@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/scv_orderdetail"
+        android:layout_above="@+id/scv_orderdetailbutton">
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dip"
+            android:paddingRight="10dip"
+            android:shrinkColumns="*"  android:stretchColumns="*">
+            <!-- single column -->
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:background="@drawable/table_bottom_border"
+                android:gravity="center_horizontal">
+                <TextView
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:textSize="18dp" android:text="@string/order_title"  android:layout_span="3"
+                    android:padding="18dip"
+                    android:textColor="#000"/>
+            </TableRow>
+
+            <!--order_title_code-->
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:background="@drawable/table_bottom_border"
+                android:gravity="left">
+                <TextView
+                    android:text="@string/order_title_code"
+                    android:layout_weight="1"
+
+                    android:paddingLeft="20dip"
+                    android:paddingBottom="10dip"
+                    android:paddingTop="10dip"/>
+
+                <TextView
+                    android:id="@+id/order_title_code" android:text="Row 3 column 2"
+                    android:layout_weight="1"
+
+                    android:paddingBottom="10dip"
+                    android:paddingTop="10dip"/>
+            </TableRow>
+
+            <!--order_title_hub-->
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:background="@drawable/table_bottom_border"
+                android:gravity="left">
+                <TextView
+                    android:text="@string/order_title_hub"
+                    android:layout_weight="1"
+
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="20dip"
+                    android:paddingBottom="10dip"
+                    android:paddingTop="10dip" />
+
+                <TextView
+                    android:id="@+id/order_title_hub" android:text="Row 3 column 2"
+                    android:layout_weight="1"
+
+                    android:paddingBottom="10dip"
+                    android:paddingTop="10dip" />
+            </TableRow>
+
+            <!--order_title_nextdriver-->
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:background="@drawable/table_bottom_border"
+                android:gravity="left">
+                <TextView
+                    android:text="@string/order_title_nextdriver"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+
+                    android:paddingLeft="20dip" android:paddingBottom="10dip"
+                    android:paddingTop="10dip" />
+
+                <TextView
+                    android:id="@+id/order_title_nextdriver" android:text="Row 3 column 2"
+                    android:layout_weight="1"
+
+                    android:paddingBottom="10dip"
+                    android:paddingTop="10dip" />
+            </TableRow>
+
+            <!--order_title_origin-->
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:background="@drawable/table_bottom_border"
+                android:gravity="left">
+                <TextView
+                    android:text="@string/order_title_origin"
+                    android:layout_weight="1"
+
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="20dip" android:paddingBottom="10dip"
+                    android:paddingTop="10dip" />
+
+                <TextView
+                    android:id="@+id/order_title_origin" android:text="Row 3 column 2"
+                    android:layout_weight="1"
+
+                    android:paddingBottom="10dip"
+                    android:paddingTop="10dip" />
+            </TableRow>
+
+            <!--order_title_dest-->
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:background="@drawable/table_bottom_border"
+                android:gravity="left">
+                <TextView
+                    android:text="@string/order_title_dest"
+                    android:layout_weight="1"
+
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="20dip" android:paddingBottom="10dip"
+                    android:paddingTop="10dip" />
+
+                <TextView
+                    android:id="@+id/order_title_dest" android:text="Row 3 column 2"
+                    android:layout_weight="1"
+
+                    android:paddingBottom="10dip"
+                    android:paddingTop="10dip" />
+            </TableRow>
+
+            <!--order_title_etd-->
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:background="@drawable/table_bottom_border"
+                android:gravity="left">
+                <TextView
+                    android:text="@string/order_title_etd"
+                    android:layout_weight="1"
+
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="20dip" android:paddingBottom="10dip"
+                    android:paddingTop="10dip" />
+
+                <TextView
+                    android:id="@+id/order_title_etd" android:text="Row 3 column 2"
+                    android:layout_weight="1"
+
+                    android:paddingBottom="10dip"
+                    android:paddingTop="10dip" />
+            </TableRow>
+
+            <!--order_title_eta-->
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:background="@drawable/table_bottom_border"
+                android:gravity="left">
+                <TextView
+                    android:text="@string/order_title_eta"
+                    android:layout_weight="1"
+
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="20dip" android:paddingBottom="10dip" android:paddingTop="10dip" />
+
+                <TextView
+                    android:id="@+id/order_title_eta" android:text="Row 3 column 2"
+                    android:layout_weight="1"
+
+                    android:paddingBottom="10dip" android:paddingTop="10dip" />
+            </TableRow>
+
+            <!--order_title_customer-->
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:background="@drawable/table_bottom_border"
+                android:gravity="left">
+                <TextView
+                    android:text="@string/order_title_customer"
+                    android:layout_weight="1"
+
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="20dip" android:paddingBottom="10dip" android:paddingTop="10dip" />
+
+                <TextView
+                    android:id="@+id/order_title_customer" android:text="Row 3 column 2"
+                    android:layout_weight="1"
+
+                    android:paddingBottom="10dip" android:paddingTop="10dip" />
+            </TableRow>
+
+            <!--order_title_unit-->
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:background="@drawable/table_bottom_border"
+                android:gravity="left">
+                <TextView
+                    android:text="@string/order_title_unit"
+                    android:layout_weight="1"
+
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="20dip" android:paddingBottom="10dip" android:paddingTop="10dip" />
+
+                <TextView
+                    android:id="@+id/order_title_unit" android:text="Row 3 column 2"
+                    android:layout_weight="1"
+
+                    android:paddingBottom="10dip" android:paddingTop="10dip" />
+            </TableRow>
+
+            <!--order_title_nextdest-->
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:background="@drawable/table_bottom_border"
+                android:gravity="left">
+                <TextView
+                    android:text="@string/order_title_nextdest"
+                    android:layout_weight="1"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="20dip" android:paddingBottom="10dip" android:paddingTop="10dip" />
+
+                <TextView
+                    android:id="@+id/order_title_nextdest" android:text="Row 3 column 2"
+                    android:layout_weight="1"
+                    android:textColor="@color/colorPrimaryDark"
+
+                    android:paddingBottom="10dip" android:paddingTop="10dip" />
+            </TableRow>
+
+            <!--order_title_nexteta-->
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:background="@drawable/table_bottom_border"
+                android:gravity="left">
+                <TextView
+                    android:text="@string/order_title_nexteta"
+                    android:layout_weight="1"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="20dip" android:paddingBottom="10dip" android:paddingTop="10dip" />
+
+                <TextView
+                    android:id="@+id/order_title_nexteta" android:text="Row 3 column 2"
+                    android:layout_weight="1"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:paddingBottom="10dip" android:paddingTop="10dip" />
+            </TableRow>
+
+            <!--order_title_laststatus-->
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:background="@drawable/table_bottom_border"
+                android:gravity="left">
+                <TextView
+                    android:text="@string/order_title_laststatus"
+                    android:layout_weight="1"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="20dip" android:paddingBottom="10dip" android:paddingTop="10dip" />
+
+                <TextView
+                    android:id="@+id/order_title_laststatus" android:text="Row 3 column 2"
+                    android:layout_weight="1"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:paddingBottom="10dip" android:paddingTop="10dip" />
+            </TableRow>
+
+            <!--Not shown?-->
+            <!--order_title_cargotype-->
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:background="@drawable/table_bottom_border"
+                android:gravity="left">
+                <TextView
+                    android:text="@string/order_title_cargotype"
+                    android:layout_weight="1"
+
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="20dip" android:paddingBottom="10dip" android:paddingTop="10dip" />
+
+                <TextView
+                    android:id="@+id/order_title_cargotype" android:text="Row 3 column 2"
+                    android:layout_weight="1"
+
+                    android:paddingBottom="10dip" android:paddingTop="10dip" />
+            </TableRow>
+
+            <!--order_title_quantity-->
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:background="@drawable/table_bottom_border"
+                android:gravity="left">
+                <TextView
+                    android:text="@string/order_title_quantity"
+                    android:layout_weight="1"
+
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="20dip" android:paddingBottom="10dip" android:paddingTop="10dip" />
+
+                <TextView
+                    android:id="@+id/order_title_quantity" android:text="Row 3 column 2"
+                    android:layout_weight="1"
+
+                    android:paddingBottom="10dip" android:paddingTop="10dip" />
+            </TableRow>
+
+            <!--order_title_checkpoint-->
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:background="@drawable/table_bottom_border"
+                android:gravity="left">
+                <TextView
+                    android:text="@string/order_title_checkpoint"
+                    android:layout_weight="1"
+
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="20dip" android:paddingBottom="10dip" android:paddingTop="10dip" />
+
+                <TextView
+                    android:id="@+id/order_title_checkpoint" android:text="Row 3 column 2"
+                    android:layout_weight="1"
+
+                    android:paddingBottom="10dip" android:paddingTop="10dip" />
+            </TableRow>
+
+            <!--order_title_checkpointeta-->
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:background="@drawable/table_bottom_border"
+                android:gravity="left">
+                <TextView
+                    android:text="@string/order_title_checkpointeta"
+                    android:layout_weight="1"
+
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="20dip" android:paddingBottom="10dip" android:paddingTop="10dip" />
+
+                <TextView
+                    android:id="@+id/order_title_checkpointeta" android:text="Row 3 column 2"
+                    android:layout_weight="1"
+
+                    android:paddingBottom="10dip" android:paddingTop="10dip" />
+            </TableRow>
+
+            <!--order_title_loadingloc-->
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:background="@drawable/table_bottom_border"
+                android:gravity="left">
+                <TextView
+                    android:text="@string/order_title_loadingloc"
+                    android:layout_weight="1"
+
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="20dip" android:paddingBottom="10dip" android:paddingTop="10dip" />
+
+                <TextView
+                    android:id="@+id/order_title_loadingloc" android:text="Row 3 column 2"
+                    android:layout_weight="1"
+
+                    android:paddingBottom="10dip" android:paddingTop="10dip" />
+            </TableRow>
+
+            <!--order_title_loadingeta-->
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:background="@drawable/table_bottom_border"
+                android:gravity="left">
+                <TextView
+                    android:text="@string/order_title_loadingeta"
+                    android:layout_weight="1"
+
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="20dip" android:paddingBottom="10dip" android:paddingTop="10dip" />
+
+                <TextView
+                    android:id="@+id/order_title_loadingeta" android:text="Row 3 column 2"
+                    android:layout_weight="1"
+
+                    android:paddingBottom="10dip" android:paddingTop="10dip" />
+            </TableRow>
+
+            <!--order_title_unloadingloc-->
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:background="@drawable/table_bottom_border"
+                android:gravity="left">
+                <TextView
+                    android:text="@string/order_title_unloadingloc"
+                    android:layout_weight="1"
+
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="20dip" android:paddingBottom="10dip" android:paddingTop="10dip" />
+
+                <TextView
+                    android:id="@+id/order_title_unloadingloc" android:text="Row 3 column 2"
+                    android:layout_weight="1"
+
+                    android:paddingBottom="10dip" android:paddingTop="10dip" />
+            </TableRow>
+
+            <!--order_title_unloadinget-->
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:background="@drawable/table_bottom_border"
+                android:gravity="left">
+                <TextView
+                    android:text="@string/order_title_unloadinget"
+                    android:layout_weight="1"
+
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="20dip" android:paddingBottom="10dip" android:paddingTop="10dip" />
+
+                <TextView
+                    android:id="@+id/order_title_unloadinget" android:text="Row 3 column 2"
+                    android:layout_weight="1"
+
+                    android:paddingBottom="10dip" android:paddingTop="10dip" />
+            </TableRow>
+
+        </TableLayout>
+    </ScrollView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:id="@+id/scv_orderdetailbutton"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:background="@android:color/white">
+                <Button
+                    android:id="@+id/btn_loading"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_weight="1"
+                    android:text="@string/order_button_loading"
+                    tools:ignore="ButtonStyle"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/button_all_border" />
+
+                <Button
+                    android:id="@+id/btn_unloading"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_weight="1"
+                    android:text="@string/order_button_unloading"
+                    tools:ignore="ButtonStyle"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/button_all_border" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:background="@android:color/white">
+                <Button
+                    android:id="@+id/btn_stoporder"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_weight="1"
+                    android:text="@string/order_button_stoporder"
+                    tools:ignore="ButtonStyle"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/button_all_border" />
+
+                <Button
+                    android:id="@+id/btn_checkpoint"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_weight="1"
+                    android:text="@string/order_button_checkpoint"
+                    tools:ignore="ButtonStyle"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/button_all_border" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="1"
+                android:background="@android:color/white">
+                <Button
+                    android:id="@+id/btn_endorder"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:text="@string/order_button_endorder"
+                    tools:ignore="ButtonStyle"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/button_all_border_red" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</RelativeLayout>
