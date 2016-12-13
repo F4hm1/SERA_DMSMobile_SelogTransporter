@@ -24,8 +24,10 @@
         <activity android:name=".activity.DashboardActivity" android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activity.OrderDetailActivity"/>
         <activity android:name=".activity.ChangePasswordActivity"/>
+        <activity android:name=".activity.FatigueInterviewActivity"/>
         <activity android:name=".activity.ProveActivity"/>
         <activity android:name=".activity.SignatureActivity"/>
+        <activity android:name=".activity.ProfileActivity"/>
     </application>
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>

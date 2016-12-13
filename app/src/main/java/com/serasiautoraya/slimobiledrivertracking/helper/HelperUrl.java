@@ -25,6 +25,7 @@ public class HelperUrl {
     * Data Post
     */
     public static String CICO = HOST + "restapifront_cico/cico/";
+    public static String CICO_REQUEST = HOST + "restapifront_cico/cico/";
     public static String ABSENCE = HOST + "restapifront_absence/absence/";
 
 

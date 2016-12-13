@@ -29,6 +29,8 @@ public class HelperKey {
     public static final String TITLE_ACTIVITY_CHECKPOINT= "Bukti Checkpoint";
     public static final String TITLE_ACTIVITY_END_ORDER= "Bukti End Order";
     public static final String TITLE_ACTIVITY_CHANGE_PASS= "Ganti Password";
+    public static final String TITLE_ACTIVITY_FATIGUE_INTERVIEW= "Fatigue Interview";
+    public static final String TITLE_ACTIVITY_PROFILE= "Profil Driver";
 
     //API - Key
     public static String API_KEY = "8d7ca5b010c22997b1f6910b111c8273417ec35a";
@@ -37,12 +39,18 @@ public class HelperKey {
     public static final int HTTP_STAT_OK = 200;
     public static final int HTTP_STAT_BADREQ = 400;
 
+    //Generic Status
+    public static final String STATUS_SUKSES = "1";
+    public static final String STATUS_GAGAL = "0";
+
     //Static API Code
     public static final String CLOCK_IN_CODE = "TRXCC_01";
     public static final String CLOCK_OUT_CODE = "TRXCC_02";
     public static final String WFSTATUS_APPROVED = "WFSTS_10";
     public static final String WFSTATUS_PENDING = "WFSTS_01";
+    public static final String WFSTATUS_REQUEST_ABSENCE = "WFSTS_02";
     public static final String SUBMIT_TYPE_DEFAULT = "CCSMT_04";
+    public static final String SUBMIT_TYPE_ABSENCE = "CCSMT_02";
     public static final String APPROVED_AUTO = "Automatic Approved";
 
 

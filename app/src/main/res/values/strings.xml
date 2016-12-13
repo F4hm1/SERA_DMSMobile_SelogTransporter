@@ -70,6 +70,29 @@
     <!--Cico-->
     <string name="cico_button_clockin">Clock In</string>
     <string name="cico_button_clockout">Clock Out</string>
+    <string name="cico_label_transactiontype">Tipe Transaksi</string>
+    <string name="cico_label_date">Tanggal</string>
+    <string name="cico_label_time">Waktu</string>
+    <string name="cico_label_reason">Alasan</string>
+    <string name="cico_label_submit">Submit</string>
+    <string name="success_msg_cico_req">Request Clock In/Out sukses, menunggu persetujuan.</string>
+    <string name="success_msg_cico">Clock In/Out sukses.</string>
+    <string name="err_msg_empty_cico_keterangan">Harap isi kolom alasan</string>
+    <string name="err_msg_empty_cico_transactiontype">Harap pilih tipe transaksi</string>
+    <string name="err_msg_empty_cico_date">Harap isi tanggal</string>
+    <string name="err_msg_empty_cico_time">Harap isi waktu</string>
+    <string name="err_msg_wrong_cico_date">Tanggal tidak valid atau melebihi max hari request</string>
+    <string name="err_msg_wrong_cico_time">Waktu tidak valid atau melebihi waktu saat ini</string>
+    <string-array name="cico_tipe_array">
+        <item>Pilih</item>
+        <item>Clock In</item>
+        <item>Clock Out</item>
+    </string-array>
+    <string-array name="cico_tipe_array_val">
+        <item>-1</item>
+        <item>TRXCC_01</item>
+        <item>TRXCC_02</item>
+    </string-array>
 
     <!--Absence-->
     <string name="absence_label_startdate">Tanggal Mulai</string>
@@ -77,13 +100,14 @@
     <string name="absence_label_reason">Alasan</string>
     <string name="absence_label_absencetype">Tipe Absen</string>
     <string name="absence_label_submit">Submit</string>
+    <string name="success_msg_absent">Request ketidakhadiran sukses, menunggu persetujuan.</string>
     <string name="err_msg_empty_absent_keterangan">Harap isi kolom alasan</string>
     <string name="err_msg_empty_absent_absenttype">Harap pilih tipe absen</string>
     <string name="err_msg_empty_absent_dateberakhir">Harap isi tanggal selesai</string>
     <string name="err_msg_empty_absent_datemulai">Harap isi tanggal mulai</string>
     <string name="err_msg_wrong_absent_date">Tanggal selesai tidak boleh kurang dari tanggal mulai</string>
-    <string name="err_msg_wrong_absent_datemulai">Tanggal mulai tidak valid</string>
-    <string name="err_msg_wrong_absent_dateberakhir">Tanggal selesai tidak valid</string>
+    <string name="err_msg_wrong_absent_datemulai">Tanggal mulai tidak valid atau melebihi max hari request</string>
+    <string name="err_msg_wrong_absent_dateberakhir">Tanggal selesai tidak valid atau melebihi max hari request</string>
     <string-array name="absence_tipe_array">
         <item>Pilih Tipe Absen</item>
         <item>Cuti Bersalin</item>
@@ -124,13 +148,24 @@
     <string name="cp_label_pass">Password baru</string>
     <string name="cp_label_passconf">Ulangi password baru</string>
     <string name="cp_label_submit">Submit</string>
+    <string name="success_msg_cp">Password anda berhasil diganti</string>
     <string name="err_msg_wrong_cp_passlamasalah">Password lama anda salah</string>
     <string name="err_msg_wrong_cp_passbarunotmatch">Password baru anda tidak cocok</string>
     <string name="err_msg_empty_cp_oldpass">Harap isi password lama anda</string>
     <string name="err_msg_empty_cp_pass">Harap isi password baru anda</string>
     <string name="err_msg_empty_cp_confpass">Harap isi kembali password baru anda</string>
 
-
+    <!--Fatigue Interview-->
+    <string name="fi_quest_1">Apakah anda <b>dalam kondisi sehat</b>?</string>
+    <string name="fi_quest_2">Apakah anda <b>tidak dalam pengaruh obat / sedang mengkonsumsi obat</b> yang menyebabkan mengantuk (misalnya obat flu/batuk)?</string>
+    <string name="fi_quest_3">Apakah anda <b>tidak mengkonsumsi alkohol</b>?</string>
+    <string name="fi_quest_4">Apakah anda <b>tidak mengkonsumsi obat-obatan terlarang</b> (Narkoba)?</string>
+    <string name="fi_quest_5">Apakah anda <b>siap untuk bertugas mengemudi</b>?</string>
+    <string name="fi_dialog_quest_1">Dalam kondisi sehat</string>
+    <string name="fi_dialog_quest_2">Tidak dalam pengaruh obat / sedang mengkonsumsi obat yang menyebabkan mengantuk</string>
+    <string name="fi_dialog_quest_3">Tidak mengkonsumsi alkohol</string>
+    <string name="fi_dialog_quest_4">Tidak mengkonsumsi obat-obatan terlarang (Narkoba)</string>
+    <string name="fi_dialog_quest_5">Siap untuk bertugas mengemudi</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

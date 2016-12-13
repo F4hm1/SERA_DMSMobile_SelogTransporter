@@ -3,6 +3,8 @@ package com.serasiautoraya.slimobiledrivertracking.activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
@@ -12,12 +14,17 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ThemedSpinnerAdapter;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.serasiautoraya.slimobiledrivertracking.R;
@@ -26,6 +33,7 @@ import com.serasiautoraya.slimobiledrivertracking.fragment.AttendanceHistoryFrag
 import com.serasiautoraya.slimobiledrivertracking.fragment.CicoRequestFragment;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperKey;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
+import com.serasiautoraya.slimobiledrivertracking.listener.TextViewTouchListener;
 import com.serasiautoraya.slimobiledrivertracking.util.LocationServiceUtil;
 
 public class DashboardActivity extends AppCompatActivity
@@ -34,6 +42,11 @@ public class DashboardActivity extends AppCompatActivity
     NavigationView navigationView;
     private Handler mHandler;
     private int fragmentSelectedID;
+
+    private TextView mTextViewNavNama, mTextViewNavPosisi;
+    private ImageView mImageViewNavImg;
+    private View mNavHeader;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +136,53 @@ public class DashboardActivity extends AppCompatActivity
 
         mHandler = new Handler();
         navigationView.setCheckedItem(R.id.nav_cico_request);
+
+        mNavHeader = navigationView.getHeaderView(0);
+
+        mImageViewNavImg = (ImageView) mNavHeader.findViewById(R.id.nav_header_img);
+        mTextViewNavNama = (TextView) mNavHeader.findViewById(R.id.nav_header_name);
+        mTextViewNavPosisi = (TextView) mNavHeader.findViewById(R.id.nav_header_posisi);
+
+        mImageViewNavImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToProfile();
+            }
+        });
+        mTextViewNavNama.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToProfile();
+            }
+        });
+        mTextViewNavPosisi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToProfile();
+            }
+        });
+
+        mTextViewNavNama.setOnTouchListener(new TextViewTouchListener(this, R.color.colorPrimary, R.color.colorTextIcon));
+        mTextViewNavPosisi.setOnTouchListener(new TextViewTouchListener(this, R.color.colorPrimary, R.color.colorDivider));
+        mImageViewNavImg.setOnTouchListener(new View.OnTouchListener() {
+            private Rect rect;
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                    mImageViewNavImg.setColorFilter(Color.argb(90, 255, 87 ,34));
+                    rect = new Rect(v.getLeft(), v.getTop(), v.getRight(), v.getBottom());
+                }
+                if(event.getAction() == MotionEvent.ACTION_UP){
+                    mImageViewNavImg.setColorFilter(Color.argb(0, 0, 0, 0));
+                }
+                return false;
+            }
+        });
+    }
+
+    private void goToProfile(){
+        HelperUtil.goToActivity(DashboardActivity.this, ProfileActivity.class, HelperKey.EXTRA_KEY_TITLE, HelperKey.TITLE_ACTIVITY_PROFILE);
     }
 
     private void assignFragment(){

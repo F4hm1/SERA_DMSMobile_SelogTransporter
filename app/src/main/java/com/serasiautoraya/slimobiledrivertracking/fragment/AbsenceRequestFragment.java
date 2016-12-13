@@ -26,6 +26,7 @@ import com.serasiautoraya.slimobiledrivertracking.helper.HelperBridge;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperKey;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperUrl;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
+import com.serasiautoraya.slimobiledrivertracking.model.ModelSingleData;
 import com.serasiautoraya.slimobiledrivertracking.model.VolleyUtil;
 import com.serasiautoraya.slimobiledrivertracking.util.LocationServiceUtil;
 
@@ -99,42 +100,37 @@ public class AbsenceRequestFragment extends Fragment{
         });
     }
 
-    private int mStatusCode = 0;
     private void requestAbsence(String absentTypeSelected) {
         String url = HelperUrl.ABSENCE;
 
         HashMap<String, String> params = new HashMap<>();
-        params.put("PersonalId", HelperBridge.MODEL_PERSONAL_DATA.getPersonalId());
-        params.put("PersonalCode", HelperBridge.MODEL_PERSONAL_DATA.getPersonalCode());
-        params.put("CompanyCode", HelperBridge.MODEL_PERSONAL_DATA.getCompanyCode());
-        params.put("BranchCode", HelperBridge.MODEL_PERSONAL_DATA.getBranchCode());
-        params.put("PlacementCode", HelperBridge.MODEL_PERSONAL_DATA.getPlacementCode());
-        params.put("PoolCode", HelperBridge.MODEL_PERSONAL_DATA.getPoolCode());
-        params.put("SubmitType", HelperKey.SUBMIT_TYPE_DEFAULT);
-        params.put("AbsenceType", absentTypeSelected);
-        params.put("WFStatus", HelperKey.WFSTATUS_PENDING);
-        params.put("Reason", mEditTextAlasan.getText().toString());
-        params.put("UserApproval", HelperBridge.MODEL_PERSONAL_DATA.getUserIdLevel2Name());
-        /**
-        * @Todo change long, lat, loc here
-        * */
-        params.put("Latitude", ""+ LocationServiceUtil.getLocationManager(getContext()).getLastLocation().getLatitude());
-        params.put("Longitude", ""+ LocationServiceUtil.getLocationManager(getContext()).getLastLocation().getLongitude());
+        params.put("idPersonalData", HelperBridge.MODEL_LOGIN_DATA.getIdPersonalData());
+        params.put("wfStatus", HelperKey.WFSTATUS_REQUEST_ABSENCE);
+        params.put("tanggal_mulai", mEditTextTanggalMulai.getText().toString());
+        params.put("tanggal_akhir", mEditTextTanggalAkhir.getText().toString());
+        params.put("transaksi_abs", absentTypeSelected);
+        params.put("submittype", HelperKey.SUBMIT_TYPE_ABSENCE);
+        params.put("reason", mEditTextAlasan.getText().toString());
+        params.put("addby", HelperBridge.MODEL_LOGIN_DATA.getIdPersonalData());
+        params.put("destUser1", HelperBridge.MODEL_LOGIN_DATA.getIdUpLevel_2());
+        params.put("EmaildestUser1", HelperBridge.MODEL_LOGIN_DATA.getEmailLvl_2());
+        params.put("destUser2", "");
 
         HashMap<String, String> header = new HashMap<>();
         header.put("X-API-KEY", HelperKey.API_KEY);
 
-        GsonRequest<String> request = new GsonRequest<String>(
+        GsonRequest<ModelSingleData> request = new GsonRequest<ModelSingleData>(
                 Request.Method.POST,
                 url,
-                String.class,
+                ModelSingleData.class,
                 header,
                 params,
-                new Response.Listener<String>() {
+                new Response.Listener<ModelSingleData>() {
                     @Override
-                    public void onResponse(String response) {
-                        if (mStatusCode == HelperKey.HTTP_STAT_OK) {
-                            Toast.makeText(getContext(), "Submit Clock In/Clock Out", Toast.LENGTH_LONG).show();
+                    public void onResponse(ModelSingleData response) {
+                        if(response.getStatus().equalsIgnoreCase(HelperKey.STATUS_SUKSES)){
+                            clearForm();
+                            HelperUtil.showSimpleAlertDialog(getResources().getString(R.string.success_msg_absent), getContext());
                         }
                     }
                 },
@@ -144,19 +140,10 @@ public class AbsenceRequestFragment extends Fragment{
                         HelperUtil.showSimpleAlertDialog(getResources().getString(R.string.err_msg_general), getContext());
                     }
                 }
-        ){
-            @Override
-            protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                if (response != null) {
-                    mStatusCode = response.statusCode;
-                }
-                return super.parseNetworkResponse(response);
-            }
-        };
+        );
 
         request.setShouldCache(false);
         mqueue.add(request);
-        Toast.makeText(getContext(), "Submit clockout", Toast.LENGTH_LONG).show();
     }
 
     private boolean validateForm(String absentTypeSelected){
@@ -181,7 +168,7 @@ public class AbsenceRequestFragment extends Fragment{
             focusView = mEditTextTanggalAkhir;
             HelperUtil.showSimpleToast(getResources().getString(R.string.err_msg_empty_absent_dateberakhir), getContext());
             result = false;
-        }else if(mDatePickerToEditTextDialogBerakhir.isBeforeToday()){
+        }else if(!mDatePickerToEditTextDialogBerakhir.isInMaxRequest()){
             focusView = mEditTextTanggalAkhir;
             HelperUtil.showSimpleToast(getResources().getString(R.string.err_msg_wrong_absent_dateberakhir), getContext());
             result = false;
@@ -191,7 +178,7 @@ public class AbsenceRequestFragment extends Fragment{
             focusView = mEditTextTanggalMulai;
             HelperUtil.showSimpleToast(getResources().getString(R.string.err_msg_empty_absent_datemulai), getContext());
             result = false;
-        }else if(mDatePickerToEditTextDialogMulai.isBeforeToday()){
+        }else if(!mDatePickerToEditTextDialogMulai.isInMaxRequest()){
             focusView = mEditTextTanggalMulai;
             HelperUtil.showSimpleToast(getResources().getString(R.string.err_msg_wrong_absent_datemulai), getContext());
             result = false;
@@ -212,4 +199,10 @@ public class AbsenceRequestFragment extends Fragment{
         return result;
     }
 
+    private void clearForm(){
+        mSpinnerAbsenceType.setSelection(0);
+        mEditTextTanggalMulai.setText("");
+        mEditTextTanggalAkhir.setText("");
+        mEditTextAlasan.setText("");
+    }
 }

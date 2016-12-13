@@ -1,11 +1,7 @@
 package com.serasiautoraya.slimobiledrivertracking.activity;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -15,7 +11,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -26,7 +21,8 @@ import com.serasiautoraya.slimobiledrivertracking.helper.HelperBridge;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperKey;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperUrl;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
-import com.serasiautoraya.slimobiledrivertracking.model.ModelPersonalData;
+import com.serasiautoraya.slimobiledrivertracking.model.ModelArrayData;
+import com.serasiautoraya.slimobiledrivertracking.model.ModelLoginResponse;
 import com.serasiautoraya.slimobiledrivertracking.model.VolleyUtil;
 import com.serasiautoraya.slimobiledrivertracking.util.PermissionsUtil;
 import com.serasiautoraya.slimobiledrivertracking.util.SharedPrefsUtil;
@@ -139,7 +135,6 @@ public class LoginActivity extends AppCompatActivity{
         }
     }
 
-    private int mStatusCode = 0;
     private void onLogin(final String username, final String password) {
         String url = HelperUrl.LOGIN;
         HashMap<String, String> params = new HashMap<>();
@@ -147,17 +142,17 @@ public class LoginActivity extends AppCompatActivity{
         params.put("username", username);
         params.put("password", password);
         header.put("X-API-KEY", HelperKey.API_KEY);
-        GsonRequest<ModelPersonalData> request = new GsonRequest<ModelPersonalData>(
+        GsonRequest<ModelArrayData> request = new GsonRequest<ModelArrayData>(
                 Request.Method.POST,
                 url,
-                ModelPersonalData.class,
+                ModelArrayData.class,
                 header,
                 params,
-                new Response.Listener<ModelPersonalData>() {
+                new Response.Listener<ModelArrayData>() {
                     @Override
-                    public void onResponse(ModelPersonalData response) {
-                        if(mStatusCode == HelperKey.HTTP_STAT_OK){
-                            HelperBridge.MODEL_PERSONAL_DATA = response;
+                    public void onResponse(ModelArrayData response) {
+                        if(response.getStatus().equalsIgnoreCase(HelperKey.STATUS_SUKSES)){
+                            HelperBridge.MODEL_LOGIN_DATA = HelperUtil.getMyObject(response.getData()[0], ModelLoginResponse.class);
                             HelperUtil.showSimpleToast(getResources().getString(R.string.success_msg_login), LoginActivity.this);
 
                             SharedPrefsUtil.apply(LoginActivity.this, HelperKey.HAS_LOGIN, true);
@@ -178,16 +173,7 @@ public class LoginActivity extends AppCompatActivity{
                         HelperUtil.showSimpleAlertDialog(getResources().getString(R.string.err_msg_wrong_login), LoginActivity.this);
                     }
                 }
-        )
-        {
-            @Override
-            protected Response<ModelPersonalData> parseNetworkResponse(NetworkResponse response) {
-                if (response != null) {
-                    mStatusCode = response.statusCode;
-                }
-                return super.parseNetworkResponse(response);
-            }
-        };
+        );
         request.setShouldCache(false);
         mqueue.add(request);
     }

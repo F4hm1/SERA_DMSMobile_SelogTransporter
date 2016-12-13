@@ -24,6 +24,7 @@ import com.serasiautoraya.slimobiledrivertracking.helper.HelperBridge;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperKey;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperUrl;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
+import com.serasiautoraya.slimobiledrivertracking.model.ModelSingleData;
 import com.serasiautoraya.slimobiledrivertracking.model.VolleyUtil;
 import com.serasiautoraya.slimobiledrivertracking.util.SharedPrefsUtil;
 
@@ -102,15 +103,15 @@ public class ChangePasswordActivity extends AppCompatActivity {
         }
 
         if(result == true){
-            if(!mEditTextOld.getText().toString().equals(SharedPrefsUtil.getString(this, HelperKey.KEY_USERNAME, "c"))){
+            if(!mEditTextOld.getText().toString().equals(SharedPrefsUtil.getString(this, HelperKey.KEY_PASSWORD, ""))){
                 focusView = mEditTextOld;
                 mEditTextOld.setError(getResources().getString(R.string.err_msg_wrong_cp_passlamasalah));
                 result = false;
             }
 
             if(!mEditTextPass.getText().toString().equals(mEditTextPassConf.getText().toString())){
-                focusView = mEditTextOld;
-                mEditTextOld.setError(getResources().getString(R.string.err_msg_wrong_cp_passlamasalah));
+                focusView = mEditTextPassConf;
+                mEditTextPassConf.setError(getResources().getString(R.string.err_msg_wrong_cp_passbarunotmatch));
                 result = false;
             }
         }
@@ -128,23 +129,28 @@ public class ChangePasswordActivity extends AppCompatActivity {
         String url = HelperUrl.ABSENCE;
 
         HashMap<String, String> params = new HashMap<>();
-        params.put("PersonalId", HelperBridge.MODEL_PERSONAL_DATA.getPersonalId());
+        params.put("oldpassword", mEditTextOld.getText().toString());
         params.put("NewPassword", mEditTextPass.getText().toString());
+        params.put("ConNewPassword", mEditTextPassConf.getText().toString());
+        params.put("IdPersonalData", HelperBridge.MODEL_LOGIN_DATA.getIdPersonalData());
 
         HashMap<String, String> header = new HashMap<>();
         header.put("X-API-KEY", HelperKey.API_KEY);
 
-        GsonRequest<String> request = new GsonRequest<String>(
+        GsonRequest<ModelSingleData> request = new GsonRequest<ModelSingleData>(
                 Request.Method.POST,
                 url,
-                String.class,
+                ModelSingleData.class,
                 header,
                 params,
-                new Response.Listener<String>() {
+                new Response.Listener<ModelSingleData>() {
                     @Override
-                    public void onResponse(String response) {
-                        if (mStatusCode == HelperKey.HTTP_STAT_OK) {
-                            Toast.makeText(ChangePasswordActivity.this, "Password changed", Toast.LENGTH_LONG).show();
+                    public void onResponse(ModelSingleData response) {
+                        if (response.getStatus().equalsIgnoreCase(HelperKey.STATUS_SUKSES)) {
+                            clearForm();
+                            HelperUtil.showSimpleAlertDialog(getResources().getString(R.string.success_msg_cp), ChangePasswordActivity.this);
+                        }else {
+                            HelperUtil.showSimpleAlertDialog(response.getData(), ChangePasswordActivity.this);
                         }
                     }
                 },
@@ -154,15 +160,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                         HelperUtil.showSimpleAlertDialog(getResources().getString(R.string.err_msg_general), ChangePasswordActivity.this);
                     }
                 }
-        ){
-            @Override
-            protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                if (response != null) {
-                    mStatusCode = response.statusCode;
-                }
-                return super.parseNetworkResponse(response);
-            }
-        };
+        );
 
         request.setShouldCache(false);
         mqueue.add(request);
@@ -188,6 +186,12 @@ public class ChangePasswordActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         onBackPressed();
         return true;
+    }
 
+    private void clearForm(){
+        mEditTextOld.setText("");
+        mEditTextPassConf.setText("");
+        mEditTextPass.setText("");
     }
 }
+

@@ -12,6 +12,7 @@ import android.graphics.Matrix;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.serasiautoraya.slimobiledrivertracking.R;
 import com.serasiautoraya.slimobiledrivertracking.activity.ChangePasswordActivity;
 
@@ -26,6 +27,11 @@ import java.util.Locale;
  * Created by Randi Dwi Nandra on 18/11/2016.
  */
 public class HelperUtil {
+
+    public static <T> T getMyObject(Object object, Class<T> cls) {
+        Gson gson = new Gson();
+        return gson.fromJson(gson.toJson(object), cls);
+    }
 
     public static void goToActivity(Activity activityFrom, Class activityTo){
         Intent changeActivity = new Intent(activityFrom, activityTo);
@@ -159,4 +165,40 @@ public class HelperUtil {
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", onClickListener);
         alertDialog.show();
     }
+
+    public static Calendar getCalendarVersion(Date date){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+
+        return cal;
+    }
+
+    public static long getDaysBetween(Date startDate, Date endDate) {
+        Calendar sDate = getCalendarVersion(startDate);
+        Calendar eDate = getCalendarVersion(endDate);
+
+        long daysBetween = 0;
+        while (sDate.before(eDate)) {
+            sDate.add(Calendar.DAY_OF_MONTH, 1);
+            daysBetween++;
+        }
+        return daysBetween;
+    }
+
+    public static boolean isToday(Date date) {
+        Calendar sDate = getCalendarVersion(date);
+        Calendar eDate = getCalendarVersion(new Date());
+
+        if(!sDate.after(eDate) && !sDate.before(eDate)){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+
 }
