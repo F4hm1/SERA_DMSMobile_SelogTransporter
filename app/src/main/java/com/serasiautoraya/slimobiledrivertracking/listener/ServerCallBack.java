@@ -1,0 +1,10 @@
+package com.serasiautoraya.slimobiledrivertracking.listener;
+
+import com.serasiautoraya.slimobiledrivertracking.model.ModelTimeRESTResponse;
+
+/**
+ * Created by Randi Dwi Nandra on 18/01/2017.
+ */
+public interface ServerCallBack {
+    void onSuccessModelTimeRESTResponse(ModelTimeRESTResponse result);
+}

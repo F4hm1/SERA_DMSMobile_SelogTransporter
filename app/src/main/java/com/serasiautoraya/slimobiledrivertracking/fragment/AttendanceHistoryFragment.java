@@ -1,5 +1,6 @@
 package com.serasiautoraya.slimobiledrivertracking.fragment;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -29,10 +30,12 @@ import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
 import com.serasiautoraya.slimobiledrivertracking.listener.ClickListener;
 import com.serasiautoraya.slimobiledrivertracking.listener.RecyclerTouchListener;
 import com.serasiautoraya.slimobiledrivertracking.model.ModelArrayData;
+import com.serasiautoraya.slimobiledrivertracking.model.ModelPersonalData;
 import com.serasiautoraya.slimobiledrivertracking.model.ModelReportResponse;
 import com.serasiautoraya.slimobiledrivertracking.model.VolleyUtil;
 import com.serasiautoraya.slimobiledrivertracking.util.DividerRecycleViewDecoration;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,6 +52,7 @@ public class AttendanceHistoryFragment extends Fragment {
     private EditText editTextDateMulai, editTextDateSelesai;
     private LinearLayout tableTitle;
     private DatePickerToEditTextDialog mDatePickerToEditTextDialogMulai, mDatePickerToEditTextDialogBerakhir;
+
 
     private RequestQueue mqueue;
 
@@ -72,8 +76,8 @@ public class AttendanceHistoryFragment extends Fragment {
         editTextDateMulai = (EditText) view.findViewById(R.id.edittext_attendance_history_datemulai);
         editTextDateSelesai = (EditText) view.findViewById(R.id.edittext_attendance_history_dateakhir);
 
-        mDatePickerToEditTextDialogMulai = new DatePickerToEditTextDialog(editTextDateMulai, view.getContext());
-        mDatePickerToEditTextDialogBerakhir= new DatePickerToEditTextDialog(editTextDateSelesai, view.getContext());
+        mDatePickerToEditTextDialogMulai = new DatePickerToEditTextDialog(editTextDateMulai, view.getContext(), false, true);
+        mDatePickerToEditTextDialogBerakhir= new DatePickerToEditTextDialog(editTextDateSelesai, view.getContext(), false, true);
 
         mqueue = VolleyUtil.getRequestQueue();
 
@@ -96,7 +100,15 @@ public class AttendanceHistoryFragment extends Fragment {
 //                readData();
 //                refreshRecycleView();
 
-                HelperUtil.showSimpleToast("Mulai Changed", getContext());
+                try {
+                    mDatePickerToEditTextDialogBerakhir= new DatePickerToEditTextDialog(editTextDateSelesai, getContext(), false, true);
+                    mDatePickerToEditTextDialogBerakhir.setMaxDateHistory(editTextDateMulai.getText().toString());
+                    mDatePickerToEditTextDialogBerakhir.setMinDateHistory(editTextDateMulai.getText().toString());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+//                HelperUtil.showSimpleToast("Mulai Changed", getContext());
             }
         });
 
@@ -116,12 +128,15 @@ public class AttendanceHistoryFragment extends Fragment {
                 /**
                  * Web API address belum ada
                  * sementara request di pass */
-//                readData();
-//                refreshRecycleView();
+                if(!editTextDateSelesai.getText().toString().equalsIgnoreCase("")){
+                    readData();
+                }
 
-                HelperUtil.showSimpleToast("Selesai changed", getContext());
+//                HelperUtil.showSimpleToast("Selesai changed", getContext());
             }
         });
+
+
 
         assignRecycler();
         assignRecyclerData();
@@ -131,15 +146,31 @@ public class AttendanceHistoryFragment extends Fragment {
     private void refreshRecycleView() {
         historyAttendanceSingleLists.clear();
         for (int i = 0; i < HelperBridge.MODEL_REPORT_ARRAY.length; i++) {
+            String tanggal = HelperBridge.MODEL_REPORT_ARRAY[i].getTanggal() == null? " - ": HelperBridge.MODEL_REPORT_ARRAY[i].getTanggal();
+            String absence = HelperBridge.MODEL_REPORT_ARRAY[i].getAbsence() == null? " - ": HelperBridge.MODEL_REPORT_ARRAY[i].getAbsence();
+            String wsIn = HelperBridge.MODEL_REPORT_ARRAY[i].getWsIn() == null? " - ": HelperBridge.MODEL_REPORT_ARRAY[i].getWsIn();
+            String wsOut = HelperBridge.MODEL_REPORT_ARRAY[i].getWsOut() == null? " - ": HelperBridge.MODEL_REPORT_ARRAY[i].getWsOut();
+            String ci = HelperBridge.MODEL_REPORT_ARRAY[i].getCi() == null? " - ": HelperBridge.MODEL_REPORT_ARRAY[i].getCi();
+            String co = HelperBridge.MODEL_REPORT_ARRAY[i].getCo() == null? " - ": HelperBridge.MODEL_REPORT_ARRAY[i].getCo();
+
+
             HistoryAttendanceSingleList historyAttendanceSingleList =
-                    new HistoryAttendanceSingleList(
-                            HelperBridge.MODEL_REPORT_ARRAY[i].getTanggal(),
-                            HelperBridge.MODEL_REPORT_ARRAY[i].getAbsence(),
-                            HelperBridge.MODEL_REPORT_ARRAY[i].getWsIn(),
-                            HelperBridge.MODEL_REPORT_ARRAY[i].getWsOut(),
-                            HelperBridge.MODEL_REPORT_ARRAY[i].getCi(),
-                            HelperBridge.MODEL_REPORT_ARRAY[i].getCo());
+                    new HistoryAttendanceSingleList(tanggal, absence, wsIn, wsOut, ci, co);
             historyAttendanceSingleLists.add(historyAttendanceSingleList);
+        }
+
+        if(historyAttendanceSingleLists.size() > 0){
+//            textViewKosong.setEnabled(false);
+//            textViewKosong.setVisibility(View.GONE);
+//            textViewKosong.setText("");
+            tableTitle.setEnabled(true);
+            tableTitle.setVisibility(View.VISIBLE);
+        }else {
+//            textViewKosong.setEnabled(true);
+//            textViewKosong.setVisibility(View.VISIBLE);
+//            textViewKosong.setText(getText(R.string.content_history_cico_empty));
+            tableTitle.setEnabled(false);
+            tableTitle.setVisibility(View.GONE);
         }
 
         historyAttendanceListAdapter.notifyDataSetChanged();
@@ -156,14 +187,14 @@ public class AttendanceHistoryFragment extends Fragment {
     private void assignRecyclerData(){
         historyAttendanceSingleLists.clear();
 
-        for (int i = 0; i < 17; i++) {
-            HistoryAttendanceSingleList historyAttendanceSingleList =
-                    new HistoryAttendanceSingleList("2016-11-01", "Cuti sakit","08:17:12", "18:02:45", "08:17:12", "18:02:45");
-            historyAttendanceSingleLists.add(historyAttendanceSingleList);
-            historyAttendanceSingleList =
-                    new HistoryAttendanceSingleList("2016-11-01", "Hadir","08:17:12", "18:02:45", "08:17:12", "18:02:45");
-            historyAttendanceSingleLists.add(historyAttendanceSingleList);
-        }
+//        for (int i = 0; i < 17; i++) {
+//            HistoryAttendanceSingleList historyAttendanceSingleList =
+//                    new HistoryAttendanceSingleList("2016-11-01", "Cuti sakit","08:17:12", "18:02:45", "08:17:12", "18:02:45");
+//            historyAttendanceSingleLists.add(historyAttendanceSingleList);
+//            historyAttendanceSingleList =
+//                    new HistoryAttendanceSingleList("2016-11-01", "Hadir","08:17:12", "18:02:45", "08:17:12", "18:02:45");
+//            historyAttendanceSingleLists.add(historyAttendanceSingleList);
+//        }
 
         if(historyAttendanceSingleLists.size() > 0){
 //            textViewKosong.setEnabled(false);
@@ -189,8 +220,10 @@ public class AttendanceHistoryFragment extends Fragment {
         params.put("startdate", editTextDateMulai.getText().toString());
         params.put("enddate", editTextDateSelesai.getText().toString());
         header.put("X-API-KEY", HelperKey.API_KEY);
+
+        final ProgressDialog loading = ProgressDialog.show(getContext(), getResources().getString(R.string.prog_msg_report),getResources().getString(R.string.prog_msg_wait),true,false);
         GsonRequest<ModelArrayData> request = new GsonRequest<ModelArrayData>(
-                Request.Method.POST,
+                Request.Method.GET,
                 url,
                 ModelArrayData.class,
                 header,
@@ -198,23 +231,27 @@ public class AttendanceHistoryFragment extends Fragment {
                 new Response.Listener<ModelArrayData>() {
                     @Override
                     public void onResponse(ModelArrayData response) {
+                        loading.dismiss();
                         if (response.getStatus().equalsIgnoreCase(HelperKey.STATUS_SUKSES)) {
                             HelperBridge.MODEL_REPORT_ARRAY = new ModelReportResponse[response.getData().length];
                             for (int i = 0; i < response.getData().length ; i++) {
                                 HelperBridge.MODEL_REPORT_ARRAY[i] = HelperUtil.getMyObject(response.getData()[i], ModelReportResponse.class);
                             }
+                            refreshRecycleView();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        loading.dismiss();
                         HelperUtil.showSimpleAlertDialog(getResources().getString(R.string.err_msg_general), getContext());
                     }
                 }
         );
         request.setShouldCache(false);
         mqueue.add(request);
+
 
     }
 

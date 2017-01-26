@@ -17,14 +17,15 @@ public class HistoryAttendanceListAdapter extends RecyclerView.Adapter<HistoryAt
     private List<HistoryAttendanceSingleList> historyAttendanceSingleLists;
 
     public class HistoryAttendanceListViewHolder extends RecyclerView.ViewHolder {
-        private TextView tanggal, absenceType, jadwalIn, jadwalOut, clockIn, clockOut;
+//        private TextView tanggal, absenceType, jadwalIn, jadwalOut, clockIn, clockOut;
+        private TextView tanggal, absenceType, clockIn, clockOut;
 
         public HistoryAttendanceListViewHolder(View view) {
             super(view);
             tanggal = (TextView) view.findViewById(R.id.single_list_atthis_tanggal);
             absenceType = (TextView) view.findViewById(R.id.single_list_atthis_absence);
-            jadwalIn = (TextView) view.findViewById(R.id.single_list_atthis_jadwalin);
-            jadwalOut = (TextView) view.findViewById(R.id.single_list_atthis_jadwalout);
+//            jadwalIn = (TextView) view.findViewById(R.id.single_list_atthis_jadwalin);
+//            jadwalOut = (TextView) view.findViewById(R.id.single_list_atthis_jadwalout);
             clockIn = (TextView) view.findViewById(R.id.single_list_atthis_clockin);
             clockOut = (TextView) view.findViewById(R.id.single_list_atthis_clockout);
         }
@@ -49,8 +50,8 @@ public class HistoryAttendanceListAdapter extends RecyclerView.Adapter<HistoryAt
         HistoryAttendanceSingleList historyCicoSingleList = historyAttendanceSingleLists.get(position);
         holder.tanggal.setText(historyCicoSingleList.getTanggal());
         holder.absenceType.setText(historyCicoSingleList.getAbsenceType());
-        holder.jadwalIn.setText(historyCicoSingleList.getJadwalIn());
-        holder.jadwalOut.setText(historyCicoSingleList.getJadwalOut());
+//        holder.jadwalIn.setText(historyCicoSingleList.getJadwalIn());
+//        holder.jadwalOut.setText(historyCicoSingleList.getJadwalOut());
         holder.clockIn.setText(historyCicoSingleList.getClockIn());
         holder.clockOut.setText(historyCicoSingleList.getClockOut());
     }

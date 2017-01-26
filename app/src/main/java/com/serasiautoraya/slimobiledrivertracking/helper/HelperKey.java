@@ -7,6 +7,8 @@ public class HelperKey {
     //Permission Code
     public static final int STORAGE_PERMISSION_GRANTED_CODE = 1001;
     public static final int LOCATION_PERMISSION_GRANTED_CODE = 1002;
+    public static final int SYSWINDOWS_PERMISSION_GRANTED_CODE = 1003;
+    public static final int VIBRATE_PERMISSION_GRANTED_CODE = 1004;
 
     //SharedPreferences Code
     public static final String HAS_LOGIN = "LOGGED_IN";
@@ -19,7 +21,8 @@ public class HelperKey {
     public static final int ACTIVITY_SECOND_IMAGE_CAPTURE = 1003;
 
     //Date format
-    public static final String USER_DATE_FORMAT = "dd-MM-yyyy";
+    public static final String USER_DATE_FORMAT = "yyyy-MM-dd";
+    public static final String USER_DATE_FORMAT_SEPARATOR = "-";
     public static final String USER_TIME_FORMAT = "kk:mm:ss";
 
     //Activity Title
@@ -30,7 +33,7 @@ public class HelperKey {
     public static final String TITLE_ACTIVITY_END_ORDER= "Bukti End Order";
     public static final String TITLE_ACTIVITY_CHANGE_PASS= "Ganti Password";
     public static final String TITLE_ACTIVITY_FATIGUE_INTERVIEW= "Fatigue Interview";
-    public static final String TITLE_ACTIVITY_PROFILE= "Profil Driver";
+    public static final String TITLE_ACTIVITY_PROFILE= "Profil Transporter";
 
     //API - Key
     public static String API_KEY = "8d7ca5b010c22997b1f6910b111c8273417ec35a";
@@ -41,9 +44,12 @@ public class HelperKey {
 
     //Generic Status
     public static final String STATUS_SUKSES = "1";
+    public static final String STATUS_SUKSES_STRING = "success";
     public static final String STATUS_GAGAL = "0";
+    public static final int AUTHORIZED_ACCESS = 1;
 
     //Static API Code
+    public static final String MOBILE_CODE = "1";
     public static final String CLOCK_IN_CODE = "TRXCC_01";
     public static final String CLOCK_OUT_CODE = "TRXCC_02";
     public static final String WFSTATUS_APPROVED = "WFSTS_10";

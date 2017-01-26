@@ -67,112 +67,30 @@
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
 
-    <HorizontalScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/container_attendance_history"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:elevation="2dp">
 
-            <LinearLayout
-                android:id="@+id/title_attendance_history_table"
-                android:layout_width="wrap_content"
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabs_request_report"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:background="@color/colorPrimaryDark"
-                android:weightSum="6">
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                app:tabTextColor="@color/colorTextSecondary"
+                app:tabSelectedTextColor="@color/colorTextIcon"
+                app:tabIndicatorColor="@color/colorAccent"
+                app:tabMaxWidth="0dp"
+                app:tabGravity="fill"/>
 
-                    android:gravity="center_horizontal"
-                    android:textStyle="bold"
-                    android:textColor="@color/colorTextIcon"
-                    android:background="@drawable/shape_border_textview_right"
-
-                    android:text="Tanggal"/>
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:layout_weight="1"
-
-                    android:gravity="center_horizontal"
-                    android:textStyle="bold"
-                    android:textColor="@color/colorTextIcon"
-                    android:background="@drawable/shape_border_textview_right"
-
-                    android:text="Absence"/>
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:layout_weight="1"
-
-                    android:gravity="center_horizontal"
-                    android:textStyle="bold"
-                    android:textColor="@color/colorTextIcon"
-                    android:background="@drawable/shape_border_textview_right"
-
-                    android:text="Jadwal Masuk"/>
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:layout_weight="1"
-
-                    android:gravity="center_horizontal"
-                    android:textStyle="bold"
-                    android:textColor="@color/colorTextIcon"
-                    android:background="@drawable/shape_border_textview_right"
-
-                    android:text="Jadwal Keluar"/>
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:layout_weight="1"
-
-                    android:gravity="center_horizontal"
-                    android:textStyle="bold"
-                    android:textColor="@color/colorTextIcon"
-                    android:background="@drawable/shape_border_textview_right"
-
-                    android:text="Clock In"/>
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:layout_weight="1"
-
-                    android:gravity="center_horizontal"
-                    android:textStyle="bold"
-                    android:textColor="@color/colorTextIcon"
-
-                    android:text="Clock Out"/>
-            </LinearLayout>
-
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_attendance_history"
-                android:layout_below="@+id/title_attendance_history_table"
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewpager_request_report"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:scrollbars="vertical" />
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                android:layout_below="@+id/tabs_request_report"
+                />
         </RelativeLayout>
-    </HorizontalScrollView>
+
 </LinearLayout>

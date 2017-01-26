@@ -22,15 +22,21 @@ public class PermissionsUtil implements ActivityCompat.OnRequestPermissionsResul
     private static boolean sLocationGranted = false;
     private static boolean sExternalStorageGranted = false;
     private static boolean sInternetGranted = false;
+    private static boolean sSystemAlertGranted = false;
+    private static boolean sVibrateGranted = false;
 
     private static Activity sCurrentActivity;
     public static void requestLocationPermission(Activity activity){
         sCurrentActivity = activity;
         if (Build.VERSION.SDK_INT >= 23 &&
-                ContextCompat.checkSelfPermission(activity, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(activity, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ContextCompat.checkSelfPermission(activity, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(activity, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(activity, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
-            ActivityCompat.requestPermissions( activity, new String[] {  android.Manifest.permission.ACCESS_COARSE_LOCATION  },
+            ActivityCompat.requestPermissions( activity, new String[] {
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     HelperKey.LOCATION_PERMISSION_GRANTED_CODE);
         }else{
             PermissionsUtil.sLocationGranted = true;
@@ -49,6 +55,38 @@ public class PermissionsUtil implements ActivityCompat.OnRequestPermissionsResul
         }
     }
 
+    public static void requestWindowsAlert(Activity activity){
+        sCurrentActivity = activity;
+        if (Build.VERSION.SDK_INT >= 23 &&
+                ContextCompat.checkSelfPermission(activity, Manifest.permission.SYSTEM_ALERT_WINDOW) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions( activity, new String[] {  Manifest.permission.SYSTEM_ALERT_WINDOW  },
+                    HelperKey.SYSWINDOWS_PERMISSION_GRANTED_CODE);
+        }else{
+            PermissionsUtil.sSystemAlertGranted = true;
+        }
+    }
+
+    public static void requestVibrate(Activity activity){
+        sCurrentActivity = activity;
+        if (Build.VERSION.SDK_INT >= 23 &&
+                ContextCompat.checkSelfPermission(activity, Manifest.permission.VIBRATE) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions( activity, new String[] {  Manifest.permission.VIBRATE  },
+                    HelperKey.VIBRATE_PERMISSION_GRANTED_CODE);
+        }else{
+            PermissionsUtil.sVibrateGranted = true;
+        }
+    }
+
+    public static boolean issSystemAlertGranted() {
+        return sSystemAlertGranted;
+    }
+
+    public static boolean issVibrateGranted() {
+        return sVibrateGranted;
+    }
+
     public static boolean issLocationGranted() {
         return sLocationGranted;
     }
@@ -65,7 +103,9 @@ public class PermissionsUtil implements ActivityCompat.OnRequestPermissionsResul
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case HelperKey.LOCATION_PERMISSION_GRANTED_CODE: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.length > 0 &&
+                        grantResults[0] == PackageManager.PERMISSION_GRANTED &&
+                        grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                     PermissionsUtil.sLocationGranted = true;
                 } else {
 //                    HelperUtil.showConfirmationAlertDialogNoCancel("Mohon aktifkan ijin lokasi untuk aplikasi ini", sCurrentActivity.getBaseContext(), new DialogInterface.OnClickListener() {
@@ -77,7 +117,7 @@ public class PermissionsUtil implements ActivityCompat.OnRequestPermissionsResul
                     if(SharedPrefsUtil.getBoolean(sCurrentActivity, HelperKey.HAS_LOGIN, false)){
                         System.exit(0);
                     }else{
-                        HelperUtil.showSimpleToast("Mohon aktifkan ijin lokasi untuk aplikasi ini", sCurrentActivity.getBaseContext());
+                        HelperUtil.showSimpleToast("Mohon aktifkan semua ijin sistem untuk aplikasi ini", sCurrentActivity.getBaseContext());
                     }
                 }
                 break;
@@ -96,6 +136,42 @@ public class PermissionsUtil implements ActivityCompat.OnRequestPermissionsResul
                         System.exit(0);
                     }else{
                         HelperUtil.showSimpleToast("Mohon aktifkan ijin akses storage untuk aplikasi ini", sCurrentActivity.getBaseContext());
+                    }
+                }
+                break;
+            }
+            case HelperKey.SYSWINDOWS_PERMISSION_GRANTED_CODE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    PermissionsUtil.sSystemAlertGranted = true;
+                } else {
+//                    HelperUtil.showConfirmationAlertDialogNoCancel("Mohon aktifkan ijin akses storage untuk aplikasi ini", sCurrentActivity.getBaseContext(), new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            requestStoragePermission(sCurrentActivity);
+//                        }
+//                    });
+                    if(SharedPrefsUtil.getBoolean(sCurrentActivity, HelperKey.HAS_LOGIN, false)){
+                        System.exit(0);
+                    }else{
+                        HelperUtil.showSimpleToast("Mohon aktifkan ijin akses notifikasi sistem untuk aplikasi ini", sCurrentActivity.getBaseContext());
+                    }
+                }
+                break;
+            }
+            case HelperKey.VIBRATE_PERMISSION_GRANTED_CODE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    PermissionsUtil.sVibrateGranted = true;
+                } else {
+//                    HelperUtil.showConfirmationAlertDialogNoCancel("Mohon aktifkan ijin akses storage untuk aplikasi ini", sCurrentActivity.getBaseContext(), new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            requestStoragePermission(sCurrentActivity);
+//                        }
+//                    });
+                    if(SharedPrefsUtil.getBoolean(sCurrentActivity, HelperKey.HAS_LOGIN, false)){
+                        System.exit(0);
+                    }else{
+                        HelperUtil.showSimpleToast("Mohon aktifkan ijin getar untuk notifikasi aplikasi ini", sCurrentActivity.getBaseContext());
                     }
                 }
                 break;

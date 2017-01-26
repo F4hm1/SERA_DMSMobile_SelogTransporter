@@ -33,7 +33,7 @@ public class ModelLoginResponse  {
 
     @SerializedName("AccessM")
     @Expose
-    private String accessM;
+    private int accessM;
 
     @SerializedName("AccessPersonnelSubArea")
     @Expose
@@ -101,12 +101,91 @@ public class ModelLoginResponse  {
 
     @SerializedName("MaxHariRequestDriver")
     @Expose
-    private String maxHariRequestDriver;
+    private int maxHariRequestDriver;
 
     @SerializedName("MaxHariRequestAdmin")
     @Expose
     private String maxHariRequestAdmin;
 
+    @SerializedName("MinHariRequestAbsence")
+    @Expose
+    private String minHariRequestAbsence;
+
+    @SerializedName("PhotoFront")
+    @Expose
+    private String photoFront;
+
+    @SerializedName("Pool")
+    @Expose
+    private String pool;
+
+    @SerializedName("Code")
+    @Expose
+    private String code;
+
+    @SerializedName("CompanyName")
+    @Expose
+    private String companyName;
+
+    @SerializedName("PoolName")
+    @Expose
+    private String poolName;
+
+    @SerializedName("SIMEndDate")
+    @Expose
+    private String sIMEndDate;
+
+    @SerializedName("SIMNumber")
+    @Expose
+    private String sIMNumber;
+
+    @SerializedName("KTPEndDate")
+    @Expose
+    private String kTPEndDate;
+
+    @SerializedName("KTPNumber")
+    @Expose
+    private String kTPNumber;
+
+    public String getMinHariRequestAbsence() {
+        return minHariRequestAbsence;
+    }
+
+    public String getsIMEndDate() {
+        return sIMEndDate;
+    }
+
+    public String getsIMNumber() {
+        return sIMNumber;
+    }
+
+    public String getkTPEndDate() {
+        return kTPEndDate;
+    }
+
+    public String getkTPNumber() {
+        return kTPNumber;
+    }
+
+    public String getPoolName() {
+        return poolName;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public String getPool() {
+        return pool;
+    }
+
+    public String getPhotoFront() {
+        return photoFront;
+    }
 
     public String getUid() {
         return uid;
@@ -132,7 +211,7 @@ public class ModelLoginResponse  {
         return accessF;
     }
 
-    public String getAccessM() {
+    public int getAccessM() {
         return accessM;
     }
 
@@ -200,7 +279,7 @@ public class ModelLoginResponse  {
         return fullNamelLvl_2;
     }
 
-    public String getMaxHariRequestDriver() {
+    public int getMaxHariRequestDriver() {
         return maxHariRequestDriver;
     }
 

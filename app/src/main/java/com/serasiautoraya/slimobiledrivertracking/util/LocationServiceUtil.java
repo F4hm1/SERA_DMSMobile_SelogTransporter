@@ -120,6 +120,7 @@ public class LocationServiceUtil implements LocationListener, GoogleApiClient.On
     public Location getLastLocation(){
         updateLocation();
         if(sLocation != null){
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
             return sLocation;
         }else {
             return null;

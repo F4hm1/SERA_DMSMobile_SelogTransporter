@@ -12,22 +12,30 @@ public class HelperUrl {
     /**
     * Host
     */
-    private static String HOST = "http://192.168.8.100:811/api_att/";
+    private static String HOST = "https://damira.sera.astra.co.id/DMSAPI/";
 
 
     /**
      * Data Retrieval
      */
-    public static String LOGIN = HOST + "restapifront_login/login/";
-    public static String GET_ATTENDANCE_HISTORY = HOST + "restapifront_cico/history/";
+    public static String LOGIN = HOST + "RestAPIFront_Login/login/";
+    public static String GET_ATTENDANCE_HISTORY = HOST + "RestAPIFront_Report/report_driver/";
+    public static String GET_REPORT_REQUEST_HISTORY = HOST + "RestAPIFront_Report/report_driver_request/";
+    public static String GET_SERVER_LOCALTIME = "http://api.geonames.org/timezoneJSON";
 
     /**
     * Data Post
     */
-    public static String CICO = HOST + "restapifront_cico/cico/";
-    public static String CICO_REQUEST = HOST + "restapifront_cico/cico/";
-    public static String ABSENCE = HOST + "restapifront_absence/absence/";
+    public static String CICO = HOST + "RestAPIFront_Trxcico/create/";
+    public static String CICO_REQUEST = HOST + "RestAPIFront_Trxcico/create_temp/";
+    public static String ABSENCE = HOST + "RestAPIFront_Trxabsence/create/";
+    public static String CHANGE_PASSWORD = HOST + "RestAPIFront_Changepassword/changepassword/";
 
+    /**
+     * Data Delete
+     */
+    public static String DELETE_REQUEST_CICO = HOST + "RestAPIFront_Trxcico/delete/";
+    public static String DELETE_REQUEST_ABSENCE = HOST + "RestAPIFront_Trxcico/delete/";
 
 
 }

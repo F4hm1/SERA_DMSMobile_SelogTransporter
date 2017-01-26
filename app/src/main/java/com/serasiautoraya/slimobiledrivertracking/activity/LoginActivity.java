@@ -1,9 +1,17 @@
 package com.serasiautoraya.slimobiledrivertracking.activity;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -16,6 +24,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.GsonRequest;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.serasiautoraya.slimobiledrivertracking.R;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperBridge;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperKey;
@@ -24,6 +33,7 @@ import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
 import com.serasiautoraya.slimobiledrivertracking.model.ModelArrayData;
 import com.serasiautoraya.slimobiledrivertracking.model.ModelLoginResponse;
 import com.serasiautoraya.slimobiledrivertracking.model.VolleyUtil;
+import com.serasiautoraya.slimobiledrivertracking.util.HttpsTrustManager;
 import com.serasiautoraya.slimobiledrivertracking.util.PermissionsUtil;
 import com.serasiautoraya.slimobiledrivertracking.util.SharedPrefsUtil;
 
@@ -46,6 +56,8 @@ public class LoginActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        VolleyUtil.init(LoginActivity.this);
+        HttpsTrustManager.allowAllSSL();
         if(!SharedPrefsUtil.getBoolean(this, HelperKey.HAS_LOGIN, false)){
             setContentView(R.layout.activity_login);
             assignViews();
@@ -63,6 +75,13 @@ public class LoginActivity extends AppCompatActivity{
         if(!PermissionsUtil.issExternalStorageGranted()){
             PermissionsUtil.requestStoragePermission(LoginActivity.this);
         }
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            if (!Settings.canDrawOverlays(LoginActivity.this)) {
+//                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
+//                startActivityForResult(intent, 1001);
+//            }
+//        }
     }
 
     private void assignViews() {
@@ -115,12 +134,7 @@ public class LoginActivity extends AppCompatActivity{
             focusView.requestFocus();
         } else {
             showProgress(true, getResources().getString(R.string.progress_msg_login));
-            /**
-             * Web API address belum ada
-             * sementara login di pass */
-//            onLogin(username, password);
-            HelperUtil.goToActivity(LoginActivity.this, DashboardActivity.class);
-            LoginActivity.this.finish();
+            onLogin(username, password);
         }
     }
 
@@ -151,18 +165,28 @@ public class LoginActivity extends AppCompatActivity{
                 new Response.Listener<ModelArrayData>() {
                     @Override
                     public void onResponse(ModelArrayData response) {
+                        showProgress(false, "");
                         if(response.getStatus().equalsIgnoreCase(HelperKey.STATUS_SUKSES)){
-                            HelperBridge.MODEL_LOGIN_DATA = HelperUtil.getMyObject(response.getData()[0], ModelLoginResponse.class);
-                            HelperUtil.showSimpleToast(getResources().getString(R.string.success_msg_login), LoginActivity.this);
+                            ModelLoginResponse responseModel  = HelperUtil.getMyObject(response.getData()[0], ModelLoginResponse.class);
+                                if(responseModel.getAccessM() == HelperKey.AUTHORIZED_ACCESS){
+                                    HelperBridge.MODEL_LOGIN_DATA = responseModel;
+                                    HelperBridge.maxRequest = HelperBridge.MODEL_LOGIN_DATA.getMaxHariRequestDriver();
+                                    HelperUtil.showSimpleToast(getResources().getString(R.string.success_msg_login), LoginActivity.this);
 
-                            SharedPrefsUtil.apply(LoginActivity.this, HelperKey.HAS_LOGIN, true);
-                            SharedPrefsUtil.apply(LoginActivity.this, HelperKey.KEY_PASSWORD, password);
-                            SharedPrefsUtil.apply(LoginActivity.this, HelperKey.KEY_USERNAME, username);
+                                    SharedPrefsUtil.apply(LoginActivity.this, HelperKey.HAS_LOGIN, true);
+                                    SharedPrefsUtil.apply(LoginActivity.this, HelperKey.KEY_PASSWORD, password);
+                                    SharedPrefsUtil.apply(LoginActivity.this, HelperKey.KEY_USERNAME, username);
 
-                            HelperUtil.goToActivity(LoginActivity.this, DashboardActivity.class);
-                            LoginActivity.this.finish();
+                                    HelperUtil.goToActivity(LoginActivity.this, DashboardActivity.class);
+                                    LoginActivity.this.finish();
+                                }else{
+                                    HelperUtil.showSimpleAlertDialog(getResources().getString(R.string.err_msg_not_authorizad), LoginActivity.this);
+                                }
                         }else{
                             HelperUtil.showSimpleAlertDialog(getResources().getString(R.string.err_msg_wrong_login), LoginActivity.this);
+                            if(SharedPrefsUtil.getBoolean(LoginActivity.this, HelperKey.HAS_LOGIN, false)){
+                                restartLogin();
+                            }
                         }
                     }
                 },
@@ -170,12 +194,28 @@ public class LoginActivity extends AppCompatActivity{
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         showProgress(false, "");
-                        HelperUtil.showSimpleAlertDialog(getResources().getString(R.string.err_msg_wrong_login), LoginActivity.this);
+                        if(SharedPrefsUtil.getBoolean(LoginActivity.this, HelperKey.HAS_LOGIN, false)){
+                            HelperUtil.showSimpleAlertDialogCustomAction(getResources().getString(R.string.err_msg_general), LoginActivity.this, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    System.exit(0);
+                                }
+                            });
+                        }else {
+                            HelperUtil.showSimpleAlertDialog(getResources().getString(R.string.err_msg_general), LoginActivity.this);
+                        }
                     }
                 }
         );
         request.setShouldCache(false);
         mqueue.add(request);
+    }
+
+    private void restartLogin() {
+        SharedPrefsUtil.clearAll(this);
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
     }
 
     private void passLogin(){
@@ -184,12 +224,7 @@ public class LoginActivity extends AppCompatActivity{
         String password = SharedPrefsUtil.getString(this, HelperKey.KEY_PASSWORD, "");
         String username = SharedPrefsUtil.getString(this, HelperKey.KEY_USERNAME, "");
         showProgress(true, getResources().getString(R.string.progress_msg_loaddata));
-        /**
-         * Web API address belum ada
-         * sementara login di pass */
-//            onLogin(username, password);
-        HelperUtil.goToActivity(LoginActivity.this, DashboardActivity.class);
-        LoginActivity.this.finish();
+        onLogin(username, password);
     }
 
     protected void onPause() {

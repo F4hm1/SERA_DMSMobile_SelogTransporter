@@ -143,6 +143,4 @@ public class SignatureView extends View {
         dirtyRect.top = Math.min(lastTouchY, eventY);
         dirtyRect.bottom = Math.max(lastTouchY, eventY);
     }
-
-
 }

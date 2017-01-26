@@ -22,23 +22,9 @@ public class AppInit extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-//        initTimber();
         initVolley();
         initConfig();
-//        initUploadService();
-
     }
-
-//    private void initUploadService() {
-//        UploadService.NAMESPACE = BuildConfig.APPLICATION_ID;
-//    }
-
-
-//    private void initTimber() {
-//        if (BuildConfig.DEBUG) {
-//            Timber.plant(new Timber.DebugTree());
-//        }
-//    }
 
     private void initVolley() {
         VolleyUtil.init(this);

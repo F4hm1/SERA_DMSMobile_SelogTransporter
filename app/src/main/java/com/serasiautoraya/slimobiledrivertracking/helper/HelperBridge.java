@@ -7,13 +7,14 @@ import com.serasiautoraya.slimobiledrivertracking.adapter.OrderSingleList;
 import com.serasiautoraya.slimobiledrivertracking.model.ModelLoginResponse;
 import com.serasiautoraya.slimobiledrivertracking.model.ModelPersonalData;
 import com.serasiautoraya.slimobiledrivertracking.model.ModelReportResponse;
+import com.serasiautoraya.slimobiledrivertracking.model.ModelRequestReportResponse;
 
 /**
  * Created by Randi Dwi Nandra on 18/11/2016.
  */
 public class HelperBridge {
     //Model
-    public static int maxRequest = 2; //temporary, nanti di parsing dari model Login
+    public static int maxRequest; //temporary, nanti di parsing dari model Login
 
     //List
     public static OrderSingleList ORDER_CLICKED;
@@ -27,6 +28,9 @@ public class HelperBridge {
     //Temporary model data
     public static ModelLoginResponse MODEL_LOGIN_DATA;
     public static ModelReportResponse[] MODEL_REPORT_ARRAY;
+    public static ModelRequestReportResponse[] MODEL_REQUEST_CICO_REPORT_ARRAY;
+    public static ModelRequestReportResponse[] MODEL_REQUEST_ABSENCE_REPORT_ARRAY;
+    public static Bitmap sProfilePhoto;
 
     //Permission Status
     public static boolean sLocationGranted = false;

@@ -1,20 +1,48 @@
 <resources>
-    <string name="app_name">SERA Mobile Driver Tracking</string>
+    <string name="app_name">SELOG Transporter</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="action_logout">Logout</string>
+    <string name="action_logout">Keluar</string>
+    <string name="warn_msg_exit">Apakah anda yakin akan keluar aplikasi?</string>
+
+    <string name="bulan_01">Januari</string>
+    <string name="bulan_02">Februari</string>
+    <string name="bulan_03">Maret</string>
+    <string name="bulan_04">April</string>
+    <string name="bulan_05">Mei</string>
+    <string name="bulan_06">Juni</string>
+    <string name="bulan_07">Juli</string>
+    <string name="bulan_08">Agustus</string>
+    <string name="bulan_09">September</string>
+    <string name="bulan_10">Oktober</string>
+    <string name="bulan_11">November</string>
+    <string name="bulan_12">Desember</string>
+
+
+    <!--Progress Dialog-->
+    <string name="prog_msg_wait">Harap Tunggu...</string>
+    <string name="prog_msg_uploading">Uploading data...</string>
+    <string name="prog_msg_downloading">Downloading data...</string>
+    <string name="prog_msg_cp">Mengganti kata sandi...</string>
+    <string name="prog_msg_cico">Menyimpan data clock in/out...</string>
+    <string name="prog_msg_absence">Menyimpan data ketidakhadiran...</string>
+    <string name="prog_msg_report">Mengambil data...</string>
+    <string name="prog_msg_cancel_request">Membatalkan pengajuan...</string>
+    <string name="prog_msg_foto">Mengambil foto profil...</string>
+    <string name="prog_msg_loadingjam">Mengambil data waktu...</string>
+
 
     <!--Permission-->
-    <string name="err_msg_general">Terjadi kesalahn, harap periksa koneksi anda, kemudian coba kembali</string>
+    <string name="err_msg_general">Terjadi kesalahan, harap periksa koneksi anda, kemudian coba kembali</string>
 
     <!--Menu Tittle-->
-    <string name="title_active_order">Active Order</string>
-    <string name="title_order_history">Order History</string>
-    <string name="title_cico_request">Clock In/Out Request</string>
-    <string name="title_absence_request">Absence Request</string>
-    <string name="title_history_attendance">Attendance History</string>
-    <string name="title_ganti_password">Change Password</string>
-    <string name="title_logout">Logout</string>
+    <string name="title_active_order">Order Aktif</string>
+    <string name="title_order_history">Riwayat Order</string>
+    <string name="title_cico_request">Pengajuan Clock In/Out</string>
+    <string name="title_absence_request">Pengajuan Ketidakhadiran</string>
+    <string name="title_history_attendance">Riwayat Kehadiran</string>
+    <string name="title_ganti_password">Ganti Kata Sandi</string>
+    <string name="title_logout">Keluar</string>
 
     <!--ContentFragment-->
     <string name="content_active_order_empty">Tidak ada order yang aktif</string>
@@ -26,16 +54,15 @@
 
     <!--Login Validation-->
     <string name="err_msg_empty_username">Harap isi username</string>
-    <string name="err_msg_empty_password">Harap isi password</string>
-    <string name="err_msg_wrong_login">Username dan Password tidak cocok</string>
-    <string name="success_msg_login">Login berhasil, harap tunggu.</string>
+    <string name="err_msg_empty_password">Harap isi kata sandi</string>
+    <string name="err_msg_wrong_login">Username dan Kata Sandi tidak cocok</string>
+    <string name="err_msg_not_authorizad">Tidak bisa masuk, anda tidak memiliki akses.</string>
+    <string name="success_msg_login">Berhasil masuk aplikasi, harap tunggu.</string>
 
     <!--Login Progress-->
     <string name="warn_msg_memuatdata">Memuat data, harap tunggu</string>
-    <string name="progress_msg_login">Authenticating...</string>
+    <string name="progress_msg_login">Melakukan Verifikasi...</string>
     <string name="progress_msg_loaddata">Loading data...</string>
-
-
 
     <!--Order Details -->
     <string name="order_title">Order Details</string>
@@ -74,8 +101,9 @@
     <string name="cico_label_date">Tanggal</string>
     <string name="cico_label_time">Waktu</string>
     <string name="cico_label_reason">Alasan</string>
-    <string name="cico_label_submit">Submit</string>
-    <string name="success_msg_cico_req">Request Clock In/Out sukses, menunggu persetujuan.</string>
+    <string name="cico_label_submit">Kirim</string>
+    <string name="success_msg_cico_req">Pengajuan clock in/out sukses, menunggu persetujuan.</string>
+    <string name="success_msg_cico_req_delete">Pengajuan Clock In/Out berhasil dibatalkan.</string>
     <string name="success_msg_cico">Clock In/Out sukses.</string>
     <string name="err_msg_empty_cico_keterangan">Harap isi kolom alasan</string>
     <string name="err_msg_empty_cico_transactiontype">Harap pilih tipe transaksi</string>
@@ -83,6 +111,7 @@
     <string name="err_msg_empty_cico_time">Harap isi waktu</string>
     <string name="err_msg_wrong_cico_date">Tanggal tidak valid atau melebihi max hari request</string>
     <string name="err_msg_wrong_cico_time">Waktu tidak valid atau melebihi waktu saat ini</string>
+    <string name="err_msg_fail_delete_cico_request">Gagal membatalkan pengajuan clock in/out, silahkan coba kembali.</string>
     <string-array name="cico_tipe_array">
         <item>Pilih</item>
         <item>Clock In</item>
@@ -94,13 +123,17 @@
         <item>TRXCC_02</item>
     </string-array>
 
+    <string name="cico_notes_1">Clock In adalah waktu bapak berada di pool untuk siap bekerja</string>
+    <string name="cico_notes_2">Clock Out adalah waktu bapak berada di pool untuk selesai bekerja atau waktu pulang</string>
+
     <!--Absence-->
     <string name="absence_label_startdate">Tanggal Mulai</string>
     <string name="absence_label_enddate">Tanggal Selesai</string>
     <string name="absence_label_reason">Alasan</string>
     <string name="absence_label_absencetype">Tipe Absen</string>
-    <string name="absence_label_submit">Submit</string>
-    <string name="success_msg_absent">Request ketidakhadiran sukses, menunggu persetujuan.</string>
+    <string name="absence_label_submit">Kirim</string>
+    <string name="success_msg_absent">Pengajuan ketidakhadiran sukses, menunggu persetujuan.</string>
+    <string name="success_msg_absence_req_delete">Pengajuan ketidakhadiran berhasil dibatalkan.</string>
     <string name="err_msg_empty_absent_keterangan">Harap isi kolom alasan</string>
     <string name="err_msg_empty_absent_absenttype">Harap pilih tipe absen</string>
     <string name="err_msg_empty_absent_dateberakhir">Harap isi tanggal selesai</string>
@@ -108,52 +141,33 @@
     <string name="err_msg_wrong_absent_date">Tanggal selesai tidak boleh kurang dari tanggal mulai</string>
     <string name="err_msg_wrong_absent_datemulai">Tanggal mulai tidak valid atau melebihi max hari request</string>
     <string name="err_msg_wrong_absent_dateberakhir">Tanggal selesai tidak valid atau melebihi max hari request</string>
+    <string name="err_msg_fail_delete_absence_request">Gagal membatalkan pengajuan ketidakhadiran, silahkan coba kembali.</string>
     <string-array name="absence_tipe_array">
         <item>Pilih Tipe Absen</item>
-        <item>Cuti Bersalin</item>
-        <item>Cuti Besar</item>
-        <item>Cuti Haid</item>
-        <item>Cuti Menikah</item>
-        <item>Cuti Tahunan</item>
-        <item>Ibadah Haji</item>
-        <item>Kelahiran Anak</item>
-        <item>Keluarga Meninggal</item>
-        <item>Khitan/Baptis/Telung Bln.</item>
+        <item>Cuti</item>
         <item>Off</item>
-        <item>Pernikahan Anak</item>
-        <item>Sakit Dengan Surat</item>
-        <item>Sakit Tanpa Surat</item>
-        <item>Ziarah Keagamaan</item>
     </string-array>
     <string-array name="absence_tipe_array_val">
         <item>-1</item>
         <item>1000</item>
-        <item>5001</item>
-        <item>4002</item>
-        <item>1001</item>
-        <item>5000</item>
-        <item>2001</item>
-        <item>1003</item>
-        <item>1004</item>
-        <item>2000</item>
         <item>9000</item>
-        <item>1002</item>
-        <item>4001</item>
-        <item>4000</item>
-        <item>2002</item>
     </string-array>
 
+    <string name="absence_notes_1">Cuti adalah keadaan tidak masuk kerja yang diijinkan dalam jangka waktu tertentu</string>
+    <string name="absence_notes_2">Off adalah keadaan tidak masuk kerja yang diijinkan atas keadaan tertentu</string>
+    <string name="absence_notes_3">Setelah pengajuan cuti dan off mohon menghubungi koordinator untuk penjelasan lebih lanjut</string>
+
     <!--Change Password-->
-    <string name="cp_label_old">Password lama</string>
-    <string name="cp_label_pass">Password baru</string>
-    <string name="cp_label_passconf">Ulangi password baru</string>
-    <string name="cp_label_submit">Submit</string>
-    <string name="success_msg_cp">Password anda berhasil diganti</string>
-    <string name="err_msg_wrong_cp_passlamasalah">Password lama anda salah</string>
-    <string name="err_msg_wrong_cp_passbarunotmatch">Password baru anda tidak cocok</string>
-    <string name="err_msg_empty_cp_oldpass">Harap isi password lama anda</string>
-    <string name="err_msg_empty_cp_pass">Harap isi password baru anda</string>
-    <string name="err_msg_empty_cp_confpass">Harap isi kembali password baru anda</string>
+    <string name="cp_label_old">Kata sandi lama</string>
+    <string name="cp_label_pass">Kata sandi baru</string>
+    <string name="cp_label_passconf">Ulangi kata sandi baru</string>
+    <string name="cp_label_submit">Kirim</string>
+    <string name="success_msg_cp">Kata sandi anda berhasil diganti</string>
+    <string name="err_msg_wrong_cp_passlamasalah">Kata sandi lama anda salah</string>
+    <string name="err_msg_wrong_cp_passbarunotmatch">Kata sandi baru anda tidak cocok</string>
+    <string name="err_msg_empty_cp_oldpass">Harap isi kata sandi lama anda</string>
+    <string name="err_msg_empty_cp_pass">Harap isi kata sandi baru anda</string>
+    <string name="err_msg_empty_cp_confpass">Harap isi kembali kata sandi baru anda</string>
 
     <!--Fatigue Interview-->
     <string name="fi_quest_1">Apakah anda <b>dalam kondisi sehat</b>?</string>

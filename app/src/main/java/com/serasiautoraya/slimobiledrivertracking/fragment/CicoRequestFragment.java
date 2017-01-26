@@ -50,8 +50,8 @@ public class CicoRequestFragment extends Fragment {
 
     private void setupViewPager(final ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new CicoRealtimeSubFragment(), "Realtime");
-        adapter.addFragment(new CicoRequestSubFragment(), "Request");
+        adapter.addFragment(new CicoRealtimeSubFragment(), "CiCo");
+        adapter.addFragment(new CicoRequestSubFragment(), "Pengajuan");
         viewPager.setAdapter(adapter);
     }
 

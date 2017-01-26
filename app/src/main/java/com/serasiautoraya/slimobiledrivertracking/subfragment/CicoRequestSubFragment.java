@@ -1,5 +1,6 @@
 package com.serasiautoraya.slimobiledrivertracking.subfragment;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -68,7 +69,7 @@ public class CicoRequestSubFragment extends Fragment {
         mSpinnerTransactionType.setAdapter(adapter);
         mBtnSubmit = (Button) view.findViewById(R.id.btn_cico_submit);
 
-        mDatePickerToEditTextDialog = new DatePickerToEditTextDialog(mEditTextTanggal, view.getContext());
+        mDatePickerToEditTextDialog = new DatePickerToEditTextDialog(mEditTextTanggal, view.getContext(), true, false);
         mTimePickerToEditTextDialog = new TimePickerToEditTextDialog(mEditTextWaktu, view.getContext());
 
         mqueue = VolleyUtil.getRequestQueue();
@@ -81,23 +82,22 @@ public class CicoRequestSubFragment extends Fragment {
                         getResources().getStringArray(R.array.cico_tipe_array_val),
                         mSpinnerTransactionType.getSelectedItem().toString());
 
+                String[] tanggalSplit =  mEditTextTanggal.getText().toString().split(HelperKey.USER_DATE_FORMAT_SEPARATOR);
+                final String tanggalMessage = tanggalSplit[2] + " " + HelperUtil.getMonthName(tanggalSplit[1], getContext()) + " " + tanggalSplit[0];
+
                 if(validateForm(requestType)){
-                    CharSequence textMsg = Html.fromHtml("Apakah anda yakin akan melakukan request "+
+                    CharSequence textMsg = Html.fromHtml("Apakah anda yakin akan melakukan pengajuan "+
                             "<b>"+mSpinnerTransactionType.getSelectedItem().toString()+"</b>"+" pada "+
-                            "<b>"+ mEditTextTanggal.getText()+", pukul "+ mEditTextWaktu.getText()+"</b>"+"?");
+                            "<b>"+ tanggalMessage+", pukul "+ mEditTextWaktu.getText()+"</b>"+"?");
 
                     HelperUtil.showConfirmationAlertDialog(textMsg, getContext(), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            /**
-                             * Web API address belum ada
-                             * sementara request di pass */
-            //                if(requestType == CicoRequestFragment.REQUEST_TYPE_CLOCKOUT){
-            //                    requestCiCo(dateTimeCiCo, HelperKey.CLOCK_OUT_CODE);
-            //                }else {
-            //                    requestCiCo(dateTimeCiCo, HelperKey.CLOCK_IN_CODE);
-            //                }
-                            Toast.makeText(getContext(), "Request absence sukses", Toast.LENGTH_LONG).show();
+                            if(requestType == HelperKey.CLOCK_OUT_CODE){
+                                requestCiCo(HelperKey.CLOCK_OUT_CODE);
+                            }else {
+                                requestCiCo(HelperKey.CLOCK_IN_CODE);
+                            }
                         }
                     });
                 }
@@ -150,7 +150,7 @@ public class CicoRequestSubFragment extends Fragment {
         return result;
     }
 
-    private void requestCiCo(String dateTimeCiCo, String ciCoCode) {
+    private void requestCiCo(String ciCoCode) {
         String url = HelperUrl.CICO_REQUEST;
 
         HashMap<String, String> params = new HashMap<>();
@@ -169,6 +169,7 @@ public class CicoRequestSubFragment extends Fragment {
         HashMap<String, String> header = new HashMap<>();
         header.put("X-API-KEY", HelperKey.API_KEY);
 
+        final ProgressDialog loading = ProgressDialog.show(getContext(), getResources().getString(R.string.prog_msg_cico),getResources().getString(R.string.prog_msg_wait),true,false);
         GsonRequest<ModelSingleData> request = new GsonRequest<ModelSingleData>(
                 Request.Method.POST,
                 url,
@@ -178,6 +179,7 @@ public class CicoRequestSubFragment extends Fragment {
                 new Response.Listener<ModelSingleData>() {
                     @Override
                     public void onResponse(ModelSingleData response) {
+                        loading.dismiss();
                         if (response.getStatus().equalsIgnoreCase(HelperKey.STATUS_SUKSES)) {
                             clearForm();
                             HelperUtil.showSimpleAlertDialog(getResources().getString(R.string.success_msg_cico_req), getContext());
@@ -189,6 +191,7 @@ public class CicoRequestSubFragment extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        loading.dismiss();
                         HelperUtil.showSimpleAlertDialog(getResources().getString(R.string.err_msg_general), getContext());
                     }
                 }

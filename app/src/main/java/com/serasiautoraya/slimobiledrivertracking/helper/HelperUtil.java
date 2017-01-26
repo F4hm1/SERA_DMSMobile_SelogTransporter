@@ -7,14 +7,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.serasiautoraya.slimobiledrivertracking.R;
-import com.serasiautoraya.slimobiledrivertracking.activity.ChangePasswordActivity;
 
 import java.io.FileOutputStream;
 import java.text.ParseException;
@@ -28,7 +26,7 @@ import java.util.Locale;
  */
 public class HelperUtil {
 
-    public static <T> T getMyObject(Object object, Class<T> cls) {
+    public static <T> T getMyObject(Object object, Class<T> cls){
         Gson gson = new Gson();
         return gson.fromJson(gson.toJson(object), cls);
     }
@@ -86,10 +84,10 @@ public class HelperUtil {
 
     public static void showConfirmationAlertDialog(CharSequence msg, Context context, DialogInterface.OnClickListener onClickListener){
         AlertDialog alertDialog = new AlertDialog.Builder(context).create();
-        alertDialog.setTitle("Perhatian!");
+        alertDialog.setTitle("Perhatian");
         alertDialog.setMessage(msg);
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", onClickListener);
-        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Batal", new DialogInterface.OnClickListener() {
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "YA", onClickListener);
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "TIDAK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -116,14 +114,36 @@ public class HelperUtil {
 
     public static void showSimpleAlertDialog(String msg, Context context){
         AlertDialog alertDialog = new AlertDialog.Builder(context).create();
-        alertDialog.setTitle("Alert");
+        alertDialog.setTitle("Peringatan");
         alertDialog.setMessage(msg);
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "YA",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }
                 });
+        alertDialog.show();
+    }
+
+    public static void showSimpleAlertDialogCustomTitle(String msg, Context context, String title){
+        AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+        alertDialog.setTitle(title);
+        alertDialog.setMessage(msg);
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "YA",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
+    }
+
+    public static void showSimpleAlertDialogCustomAction(String msg, Context context, DialogInterface.OnClickListener onClickListener){
+        AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+        alertDialog.setTitle("Peringatan");
+        alertDialog.setMessage(msg);
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "YA",
+                onClickListener);
         alertDialog.show();
     }
 
@@ -200,5 +220,36 @@ public class HelperUtil {
         }
     }
 
+
+    public static String getMonthName(String monthNum, Context context){
+        switch (monthNum){
+            case "01":
+                return context.getResources().getString(R.string.bulan_01);
+            case "02":
+                return context.getResources().getString(R.string.bulan_02);
+            case "03":
+                return context.getResources().getString(R.string.bulan_03);
+            case "04":
+                return context.getResources().getString(R.string.bulan_04);
+            case "05":
+                return context.getResources().getString(R.string.bulan_05);
+            case "06":
+                return context.getResources().getString(R.string.bulan_06);
+            case "07":
+                return context.getResources().getString(R.string.bulan_07);
+            case "08":
+                return context.getResources().getString(R.string.bulan_08);
+            case "09":
+                return context.getResources().getString(R.string.bulan_09);
+            case "10":
+                return context.getResources().getString(R.string.bulan_10);
+            case "11":
+                return context.getResources().getString(R.string.bulan_11);
+            case "12":
+                return context.getResources().getString(R.string.bulan_12);
+            default:
+                return monthNum;
+        }
+    }
 
 }

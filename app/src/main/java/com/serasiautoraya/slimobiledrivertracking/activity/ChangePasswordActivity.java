@@ -1,6 +1,7 @@
 package com.serasiautoraya.slimobiledrivertracking.activity;
 
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -61,16 +62,12 @@ public class ChangePasswordActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(isFormValid()){
                     CharSequence textMsg = Html.fromHtml("Apakah anda yakin akan "+
-                            "<b>"+" mengganti password"+"</b>"+"?");
+                            "<b>"+" mengganti kata sandi"+"</b>"+"?");
 
                     HelperUtil.showConfirmationAlertDialog(textMsg, ChangePasswordActivity.this, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            /**
-                             * Web API address belum ada
-                             * sementara request di pass */
-//                            requestChangePassword();
-                            Toast.makeText(ChangePasswordActivity.this, "Password Changed", Toast.LENGTH_LONG).show();
+                            requestChangePassword();
 
                         }
                     });
@@ -126,19 +123,21 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
     private int mStatusCode = 0;
     private void requestChangePassword() {
-        String url = HelperUrl.ABSENCE;
+        String url = HelperUrl.CHANGE_PASSWORD;
+        final String newPass = mEditTextPass.getText().toString();
 
         HashMap<String, String> params = new HashMap<>();
         params.put("oldpassword", mEditTextOld.getText().toString());
-        params.put("NewPassword", mEditTextPass.getText().toString());
+        params.put("NewPassword", newPass);
         params.put("ConNewPassword", mEditTextPassConf.getText().toString());
         params.put("IdPersonalData", HelperBridge.MODEL_LOGIN_DATA.getIdPersonalData());
 
         HashMap<String, String> header = new HashMap<>();
         header.put("X-API-KEY", HelperKey.API_KEY);
 
+        final ProgressDialog loading = ProgressDialog.show(this,getResources().getString(R.string.prog_msg_cp),getResources().getString(R.string.prog_msg_wait),true,false);
         GsonRequest<ModelSingleData> request = new GsonRequest<ModelSingleData>(
-                Request.Method.POST,
+                Request.Method.PUT,
                 url,
                 ModelSingleData.class,
                 header,
@@ -146,8 +145,10 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 new Response.Listener<ModelSingleData>() {
                     @Override
                     public void onResponse(ModelSingleData response) {
+                        loading.dismiss();
                         if (response.getStatus().equalsIgnoreCase(HelperKey.STATUS_SUKSES)) {
                             clearForm();
+                            SharedPrefsUtil.apply(ChangePasswordActivity.this, HelperKey.KEY_PASSWORD, newPass);
                             HelperUtil.showSimpleAlertDialog(getResources().getString(R.string.success_msg_cp), ChangePasswordActivity.this);
                         }else {
                             HelperUtil.showSimpleAlertDialog(response.getData(), ChangePasswordActivity.this);
@@ -157,6 +158,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        loading.dismiss();
                         HelperUtil.showSimpleAlertDialog(getResources().getString(R.string.err_msg_general), ChangePasswordActivity.this);
                     }
                 }

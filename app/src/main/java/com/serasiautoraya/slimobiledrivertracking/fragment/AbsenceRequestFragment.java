@@ -1,10 +1,12 @@
 package com.serasiautoraya.slimobiledrivertracking.fragment;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,8 +70,12 @@ public class AbsenceRequestFragment extends Fragment{
         mSpinnerAbsenceType.setAdapter(adapter);
         mBtnSubmit = (Button) view.findViewById(R.id.btn_absence_submit);
 
-        mDatePickerToEditTextDialogMulai = new DatePickerToEditTextDialog(mEditTextTanggalMulai, view.getContext());
-        mDatePickerToEditTextDialogBerakhir= new DatePickerToEditTextDialog(mEditTextTanggalAkhir, view.getContext());
+        int daysMinRequest = 0;
+        daysMinRequest = Math.round(Float.valueOf(HelperBridge.MODEL_LOGIN_DATA.getMinHariRequestAbsence()));
+        mDatePickerToEditTextDialogMulai = new DatePickerToEditTextDialog(mEditTextTanggalMulai, view.getContext(), false, false, daysMinRequest);
+        mDatePickerToEditTextDialogBerakhir= new DatePickerToEditTextDialog(mEditTextTanggalAkhir, view.getContext(), false, false, daysMinRequest);
+
+//        Log.i("TAG_REQMIN", "day: "+daysMinRequest);
 
         mqueue = VolleyUtil.getRequestQueue();
 
@@ -82,17 +88,20 @@ public class AbsenceRequestFragment extends Fragment{
                         mSpinnerAbsenceType.getSelectedItem().toString());
 
                 if(validateForm(absentTypeSelected)){
-                    CharSequence textMsg = Html.fromHtml("Apakah anda yakin akan melakukan request absence pada "+
-                            "<b>"+mEditTextTanggalMulai.getText()+" - "+mEditTextTanggalAkhir.getText()+"</b>"+"?");
+                    String[] tanggalSplitMulai =  mEditTextTanggalMulai.getText().toString().split(HelperKey.USER_DATE_FORMAT_SEPARATOR);
+                    final String tanggalMessageMulai = tanggalSplitMulai[2] + " " + HelperUtil.getMonthName(tanggalSplitMulai[1], getContext()) + " " + tanggalSplitMulai[0];
+
+                    String[] tanggalSplitAkhir =  mEditTextTanggalAkhir.getText().toString().split(HelperKey.USER_DATE_FORMAT_SEPARATOR);
+                    final String tanggalMessageAkhir = tanggalSplitAkhir[2] + " " + HelperUtil.getMonthName(tanggalSplitAkhir[1], getContext()) + " " + tanggalSplitAkhir[0];
+
+                    CharSequence textMsg = Html.fromHtml("Apakah anda yakin akan melakukan pengajuan ketidakhadiran pada "+
+                            "<b>"+tanggalMessageMulai+" - "+tanggalMessageAkhir+"</b>"+"?");
+
 
                     HelperUtil.showConfirmationAlertDialog(textMsg, getContext(), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            /**
-                             * Web API address belum ada
-                             * sementara request di pass */
-//                            requestAbsence(absentTypeSelected);
-                            Toast.makeText(getContext(), "Request absence sukses", Toast.LENGTH_LONG).show();
+                            requestAbsence(absentTypeSelected);
                         }
                     });
                 }
@@ -112,13 +121,14 @@ public class AbsenceRequestFragment extends Fragment{
         params.put("submittype", HelperKey.SUBMIT_TYPE_ABSENCE);
         params.put("reason", mEditTextAlasan.getText().toString());
         params.put("addby", HelperBridge.MODEL_LOGIN_DATA.getIdPersonalData());
-        params.put("destUser1", HelperBridge.MODEL_LOGIN_DATA.getIdUpLevel_2());
-        params.put("EmaildestUser1", HelperBridge.MODEL_LOGIN_DATA.getEmailLvl_2());
+        params.put("destUser1", HelperBridge.MODEL_LOGIN_DATA.getIdUpLevel_1());
+        params.put("EmaildestUser1", HelperBridge.MODEL_LOGIN_DATA.getEmailLvl_1());
         params.put("destUser2", "");
 
         HashMap<String, String> header = new HashMap<>();
         header.put("X-API-KEY", HelperKey.API_KEY);
 
+        final ProgressDialog loading = ProgressDialog.show(getContext(), getResources().getString(R.string.prog_msg_absence),getResources().getString(R.string.prog_msg_wait),true,false);
         GsonRequest<ModelSingleData> request = new GsonRequest<ModelSingleData>(
                 Request.Method.POST,
                 url,
@@ -128,16 +138,25 @@ public class AbsenceRequestFragment extends Fragment{
                 new Response.Listener<ModelSingleData>() {
                     @Override
                     public void onResponse(ModelSingleData response) {
-                        if(response.getStatus().equalsIgnoreCase(HelperKey.STATUS_SUKSES)){
-                            clearForm();
-                            HelperUtil.showSimpleAlertDialog(getResources().getString(R.string.success_msg_absent), getContext());
+                        loading.dismiss();
+                        if (response.getStatus().equalsIgnoreCase(HelperKey.STATUS_SUKSES)) {
+                            if(response.getData().toLowerCase().contains("success")){
+                                clearForm();
+                                HelperUtil.showSimpleAlertDialog(getResources().getString(R.string.success_msg_absent), getContext());
+                            }else{
+                                clearForm();
+                                HelperUtil.showSimpleAlertDialog(response.getData(), getContext());
+                            }
+                        }else {
+                            HelperUtil.showSimpleAlertDialog(response.getData(), getContext());
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        HelperUtil.showSimpleAlertDialog(getResources().getString(R.string.err_msg_general), getContext());
+                        loading.dismiss();
+                        HelperUtil.showSimpleAlertDialog(getResources().getString(R.string.err_msg_general) +" \nerror: "+error.toString(), getContext());
                     }
                 }
         );
