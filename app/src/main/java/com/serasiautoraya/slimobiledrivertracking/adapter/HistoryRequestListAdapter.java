@@ -15,7 +15,6 @@ import com.serasiautoraya.slimobiledrivertracking.listener.CancelableRequest;
 import com.serasiautoraya.slimobiledrivertracking.listener.ServerCallBack;
 import com.serasiautoraya.slimobiledrivertracking.model.ModelTimeRESTResponse;
 import com.serasiautoraya.slimobiledrivertracking.util.TimeWebRestAPI;
-import com.serasiautoraya.slimobiledrivertracking.util.TimezoneMapper;
 
 import java.util.List;
 
