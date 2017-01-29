@@ -104,6 +104,7 @@ public class HelperUtil {
     public static void showProgressDialog(Context context, String msg){
         progressDialog = new ProgressDialog(context, R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
+        progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMessage(msg);
         progressDialog.show();
     }

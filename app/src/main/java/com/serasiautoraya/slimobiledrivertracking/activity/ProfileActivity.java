@@ -28,11 +28,12 @@ public class ProfileActivity extends AppCompatActivity{
     private TextView textProfilePoolNameFp;
     private TextView textProfileNrp;
     private TextView textProfileFullname;
-    private TextView textProfileTraining;
+//    private TextView textProfileTraining;
     private TextView textProfileUsercostumer;
     private TextView textProfileDoo;
     private TextView textProfileKTPExp;
     private TextView textProfileSIMExp;
+    private TextView textTitleSIMExp;
     private ImageView imgProfilePhoto;
 
     @Override
@@ -52,11 +53,12 @@ public class ProfileActivity extends AppCompatActivity{
         textProfilePoolNameFp.setText("Pool "+HelperBridge.MODEL_LOGIN_DATA.getPoolName());
         textProfileNrp.setText(HelperBridge.MODEL_LOGIN_DATA.getCode());
         textProfileFullname.setText(HelperBridge.MODEL_LOGIN_DATA.getFullName());
-        textProfileTraining.setText(HelperBridge.MODEL_LOGIN_DATA.getPosition());
+//        textProfileTraining.setText(HelperBridge.MODEL_LOGIN_DATA.getPosition());
         textProfileUsercostumer.setText(HelperBridge.MODEL_LOGIN_DATA.getFullNamelLvl_1());
         textProfileDoo.setText(HelperBridge.MODEL_LOGIN_DATA.getFullNamelLvl_2());
         textProfileKTPExp.setText(HelperBridge.MODEL_LOGIN_DATA.getkTPEndDate());
         textProfileSIMExp.setText(HelperBridge.MODEL_LOGIN_DATA.getsIMEndDate());
+        textTitleSIMExp.setText("Tanggal Akhir Masa Berlaku "+HelperBridge.MODEL_LOGIN_DATA.getsIMType());
     }
 
     private void assignView() {
@@ -66,11 +68,12 @@ public class ProfileActivity extends AppCompatActivity{
         textProfilePoolNameFp = (TextView) findViewById(R.id.text_profile_poolname_fp);
         textProfileNrp = (TextView) findViewById(R.id.text_profile_nrp);
         textProfileFullname  = (TextView) findViewById(R.id.text_profile_fullname);
-        textProfileTraining = (TextView) findViewById(R.id.text_profile_training);
+//        textProfileTraining = (TextView) findViewById(R.id.text_profile_training);
         textProfileUsercostumer = (TextView) findViewById(R.id.text_profile_usercostumer);
         textProfileDoo = (TextView) findViewById(R.id.text_profile_doo);
         textProfileKTPExp = (TextView) findViewById(R.id.text_profile_ktpexp);
         textProfileSIMExp = (TextView) findViewById(R.id.text_profile_simexp);
+        textTitleSIMExp = (TextView) findViewById(R.id.text_title_sim);
 
         imgProfilePhoto = (ImageView) findViewById(R.id.img_profile_photo);
 
@@ -78,7 +81,7 @@ public class ProfileActivity extends AppCompatActivity{
         textProfilePosisiFp.setKeyListener(null);
         textProfileNrp.setKeyListener(null);
         textProfileFullname.setKeyListener(null);
-        textProfileTraining.setKeyListener(null);
+//        textProfileTraining.setKeyListener(null);
         textProfileUsercostumer.setKeyListener(null);
         textProfileDoo.setKeyListener(null);
         textProfileKTPExp.setKeyListener(null);

@@ -147,6 +147,14 @@ public class ModelLoginResponse  {
     @Expose
     private String kTPNumber;
 
+    @SerializedName("SIMType")
+    @Expose
+    private String sIMType;
+
+    public String getsIMType() {
+        return sIMType;
+    }
+
     public String getMinHariRequestAbsence() {
         return minHariRequestAbsence;
     }
