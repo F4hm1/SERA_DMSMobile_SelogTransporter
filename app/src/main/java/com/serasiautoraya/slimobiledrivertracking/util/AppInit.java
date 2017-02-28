@@ -2,6 +2,7 @@ package com.serasiautoraya.slimobiledrivertracking.util;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -19,11 +20,15 @@ import com.serasiautoraya.slimobiledrivertracking.model.VolleyUtil;
  */
 public class AppInit extends Application {
 
+    private static Context context;
+
     @Override
     public void onCreate() {
-        super.onCreate();
+        AppInit.context=getApplicationContext();
         initVolley();
         initConfig();
+
+        super.onCreate();
     }
 
     private void initVolley() {
@@ -67,5 +72,9 @@ public class AppInit extends Application {
 
             }
         });
+    }
+
+    public static Context getAppContext() {
+        return AppInit.context;
     }
 }

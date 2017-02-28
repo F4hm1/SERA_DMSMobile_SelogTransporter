@@ -49,8 +49,30 @@ public class TimeWebRestAPI {
         final ProgressDialog loading = ProgressDialog.show(sContext, sContext.getResources().getString(R.string.prog_msg_loadingjam),
                 sContext.getResources().getString(R.string.prog_msg_wait), true, false);
 
-        String lat = ""+ LocationServiceUtil.getLocationManager(sContext).getLastLocation().getLatitude();
-        String lng = ""+ LocationServiceUtil.getLocationManager(sContext).getLastLocation().getLongitude();
+        String lat = "";
+        String lng = "";
+
+//        if(HelperBridge.gps.canGetLocation()){
+//            if(HelperBridge.gps.getLatitude() > 0 || HelperBridge.gps.getLatitude() < 0){
+//                lat = HelperBridge.gps.getLatitude()+"";
+//                lng = HelperBridge.gps.getLongitude()+"";
+//            }
+//        }
+
+//        if(lat.equalsIgnoreCase("")){
+            if((LocationServiceUtil.getLocationManager(sContext).getLastLocation() != null) &&
+                    LocationServiceUtil.getLocationManager(sContext).isGPSEnabled()){
+                lat = ""+ LocationServiceUtil.getLocationManager(sContext).getLastLocation().getLatitude();
+                lng = ""+ LocationServiceUtil.getLocationManager(sContext).getLastLocation().getLongitude();
+            }else{
+                HelperUtil.showSimpleAlertDialogCustomTitle("Aplikasi sedang mengambil lokasi (pastikan gps dan peket data tersedia), harap tunggu beberapa saat kemudian silahkan coba kembali.", sContext, "Perhatian");
+                loading.dismiss();
+                return;
+            }
+//        }
+
+//        String lat = ""+ LocationServiceUtil.getLocationManager(sContext).getLastLocation().getLatitude();
+//        String lng = ""+ LocationServiceUtil.getLocationManager(sContext).getLastLocation().getLongitude();
 
         ModelTimeRESTResponse result = null;
         HashMap<String, String> params = new HashMap<>();

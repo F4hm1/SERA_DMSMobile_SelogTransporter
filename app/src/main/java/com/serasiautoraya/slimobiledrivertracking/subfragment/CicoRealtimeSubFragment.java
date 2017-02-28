@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.ThemedSpinnerAdapter;
 import android.text.Html;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -111,6 +112,7 @@ public class CicoRealtimeSubFragment extends Fragment {
     private static final int REQUEST_TYPE_CLOCKIN= 2;
 
     private void showClockinConfirmationDialog(final int requestType, ModelTimeRESTResponse timeRESTResponse) {
+        HelperBridge.gps.getLocation();
         String type = "Clock In";
         if(requestType == CicoRealtimeSubFragment.REQUEST_TYPE_CLOCKOUT){
             type = "Clock Out";
@@ -149,9 +151,31 @@ public class CicoRealtimeSubFragment extends Fragment {
         String url = HelperUrl.CICO;
         final ProgressDialog loading = ProgressDialog.show(getContext(), getResources().getString(R.string.prog_msg_cico),getResources().getString(R.string.prog_msg_wait),true,false);
 
-        String lat = ""+ LocationServiceUtil.getLocationManager(getContext()).getLastLocation().getLatitude();
-        String longl = ""+ LocationServiceUtil.getLocationManager(getContext()).getLastLocation().getLongitude();
+//        String lat = ""+ LocationServiceUtil.getLocationManager(getContext()).getLastLocation().getLatitude();
+//        String longl = ""+ LocationServiceUtil.getLocationManager(getContext()).getLastLocation().getLongitude();
+
+        String lat = "";
+        String longl = "";
         String address = ""+LocationServiceUtil.getLocationManager(getContext()).getLastLocationName();
+
+//        if(HelperBridge.gps.canGetLocation()){
+//            if(HelperBridge.gps.getLatitude() > 0 || HelperBridge.gps.getLatitude() < 0){
+//                lat = HelperBridge.gps.getLatitude()+"";
+//                longl = HelperBridge.gps.getLongitude()+"";
+//            }
+//        }
+
+//        if(lat.equalsIgnoreCase("")){
+//            HelperUtil.showSimpleToast("NULL LOT LANG", getContext());
+            if(LocationServiceUtil.getLocationManager(getContext()).getLastLocation() != null){
+                lat = ""+ LocationServiceUtil.getLocationManager(getContext()).getLastLocation().getLatitude();
+                longl = ""+ LocationServiceUtil.getLocationManager(getContext()).getLastLocation().getLongitude();
+            }else{
+                HelperUtil.showSimpleAlertDialogCustomTitle("Aplikasi sedang mengambil lokasi (pastikan gps dan peket data tersedia), harap tunggu beberapa saat kemudian silahkan coba kembali.", getContext(), "Perhatian");
+                return;
+            }
+//        }
+//        Log.i("CicoRealtime", "result: "+lat+" - "+longl);
 
         HashMap<String, String> params = new HashMap<>();
         params.put("idPersonalData", HelperBridge.MODEL_LOGIN_DATA.getIdPersonalData());
@@ -177,7 +201,13 @@ public class CicoRealtimeSubFragment extends Fragment {
         final String fTanggal = tanggal;
         final String typeTrans = ciCoCode == HelperKey.CLOCK_IN_CODE?"Clock In":"Clock Out";
 
-        Log.d("TAG_LEK", params.toString());
+//        if(HelperBridge.gps.canGetLocation()){
+//            lat = HelperBridge.gps.getLatitude()+" -gpsprov";
+//            longl = HelperBridge.gps.getLongitude()+" -gpsprov";
+//        }
+
+//        Log.d("TAG_LOCATION", "lat: "+lat+"\nlong: "+longl);
+//        HelperUtil.showSimpleToast("lat: "+lat+"\nlong: "+longl, getContext());
 
 
         HashMap<String, String> header = new HashMap<>();
@@ -205,7 +235,8 @@ public class CicoRealtimeSubFragment extends Fragment {
                     public void onErrorResponse(VolleyError error) {
                         loading.dismiss();
                         String textMsg = typeTrans+" pada tanggal "+tanggalMessage+" pukul "+fWaktu+" gagal, harap periksa koneksi ada";
-                        HelperUtil.showSimpleAlertDialog(textMsg, getContext());
+                        Log.d("REALTIME_CICO", "Err: "+error.toString());
+                        HelperUtil.showSimpleAlertDialog(textMsg +"\n"+error.toString() , getContext());
                     }
                 }
         );

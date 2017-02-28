@@ -48,7 +48,7 @@ public class ProfileActivity extends AppCompatActivity{
         Picasso.with(ProfileActivity.this).load(HelperBridge.MODEL_LOGIN_DATA.getPhotoFront()).into(imgProfilePhoto);
         textProfileNameFp.setText(HelperBridge.MODEL_LOGIN_DATA.getFullName());
         String position = HelperBridge.MODEL_LOGIN_DATA.getPosition() == "Driver"? "Transporter": HelperBridge.MODEL_LOGIN_DATA.getPosition();
-        textProfilePosisiFp.setText(position);
+        textProfilePosisiFp.setText(HelperBridge.MODEL_LOGIN_DATA.getPosition());
         textProfileCompanyFp.setText(HelperBridge.MODEL_LOGIN_DATA.getCompanyName());
         textProfilePoolNameFp.setText("Pool "+HelperBridge.MODEL_LOGIN_DATA.getPoolName());
         textProfileNrp.setText(HelperBridge.MODEL_LOGIN_DATA.getCode());

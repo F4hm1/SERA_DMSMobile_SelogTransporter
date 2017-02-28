@@ -48,9 +48,16 @@ import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
 import com.serasiautoraya.slimobiledrivertracking.listener.TextViewTouchListener;
 import com.serasiautoraya.slimobiledrivertracking.model.ModelLoginResponse;
 import com.serasiautoraya.slimobiledrivertracking.model.VolleyUtil;
+import com.serasiautoraya.slimobiledrivertracking.util.GPSTracker;
 import com.serasiautoraya.slimobiledrivertracking.util.LocationServiceUtil;
 import com.serasiautoraya.slimobiledrivertracking.util.SharedPrefsUtil;
 import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
+import java.util.Timer;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class DashboardActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -62,19 +69,37 @@ public class DashboardActivity extends AppCompatActivity
     private TextView mTextViewNavNama, mTextViewNavPosisi;
     private ImageView mImageViewNavImg;
     private View mNavHeader;
+    private ScheduledExecutorService scheduleTaskExecutor;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //SET no title bro
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         LocationServiceUtil.getLocationManager(DashboardActivity.this);
+        HelperBridge.gps = new GPSTracker(this);
+        Intent LocationService = new Intent(this, GPSTracker.class);
+        this.startService(LocationService);
+
+        scheduleTaskExecutor = Executors.newScheduledThreadPool(2);
+        scheduleTaskExecutor.scheduleAtFixedRate(new Runnable() {
+            public void run() {
+                HelperBridge.gps.getLocation();
+            }
+        }, 0, 10, TimeUnit.SECONDS);
 
         setContentView(R.layout.activity_dashboard);
         assignNav();
         assignFragment();
+    }
+
+    @Override
+    protected void onStart() {
+        Log.d("DASHBOARD_TAG", "clicked_1");
+        super.onStart();
+        LocationServiceUtil.getLocationManager(DashboardActivity.this).connectGoogleAPIClient();
+        Log.d("DASHBOARD_TAG", "clicked");
     }
 
     @Override
@@ -149,6 +174,13 @@ public class DashboardActivity extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        /*
+        * TODO CHANGE MENU
+        * */
+//        Menu menu = navigationView.getMenu();
+//        menu.findItem(R.id.nav_absence_request).setVisible(false);
+//        menu.findItem(R.id.nav_absence_request).setEnabled(false);
 
         mHandler = new Handler();
         navigationView.setCheckedItem(R.id.nav_cico_request);

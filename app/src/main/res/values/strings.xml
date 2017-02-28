@@ -107,6 +107,7 @@
     <string name="success_msg_cico">Clock In/Out sukses.</string>
     <string name="err_msg_empty_cico_keterangan">Harap isi kolom alasan</string>
     <string name="err_msg_empty_cico_transactiontype">Harap pilih tipe transaksi</string>
+    <string name="err_msg_empty_cico_reason">Harap pilih alasan anda</string>
     <string name="err_msg_empty_cico_date">Harap isi tanggal</string>
     <string name="err_msg_empty_cico_time">Harap isi waktu</string>
     <string name="err_msg_wrong_cico_date">Tanggal tidak valid atau melebihi max hari request</string>
@@ -121,6 +122,12 @@
         <item>-1</item>
         <item>TRXCC_01</item>
         <item>TRXCC_02</item>
+    </string-array>
+    <string-array name="cico_reason_choice">
+        <item>Pilih</item>
+        <item>Kendala Operasional</item>
+        <item>Kendala Teknologi</item>
+        <item>Kendala Pribadi</item>
     </string-array>
 
     <string name="cico_notes_1">Clock In adalah waktu bapak berada di pool untuk siap bekerja</string>

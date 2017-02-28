@@ -88,14 +88,14 @@ public class AbsenceRequestFragment extends Fragment{
                         mSpinnerAbsenceType.getSelectedItem().toString());
 
                 if(validateForm(absentTypeSelected)){
-                    String[] tanggalSplitMulai =  mEditTextTanggalMulai.getText().toString().split(HelperKey.USER_DATE_FORMAT_SEPARATOR);
-                    final String tanggalMessageMulai = tanggalSplitMulai[2] + " " + HelperUtil.getMonthName(tanggalSplitMulai[1], getContext()) + " " + tanggalSplitMulai[0];
-
-                    String[] tanggalSplitAkhir =  mEditTextTanggalAkhir.getText().toString().split(HelperKey.USER_DATE_FORMAT_SEPARATOR);
-                    final String tanggalMessageAkhir = tanggalSplitAkhir[2] + " " + HelperUtil.getMonthName(tanggalSplitAkhir[1], getContext()) + " " + tanggalSplitAkhir[0];
+//                    String[] tanggalSplitMulai =  mEditTextTanggalMulai.getText().toString().split(HelperKey.USER_DATE_FORMAT_SEPARATOR);
+//                    final String tanggalMessageMulai = tanggalSplitMulai[2] + " " + HelperUtil.getMonthName(tanggalSplitMulai[1], getContext()) + " " + tanggalSplitMulai[0];
+//
+//                    String[] tanggalSplitAkhir =  mEditTextTanggalAkhir.getText().toString().split(HelperKey.USER_DATE_FORMAT_SEPARATOR);
+//                    final String tanggalMessageAkhir = tanggalSplitAkhir[2] + " " + HelperUtil.getMonthName(tanggalSplitAkhir[1], getContext()) + " " + tanggalSplitAkhir[0];
 
                     CharSequence textMsg = Html.fromHtml("Apakah anda yakin akan melakukan pengajuan ketidakhadiran pada "+
-                            "<b>"+tanggalMessageMulai+" - "+tanggalMessageAkhir+"</b>"+"?");
+                            "<b>"+mEditTextTanggalMulai.getText().toString()+" - "+mEditTextTanggalAkhir.getText().toString()+"</b>"+"?");
 
 
                     HelperUtil.showConfirmationAlertDialog(textMsg, getContext(), new DialogInterface.OnClickListener() {
@@ -115,8 +115,8 @@ public class AbsenceRequestFragment extends Fragment{
         HashMap<String, String> params = new HashMap<>();
         params.put("idPersonalData", HelperBridge.MODEL_LOGIN_DATA.getIdPersonalData());
         params.put("wfStatus", HelperKey.WFSTATUS_REQUEST_ABSENCE);
-        params.put("tanggal_mulai", mEditTextTanggalMulai.getText().toString());
-        params.put("tanggal_akhir", mEditTextTanggalAkhir.getText().toString());
+        params.put("tanggal_mulai", HelperUtil.getServerFormDate(mEditTextTanggalMulai.getText().toString()));
+        params.put("tanggal_akhir", HelperUtil.getServerFormDate(mEditTextTanggalAkhir.getText().toString()));
         params.put("transaksi_abs", absentTypeSelected);
         params.put("submittype", HelperKey.SUBMIT_TYPE_ABSENCE);
         params.put("reason", mEditTextAlasan.getText().toString());

@@ -107,7 +107,7 @@ public class CicoRequestHistorySubFragment extends Fragment implements Cancelabl
             String information = HelperBridge.MODEL_REQUEST_CICO_REPORT_ARRAY[i].getTypeRequest();
 
             HistoryRequestSingleList historyAttendanceSingleList =
-                    new HistoryRequestSingleList(id, date, information, "Pending");
+                    new HistoryRequestSingleList(id, date, information, "Menunggu");
             historyRequestSingleLists.add(historyAttendanceSingleList);
         }
 
@@ -190,15 +190,15 @@ public class CicoRequestHistorySubFragment extends Fragment implements Cancelabl
                     if (jsonResponse.getString("data").equalsIgnoreCase(HelperKey.STATUS_SUKSES) ||
                         jsonResponse.getString("data").equalsIgnoreCase(HelperKey.STATUS_SUKSES_STRING)) {
 
-                        HelperUtil.showSimpleAlertDialog(getResources().getString(R.string.success_msg_absence_req_delete), getContext());
+                        HelperUtil.showSimpleAlertDialog(getResources().getString(R.string.success_msg_cico_req_delete), getContext());
                         RequestHistoryFragment parentFragment = (RequestHistoryFragment) getParentFragment();
                         parentFragment.refreshRecyclerView();
                     }else{
-                        HelperUtil.showSimpleAlertDialog(getResources().getString(R.string.err_msg_fail_delete_absence_request), getContext());
+                        HelperUtil.showSimpleAlertDialog(getResources().getString(R.string.err_msg_fail_delete_cico_request), getContext());
                     }
 
                 } catch (JSONException e) {
-                    HelperUtil.showSimpleAlertDialog(getResources().getString(R.string.err_msg_fail_delete_absence_request), getContext());
+                    HelperUtil.showSimpleAlertDialog(getResources().getString(R.string.err_msg_fail_delete_cico_request), getContext());
                     e.printStackTrace();
                 }
             }

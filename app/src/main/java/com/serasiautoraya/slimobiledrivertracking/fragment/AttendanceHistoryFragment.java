@@ -217,8 +217,8 @@ public class AttendanceHistoryFragment extends Fragment {
         HashMap<String, String> header = new HashMap<>();
         HashMap<String, String> params = new HashMap<>();
         params.put("IdPersonalData", HelperBridge.MODEL_LOGIN_DATA.getIdPersonalData());
-        params.put("startdate", editTextDateMulai.getText().toString());
-        params.put("enddate", editTextDateSelesai.getText().toString());
+        params.put("startdate", HelperUtil.getServerFormDate(editTextDateMulai.getText().toString()));
+        params.put("enddate", HelperUtil.getServerFormDate(editTextDateSelesai.getText().toString()));
         header.put("X-API-KEY", HelperKey.API_KEY);
 
         final ProgressDialog loading = ProgressDialog.show(getContext(), getResources().getString(R.string.prog_msg_report),getResources().getString(R.string.prog_msg_wait),true,false);

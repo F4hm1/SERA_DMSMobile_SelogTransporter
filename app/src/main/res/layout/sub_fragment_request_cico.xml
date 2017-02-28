@@ -61,26 +61,38 @@
                     android:textColor="@color/colorTextSecondary"/>
             </android.support.design.widget.TextInputLayout>
 
-            <!--Input Alasan-->
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/textil_layout_cico_reason"
+            <!--Input Pilihan Alasan (Spinner)-->
+            <TextView
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="40dp">
+                android:text="@string/cico_label_reason" />
+            <Spinner
+                android:layout_marginBottom="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinner_cico_reason_choice" />
 
-                <EditText
-                    android:id="@+id/edittext_cico_reason"
-                    android:inputType="textMultiLine"
-                    android:lines="8"
-                    android:minLines="4"
-                    android:gravity="top|left"
-                    android:maxLines="10"
-                    android:scrollbars="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/cico_label_reason" />
+            <!--Input Alasan-->
+            <!--<android.support.design.widget.TextInputLayout-->
+                <!--android:id="@+id/textil_layout_cico_reason"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:paddingBottom="40dp">-->
 
-            </android.support.design.widget.TextInputLayout>
+                <!--<EditText-->
+                    <!--android:id="@+id/edittext_cico_reason"-->
+                    <!--android:inputType="textMultiLine"-->
+                    <!--android:lines="8"-->
+                    <!--android:minLines="4"-->
+                    <!--android:gravity="top|left"-->
+                    <!--android:maxLines="10"-->
+                    <!--android:scrollbars="vertical"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:hint="@string/cico_label_reason" />-->
+
+            <!--</android.support.design.widget.TextInputLayout>-->
 
             <!--Submit-->
             <RelativeLayout

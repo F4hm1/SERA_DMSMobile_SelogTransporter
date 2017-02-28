@@ -221,6 +221,30 @@ public class HelperUtil {
         }
     }
 
+    public static String getServerFormDate(String userFormDate){
+        SimpleDateFormat serverDateFormat = new SimpleDateFormat(HelperKey.SERVER_DATE_FORMAT, Locale.getDefault());
+        SimpleDateFormat userDateFormat = new SimpleDateFormat(HelperKey.USER_DATE_FORMAT, Locale.getDefault());
+        try {
+            Date resDate = userDateFormat.parse(userFormDate);
+            return serverDateFormat.format(resDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    public static String getUserFormDate(String serverFormDate){
+        SimpleDateFormat serverDateFormat = new SimpleDateFormat(HelperKey.SERVER_DATE_FORMAT, Locale.getDefault());
+        SimpleDateFormat userDateFormat = new SimpleDateFormat(HelperKey.USER_DATE_FORMAT, Locale.getDefault());
+        try {
+            Date resDate = serverDateFormat.parse(serverFormDate);
+            return userDateFormat.format(resDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
 
     public static String getMonthName(String monthNum, Context context){
         switch (monthNum){

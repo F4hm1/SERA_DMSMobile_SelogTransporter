@@ -172,8 +172,8 @@ public class RequestHistoryFragment extends Fragment {
         HashMap<String, String> header = new HashMap<>();
         HashMap<String, String> params = new HashMap<>();
         params.put("IdPersonalData", HelperBridge.MODEL_LOGIN_DATA.getIdPersonalData());
-        params.put("startdate", editTextDateMulai.getText().toString());
-        params.put("enddate", editTextDateSelesai.getText().toString());
+        params.put("startdate", HelperUtil.getServerFormDate(editTextDateMulai.getText().toString()));
+        params.put("enddate", HelperUtil.getServerFormDate(editTextDateSelesai.getText().toString()));
         params.put("Type", "ABSENCE");
         header.put("X-API-KEY", HelperKey.API_KEY);
 
@@ -210,8 +210,6 @@ public class RequestHistoryFragment extends Fragment {
         );
         request.setShouldCache(false);
         mqueue.add(request);
-
-
     }
 
     void readDataCicoRequest() {
@@ -219,8 +217,8 @@ public class RequestHistoryFragment extends Fragment {
         HashMap<String, String> header = new HashMap<>();
         HashMap<String, String> params = new HashMap<>();
         params.put("IdPersonalData", HelperBridge.MODEL_LOGIN_DATA.getIdPersonalData());
-        params.put("startdate", editTextDateMulai.getText().toString());
-        params.put("enddate", editTextDateSelesai.getText().toString());
+        params.put("startdate", HelperUtil.getServerFormDate(editTextDateMulai.getText().toString()));
+        params.put("enddate", HelperUtil.getServerFormDate(editTextDateSelesai.getText().toString()));
         params.put("Type", "CICO");
         header.put("X-API-KEY", HelperKey.API_KEY);
 

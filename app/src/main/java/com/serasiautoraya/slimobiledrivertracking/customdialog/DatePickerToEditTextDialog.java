@@ -2,6 +2,7 @@ package com.serasiautoraya.slimobiledrivertracking.customdialog;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.text.InputType;
 import android.text.format.DateUtils;
 import android.view.View;
@@ -38,6 +39,7 @@ public class DatePickerToEditTextDialog {
         this.context = context;
         this.isMaxDateToday = isMaxDateToday;
         this.isNormalDate = isNormalDate;
+
         dateFormatter = new SimpleDateFormat(dateFormat, Locale.getDefault());
         editText.setInputType(InputType.TYPE_NULL);
         editText.requestFocus();

@@ -38,8 +38,8 @@ import java.util.HashMap;
  * Created by Randi Dwi Nandra on 07/12/2016.
  */
 public class CicoRequestSubFragment extends Fragment {
-    private Spinner mSpinnerTransactionType;
-    private EditText mEditTextTanggal, mEditTextWaktu, mEditTextAlasan;
+    private Spinner mSpinnerTransactionType, mSpinnerReason;
+    private EditText mEditTextTanggal, mEditTextWaktu;
     private Button mBtnSubmit;
     private DatePickerToEditTextDialog mDatePickerToEditTextDialog;
     private TimePickerToEditTextDialog mTimePickerToEditTextDialog;
@@ -61,12 +61,19 @@ public class CicoRequestSubFragment extends Fragment {
     private void assignView(View view) {
         mEditTextTanggal = (EditText) view.findViewById(R.id.edittext_cico_date);
         mEditTextWaktu = (EditText) view.findViewById(R.id.edittext_cico_time);
-        mEditTextAlasan = (EditText) view.findViewById(R.id.edittext_cico_reason);
+//        mEditTextAlasan = (EditText) view.findViewById(R.id.edittext_cico_reason);
         mSpinnerTransactionType = (Spinner) view.findViewById(R.id.spinner_cico_transaction_type);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(),
                 R.array.cico_tipe_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinnerTransactionType.setAdapter(adapter);
+
+        mSpinnerReason = (Spinner) view.findViewById(R.id.spinner_cico_reason_choice);
+        ArrayAdapter<CharSequence> adapterReason = ArrayAdapter.createFromResource(this.getContext(),
+                R.array.cico_reason_choice, android.R.layout.simple_spinner_item);
+        adapterReason.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinnerReason.setAdapter(adapterReason);
+
         mBtnSubmit = (Button) view.findViewById(R.id.btn_cico_submit);
 
         mDatePickerToEditTextDialog = new DatePickerToEditTextDialog(mEditTextTanggal, view.getContext(), true, false);
@@ -82,13 +89,14 @@ public class CicoRequestSubFragment extends Fragment {
                         getResources().getStringArray(R.array.cico_tipe_array_val),
                         mSpinnerTransactionType.getSelectedItem().toString());
 
-                String[] tanggalSplit =  mEditTextTanggal.getText().toString().split(HelperKey.USER_DATE_FORMAT_SEPARATOR);
-                final String tanggalMessage = tanggalSplit[2] + " " + HelperUtil.getMonthName(tanggalSplit[1], getContext()) + " " + tanggalSplit[0];
 
                 if(validateForm(requestType)){
+//                    String[] tanggalSplit =  mEditTextTanggal.getText().toString().split(HelperKey.USER_DATE_FORMAT_SEPARATOR);
+//                    final String tanggalMessage = tanggalSplit[2] + " " + HelperUtil.getMonthName(tanggalSplit[1], getContext()) + " " + tanggalSplit[0];
+
                     CharSequence textMsg = Html.fromHtml("Apakah anda yakin akan melakukan pengajuan "+
                             "<b>"+mSpinnerTransactionType.getSelectedItem().toString()+"</b>"+" pada "+
-                            "<b>"+ tanggalMessage+", pukul "+ mEditTextWaktu.getText()+"</b>"+"?");
+                            "<b>"+ mEditTextTanggal.getText().toString()+", pukul "+ mEditTextWaktu.getText()+"</b>"+"?");
 
                     HelperUtil.showConfirmationAlertDialog(textMsg, getContext(), new DialogInterface.OnClickListener() {
                         @Override
@@ -110,9 +118,16 @@ public class CicoRequestSubFragment extends Fragment {
         String errText = "";
         View focusView = null;
 
-        if(TextUtils.isEmpty(mEditTextAlasan.getText().toString())){
-            focusView = mEditTextAlasan;
-            mEditTextAlasan.setError(getResources().getString(R.string.err_msg_empty_absent_keterangan));
+//        if(TextUtils.isEmpty(mEditTextAlasan.getText().toString())){
+//            focusView = mEditTextAlasan;
+//            mEditTextAlasan.setError(getResources().getString(R.string.err_msg_empty_absent_keterangan));
+//            result = false;
+//        }
+
+        if(mSpinnerReason.getSelectedItem().toString().equalsIgnoreCase("Pilih")){
+            focusView = mSpinnerReason;
+            errText = getResources().getString(R.string.err_msg_empty_cico_reason);
+            HelperUtil.showSimpleToast(errText, getContext());
             result = false;
         }
 
@@ -157,9 +172,10 @@ public class CicoRequestSubFragment extends Fragment {
         params.put("idPersonalData", HelperBridge.MODEL_LOGIN_DATA.getIdPersonalData());
         params.put("wfStatus", HelperKey.WFSTATUS_PENDING);
         params.put("type", ciCoCode);
-        params.put("tanggal", mEditTextTanggal.getText().toString());
+        params.put("tanggal", HelperUtil.getServerFormDate(mEditTextTanggal.getText().toString()));
         params.put("waktu", mEditTextWaktu.getText().toString());
-        params.put("reason", mEditTextAlasan.getText().toString());
+//        params.put("reason", mEditTextAlasan.getText().toString());
+        params.put("reason", mSpinnerReason.getSelectedItem().toString());
         params.put("addby", HelperBridge.MODEL_LOGIN_DATA.getIdPersonalData());
         params.put("submittype", HelperKey.SUBMIT_TYPE_ABSENCE);
         params.put("destUser1", HelperBridge.MODEL_LOGIN_DATA.getIdUpLevel_1());
@@ -203,8 +219,9 @@ public class CicoRequestSubFragment extends Fragment {
 
     private void clearForm(){
         mSpinnerTransactionType.setSelection(0);
+        mSpinnerReason.setSelection(0);
         mEditTextTanggal.setText("");
         mEditTextWaktu.setText("");
-        mEditTextAlasan.setText("");
+//        mEditTextAlasan.setText("");
     }
 }

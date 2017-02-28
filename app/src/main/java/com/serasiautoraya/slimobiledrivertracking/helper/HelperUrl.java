@@ -2,6 +2,8 @@ package com.serasiautoraya.slimobiledrivertracking.helper;
 
 import android.os.Environment;
 
+import java.util.Locale;
+
 /**
  * Created by Randi Dwi Nandra on 21/11/2016.
  */
@@ -35,7 +37,22 @@ public class HelperUrl {
      * Data Delete
      */
     public static String DELETE_REQUEST_CICO = HOST + "RestAPIFront_Trxcico/delete/";
-    public static String DELETE_REQUEST_ABSENCE = HOST + "RestAPIFront_Trxcico/delete/";
+    public static String DELETE_REQUEST_ABSENCE = HOST + "restapifront_trxabsence/delete/";
+
+
+
+    /*
+    * TODO
+    * [DONE] Ganti URL delete request absence, dan test ulang
+    * [DONE] Ganti date format jadi indonesiable dd-mm-yyyy, atau dd-mmmm-yyyy
+        > [DONE] Membuat method convert date format dari (user form -> server form)
+        > [DONE] Membuat method convert date format dari (server form -> user form)
+        > [DONE] Mengganti algoritma display local date (u/k konfirmasi) jadi langsung ditampilkan sesuai user format (tanpa di split, dll)
+          dan ganti date format menjadi server form sebelum dikirim ke API
+    * [DONE] Ganti bahasa pickup kalender jadi bahasa indonesia
+    * [DONE] Ganti Id Equipment jadi Username
+    * [DONE] Ganti DMS jadi TDS
+    * */
 
 
 }

@@ -14,6 +14,10 @@ public class HelperKey {
     public static final String HAS_LOGIN = "LOGGED_IN";
     public static String KEY_USERNAME = "KEY_USERNAME";
     public static String KEY_PASSWORD = "KEY_PASSWORD";
+    public static String KEY_NOTIF_ID = "KEY_NOTIF_ID";
+    public static String KEY_LOC_LAT = "KEY_LOC_LAT";
+    public static String KEY_LOC_LONG = "KEY_LOC_LONG";
+    public static String KEY_LOC_ADDRESS = "KEY_LOC_ADDRESS";
 
     //Activity Code
     public static final int ACTIVITY_PROVE = 1001;
@@ -21,7 +25,8 @@ public class HelperKey {
     public static final int ACTIVITY_SECOND_IMAGE_CAPTURE = 1003;
 
     //Date format
-    public static final String USER_DATE_FORMAT = "yyyy-MM-dd";
+    public static final String SERVER_DATE_FORMAT = "yyyy-MM-dd";
+    public static final String USER_DATE_FORMAT = "dd MMMM yyyy";
     public static final String USER_DATE_FORMAT_SEPARATOR = "-";
     public static final String USER_TIME_FORMAT = "kk:mm:ss";
 

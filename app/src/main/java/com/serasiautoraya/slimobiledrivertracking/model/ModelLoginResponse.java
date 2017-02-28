@@ -2,6 +2,7 @@ package com.serasiautoraya.slimobiledrivertracking.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
 
 /**
  * Created by Randi Dwi Nandra on 13/12/2016.
@@ -160,7 +161,15 @@ public class ModelLoginResponse  {
     }
 
     public String getsIMEndDate() {
-        return sIMEndDate;
+        if(sIMEndDate != null){
+            if(sIMEndDate.equalsIgnoreCase("")){
+                return sIMEndDate;
+            }else {
+                return HelperUtil.getUserFormDate(sIMEndDate);
+            }
+        }else {
+            return "";
+        }
     }
 
     public String getsIMNumber() {
@@ -168,7 +177,15 @@ public class ModelLoginResponse  {
     }
 
     public String getkTPEndDate() {
-        return kTPEndDate;
+        if(kTPEndDate != null){
+            if(kTPEndDate.equalsIgnoreCase("") || kTPEndDate.equalsIgnoreCase("null")){
+                return kTPEndDate;
+            }else {
+                return HelperUtil.getUserFormDate(kTPEndDate);
+            }
+        }else {
+            return "";
+        }
     }
 
     public String getkTPNumber() {
@@ -193,6 +210,10 @@ public class ModelLoginResponse  {
 
     public String getPhotoFront() {
         return photoFront;
+    }
+
+    public void setPhotoFront(String photoFront) {
+        this.photoFront = photoFront;
     }
 
     public String getUid() {
@@ -244,7 +265,11 @@ public class ModelLoginResponse  {
     }
 
     public String getPosition() {
-        return position;
+        if(position.equalsIgnoreCase("Driver")){
+            return "Transporter";
+        }else {
+            return position;
+        }
     }
 
     public String getJob() {

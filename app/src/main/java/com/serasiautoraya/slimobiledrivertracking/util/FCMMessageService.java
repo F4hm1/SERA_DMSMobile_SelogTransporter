@@ -3,10 +3,13 @@ package com.serasiautoraya.slimobiledrivertracking.util;
 import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Vibrator;
+import android.support.annotation.IntegerRes;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +21,8 @@ import android.widget.RemoteViews;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.serasiautoraya.slimobiledrivertracking.R;
+import com.serasiautoraya.slimobiledrivertracking.activity.LoginActivity;
+import com.serasiautoraya.slimobiledrivertracking.helper.HelperKey;
 
 import java.util.Map;
 
@@ -29,16 +34,23 @@ public class FCMMessageService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 //        Log.d("TAG_NOTIF", "Message Received here");
-//        Map<String, String> data = remoteMessage.getData();
+        Map<String, String> data = remoteMessage.getData();
+
 //        String value1  = data.get("title");
 //        String value2 = data.get("content");
-//        showNotification(data);
+
+        if(!SharedPrefsUtil.getString(this, HelperKey.KEY_USERNAME, "").equalsIgnoreCase(data.get("IdPersonal"))){
+            Log.d("NOTIF_TAG", "Usernya logout");
+
+        }else {
+            showNotification(data);
+        }
 //        showPopUpAlert(data.get("title"));
     }
 
     public void showNotification(Map<String, String> message)
     {
-//        Intent i = new Intent(this, MainView.class);
+        Intent i = new Intent(this, LoginActivity.class);
 //        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP ); //FLAG_ACTIVITY_CLEAR_TOP
 
         Log.d("TAG_NOTIF", "Message Received here: "+message);
@@ -46,24 +58,27 @@ public class FCMMessageService extends FirebaseMessagingService {
 //        contentView.setTextViewText(R.id.title, message.get("title"));
 //        contentView.setTextViewText(R.id.text, message.get("content"));
 
-//        PendingIntent pendingIntent = PendingIntent.getActivity(this,0,i,PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,0,i,PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setDefaults(Notification.DEFAULT_ALL)
-                .setSmallIcon(R.drawable.ic_person_pin_black_24dp)
+                .setSmallIcon(R.drawable.logoselog)
                 .setAutoCancel(true)
-                .setContentTitle("Title")
+                .setContentTitle(message.get("Title"))
 //                .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
-                .setContentText(message.get("content"))
-                .setCustomHeadsUpContentView(contentView)
-                .setTicker(message.get("content"))
+                .setContentText(message.get("Body"))
+//                .setCustomHeadsUpContentView(contentView)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(message.get("Body")))
+                .setTicker(message.get("Body"))
                 .setVibrate(new long[] { 100, 250, 100, 250, 100, 250 })
                 .setPriority(NotificationCompat.PRIORITY_MAX)
-//                .setContentIntent(pendingIntent)
+                .setContentIntent(pendingIntent)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE);
 
         NotificationManager manager =   (NotificationManager)getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-        manager.notify(0,builder.build());
+//        Integer index = Integer.parseInt();
+        manager.notify(SharedPrefsUtil.getInt(this, HelperKey.KEY_NOTIF_ID, 0),builder.build());
+        SharedPrefsUtil.apply(this, HelperKey.KEY_NOTIF_ID, SharedPrefsUtil.getInt(this, HelperKey.KEY_NOTIF_ID, 0) + 1);
     }
 
     public void showPopUpAlert(String message){
@@ -95,6 +110,12 @@ public class FCMMessageService extends FirebaseMessagingService {
             }
         });
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+//        sendBroadcast(new Intent("FCMReceiver"));
     }
 
 }

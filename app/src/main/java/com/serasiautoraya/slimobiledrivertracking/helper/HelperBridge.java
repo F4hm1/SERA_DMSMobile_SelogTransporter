@@ -8,6 +8,7 @@ import com.serasiautoraya.slimobiledrivertracking.model.ModelLoginResponse;
 import com.serasiautoraya.slimobiledrivertracking.model.ModelPersonalData;
 import com.serasiautoraya.slimobiledrivertracking.model.ModelReportResponse;
 import com.serasiautoraya.slimobiledrivertracking.model.ModelRequestReportResponse;
+import com.serasiautoraya.slimobiledrivertracking.util.GPSTracker;
 
 /**
  * Created by Randi Dwi Nandra on 18/11/2016.
@@ -34,4 +35,5 @@ public class HelperBridge {
 
     //Permission Status
     public static boolean sLocationGranted = false;
+    public static GPSTracker gps;
 }

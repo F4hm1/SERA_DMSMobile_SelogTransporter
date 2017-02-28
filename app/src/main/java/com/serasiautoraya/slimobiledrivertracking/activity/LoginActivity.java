@@ -1,9 +1,12 @@
 package com.serasiautoraya.slimobiledrivertracking.activity;
 
 import android.annotation.TargetApi;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,11 +36,17 @@ import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
 import com.serasiautoraya.slimobiledrivertracking.model.ModelArrayData;
 import com.serasiautoraya.slimobiledrivertracking.model.ModelLoginResponse;
 import com.serasiautoraya.slimobiledrivertracking.model.VolleyUtil;
+import com.serasiautoraya.slimobiledrivertracking.util.AppInit;
+import com.serasiautoraya.slimobiledrivertracking.util.FCMMessageService;
+import com.serasiautoraya.slimobiledrivertracking.util.GPSTrackerService;
+import com.serasiautoraya.slimobiledrivertracking.util.GPSTrackerServiceReceiver;
 import com.serasiautoraya.slimobiledrivertracking.util.HttpsTrustManager;
+import com.serasiautoraya.slimobiledrivertracking.util.LocationServiceUtil;
 import com.serasiautoraya.slimobiledrivertracking.util.PermissionsUtil;
 import com.serasiautoraya.slimobiledrivertracking.util.SharedPrefsUtil;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * Created by Randi Dwi Nandra on 28/11/2016.
@@ -56,6 +65,14 @@ public class LoginActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        Locale locale = new Locale("id");
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        startService(new Intent(this, FCMMessageService.class));
+        LocationServiceUtil.getLocationManager(LoginActivity.this);
         VolleyUtil.init(LoginActivity.this);
         HttpsTrustManager.allowAllSSL();
         if(!SharedPrefsUtil.getBoolean(this, HelperKey.HAS_LOGIN, false)){
@@ -66,6 +83,28 @@ public class LoginActivity extends AppCompatActivity{
             passLogin();
         }
         initPermissions();
+//        initAlarm();
+    }
+
+    private void initAlarm() {
+        AlarmManager alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, GPSTrackerServiceReceiver.class);
+        boolean flag = (PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_NO_CREATE) == null);
+
+        startService(new Intent(this, GPSTrackerService.class));
+        if (flag) {
+            PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            int intervalTimeMillis = 1000 * 60 * 2;
+            alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), intervalTimeMillis, alarmIntent);
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        Log.d("LOHIN_TAG", "clicked_1");
+        super.onStart();
+        LocationServiceUtil.getLocationManager(LoginActivity.this).connectGoogleAPIClient();
+        Log.d("LOHIN_TAG", "clicked");
     }
 
     private void initPermissions() {
@@ -139,7 +178,7 @@ public class LoginActivity extends AppCompatActivity{
     }
 
     /**
-     * Show the progress UI and hide the login form.
+     * Show the progress UI and hide the login form
      */
     private void showProgress(final boolean show, String msg) {
         if(show){
@@ -170,6 +209,11 @@ public class LoginActivity extends AppCompatActivity{
                             ModelLoginResponse responseModel  = HelperUtil.getMyObject(response.getData()[0], ModelLoginResponse.class);
                                 if(responseModel.getAccessM() == HelperKey.AUTHORIZED_ACCESS){
                                     HelperBridge.MODEL_LOGIN_DATA = responseModel;
+                                    if(HelperBridge.MODEL_LOGIN_DATA.getPhotoFront() == null ||
+                                            HelperBridge.MODEL_LOGIN_DATA.getPhotoFront().equalsIgnoreCase("null") ||
+                                            HelperBridge.MODEL_LOGIN_DATA.getPhotoFront().equalsIgnoreCase("")){
+                                        HelperBridge.MODEL_LOGIN_DATA.setPhotoFront("https://damira.sera.astra.co.id/DMS/assets/images/avatar2.jpg");
+                                    }
                                     HelperBridge.maxRequest = HelperBridge.MODEL_LOGIN_DATA.getMaxHariRequestDriver();
                                     HelperUtil.showSimpleToast(getResources().getString(R.string.success_msg_login), LoginActivity.this);
 
