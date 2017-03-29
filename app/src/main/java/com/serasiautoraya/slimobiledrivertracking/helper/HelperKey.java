@@ -4,6 +4,17 @@ package com.serasiautoraya.slimobiledrivertracking.helper;
  * Created by Randi Dwi Nandra on 21/11/2016.
  */
 public class HelperKey {
+    //    Shared Activity (Bundle Intent code)
+    public enum TransitionType {
+        Explode, Slide, Fade
+    }
+
+    public static final String KEY_TRANSITION_TYPE = "TRANSITION_TYPE";
+    public static final String KEY_TITLE_ANIM = "TRANSITION_TITLE";
+
+//    Constant Value
+    public static final int SAVED_IMAGE_DESIRED_WITDH = 768;
+
     //Permission Code
     public static final int STORAGE_PERMISSION_GRANTED_CODE = 1001;
     public static final int LOCATION_PERMISSION_GRANTED_CODE = 1002;
@@ -23,6 +34,9 @@ public class HelperKey {
     public static final int ACTIVITY_PROVE = 1001;
     public static final int ACTIVITY_FIRST_IMAGE_CAPTURE = 1002;
     public static final int ACTIVITY_SECOND_IMAGE_CAPTURE = 1003;
+    public static final int ACTIVITY_IMAGE_CAPTURE = 1002;
+    public static final int ACTIVITY_IMAGE_PICKER = 1004;
+    public static final int ACTIVITY_RESULT_EXPENSES = 1005;
 
     //Date format
     public static final String SERVER_DATE_FORMAT = "yyyy-MM-dd";
@@ -63,6 +77,8 @@ public class HelperKey {
     public static final String SUBMIT_TYPE_DEFAULT = "CCSMT_04";
     public static final String SUBMIT_TYPE_ABSENCE = "CCSMT_02";
     public static final String APPROVED_AUTO = "Automatic Approved";
+
+    public static final String WAITING_ACK_CODE = "Waiting ACK";
 
 
 }

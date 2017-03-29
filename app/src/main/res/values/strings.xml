@@ -188,6 +188,30 @@
     <string name="fi_dialog_quest_4">Tidak mengkonsumsi obat-obatan terlarang (Narkoba)</string>
     <string name="fi_dialog_quest_5">Siap untuk bertugas mengemudi</string>
 
+    <!--Expanse Capture-->
+    <string name="expanse_label_type">Tipe Expanse</string>
+    <string name="expanse_label_amount">Jumlah Pengeluaran</string>
+    <string name="expanse_label_submit">Simpan</string>
+    <string-array name="expenses_tipe_array">
+        <item>Pilih Tipe Expenses</item>
+        <item>Bensin</item>
+        <item>Toll dan Parkir</item>
+        <item>Escort</item>
+        <item>ASDP</item>
+        <item>Portal</item>
+        <item>BM dan SPSI</item>
+    </string-array>
+    <string-array name="expenses_tipe_array_val">
+        <item>-1</item>
+        <item>1000</item>
+        <item>2000</item>
+        <item>3000</item>
+        <item>4000</item>
+        <item>5000</item>
+        <item>6000</item>
+    </string-array>
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

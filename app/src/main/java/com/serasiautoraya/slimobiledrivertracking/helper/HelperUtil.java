@@ -2,19 +2,34 @@ package com.serasiautoraya.slimobiledrivertracking.helper;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.drawable.ColorDrawable;
+import android.media.ThumbnailUtils;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.Window;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.serasiautoraya.slimobiledrivertracking.R;
+import com.serasiautoraya.slimobiledrivertracking.activity.DashboardActivity;
 
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -80,6 +95,52 @@ public class HelperUtil {
             result = false;
         }
         return result;
+    }
+
+    public static Bitmap saveScaledBitmap(String storedPath, String targetPath){
+        int desiredWidth = HelperKey.SAVED_IMAGE_DESIRED_WITDH;
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(storedPath, options);
+
+        int srcWidth = options.outWidth;
+        int srcHeight = options.outHeight;
+
+        if(desiredWidth > srcWidth) {
+            desiredWidth = srcWidth;
+        }
+
+        int inSampleSize = 1;
+        while(srcWidth / 2 > desiredWidth){
+            srcWidth /= 2;
+            srcHeight /= 2;
+            inSampleSize *= 2;
+        }
+
+        float desiredScale = (float) desiredWidth / srcWidth;
+
+        options.inJustDecodeBounds = false;
+        options.inDither = false;
+        options.inSampleSize = inSampleSize;
+        options.inScaled = false;
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        Bitmap sampledSrcBitmap = BitmapFactory.decodeFile(storedPath, options);
+
+        Matrix matrix = new Matrix();
+        matrix.postScale(desiredScale, desiredScale);
+        Bitmap scaledBitmap = Bitmap.createBitmap(sampledSrcBitmap, 0, 0, sampledSrcBitmap.getWidth(), sampledSrcBitmap.getHeight(), matrix, true);
+        sampledSrcBitmap = null;
+
+        FileOutputStream out = null;
+        try {
+            out = new FileOutputStream(targetPath);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+//        scaledBitmap = null;
+        return scaledBitmap;
     }
 
     public static void showConfirmationAlertDialog(CharSequence msg, Context context, DialogInterface.OnClickListener onClickListener){
@@ -277,4 +338,50 @@ public class HelperUtil {
         }
     }
 
+    public static Dialog getConfirmOrderDialog(Activity activity){
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        LayoutInflater inflater = activity.getLayoutInflater();
+
+        builder.setView(inflater.inflate(R.layout.dialog_confirmation, null))
+                .setPositiveButton("Diterima", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+        Dialog dialog = builder.create();
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        return dialog;
+    }
+
+    public static Dialog showImagePreview(Bitmap srcBmp, Activity activity){
+        View view = activity.getLayoutInflater().inflate( R.layout.dialog_image_preview, null);
+
+        ImageView postImage = (ImageView) view.findViewById(R.id.iv_container);
+        postImage.setImageBitmap(srcBmp);
+
+        Dialog builder = new Dialog(activity);
+        builder.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        builder.getWindow().setBackgroundDrawable(
+                new ColorDrawable(Color.TRANSPARENT));
+        builder.setContentView(view);
+        return builder;
+    }
+
+    public static Bitmap getThumbnailBitmap(ContentResolver contentResolver, Uri uri, int size) {
+        Bitmap original = null;
+        try {
+            original = MediaStore.Images.Media.getBitmap(contentResolver, uri);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (original != null) {
+            return ThumbnailUtils.extractThumbnail(original, size, size);
+        } else {
+            return original;
+        }
+    }
+
 }
+

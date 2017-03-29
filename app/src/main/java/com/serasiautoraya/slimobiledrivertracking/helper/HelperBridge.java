@@ -4,11 +4,14 @@ import android.graphics.Bitmap;
 
 import com.serasiautoraya.slimobiledrivertracking.adapter.GeneralSingleList;
 import com.serasiautoraya.slimobiledrivertracking.adapter.OrderSingleList;
+import com.serasiautoraya.slimobiledrivertracking.model.ModelActivityJourney;
 import com.serasiautoraya.slimobiledrivertracking.model.ModelLoginResponse;
 import com.serasiautoraya.slimobiledrivertracking.model.ModelPersonalData;
 import com.serasiautoraya.slimobiledrivertracking.model.ModelReportResponse;
 import com.serasiautoraya.slimobiledrivertracking.model.ModelRequestReportResponse;
 import com.serasiautoraya.slimobiledrivertracking.util.GPSTracker;
+
+import java.util.List;
 
 /**
  * Created by Randi Dwi Nandra on 18/11/2016.
@@ -20,6 +23,8 @@ public class HelperBridge {
     //List
     public static OrderSingleList ORDER_CLICKED;
     public static GeneralSingleList HISTORY_ORDER_CLICKED;
+    public static List<GeneralSingleList> sActiveOrdersList;
+    public static List<GeneralSingleList> sPlanOrdersList;
 
     //Bitmap
     public static Bitmap sFirstBitmap = null;
@@ -27,6 +32,7 @@ public class HelperBridge {
     public static Bitmap sTtdBitmap = null;
 
     //Temporary model data
+    public static ModelActivityJourney MODEL_ACTIVITY_SELECTED;
     public static ModelLoginResponse MODEL_LOGIN_DATA;
     public static ModelReportResponse[] MODEL_REPORT_ARRAY;
     public static ModelRequestReportResponse[] MODEL_REQUEST_CICO_REPORT_ARRAY;

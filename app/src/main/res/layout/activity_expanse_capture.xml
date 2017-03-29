@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="20dp"
+            android:paddingBottom="30dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
+
+            <!--Tipe Expanse-->
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/expanse_label_type" />
+            <Spinner
+                android:transitionGroup="true"
+                android:layout_marginBottom="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/expanse_spinner_tipeexpanse" />
+
+            <!--Jumlah Uaang Keluar-->
+            <android.support.design.widget.TextInputLayout
+                android:layout_marginBottom="20dp"
+                android:transitionGroup="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/expanse_edittext_jumlah"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/expanse_label_amount"
+                    android:inputType="number"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.percent.PercentRelativeLayout
+                android:layout_marginBottom="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/expanse_iv_captured"
+                    android:layout_width="match_parent"
+                    android:layout_height="210dp"
+                    android:scaleType="centerCrop"
+                    android:background="@color/colorDeepOn"
+                    android:src="@drawable/no_preview_available2" />
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/expanse_btn_captureimage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/expanse_iv_captured"
+                    android:layout_alignEnd="@+id/expanse_iv_captured"
+                    android:layout_alignRight="@+id/expanse_iv_captured"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="10dp"
+                    android:padding="20dp"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_gallery_white_24dp"
+                    app:fabSize="normal" />
+            </android.support.percent.PercentRelativeLayout>
+
+
+            <!--Submit-->
+            <android.support.percent.PercentRelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/expanse_btn_submit"
+                    app:layout_widthPercent="60%"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="50dp"
+                    android:drawablePadding="10dp"
+                    android:textColor="@color/colorTextIcon"
+                    android:text="@string/expanse_label_submit"
+                    android:gravity="left|center_vertical"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/shape_rounded_corner"
+                    android:drawableLeft="@drawable/ic_submit_24dp"/>
+            </android.support.percent.PercentRelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

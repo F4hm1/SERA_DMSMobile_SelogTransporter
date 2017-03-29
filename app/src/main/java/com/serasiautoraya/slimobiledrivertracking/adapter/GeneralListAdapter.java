@@ -37,7 +37,7 @@ public class GeneralListAdapter extends RecyclerView.Adapter<GeneralListAdapter.
 
     @Override
     public GeneralListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_list_historyorder, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_list_general, parent, false);
         return new GeneralListViewHolder(itemView);
     }
 

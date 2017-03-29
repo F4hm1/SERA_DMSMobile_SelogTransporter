@@ -12,6 +12,7 @@
     android:orientation="vertical">
 
     <TextView
+        android:transitionName="trans_order_code"
         android:id="@+id/single_list_his_title"
         android:textColor="@color/colorTextPrimary"
         android:textSize="16dp"

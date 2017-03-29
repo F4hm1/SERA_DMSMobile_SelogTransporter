@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".activity.LoginActivity"
+            android:name=".MVP.Login.LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -21,26 +21,31 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".MVP.Dashboard.DashboardActivity" android:theme="@style/AppTheme.NoActionBar"/>
+
         <activity android:name=".activity.DashboardActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activity.EvidenceCaptureActivity"/>
+        <activity android:name=".activity.ExpanseCaptureActivity"/>
         <activity android:name=".activity.OrderDetailActivity"/>
         <activity android:name=".activity.ChangePasswordActivity"/>
         <activity android:name=".activity.FatigueInterviewActivity"/>
         <activity android:name=".activity.ProveActivity"/>
         <activity android:name=".activity.SignatureActivity"/>
         <activity android:name=".activity.ProfileActivity"/>
+        <activity android:name=".activity.ActionActivityActivity"/>
 
 
         <service android:name=".util.GPSTracker"
             android:enabled="true"
             android:exported="false"
             android:label="LocationService"
-            />
+        />
 
-        <service android:name=".util.FCMMessageService">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
-            </intent-filter>
-        </service>
+        <!--<service android:name=".util.FCMMessageService">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="com.google.firebase.MESSAGING_EVENT"/>-->
+            <!--</intent-filter>-->
+        <!--</service>-->
 
         <service android:name=".util.FirebaseInstanceIdServiceUtil">
             <intent-filter>
@@ -48,23 +53,12 @@
             </intent-filter>
         </service>
 
-        <receiver android:name=".util.FCMMessageRestartServiceReceiver" >
-            <intent-filter>
-                <action android:name="FCMReceiver" >
-                </action>
-            </intent-filter>
-        </receiver>
-
-        <!--&lt;!&ndash; Set custom default icon. This is used when no icon is set for incoming notification messages.-->
-     <!--See README(https://goo.gl/l4GJaQ) for more. &ndash;&gt;-->
-        <!--<meta-data-->
-            <!--android:name="com.google.firebase.messaging.default_notification_icon"-->
-            <!--android:resource="@drawable/ic_logout_black_24dp" />-->
-        <!--&lt;!&ndash; Set color used with incoming notification messages. This is used when no color is set for the incoming-->
-             <!--notification message. See README(https://goo.gl/6BKBk7) for more. &ndash;&gt;-->
-        <!--<meta-data-->
-            <!--android:name="com.google.firebase.messaging.default_notification_color"-->
-            <!--android:resource="@color/colorAccent" />-->
+        <!--<receiver android:name=".util.FCMMessageRestartServiceReceiver" >-->
+            <!--<intent-filter>-->
+                <!--<action android:name="FCMReceiver" >-->
+                <!--</action>-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
 
         <service
             android:name=".util.GPSTrackerService"

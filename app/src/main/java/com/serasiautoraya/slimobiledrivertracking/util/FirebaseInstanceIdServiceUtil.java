@@ -4,11 +4,19 @@ import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
+import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.SharedPrefsModel;
+import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperKey;
 
 /**
  * Created by Randi Dwi Nandra on 13/01/2017.
  */
 public class FirebaseInstanceIdServiceUtil extends FirebaseInstanceIdService {
+
+    SharedPrefsModel mSharedPrefsModel;
+
+    public FirebaseInstanceIdServiceUtil(SharedPrefsModel mSharedPrefsModel) {
+        this.mSharedPrefsModel = mSharedPrefsModel;
+    }
 
     @Override
     public void onTokenRefresh() {
@@ -18,18 +26,6 @@ public class FirebaseInstanceIdServiceUtil extends FirebaseInstanceIdService {
     }
 
     private void sendRegistrationToServer(String token) {
-        // TODO: Send token to dm server
-
-//        SIMEndDate
-//                SIMNumber
-//        KTPEndDate
-//                KTPNumber
-//
-//
-//        1000 Cuti
-//        9000 Off
-//
-//
-
+        mSharedPrefsModel.apply(HelperKey.KEY_TOKEN_SAVED, token);
     }
 }

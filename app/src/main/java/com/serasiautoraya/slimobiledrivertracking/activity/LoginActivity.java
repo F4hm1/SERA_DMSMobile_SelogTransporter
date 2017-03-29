@@ -146,11 +146,9 @@ public class LoginActivity extends AppCompatActivity{
     }
 
     private void attemptLogin() {
-        // Reset errors.
         mUsername.setError(null);
         mPasswordView.setError(null);
 
-        // Store values at the time of the login attempt.
         String username = mUsername.getText().toString();
         String password = mPasswordView.getText().toString();
 
@@ -163,6 +161,7 @@ public class LoginActivity extends AppCompatActivity{
             mPasswordView.setError(getResources().getString(R.string.err_msg_empty_password));
             cancel = true;
         }
+
         if (TextUtils.isEmpty(username)) {
             focusView = mUsername;
             mUsername.setError(getResources().getString(R.string.err_msg_empty_username));

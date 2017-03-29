@@ -2,10 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
-        <!--<item-->
-            <!--android:id="@+id/nav_active_order"-->
-            <!--android:icon="@drawable/ic_active_order_24dp"-->
-            <!--android:title="@string/title_active_order" />-->
+        <item
+            android:id="@+id/nav_active_order"
+            android:icon="@drawable/ic_active_order_24dp"
+            android:title="@string/title_active_order" />
         <item
             android:id="@+id/nav_cico_request"
             android:icon="@drawable/ic_attendance_24dp"

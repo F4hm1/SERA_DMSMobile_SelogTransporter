@@ -1,0 +1,27 @@
+package com.serasiautoraya.slimobiledrivertracking.MVP.Dashboard;
+
+import android.support.v4.app.Fragment;
+
+import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.BaseViewInterface;
+
+/**
+ * Created by Randi Dwi Nandra on 27/03/2017.
+ */
+
+public interface DashboardView extends BaseViewInterface{
+
+    void initializeMenuAccess();
+
+    void changeFragment(Fragment targetFragment);
+
+    void changeActivity(Class targetActivity);
+
+    Fragment getActiveFragment(int idNavItem);
+
+    Class getTargetActivityClass(int idNavItem);
+
+    void exitApplication();
+
+    void logout();
+
+}

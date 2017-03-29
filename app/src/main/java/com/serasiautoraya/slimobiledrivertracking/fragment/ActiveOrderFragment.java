@@ -36,6 +36,11 @@ public class ActiveOrderFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        /*
+        * TODO This class is not needed, delete wae
+        *
+        * */
     }
 
     @Override

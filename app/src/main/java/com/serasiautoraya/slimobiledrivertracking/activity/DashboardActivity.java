@@ -2,26 +2,20 @@ package com.serasiautoraya.slimobiledrivertracking.activity;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.util.LruCache;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.ThemedSpinnerAdapter;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,30 +25,21 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.Response;
-import com.android.volley.error.VolleyError;
-import com.android.volley.request.ImageRequest;
-import com.android.volley.toolbox.ImageLoader;
 import com.serasiautoraya.slimobiledrivertracking.R;
 import com.serasiautoraya.slimobiledrivertracking.fragment.AbsenceRequestFragment;
-import com.serasiautoraya.slimobiledrivertracking.fragment.AttendanceHistoryFragment;
 import com.serasiautoraya.slimobiledrivertracking.fragment.CicoRequestFragment;
+import com.serasiautoraya.slimobiledrivertracking.fragment.PlanActiveOrdersFragment;
 import com.serasiautoraya.slimobiledrivertracking.fragment.RequestHistoryFragment;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperBridge;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperKey;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
 import com.serasiautoraya.slimobiledrivertracking.listener.TextViewTouchListener;
-import com.serasiautoraya.slimobiledrivertracking.model.ModelLoginResponse;
-import com.serasiautoraya.slimobiledrivertracking.model.VolleyUtil;
 import com.serasiautoraya.slimobiledrivertracking.util.GPSTracker;
 import com.serasiautoraya.slimobiledrivertracking.util.LocationServiceUtil;
 import com.serasiautoraya.slimobiledrivertracking.util.SharedPrefsUtil;
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
-import java.util.Timer;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -92,14 +77,18 @@ public class DashboardActivity extends AppCompatActivity
         setContentView(R.layout.activity_dashboard);
         assignNav();
         assignFragment();
+        checkOutstandingOrder();
+    }
+
+    private void checkOutstandingOrder() {
+        Dialog dialog = HelperUtil.getConfirmOrderDialog(DashboardActivity.this);
+        dialog.show();
     }
 
     @Override
     protected void onStart() {
-        Log.d("DASHBOARD_TAG", "clicked_1");
         super.onStart();
         LocationServiceUtil.getLocationManager(DashboardActivity.this).connectGoogleAPIClient();
-        Log.d("DASHBOARD_TAG", "clicked");
     }
 
     @Override
@@ -183,7 +172,7 @@ public class DashboardActivity extends AppCompatActivity
 //        menu.findItem(R.id.nav_absence_request).setEnabled(false);
 
         mHandler = new Handler();
-        navigationView.setCheckedItem(R.id.nav_cico_request);
+        navigationView.setCheckedItem(R.id.nav_active_order);
 
         mNavHeader = navigationView.getHeaderView(0);
 
@@ -259,9 +248,9 @@ public class DashboardActivity extends AppCompatActivity
 
     private Fragment getActiveFragment() {
         switch (fragmentSelectedID) {
-//            case R.id.nav_active_order:
-//                ActiveOrderFragment activeOrderFragment = new ActiveOrderFragment();
-//                return activeOrderFragment;
+            case R.id.nav_active_order:
+                PlanActiveOrdersFragment planActiveOrdersFragment = new PlanActiveOrdersFragment();
+                return planActiveOrdersFragment;
             case R.id.nav_cico_request:
                 CicoRequestFragment cicoRequestFragment = new CicoRequestFragment();
                 return cicoRequestFragment;
@@ -276,7 +265,7 @@ public class DashboardActivity extends AppCompatActivity
 //                return orderHistoryFragment;
             default:
 //                return new ActiveOrderFragment();
-                  return new CicoRequestFragment();
+                  return new PlanActiveOrdersFragment();
         }
     }
 
@@ -294,26 +283,6 @@ public class DashboardActivity extends AppCompatActivity
         startActivity(goLoginActivity);
         DashboardActivity.this.finish();
         HelperUtil.showSimpleToast("Berhasil keluar", DashboardActivity.this);
-    }
-
-    private Dialog dialog;
-    private void createDialog2Buttons(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this);
-        LayoutInflater inflater = getLayoutInflater();
-
-        builder.setView(inflater.inflate(R.layout.dialog_confirmation, null))
-                .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                })
-                .setNegativeButton("Reject", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-        dialog = builder.create();
     }
 
 }

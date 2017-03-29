@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:animateLayoutChanges="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/evidence_button_capture"
+                android:padding="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorAccentDark">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:textColor="@color/colorTextIcon"
+                    android:text="Photo Capture"/>
+
+            </RelativeLayout>
+
+            <com.github.aakira.expandablelayout.ExpandableLinearLayout
+                android:id="@+id/evidence_expandable_photos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorDivider"
+                android:paddingTop="10dp"
+                android:orientation="vertical"
+                app:ael_duration="500"
+                app:ael_expanded="true"
+                app:ael_interpolator="decelerate">
+
+                <org.apmem.tools.layouts.FlowLayout
+                    android:id="@+id/evidence_flowlayout_photos"
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:f="http://schemas.android.com/apk/res-auto"
+                    f:weightDefault="1.0"
+                    android:animateLayoutChanges="true"
+                    f:layoutDirection="ltr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageButton
+                        android:id="@+id/evidence_button_opencamera"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:src="@drawable/ic_add_a_photo_black_24dp"/>
+
+                </org.apmem.tools.layouts.FlowLayout>
+
+            </com.github.aakira.expandablelayout.ExpandableLinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/evidence_button_expand_signature"
+                android:padding="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:textColor="@color/colorTextIcon"
+                    android:text="Signature Capture"/>
+
+            </RelativeLayout>
+
+            <com.github.aakira.expandablelayout.ExpandableLinearLayout
+                android:id="@+id/evidence_expandable_signature"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorDivider"
+                android:orientation="vertical"
+                app:ael_duration="500"
+                app:ael_expanded="true"
+                app:ael_interpolator="decelerate">
+
+                <RelativeLayout
+                    android:id="@+id/evidence_rel_signature"
+                    android:background="@color/colorDivider"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/evidence_iv_signature"
+                        android:layout_centerInParent="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="20dp"
+                        android:minHeight="150dp"
+                        android:src="@drawable/ic_mode_edit_white_24dp"
+                        android:scaleType="fitCenter"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/evidence_iv_signature"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="@color/colorTextIcon"
+                        android:layout_marginBottom="20dp"
+                        android:text="(Tekan untuk membuka panel tanda tangan)"/>
+                </RelativeLayout>
+
+            </com.github.aakira.expandablelayout.ExpandableLinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/evidence_button_expand_expense"
+                android:padding="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorAccent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:textColor="@color/colorTextIcon"
+                    android:text="Expense Capture"/>
+
+            </RelativeLayout>
+
+            <com.github.aakira.expandablelayout.ExpandableLinearLayout
+                android:id="@+id/evidence_expandable_expense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorDivider"
+                android:orientation="vertical"
+                app:ael_duration="500"
+                app:ael_expanded="true"
+                app:ael_interpolator="decelerate">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:id="@+id/evidence_lin_expense"
+                    android:background="@color/colorDivider"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/evidence_iv_expense"
+                            android:layout_centerInParent="true"
+                            android:padding="20dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="150dp"
+                            android:src="@drawable/ic_mode_edit_white_24dp"
+                            android:scaleType="fitCenter"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/evidence_iv_expense"
+                            android:layout_centerHorizontal="true"
+                            android:textColor="@color/colorTextIcon"
+                            android:layout_marginBottom="20dp"
+                            android:text="(Tekan untuk menambah data expense)"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.github.aakira.expandablelayout.ExpandableLinearLayout>
+
+
+            <!--Submit-->
+            <android.support.percent.PercentRelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/evidence_btn_submit"
+                    app:layout_widthPercent="60%"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="50dp"
+                    android:drawablePadding="10dp"
+                    android:textColor="@color/colorTextIcon"
+                    android:text="@string/expanse_label_submit"
+                    android:gravity="left|center_vertical"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/shape_rounded_corner"
+                    android:drawableLeft="@drawable/ic_submit_24dp"/>
+            </android.support.percent.PercentRelativeLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
