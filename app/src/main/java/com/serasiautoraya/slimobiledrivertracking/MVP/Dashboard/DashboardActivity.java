@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.serasiautoraya.slimobiledrivertracking.MVP.CiCo.CiCoFragment;
+import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Assigned.AssignedFragment;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Login.LoginActivity;
 import com.serasiautoraya.slimobiledrivertracking.R;
 import com.serasiautoraya.slimobiledrivertracking.activity.ChangePasswordActivity;
@@ -129,11 +130,12 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
     public Fragment getActiveFragment(int idNavItem) {
         switch (idNavItem) {
             case R.id.nav_active_order:
-                PlanActiveOrdersFragment planActiveOrdersFragment = new PlanActiveOrdersFragment();
-                return planActiveOrdersFragment;
+                AssignedFragment assignedFragment = new AssignedFragment();
+                return assignedFragment;
             case R.id.nav_cico_request:
                 CiCoFragment ciCoFragment = new CiCoFragment();
                 return ciCoFragment;
+
             case R.id.nav_absence_request:
                 AbsenceRequestFragment absenceRequestFragment = new AbsenceRequestFragment();
                 return absenceRequestFragment;

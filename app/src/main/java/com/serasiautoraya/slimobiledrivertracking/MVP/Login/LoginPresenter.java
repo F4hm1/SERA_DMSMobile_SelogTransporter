@@ -74,8 +74,8 @@ public class LoginPresenter extends TiPresenter<LoginView> {
         super.onAttachView(view);
         HttpsTrustManager.allowAllSSL();
         getView().initialize();
-        FirebaseInstanceIdServiceUtil firebaseInstanceIdServiceUtil = new FirebaseInstanceIdServiceUtil(mSharedPrefsModel);
-        firebaseInstanceIdServiceUtil.onTokenRefresh();
+//        FirebaseInstanceIdServiceUtil firebaseInstanceIdServiceUtil = new FirebaseInstanceIdServiceUtil(mSharedPrefsModel);
+//        firebaseInstanceIdServiceUtil.onTokenRefresh();
         if(mSharedPrefsModel.get(HelperKey.HAS_LOGIN, false)){
             String password = mSharedPrefsModel.get(HelperKey.KEY_PASSWORD, "");
             String username = mSharedPrefsModel.get(HelperKey.KEY_USERNAME, "");

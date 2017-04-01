@@ -5,6 +5,7 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallback
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.TimeRestCallBackInterface;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.TimeRESTResponseModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperBridge;
+import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperTransactionCode;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperUrl;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperKey;
@@ -18,7 +19,7 @@ import org.json.JSONObject;
  * Created by Randi Dwi Nandra on 29/03/2017.
  */
 
-public class CiCoRealtimePresenter extends TiPresenter<CiCoRealtimeView> {
+public class  CiCoRealtimePresenter extends TiPresenter<CiCoRealtimeView> {
 
     private RestConnection mRestConnection;
     private CiCoRealtimeSendModel mCiCoRealtimeSendModel;
@@ -35,7 +36,7 @@ public class CiCoRealtimePresenter extends TiPresenter<CiCoRealtimeView> {
             public void callBackOnSuccess(JSONObject response) {
                 try {
                     getView().toggleLoading(false);
-                    getView().showStandardDialog(response.getString("responseText"), "Perhatian");
+                    getView().showStandardDialog(response.getString("responseText"), "Berhasil");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -75,13 +76,13 @@ public class CiCoRealtimePresenter extends TiPresenter<CiCoRealtimeView> {
                 mCiCoRealtimeSendModel = new CiCoRealtimeSendModel(
                         HelperBridge.sModelLoginResponse.getPersonalId(),
                         HelperBridge.sModelLoginResponse.getPersonalCode(),
-                        "WFSTS_10",
-                        HelperKey.CLOCK_IN_CODE,
+                        HelperTransactionCode.WFSTATUS_APPROVED,
+                        HelperTransactionCode.CLOCK_IN_CODE,
                         date,
                         time,
                         "",
                         HelperBridge.sModelLoginResponse.getPersonalId(),
-                        "CCSMT_04",
+                        HelperTransactionCode.SUBMIT_TYPE_ACTUAL_MOBILE,
                         HelperBridge.sModelLoginResponse.getPersonalApprovalId(),
                         HelperBridge.sModelLoginResponse.getPersonalApprovalEmail(),
                         HelperBridge.sModelLoginResponse.getPersonalCoordinatorId(),
@@ -90,7 +91,7 @@ public class CiCoRealtimePresenter extends TiPresenter<CiCoRealtimeView> {
                         longitude,
                         address,
                         HelperBridge.sModelLoginResponse.getSalesOffice(),
-                        "1",
+                        HelperTransactionCode.IS_MOBILE,
                         HelperBridge.sModelLoginResponse.getPoolCode()
                 );
                 mUrlSubmit = HelperUrl.POST_CICO_REALTIME;
@@ -123,13 +124,13 @@ public class CiCoRealtimePresenter extends TiPresenter<CiCoRealtimeView> {
                 mCiCoRealtimeSendModel = new CiCoRealtimeSendModel(
                         HelperBridge.sModelLoginResponse.getPersonalId(),
                         HelperBridge.sModelLoginResponse.getPersonalCode(),
-                        "WFSTS_10",
-                        HelperKey.CLOCK_OUT_CODE,
+                        HelperTransactionCode.WFSTATUS_APPROVED,
+                        HelperTransactionCode.CLOCK_OUT_CODE,
                         date,
                         time,
                         "",
                         HelperBridge.sModelLoginResponse.getPersonalId(),
-                        "CCSMT_04",
+                        HelperTransactionCode.SUBMIT_TYPE_ACTUAL_MOBILE,
                         HelperBridge.sModelLoginResponse.getPersonalApprovalId(),
                         HelperBridge.sModelLoginResponse.getPersonalApprovalEmail(),
                         HelperBridge.sModelLoginResponse.getPersonalCoordinatorId(),
@@ -138,7 +139,7 @@ public class CiCoRealtimePresenter extends TiPresenter<CiCoRealtimeView> {
                         longitude,
                         address,
                         HelperBridge.sModelLoginResponse.getSalesOffice(),
-                        "1",
+                        HelperTransactionCode.IS_MOBILE,
                         HelperBridge.sModelLoginResponse.getPoolCode()
                 );
                 mUrlSubmit = HelperUrl.POST_CICO_REALTIME;

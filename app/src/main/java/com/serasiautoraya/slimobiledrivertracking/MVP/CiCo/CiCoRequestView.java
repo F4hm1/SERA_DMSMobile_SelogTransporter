@@ -1,5 +1,7 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.CiCo;
 
+import android.view.View;
+
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.BaseViewInterface;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.FormViewInterface;
 
@@ -8,4 +10,9 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.FormViewInte
  */
 
 public interface CiCoRequestView extends BaseViewInterface, FormViewInterface {
+
+    void showConfirmationDialog();
+
+    void onSubmitClicked(View view);
+
 }
