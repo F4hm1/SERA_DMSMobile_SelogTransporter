@@ -12,10 +12,11 @@ import com.android.volley.request.GsonRequest;
 import com.android.volley.request.JsonObjectRequest;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.Volley;
-import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallbackInterface;
+import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallBackInterfaceModel;
+import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallbackInterfaceJSON;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.TimeRestCallBackInterface;
+import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.BaseResponseModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.TimeRESTResponseModel;
-import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperBridge;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperUrl;
 import com.serasiautoraya.slimobiledrivertracking.util.LocationServiceUtil;
 
@@ -41,8 +42,8 @@ public class RestConnection {
         this.mContext = context;
     }
 
-    public void postData(String transactionToken, String url, HashMap<String, String> params, RestCallbackInterface restCallback){
-        final RestCallbackInterface restcall = restCallback;
+    public void postData(String transactionToken, String url, HashMap<String, String> params, RestCallbackInterfaceJSON restCallback){
+        final RestCallbackInterfaceJSON restcall = restCallback;
         final String token = transactionToken;
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
@@ -171,6 +172,68 @@ public class RestConnection {
                     }
                 }
         );
+        request.setShouldCache(false);
+        mRequestQueue.add(request);
+    }
+
+    public void getData(String transactionToken, String url, HashMap<String, String> params, RestCallBackInterfaceModel restCallBackInterfaceModel){
+        final RestCallBackInterfaceModel restcall = restCallBackInterfaceModel;
+        HashMap<String, String> headers = new HashMap<>();
+
+        headers.put("Content-Type", "application/json");
+        headers.put("Ocp-Apim-Subscription-Key", "6b22fb5969084b19a6c449cab37291fe");
+        if(!transactionToken.equalsIgnoreCase("")){
+            headers.put("Authorization", transactionToken);
+        }
+
+//        GsonRequest<BaseResponseModel> request = new GsonRequest<BaseResponseModel>(
+//                url,
+//                BaseResponseModel.class,
+//                headers,
+//                new Response.Listener<BaseResponseModel>() {
+//                    @Override
+//                    public void onResponse(BaseResponseModel response) {
+//                        if(mStatusCode == 200){
+//                            restcall.callBackOnSuccess(response);
+//                        }else {
+//                            restcall.callBackOnFail(response.getResponseText());
+//                        }
+//                    }
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        restcall.callBackOnFail(error.getMessage());
+//                    }
+//                }
+//        );
+
+        GsonRequest<BaseResponseModel> request = new GsonRequest<BaseResponseModel>(
+                Request.Method.GET,
+                url,
+                BaseResponseModel.class,
+                headers,
+                params,
+                new Response.Listener<BaseResponseModel>() {
+                    @Override
+                    public void onResponse(BaseResponseModel response) {
+                        if (response != null) {
+                            restcall.callBackOnSuccess(response);
+                        }else {
+                            restcall.callBackOnFail(response.getResponseText());
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        restcall.callBackOnFail(error.getMessage());
+                    }
+                }
+        );
+        request.setShouldCache(false);
+        mRequestQueue.add(request);
+
         request.setShouldCache(false);
         mRequestQueue.add(request);
     }

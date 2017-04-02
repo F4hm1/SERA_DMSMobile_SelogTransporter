@@ -23,5 +23,7 @@ public class HelperTransactionCode {
 
     public static final String TERMINAL_ID = "Request";
 
+    public static final String WAITING_ACK_CODE = "Waiting ACK";
+
 
 }

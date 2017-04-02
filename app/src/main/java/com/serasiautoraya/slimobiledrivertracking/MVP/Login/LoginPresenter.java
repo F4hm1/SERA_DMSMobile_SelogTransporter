@@ -3,7 +3,7 @@ package com.serasiautoraya.slimobiledrivertracking.MVP.Login;
 import android.support.annotation.NonNull;
 
 import com.android.volley.error.VolleyError;
-import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallbackInterface;
+import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallbackInterfaceJSON;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.Model;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.SharedPrefsModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Dashboard.DashboardActivity;
@@ -11,7 +11,6 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperBridge;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperKey;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperUrl;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
-import com.serasiautoraya.slimobiledrivertracking.util.FirebaseInstanceIdServiceUtil;
 import com.serasiautoraya.slimobiledrivertracking.util.HttpsTrustManager;
 
 import net.grandcentrix.thirtyinch.TiPresenter;
@@ -36,7 +35,7 @@ public class LoginPresenter extends TiPresenter<LoginView> {
     public void onLogin(String username, String password){
         LoginSendModel loginSendModel = new LoginSendModel(username, password, mSharedPrefsModel.get(HelperKey.KEY_TOKEN_SAVED, "null"));
         getView().toggleLoading(true);
-        mRestConnection.postData("", HelperUrl.POST_LOGIN, loginSendModel.getHashMapType(), new RestCallbackInterface() {
+        mRestConnection.postData("", HelperUrl.POST_LOGIN, loginSendModel.getHashMapType(), new RestCallbackInterfaceJSON() {
             @Override
             public void callBackOnSuccess(JSONObject response) {
                 try {

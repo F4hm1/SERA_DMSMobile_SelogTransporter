@@ -1,4 +1,4 @@
-package com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder;
+package com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Activity;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

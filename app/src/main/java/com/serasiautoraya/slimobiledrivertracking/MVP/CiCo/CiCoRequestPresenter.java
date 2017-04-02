@@ -3,8 +3,7 @@ package com.serasiautoraya.slimobiledrivertracking.MVP.CiCo;
 import android.support.annotation.NonNull;
 
 import com.android.volley.error.VolleyError;
-import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallbackInterface;
-import com.serasiautoraya.slimobiledrivertracking.MVP.Dashboard.DashboardView;
+import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallbackInterfaceJSON;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperBridge;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperTransactionCode;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperUrl;
@@ -57,7 +56,7 @@ public class CiCoRequestPresenter extends TiPresenter<CiCoRequestView> {
 
     public void onRequestSubmitted(){
         getView().toggleLoading(true);
-        mRestConnection.postData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.POST_CICO_REQUEST, mCicoRequestSendModel.getHashMapType(), new RestCallbackInterface() {
+        mRestConnection.postData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.POST_CICO_REQUEST, mCicoRequestSendModel.getHashMapType(), new RestCallbackInterfaceJSON() {
             @Override
             public void callBackOnSuccess(JSONObject response) {
                 try {

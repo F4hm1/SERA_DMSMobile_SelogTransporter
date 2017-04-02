@@ -1,6 +1,7 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface;
 
 import com.android.volley.error.VolleyError;
+import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.BaseResponseModel;
 
 import org.json.JSONObject;
 
@@ -8,7 +9,7 @@ import org.json.JSONObject;
  * Created by Randi Dwi Nandra on 21/03/2017.
  */
 
-public interface RestCallbackInterface {
+public interface RestCallbackInterfaceJSON {
 
     void callBackOnSuccess(JSONObject response);
 

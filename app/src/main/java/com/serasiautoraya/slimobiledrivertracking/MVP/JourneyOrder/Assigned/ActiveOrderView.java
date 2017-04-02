@@ -7,4 +7,9 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.BaseViewInte
  */
 
 public interface ActiveOrderView extends BaseViewInterface {
+
+    void refreshRecyclerView();
+
+    void changeActivityAction(String key, String value, Class targetActivity);
+
 }

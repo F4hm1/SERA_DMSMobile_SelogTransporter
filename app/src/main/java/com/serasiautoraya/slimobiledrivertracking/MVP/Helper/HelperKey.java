@@ -11,8 +11,10 @@ public class HelperKey {
 
     public static final String KEY_TOKEN_SAVED = "FCM_TOKEN";
     public static final String HAS_LOGIN = "LOGGED_IN";
-    public static String KEY_USERNAME = "KEY_USERNAME";
-    public static String KEY_PASSWORD = "KEY_PASSWORD";
+    public static final String KEY_USERNAME = "KEY_USERNAME";
+    public static final String KEY_PASSWORD = "KEY_PASSWORD";
+
+    public static final String KEY_INTENT_ORDERCODE = "KEY_ORDERCODE";
 
 
 

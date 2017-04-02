@@ -1,5 +1,6 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Assigned;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.serasiautoraya.slimobiledrivertracking.MVP.CiCo.CiCoPresenter;
 import com.serasiautoraya.slimobiledrivertracking.MVP.CiCo.CiCoView;
+import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking.R;
 
 import net.grandcentrix.thirtyinch.TiFragment;
@@ -35,6 +37,8 @@ public class AssignedFragment extends TiFragment<AssignedPresenter, AssignedView
     @BindView(R.id.viewpager_planactive_orders)
     ViewPager mViewPager;
 
+    private ProgressDialog mProgressDialog;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_planactive_orders, container, false);
@@ -46,11 +50,16 @@ public class AssignedFragment extends TiFragment<AssignedPresenter, AssignedView
     public void initialize() {
         setupViewPager(mViewPager);
         mTabLayout.setupWithViewPager(mViewPager);
+        getPresenter().loadOrdersData();
     }
 
     @Override
     public void toggleLoading(boolean isLoading) {
-
+        if(isLoading){
+            mProgressDialog = ProgressDialog.show(getContext(), getResources().getString(R.string.progress_msg_loaddata), getResources().getString(R.string.prog_msg_wait),true,false);
+        }else{
+            mProgressDialog.dismiss();
+        }
     }
 
     @Override
@@ -66,7 +75,7 @@ public class AssignedFragment extends TiFragment<AssignedPresenter, AssignedView
     @NonNull
     @Override
     public AssignedPresenter providePresenter() {
-        return new AssignedPresenter();
+        return new AssignedPresenter(new RestConnection(getContext()));
     }
 
     private void setupViewPager(final ViewPager viewPager) {
