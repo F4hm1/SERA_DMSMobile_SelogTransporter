@@ -12,7 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_absence_request_history"
+                android:id="@+id/recycler_olctrip_request_history"
                 android:layout_below="@+id/title_attendance_history_table"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

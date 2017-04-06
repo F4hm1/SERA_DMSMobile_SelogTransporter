@@ -36,27 +36,30 @@ public class PlanOrderPresenter extends TiPresenter<PlanOrderView> {
     }
 
     public void onItemClicked(int position){
-                        /*
-                * TODO change the way to access id/code order list, code is the title of the list? Pass it to detail driver activity and retrieve data from API based on that.
-                * Selection if status is waiting ACK or Waiting to Start
-                * Flow : onCreate activity get bundle data/ordercode -> save to local field -> onAttachView call initialize -> initialize call getdata in presenter ->
-                * presenter call & get data from API & show progress dialog -> when done, call getview.setDataValue
-                * */
-        String status = mSimpleAdapterModel.getItem(position).getStatus();
+
+        /*
+        * TODO change the way to access id/code order list, code is the title of the list? Pass it to detail driver activity and retrieve data from API based on that.
+        * Selection if status is waiting ACK or Waiting to Start
+        * Flow : onCreate activity get bundle data/ordercode -> save to local field -> onAttachView call initialize -> initialize call getdata in presenter ->
+        * presenter call & get data from API & show progress dialog -> when done, call getview.setDataValue
+        * */
+
+        AssignedOrderResponseModel assignedOrderResponseModel = (AssignedOrderResponseModel) mSimpleAdapterModel.getItem(position);
+        String status = assignedOrderResponseModel.getStatus();
 
         if(status.equalsIgnoreCase(HelperTransactionCode.WAITING_ACK_CODE)){
             getView().showAcknowledgeDialog();
             getView().showToast("Waiting ACK open dialog");
         }else {
-            /*
-            * TODO Uncomment this + delete toast
-            * */
-            getView().showToast("Open activity to start");
-//            String orderCode = mSimpleAdapterModel.getItem(position).getTittle();
-//            getView().changeActivityAction(HelperKey.KEY_INTENT_ORDERCODE, orderCode, ActivityDetailActivity.class);
+            String orderCode = assignedOrderResponseModel.getOrderCode();
+            getView().changeActivityAction(HelperKey.KEY_INTENT_ORDERCODE, orderCode, ActivityDetailActivity.class);
         }
+    }
 
-
+    public void onAcknowledgeOrder(){
+        /*
+        * TODO Post ACK order and refresh updated assigned order
+        * */
     }
 
 }

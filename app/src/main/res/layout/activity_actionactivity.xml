@@ -82,7 +82,7 @@
                     android:text="@string/order_title_hub" />
 
                 <TextView
-                    android:id="@+id/order_title_hub"
+                    android:id="@+id/order_title_activityname"
                     android:layout_weight="1"
                     android:paddingBottom="10dip"
 
@@ -107,7 +107,7 @@
                     android:text="@string/order_title_nextdriver" />
 
                 <TextView
-                    android:id="@+id/order_title_nextdriver"
+                    android:id="@+id/order_title_activitytype"
                     android:layout_weight="1"
                     android:paddingBottom="10dip"
 
@@ -257,7 +257,7 @@
                     android:text="@string/order_title_unit" />
 
                 <TextView
-                    android:id="@+id/order_title_unit"
+                    android:id="@+id/order_title_locationtarget"
                     android:layout_weight="1"
                     android:paddingBottom="10dip"
 
@@ -282,7 +282,7 @@
                     android:textColor="@color/colorPrimaryDark" />
 
                 <TextView
-                    android:id="@+id/order_title_nextdest"
+                    android:id="@+id/order_title_timetarget"
                     android:layout_weight="1"
                     android:paddingBottom="10dip"
                     android:paddingTop="10dip"
@@ -308,7 +308,7 @@
                     android:textColor="@color/colorPrimaryDark" />
 
                 <TextView
-                    android:id="@+id/order_title_nexteta"
+                    android:id="@+id/order_title_timebaseline"
                     android:layout_weight="1"
                     android:paddingBottom="10dip"
                     android:paddingTop="10dip"
@@ -333,7 +333,7 @@
                     android:textColor="@color/colorPrimaryDark" />
 
                 <TextView
-                    android:id="@+id/order_title_laststatus"
+                    android:id="@+id/order_title_timeactual"
                     android:layout_weight="1"
                     android:paddingBottom="10dip"
                     android:paddingTop="10dip"

@@ -25,5 +25,9 @@ public class HelperTransactionCode {
 
     public static final String WAITING_ACK_CODE = "Waiting ACK";
 
+    public static final String REQUEST_HISTORY_ABSENCE_CODE = "ABSENCE";
+    public static final String REQUEST_HISTORY_CICO_CODE = "CICO";
+    public static final String REQUEST_HISTORY_OLCTRIP_CODE = "OLCTRIP";
+    public static final String REQUEST_HISTORY_OVERTIME_CODE = "OVERTIME";
 
 }

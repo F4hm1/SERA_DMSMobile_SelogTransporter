@@ -35,13 +35,15 @@ public class ActiveOrderPresenter extends TiPresenter<ActiveOrderView> {
     }
 
     public void onItemClicked(int position){
-                        /*
-                * TODO change the way to access id/code order list, code is the title of the list? Pass it to detail driver activity and retrieve data from API based on that.
-                * Flow : onCreate activity get bundle data/ordercode -> save to local field -> onAttachView call initialize -> initialize call getdata in presenter ->
-                * presenter call & get data from API & show progress dialog -> when done, call getview.setDataValue
-                * */
-        String orderCode = mSimpleAdapterModel.getItem(position).getTittle();
-        getView().changeActivityAction(HelperKey.KEY_INTENT_ORDERCODE, orderCode, ActivityDetailActivity.class);
-    }
 
+        /*
+        * TODO change the way to access id/code order list, code is the title of the list? Pass it to detail driver activity and retrieve data from API based on that.
+        * Flow : onCreate activity get bundle data/ordercode -> save to local field -> onAttachView call initialize -> initialize call getdata in presenter ->
+        * presenter call & get data from API & show progress dialog -> when done, call getview.setDataValue
+        * */
+        AssignedOrderResponseModel assignedOrderResponseModel = (AssignedOrderResponseModel) mSimpleAdapterModel.getItem(position);
+        String orderCode = assignedOrderResponseModel.getOrderCode();
+        getView().changeActivityAction(HelperKey.KEY_INTENT_ORDERCODE, orderCode, ActivityDetailActivity.class);
+
+    }
 }

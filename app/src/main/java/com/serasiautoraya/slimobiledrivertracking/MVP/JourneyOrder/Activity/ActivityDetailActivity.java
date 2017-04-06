@@ -1,13 +1,21 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Activity;
 
+import android.app.ActivityOptions;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperKey;
+import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking.R;
+import com.serasiautoraya.slimobiledrivertracking.activity.ActionActivityActivity;
+import com.serasiautoraya.slimobiledrivertracking.activity.EvidenceCaptureActivity;
 
 import net.grandcentrix.thirtyinch.TiActivity;
 
@@ -21,19 +29,24 @@ import butterknife.OnClick;
 
 public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, ActivityDetailView> implements ActivityDetailView {
 
-    @BindView(R.id.order_title_code_head) TextView mOrderCodeHead;
-    @BindView(R.id.order_title_code) TextView mOrderCode;
-    @BindView(R.id.order_title_hub) TextView mOrderHub;
-    @BindView(R.id.order_title_nextdriver) TextView mOrderNextDriver;
-    @BindView(R.id.order_title_origin) TextView mOrderOrigin;
-    @BindView(R.id.order_title_dest) TextView mOrderDest;
-    @BindView(R.id.order_title_etd) TextView mOrderEtd;
-    @BindView(R.id.order_title_eta) TextView mOrderEta;
-    @BindView(R.id.order_title_customer) TextView mOrderCustomer;
-    @BindView(R.id.order_title_unit) TextView mOrderUnit;
-    @BindView(R.id.order_title_nextdest) TextView mOrderNextDest;
-    @BindView(R.id.order_title_nexteta) TextView mOrderNextEta;
-    @BindView(R.id.order_title_laststatus) TextView mOrderLastStatus;
+    @BindView(R.id.order_title_code_head) TextView mTvOrderCodeHead;
+    @BindView(R.id.order_title_code) TextView mTvOrderCode;
+    @BindView(R.id.order_title_activityname) TextView mTvOrderActivityName;
+    @BindView(R.id.order_title_activitytype) TextView mTvOrderActivityType;
+    @BindView(R.id.order_title_origin) TextView mTvOrderOrigin;
+    @BindView(R.id.order_title_dest) TextView mTvOrderDest;
+    @BindView(R.id.order_title_etd) TextView mTvOrderEtd;
+    @BindView(R.id.order_title_eta) TextView mTvOrderEta;
+    @BindView(R.id.order_title_customer) TextView mTvOrderCustomer;
+    @BindView(R.id.order_title_locationtarget) TextView mTvOrderLocationTarget;
+    @BindView(R.id.order_title_timetarget) TextView mTvOrderTimeTarget;
+    @BindView(R.id.order_title_timebaseline) TextView mTvOrderTimeBaseline;
+    @BindView(R.id.order_title_timeactual) TextView mTvOrderTimeActual;
+
+    @BindView(R.id.order_button_action) Button mTvButtonAction;
+
+    private String mOrderCode;
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,16 +55,24 @@ public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_actionactivity);
         ButterKnife.bind(this);
+        Bundle bundle = getIntent().getExtras();
+        if(bundle!=null){
+            mOrderCode = bundle.getString(HelperKey.KEY_INTENT_ORDERCODE);
+        }
     }
 
     @Override
     public void initialize() {
-
+        getPresenter().loadDetailOrderData(mOrderCode);
     }
 
     @Override
     public void toggleLoading(boolean isLoading) {
-
+        if(isLoading){
+            mProgressDialog = ProgressDialog.show(ActivityDetailActivity.this, getResources().getString(R.string.progress_msg_loaddata), getResources().getString(R.string.prog_msg_wait),true,false);
+        }else{
+            mProgressDialog.dismiss();
+        }
     }
 
     @Override
@@ -67,12 +88,40 @@ public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, 
     @NonNull
     @Override
     public ActivityDetailPresenter providePresenter() {
-        return new ActivityDetailPresenter();
+        return new ActivityDetailPresenter(new RestConnection(ActivityDetailActivity.this));
     }
 
     @Override
     @OnClick(R.id.order_button_action)
     public void onActionClicked(View view) {
         getPresenter().onActionClicked();
+    }
+
+    @Override
+    public void setDetailData(String codeHead, String code, String activityName, String activityType, String origin, String destination, String etd, String eta, String customer, String locationTarget, String timeTarget, String timeBaseline, String timeActual) {
+        mTvOrderCodeHead.setText(codeHead);
+        mTvOrderCode.setText(code);
+        mTvOrderActivityName.setText(activityName);
+        mTvOrderActivityType.setText(activityType);
+        mTvOrderOrigin.setText(origin);
+        mTvOrderDest.setText(destination);
+        mTvOrderEtd.setText(etd);
+        mTvOrderEta.setText(eta);
+        mTvOrderCustomer.setText(customer);
+        mTvOrderLocationTarget.setText(locationTarget);
+        mTvOrderTimeTarget.setText(timeTarget);
+        mTvOrderTimeBaseline.setText(timeBaseline);
+        mTvOrderTimeActual.setText(timeActual);
+    }
+
+    @Override
+    public void setButtonText(String text) {
+        mTvButtonAction.setText(text);
+    }
+
+    @Override
+    public void changeActivity(Class cls) {
+        Intent i = new Intent(ActivityDetailActivity.this, cls);
+        startActivity(i);
     }
 }

@@ -2,12 +2,13 @@ package com.serasiautoraya.slimobiledrivertracking.MVP.RequestHistory;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.Model;
 
 /**
  * Created by Randi Dwi Nandra on 24/03/2017.
  */
 
-public class RequestHistoryResponseModel {
+public class RequestHistoryResponseModel extends Model {
 
     @SerializedName("Id")
     @Expose
@@ -60,6 +61,30 @@ public class RequestHistoryResponseModel {
     @SerializedName("ApprovalBy")
     @Expose
     private String ApprovalBy;
+
+    /*
+    * TODO Delete this constructor and SET method (not needed)
+    * */
+
+    public RequestHistoryResponseModel(String id, String transType, String dateStart, String dateEnd, String timeStart, String timeEnd, String overtimeType, String absenceType, String tripCount, String OLCStatus, String requestDate, String requestStatus, String approvalBy) {
+        Id = id;
+        TransType = transType;
+        DateStart = dateStart;
+        DateEnd = dateEnd;
+        TimeStart = timeStart;
+        TimeEnd = timeEnd;
+        OvertimeType = overtimeType;
+        AbsenceType = absenceType;
+        TripCount = tripCount;
+        this.OLCStatus = OLCStatus;
+        RequestDate = requestDate;
+        RequestStatus = requestStatus;
+        ApprovalBy = approvalBy;
+    }
+
+    public void setRequestStatus(String requestStatus) {
+        RequestStatus = requestStatus;
+    }
 
     public String getId() {
         return Id;

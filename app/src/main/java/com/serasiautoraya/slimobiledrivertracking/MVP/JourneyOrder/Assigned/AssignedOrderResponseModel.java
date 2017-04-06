@@ -2,12 +2,13 @@ package com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Assigned;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.Model;
 
 /**
  * Created by Randi Dwi Nandra on 24/03/2017.
  */
 
-public class AssignedOrderResponseModel {
+public class AssignedOrderResponseModel extends Model{
 
     @SerializedName("OrderCode")
     @Expose
@@ -36,6 +37,20 @@ public class AssignedOrderResponseModel {
     @SerializedName("ETD")
     @Expose
     private String ETD;
+
+    public AssignedOrderResponseModel(String orderCode, String status, String customer, String origin, String destination, String ETA, String ETD) {
+        OrderCode = orderCode;
+        Status = status;
+        Customer = customer;
+        Origin = origin;
+        Destination = destination;
+        this.ETA = ETA;
+        this.ETD = ETD;
+    }
+
+    public void setStatus(String status) {
+        Status = status;
+    }
 
     public String getOrderCode() {
         return OrderCode;

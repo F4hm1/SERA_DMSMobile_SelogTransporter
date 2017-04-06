@@ -338,7 +338,7 @@
                 android:paddingTop="2dip" />
 
             <TextView
-                android:id="@+id/order_title_laststatus" android:text="Order selesai"
+                android:id="@+id/order_title_timeactual" android:text="Order selesai"
                 android:layout_weight="1"
                 android:textColor="@color/colorPrimaryDark"
                 android:paddingBottom="2dip"

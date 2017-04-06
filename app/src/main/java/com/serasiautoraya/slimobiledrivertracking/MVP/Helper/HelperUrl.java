@@ -39,7 +39,7 @@ public class HelperUrl {
 
     public static final String PUT_LOCATION_UPDATE = HOST + "auth/location/";
 
-    public static final String GET_ORDER_ACTIVITIES = HOST + "order/activity/";
+    public static final String GET_ORDER_ACTIVITY = HOST + "order/activity/";
 
     public static final String PUT_STATUS_UPDATE = HOST + "order/statusupdate/";
 

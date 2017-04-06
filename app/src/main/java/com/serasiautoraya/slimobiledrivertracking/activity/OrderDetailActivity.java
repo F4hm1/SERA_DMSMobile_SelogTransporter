@@ -16,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.serasiautoraya.slimobiledrivertracking.R;
-import com.serasiautoraya.slimobiledrivertracking.adapter.GeneralSingleList;
 import com.serasiautoraya.slimobiledrivertracking.adapter.OrderSingleList;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperBridge;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperKey;
@@ -43,7 +42,7 @@ public class OrderDetailActivity extends AppCompatActivity {
         TextView textView2 = (TextView) findViewById(R.id.order_title_dest);
         textView2.setText(mSelectedOrder.getmSingleListDest());
 
-        TextView textView3 = (TextView) findViewById(R.id.order_title_hub);
+        TextView textView3 = (TextView) findViewById(R.id.order_title_activityname);
         textView3.setText(mSelectedOrder.getmSingleListHub());
 
         mBtnLoading = (Button) findViewById(R.id.btn_loading);

@@ -1,8 +1,9 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.Helper;
 
 
-import com.serasiautoraya.slimobiledrivertracking.MVP.BaseAdapter.SimpleSingleList;
+import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Assigned.AssignedOrderResponseModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Login.LoginResponseModel;
+import com.serasiautoraya.slimobiledrivertracking.MVP.RequestHistory.RequestHistoryResponseModel;
 
 import java.util.List;
 
@@ -14,8 +15,13 @@ public class HelperBridge {
 
     public static LoginResponseModel sModelLoginResponse;
 
-    public static List<SimpleSingleList> sActiveOrdersList;
-    public static List<SimpleSingleList> sPlanOutstandingOrdersList;
+    public static List<AssignedOrderResponseModel> sActiveOrdersList;
+    public static List<AssignedOrderResponseModel> sPlanOutstandingOrdersList;
+
+    public static List<RequestHistoryResponseModel> sCiCoRequestHistoryList;
+    public static List<RequestHistoryResponseModel> sOLCRequestHistoryList;
+    public static List<RequestHistoryResponseModel> sOvertimeRequestHistoryList;
+    public static List<RequestHistoryResponseModel> sAbsenceRequestHistoryList;
 
 
 }

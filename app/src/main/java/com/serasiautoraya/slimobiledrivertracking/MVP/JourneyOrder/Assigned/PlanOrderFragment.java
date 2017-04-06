@@ -1,5 +1,8 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Assigned;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseAdapter.SimpleAdapterView;
-import com.serasiautoraya.slimobiledrivertracking.MVP.BaseAdapter.SimpleListAdapter;
 import com.serasiautoraya.slimobiledrivertracking.R;
 import com.serasiautoraya.slimobiledrivertracking.listener.ClickListener;
 import com.serasiautoraya.slimobiledrivertracking.listener.RecyclerTouchListener;
@@ -77,7 +79,20 @@ public class PlanOrderFragment extends TiFragment<PlanOrderPresenter, PlanOrderV
 
     @Override
     public void showAcknowledgeDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
 
+        builder.setView(inflater.inflate(R.layout.dialog_confirmation, null))
+                .setPositiveButton("Diterima", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        getPresenter().onAcknowledgeOrder();
+                    }
+                });
+        Dialog dialog = builder.create();
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
     }
 
     @NonNull
@@ -87,7 +102,7 @@ public class PlanOrderFragment extends TiFragment<PlanOrderPresenter, PlanOrderV
     }
 
     private void initializeRecylerView(){
-        SimpleListAdapter simpleListAdapter = new SimpleListAdapter();
+        AssignedOrderAdapter simpleListAdapter = new AssignedOrderAdapter();
         mSimpleAdapterView = simpleListAdapter;
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());

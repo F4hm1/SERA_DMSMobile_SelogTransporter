@@ -73,6 +73,9 @@ public class LoginPresenter extends TiPresenter<LoginView> {
         super.onAttachView(view);
         HttpsTrustManager.allowAllSSL();
         getView().initialize();
+        /*
+        * TODO Change / uncomment this, and init location and get permissions?
+        * */
 //        FirebaseInstanceIdServiceUtil firebaseInstanceIdServiceUtil = new FirebaseInstanceIdServiceUtil(mSharedPrefsModel);
 //        firebaseInstanceIdServiceUtil.onTokenRefresh();
         if(mSharedPrefsModel.get(HelperKey.HAS_LOGIN, false)){

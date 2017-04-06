@@ -2,28 +2,14 @@ package com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Assigned;
 
 import android.support.annotation.NonNull;
 
-import com.android.volley.error.VolleyError;
-import com.serasiautoraya.slimobiledrivertracking.MVP.BaseAdapter.SimpleSingleList;
-import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallBackInterfaceModel;
-import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallbackInterfaceJSON;
-import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.BaseResponseModel;
-import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.Model;
-import com.serasiautoraya.slimobiledrivertracking.MVP.CiCo.CiCoView;
-import com.serasiautoraya.slimobiledrivertracking.MVP.Dashboard.DashboardActivity;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperBridge;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperTransactionCode;
-import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperUrl;
-import com.serasiautoraya.slimobiledrivertracking.MVP.Login.LoginResponseModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking.util.HttpsTrustManager;
 
 import net.grandcentrix.thirtyinch.TiPresenter;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by Randi Dwi Nandra on 31/03/2017.
@@ -88,9 +74,24 @@ public class AssignedPresenter extends TiPresenter<AssignedView> {
         * */
 
         for (int i = 0; i < 12; i++) {
-            SimpleSingleList activeList = new SimpleSingleList("OC-XX-"+i, "Informastion Summary-"+i, "status-"+i);
+            AssignedOrderResponseModel activeList = new AssignedOrderResponseModel(
+                    "OC-XX-"+i,
+                    "Status-"+i,
+                    "customer -"+i,
+                    "Origin -"+i,
+                    "Destination -"+i,
+                    "ETA -"+i,
+                    "ETD -"+i);
 
-            SimpleSingleList planOutlist = new SimpleSingleList("OC-XX-"+i, "Informastion Summary-"+i, "status-"+i);
+            AssignedOrderResponseModel planOutlist = new AssignedOrderResponseModel(
+                    "OC-XX-"+i,
+                    "Status-"+i,
+                    "customer -"+i,
+                    "Origin -"+i,
+                    "Destination -"+i,
+                    "ETA -"+i,
+                    "ETD -"+i);
+
             if(i%2 == 0){
                 planOutlist.setStatus(HelperTransactionCode.WAITING_ACK_CODE);
             }else {

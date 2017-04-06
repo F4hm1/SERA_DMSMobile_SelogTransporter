@@ -1,18 +1,20 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.BaseAdapter;
 
+import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.Model;
+
 import java.util.List;
 
 /**
  * Created by Randi Dwi Nandra on 01/04/2017.
  */
 
-public interface SimpleAdapterModel {
+public interface SimpleAdapterModel<T extends Model> {
 
-    SimpleSingleList getItem(int position);
+    Model getItem(int position);
 
-    SimpleSingleList remove(int position);
+    Model remove(int position);
 
-    void setItemList(List<SimpleSingleList> simpleSingleLists);
+    void setItemList(List<T> simpleSingleLists);
 
-    void addItem(SimpleSingleList simpleSingleList);
+    void addItem(T simpleSingleList);
 }

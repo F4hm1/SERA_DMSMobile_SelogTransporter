@@ -37,7 +37,6 @@ public class CiCoRequestFragment extends TiFragment<CiCoRequestPresenter, CiCoRe
     @BindView(R.id.spinner_cico_reason_choice) Spinner mSpinnerReason;
     @BindView(R.id.edittext_cico_date) EditText mEtDate;
     @BindView(R.id.edittext_cico_time) EditText mEtTime;
-    @BindView(R.id.btn_cico_submit) Button mButtonSubmit;
     private DatePickerToEditTextDialog mDatePickerToEditTextDialog;
     private TimePickerToEditTextDialog mTimePickerToEditTextDialog;
     private ProgressDialog mProgressDialog;

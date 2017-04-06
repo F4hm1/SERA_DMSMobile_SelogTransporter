@@ -1,13 +1,14 @@
-package com.serasiautoraya.slimobiledrivertracking.MVP.RequestHistory;
+package com.serasiautoraya.slimobiledrivertracking.MVP.RequestHistory.Overtime;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.Model;
 
 /**
  * Created by Randi Dwi Nandra on 24/03/2017.
  */
 
-public class AbsenceDeleteSendModel {
+public class OvertimeDeleteSendModel extends Model {
 
     @SerializedName("PersonalId")
     @Expose
@@ -17,7 +18,7 @@ public class AbsenceDeleteSendModel {
     @Expose
     private String RequestId;
 
-    public AbsenceDeleteSendModel(String personalId, String requestId) {
+    public OvertimeDeleteSendModel(String personalId, String requestId) {
         PersonalId = personalId;
         RequestId = requestId;
     }

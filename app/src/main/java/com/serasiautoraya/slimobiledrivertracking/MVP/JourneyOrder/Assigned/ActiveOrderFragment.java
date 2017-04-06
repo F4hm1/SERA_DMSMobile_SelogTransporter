@@ -11,11 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.android.volley.RequestQueue;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseAdapter.SimpleAdapterView;
-import com.serasiautoraya.slimobiledrivertracking.MVP.BaseAdapter.SimpleListAdapter;
 import com.serasiautoraya.slimobiledrivertracking.R;
-import com.serasiautoraya.slimobiledrivertracking.adapter.GeneralListAdapter;
 import com.serasiautoraya.slimobiledrivertracking.listener.ClickListener;
 import com.serasiautoraya.slimobiledrivertracking.listener.RecyclerTouchListener;
 import com.serasiautoraya.slimobiledrivertracking.util.DividerRecycleViewDecoration;
@@ -83,7 +80,7 @@ public class ActiveOrderFragment extends TiFragment<ActiveOrderPresenter, Active
     }
 
     private void initializeRecylerView(){
-        SimpleListAdapter simpleListAdapter = new SimpleListAdapter();
+        AssignedOrderAdapter simpleListAdapter = new AssignedOrderAdapter();
         mSimpleAdapterView = simpleListAdapter;
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());

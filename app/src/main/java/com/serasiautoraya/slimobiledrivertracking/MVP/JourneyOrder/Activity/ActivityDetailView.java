@@ -12,4 +12,24 @@ public interface ActivityDetailView extends BaseViewInterface{
 
     void onActionClicked(View view);
 
+    void setDetailData(
+            String codeHead,
+            String code,
+            String activityName,
+            String activityType,
+            String origin,
+            String destination,
+            String etd,
+            String eta,
+            String customer,
+            String locationTarget,
+            String timeTarget,
+            String timeBaseline,
+            String timeActual
+            );
+
+    void setButtonText(String text);
+
+    void changeActivity(Class cls);
+
 }

@@ -75,7 +75,6 @@ public class RequestHistoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_attendance_history, container, false);
         assignView(view);
-        Log.d("CALL_CREATE", "called");
         initRecyclerViewData();
         return view;
     }

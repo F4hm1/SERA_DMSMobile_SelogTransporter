@@ -69,7 +69,7 @@
                     android:paddingTop="10dip" />
 
                 <TextView
-                    android:id="@+id/order_title_hub" android:text="Row 3 column 2"
+                    android:id="@+id/order_title_activityname" android:text="Row 3 column 2"
                     android:layout_weight="1"
 
                     android:paddingBottom="10dip"
@@ -91,7 +91,7 @@
                     android:paddingTop="10dip" />
 
                 <TextView
-                    android:id="@+id/order_title_nextdriver" android:text="Row 3 column 2"
+                    android:id="@+id/order_title_activitytype" android:text="Row 3 column 2"
                     android:layout_weight="1"
 
                     android:paddingBottom="10dip"
@@ -218,7 +218,7 @@
                     android:paddingLeft="20dip" android:paddingBottom="10dip" android:paddingTop="10dip" />
 
                 <TextView
-                    android:id="@+id/order_title_unit" android:text="Row 3 column 2"
+                    android:id="@+id/order_title_locationtarget" android:text="Row 3 column 2"
                     android:layout_weight="1"
 
                     android:paddingBottom="10dip" android:paddingTop="10dip" />
@@ -238,7 +238,7 @@
                     android:paddingLeft="20dip" android:paddingBottom="10dip" android:paddingTop="10dip" />
 
                 <TextView
-                    android:id="@+id/order_title_nextdest" android:text="Row 3 column 2"
+                    android:id="@+id/order_title_timetarget" android:text="Row 3 column 2"
                     android:layout_weight="1"
                     android:textColor="@color/colorPrimaryDark"
 
@@ -259,7 +259,7 @@
                     android:paddingLeft="20dip" android:paddingBottom="10dip" android:paddingTop="10dip" />
 
                 <TextView
-                    android:id="@+id/order_title_nexteta" android:text="Row 3 column 2"
+                    android:id="@+id/order_title_timebaseline" android:text="Row 3 column 2"
                     android:layout_weight="1"
                     android:textColor="@color/colorPrimaryDark"
                     android:paddingBottom="10dip" android:paddingTop="10dip" />
@@ -279,7 +279,7 @@
                     android:paddingLeft="20dip" android:paddingBottom="10dip" android:paddingTop="10dip" />
 
                 <TextView
-                    android:id="@+id/order_title_laststatus" android:text="Row 3 column 2"
+                    android:id="@+id/order_title_timeactual" android:text="Row 3 column 2"
                     android:layout_weight="1"
                     android:textColor="@color/colorPrimaryDark"
                     android:paddingBottom="10dip" android:paddingTop="10dip" />

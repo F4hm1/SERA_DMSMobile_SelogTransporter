@@ -19,15 +19,12 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.serasiautoraya.slimobiledrivertracking.MVP.Absence.AbsenceRequestFragment;
 import com.serasiautoraya.slimobiledrivertracking.MVP.CiCo.CiCoFragment;
 import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Assigned.AssignedFragment;
-import com.serasiautoraya.slimobiledrivertracking.MVP.Login.LoginActivity;
+import com.serasiautoraya.slimobiledrivertracking.MVP.RequestHistory.RequestHistoryFragment;
 import com.serasiautoraya.slimobiledrivertracking.R;
 import com.serasiautoraya.slimobiledrivertracking.activity.ChangePasswordActivity;
-import com.serasiautoraya.slimobiledrivertracking.fragment.AbsenceRequestFragment;
-import com.serasiautoraya.slimobiledrivertracking.fragment.CicoRequestFragment;
-import com.serasiautoraya.slimobiledrivertracking.fragment.PlanActiveOrdersFragment;
-import com.serasiautoraya.slimobiledrivertracking.fragment.RequestHistoryFragment;
 import com.serasiautoraya.slimobiledrivertracking.util.LocationServiceUtil;
 
 import net.grandcentrix.thirtyinch.TiActivity;
@@ -135,7 +132,6 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
             case R.id.nav_cico_request:
                 CiCoFragment ciCoFragment = new CiCoFragment();
                 return ciCoFragment;
-
             case R.id.nav_absence_request:
                 AbsenceRequestFragment absenceRequestFragment = new AbsenceRequestFragment();
                 return absenceRequestFragment;
@@ -146,7 +142,7 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
 //                OrderHistoryFragment orderHistoryFragment = new OrderHistoryFragment();
 //                return orderHistoryFragment;
             default:
-                return new PlanActiveOrdersFragment();
+                return new AssignedFragment();
         }
     }
 

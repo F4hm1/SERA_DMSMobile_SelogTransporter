@@ -30,13 +30,13 @@ class AbsenceRequestSendModel extends Model {
     @Expose
     private String AbsenceType;
 
-    @SerializedName("Date")
+    @SerializedName("DateStart")
     @Expose
-    private String Date;
+    private String DateStart;
 
-    @SerializedName("Time")
+    @SerializedName("DateEnd")
     @Expose
-    private String Time;
+    private String DateEnd;
 
     @SerializedName("Reason")
     @Expose
@@ -70,13 +70,13 @@ class AbsenceRequestSendModel extends Model {
     @Expose
     private String SalesOffice;
 
-    public AbsenceRequestSendModel(String personalId, String personalCode, String WFStatus, String absenceType, String date, String time, String reason, String addBy, String submitType, String personalApprovalId, String personalApprovalEmail, String personalCoordinatorId, String personalCoordinatorEmail, String salesOffice) {
+    public AbsenceRequestSendModel(String personalId, String personalCode, String WFStatus, String absenceType, String dateStart, String dateEnd, String reason, String addBy, String submitType, String personalApprovalId, String personalApprovalEmail, String personalCoordinatorId, String personalCoordinatorEmail, String salesOffice) {
         PersonalId = personalId;
         PersonalCode = personalCode;
         this.WFStatus = WFStatus;
         AbsenceType = absenceType;
-        Date = date;
-        Time = time;
+        DateStart = dateStart;
+        DateEnd = dateEnd;
         Reason = reason;
         AddBy = addBy;
         SubmitType = submitType;
@@ -103,12 +103,12 @@ class AbsenceRequestSendModel extends Model {
         return AbsenceType;
     }
 
-    public String getDate() {
-        return Date;
+    public String getDateStart() {
+        return DateStart;
     }
 
-    public String getTime() {
-        return Time;
+    public String getDateEnd() {
+        return DateEnd;
     }
 
     public String getReason() {

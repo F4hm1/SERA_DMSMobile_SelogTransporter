@@ -8,7 +8,6 @@ import android.transition.Slide;
 import android.view.Gravity;
 import android.view.View;
 import android.view.animation.AnticipateOvershootInterpolator;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.serasiautoraya.slimobiledrivertracking.R;
@@ -27,17 +26,17 @@ public class ActionActivityActivity extends AppCompatActivity {
 
     @BindView(R.id.order_title_code_head) TextView mOrderCodeHead;
     @BindView(R.id.order_title_code) TextView mOrderCode;
-    @BindView(R.id.order_title_hub) TextView mOrderHub;
-    @BindView(R.id.order_title_nextdriver) TextView mOrderNextDriver;
+    @BindView(R.id.order_title_activityname) TextView mOrderHub;
+    @BindView(R.id.order_title_activitytype) TextView mOrderNextDriver;
     @BindView(R.id.order_title_origin) TextView mOrderOrigin;
     @BindView(R.id.order_title_dest) TextView mOrderDest;
     @BindView(R.id.order_title_etd) TextView mOrderEtd;
     @BindView(R.id.order_title_eta) TextView mOrderEta;
     @BindView(R.id.order_title_customer) TextView mOrderCustomer;
-    @BindView(R.id.order_title_unit) TextView mOrderUnit;
-    @BindView(R.id.order_title_nextdest) TextView mOrderNextDest;
-    @BindView(R.id.order_title_nexteta) TextView mOrderNextEta;
-    @BindView(R.id.order_title_laststatus) TextView mOrderLastStatus;
+    @BindView(R.id.order_title_locationtarget) TextView mOrderUnit;
+    @BindView(R.id.order_title_timetarget) TextView mOrderNextDest;
+    @BindView(R.id.order_title_timebaseline) TextView mOrderNextEta;
+    @BindView(R.id.order_title_timeactual) TextView mOrderLastStatus;
 
 
     @Override

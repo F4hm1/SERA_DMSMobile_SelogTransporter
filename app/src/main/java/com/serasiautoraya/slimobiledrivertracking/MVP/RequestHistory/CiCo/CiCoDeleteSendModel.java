@@ -1,4 +1,4 @@
-package com.serasiautoraya.slimobiledrivertracking.MVP.RequestHistory;
+package com.serasiautoraya.slimobiledrivertracking.MVP.RequestHistory.CiCo;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -8,7 +8,7 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.Model;
  * Created by Randi Dwi Nandra on 24/03/2017.
  */
 
-public class OLCTripDeleteSendModel extends Model{
+public class CiCoDeleteSendModel extends Model {
     @SerializedName("PersonalId")
     @Expose
     private String PersonalId;
@@ -17,7 +17,7 @@ public class OLCTripDeleteSendModel extends Model{
     @Expose
     private String RequestID;
 
-    public OLCTripDeleteSendModel(String personalId, String requestID) {
+    public CiCoDeleteSendModel(String personalId, String requestID) {
         PersonalId = personalId;
         RequestID = requestID;
     }
