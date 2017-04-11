@@ -1,6 +1,7 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.Dashboard;
 
 import android.support.v4.app.Fragment;
+import android.view.View;
 
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.BaseViewInterface;
 
@@ -23,5 +24,7 @@ public interface DashboardView extends BaseViewInterface{
     void exitApplication();
 
     void logout();
+
+    void onProfileDetailClicked();
 
 }

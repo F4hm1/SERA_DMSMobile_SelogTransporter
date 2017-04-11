@@ -1,9 +1,11 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.CiCo;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.android.volley.error.VolleyError;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallbackInterfaceJSON;
+import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.Model;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperBridge;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperTransactionCode;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperUrl;
@@ -35,27 +37,29 @@ public class CiCoRequestPresenter extends TiPresenter<CiCoRequestView> {
 
     public void onSubmitClicked(String date, String time, String reason, String cicoType){
         mCicoRequestSendModel = new CiCoRequestSendModel(
-                HelperBridge.sModelLoginResponse.getPersonalId(),
-                HelperBridge.sModelLoginResponse.getPersonalId(),
-                HelperBridge.sModelLoginResponse.getPersonalCode(),
-                HelperTransactionCode.WFSTATUS_PENDING,
-                cicoType,
-                date,
-                time,
-                reason,
-                HelperTransactionCode.SUBMIT_TYPE_REQUEST_MOBILE,
-                HelperBridge.sModelLoginResponse.getPersonalApprovalId(),
-                HelperBridge.sModelLoginResponse.getPersonalApprovalEmail(),
-                HelperBridge.sModelLoginResponse.getPersonalCoordinatorId(),
-                HelperBridge.sModelLoginResponse.getPersonalCoordinatorEmail(),
-                HelperBridge.sModelLoginResponse.getSalesOffice(),
-                HelperTransactionCode.TERMINAL_ID
+                Model.getNonNullable(HelperBridge.sModelLoginResponse.getPersonalId()),
+                Model.getNonNullable(HelperBridge.sModelLoginResponse.getPersonalId()),
+                Model.getNonNullable(HelperBridge.sModelLoginResponse.getPersonalCode()),
+                Model.getNonNullable(HelperTransactionCode.WFSTATUS_PENDING),
+                Model.getNonNullable(cicoType),
+                Model.getNonNullable(date),
+                Model.getNonNullable(time),
+                Model.getNonNullable(reason),
+                Model.getNonNullable(HelperTransactionCode.SUBMIT_TYPE_REQUEST_MOBILE),
+                Model.getNonNullable(HelperBridge.sModelLoginResponse.getPersonalApprovalId()),
+                Model.getNonNullable(HelperBridge.sModelLoginResponse.getPersonalApprovalEmail()),
+                Model.getNonNullable(HelperBridge.sModelLoginResponse.getPersonalCoordinatorId()),
+                Model.getNonNullable(HelperBridge.sModelLoginResponse.getPersonalCoordinatorEmail()),
+                Model.getNonNullable(HelperBridge.sModelLoginResponse.getSalesOffice()),
+                Model.getNonNullable(HelperTransactionCode.TERMINAL_ID)
         );
         getView().showConfirmationDialog();
     }
 
     public void onRequestSubmitted(){
         getView().toggleLoading(true);
+//        Log.d("TAGSS", mCicoRequestSendModel.getHashMapType().toString());
+        Log.d("TAGSS", mCicoRequestSendModel.getJSONType(mCicoRequestSendModel));
         mRestConnection.postData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.POST_CICO_REQUEST, mCicoRequestSendModel.getHashMapType(), new RestCallbackInterfaceJSON() {
             @Override
             public void callBackOnSuccess(JSONObject response) {
@@ -79,7 +83,7 @@ public class CiCoRequestPresenter extends TiPresenter<CiCoRequestView> {
                 * TODO change this, jadikan value nya dari string values!
                 * */
                 getView().toggleLoading(false);
-                getView().showStandardDialog("Gagal melakukan cico, silahkan periksa koneksi anda kemudian coba kembali", "Perhatian");
+                getView().showStandardDialog("Gagal melakukan pengajuan cico, silahkan periksa koneksi anda kemudian coba kembali", "Perhatian");
             }
         });
     }

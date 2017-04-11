@@ -155,8 +155,8 @@ public class AbsenceRequestFragment extends TiFragment<AbsenceRequestPresenter, 
                     getResources().getStringArray(R.array.absence_tipe_array_val),
                     mSpinnerAbsenceType.getSelectedItem().toString());
             getPresenter().onSubmitClicked(
-                    mEtDateStart.getText().toString(),
-                    mEtDateEnd.getText().toString(),
+                    mDatePickerToEditTextDialogStart.getDateServerFormat(),
+                    mDatePickerToEditTextDialogEnd.getDateServerFormat(),
                     mEtReason.getText().toString(),
                     absenceType
             );

@@ -1,8 +1,10 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.Login;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.android.volley.error.VolleyError;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallbackInterfaceJSON;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.Model;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.SharedPrefsModel;
@@ -11,6 +13,7 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperBridge;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperKey;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperUrl;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
+import com.serasiautoraya.slimobiledrivertracking.util.FirebaseInstanceIdServiceUtil;
 import com.serasiautoraya.slimobiledrivertracking.util.HttpsTrustManager;
 
 import net.grandcentrix.thirtyinch.TiPresenter;
@@ -33,7 +36,10 @@ public class LoginPresenter extends TiPresenter<LoginView> {
 
 
     public void onLogin(String username, String password){
-        LoginSendModel loginSendModel = new LoginSendModel(username, password, mSharedPrefsModel.get(HelperKey.KEY_TOKEN_SAVED, "null"));
+        final String fUsername = username;
+        final String fPassword = password;
+
+        LoginSendModel loginSendModel = new LoginSendModel(username, password, mSharedPrefsModel.get(HelperKey.KEY_TOKEN_SAVED, "token-not-defined"));
         getView().toggleLoading(true);
         mRestConnection.postData("", HelperUrl.POST_LOGIN, loginSendModel.getHashMapType(), new RestCallbackInterfaceJSON() {
             @Override
@@ -41,6 +47,8 @@ public class LoginPresenter extends TiPresenter<LoginView> {
                 try {
                     JSONObject jsonObject = response.getJSONArray("data").getJSONObject(0);
                     HelperBridge.sModelLoginResponse = Model.getModelInstanceFromString(jsonObject.toString(), LoginResponseModel.class);
+                    mSharedPrefsModel.apply(HelperKey.KEY_USERNAME, fUsername);
+                    mSharedPrefsModel.apply(HelperKey.KEY_PASSWORD, fPassword);
                     getView().toggleLoading(false);
                     getView().changeActivity(DashboardActivity.class);
                 } catch (JSONException e) {
@@ -76,7 +84,8 @@ public class LoginPresenter extends TiPresenter<LoginView> {
         /*
         * TODO Change / uncomment this, and init location and get permissions?
         * */
-//        FirebaseInstanceIdServiceUtil firebaseInstanceIdServiceUtil = new FirebaseInstanceIdServiceUtil(mSharedPrefsModel);
+        Log.d("TAG_TOKEN", "firebase instance util :"+FirebaseInstanceId.getInstance().getToken());
+//        FirebaseInstanceIdServiceUtil firebaseInstanceIdServiceUtil = new FirebaseInstanceIdServiceUtil();
 //        firebaseInstanceIdServiceUtil.onTokenRefresh();
         if(mSharedPrefsModel.get(HelperKey.HAS_LOGIN, false)){
             String password = mSharedPrefsModel.get(HelperKey.KEY_PASSWORD, "");

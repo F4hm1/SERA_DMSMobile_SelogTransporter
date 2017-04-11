@@ -23,6 +23,8 @@
 
         <activity android:name=".MVP.Dashboard.DashboardActivity" android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".MVP.JourneyOrder.Activity.ActivityDetailActivity"/>
+        <activity android:name=".MVP.Profiling.ProfileActivity"/>
+        <activity android:name=".MVP.ChangePassword.ChangePasswordActivity"/>
 
         <activity android:name=".activity.DashboardActivity" android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activity.EvidenceCaptureActivity"/>
@@ -42,11 +44,11 @@
             android:label="LocationService"
         />
 
-        <!--<service android:name=".util.FCMMessageService">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="com.google.firebase.MESSAGING_EVENT"/>-->
-            <!--</intent-filter>-->
-        <!--</service>-->
+        <service android:name=".util.FCMMessageService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
 
         <service android:name=".util.FirebaseInstanceIdServiceUtil">
             <intent-filter>

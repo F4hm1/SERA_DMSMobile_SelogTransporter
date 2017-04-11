@@ -12,20 +12,18 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperKey;
  */
 public class FirebaseInstanceIdServiceUtil extends FirebaseInstanceIdService {
 
-//    SharedPrefsModel mSharedPrefsModel;
-//
-//    public FirebaseInstanceIdServiceUtil(SharedPrefsModel mSharedPrefsModel) {
-//        this.mSharedPrefsModel = mSharedPrefsModel;
-//    }
-
     @Override
     public void onTokenRefresh() {
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         Log.d("TAG_TOKEN", "Refreshed token: " + refreshedToken);
+        SharedPrefsModel sharedPrefsModel = new SharedPrefsModel(getApplicationContext());
+        Log.d("TAG_TOKEN", "Saved token: " + sharedPrefsModel.get(HelperKey.KEY_TOKEN_SAVED, ""));
         sendRegistrationToServer(refreshedToken);
     }
 
     private void sendRegistrationToServer(String token) {
-//        mSharedPrefsModel.apply(HelperKey.KEY_TOKEN_SAVED, token);
+        SharedPrefsModel sharedPrefsModel = new SharedPrefsModel(getApplicationContext());
+        sharedPrefsModel.apply(HelperKey.KEY_TOKEN_SAVED, token);
+        Log.d("TAG_TOKEN", "Saved token after sendtoserver: " + sharedPrefsModel.get(HelperKey.KEY_TOKEN_SAVED, ""));
     }
 }

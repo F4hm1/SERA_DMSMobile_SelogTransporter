@@ -1,5 +1,7 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -16,6 +18,7 @@ public class Model {
     public HashMap<String,String> getHashMapType(){
         Gson gson = new Gson();
         Type stringStringMap = new TypeToken<Map<String, String>>(){}.getType();
+        Log.d("TAGSSS", getJSONType());
         Map<String,String> map = gson.fromJson(getJSONType(), stringStringMap);
         return new HashMap<String, String>(map);
     }
@@ -23,6 +26,11 @@ public class Model {
     public String getJSONType(){
         Gson gson = new Gson();
         return gson.toJson(this);
+    }
+
+    public String getJSONType(Object object){
+        Gson gson = new Gson();
+        return gson.toJson(object);
     }
 
     public static <T> T getModelInstance(Object object, Class<T> cls){
@@ -35,4 +43,10 @@ public class Model {
         return gson.fromJson(jsonString, cls);
     }
 
+    public static String getNonNullable(String text){
+        if(text == null){
+            text = "null";
+        }
+        return text;
+    }
 }

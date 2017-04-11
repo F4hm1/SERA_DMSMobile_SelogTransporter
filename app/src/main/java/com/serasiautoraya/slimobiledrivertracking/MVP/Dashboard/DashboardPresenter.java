@@ -1,7 +1,7 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.Dashboard;
 
 import android.support.annotation.NonNull;
-
+import com.serasiautoraya.slimobiledrivertracking.MVP.Profiling.ProfileActivity;
 import net.grandcentrix.thirtyinch.TiPresenter;
 
 /**
@@ -22,6 +22,10 @@ public class DashboardPresenter extends TiPresenter<DashboardView> {
 
     public void onNavigationItemSelectedForActivity(int id){
         getView().changeActivity(getView().getTargetActivityClass(id));
+    }
+
+    public void loadDetailProfile(){
+        getView().changeActivity(ProfileActivity.class);
     }
 
 }

@@ -1,10 +1,13 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.RequestHistory.CiCo;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +21,7 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.RequestHistory.RequestHist
 import com.serasiautoraya.slimobiledrivertracking.MVP.RequestHistory.RequestHistoryResponseModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking.R;
+import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
 import com.serasiautoraya.slimobiledrivertracking.util.DividerRecycleViewDecoration;
 
 import net.grandcentrix.thirtyinch.TiFragment;
@@ -34,6 +38,7 @@ public class CiCoRequestHistoryFragment extends TiFragment<CiCoRequestHistoryPre
 
     @BindView(R.id.recycler_cico_request_history) RecyclerView mRecyclerView;
     private SimpleAdapterView mSimpleAdapterView;
+    private ProgressDialog mProgressDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,7 +55,11 @@ public class CiCoRequestHistoryFragment extends TiFragment<CiCoRequestHistoryPre
 
     @Override
     public void toggleLoading(boolean isLoading) {
-
+        if(isLoading){
+            mProgressDialog = ProgressDialog.show(getContext(), getResources().getString(R.string.prog_msg_cancel_request),getResources().getString(R.string.prog_msg_wait),true,false);
+        }else{
+            mProgressDialog.dismiss();
+        }
     }
 
     @Override
@@ -81,10 +90,7 @@ public class CiCoRequestHistoryFragment extends TiFragment<CiCoRequestHistoryPre
                         showToast("Detailed bro - "+requestHistoryResponseModel.getRequestDate());
                         return true;
                     case R.id.menu_popup_cancel_request:
-                        /*
-                        * TODO Change this code below
-                        * */
-                        showToast("Canceled bro - "+requestHistoryResponseModel.getRequestDate());
+                        getPresenter().onCancelClicked(requestHistoryResponseModel);
                         return true;
                     default:
                 }
@@ -104,5 +110,21 @@ public class CiCoRequestHistoryFragment extends TiFragment<CiCoRequestHistoryPre
     @Override
     public void refreshRecyclerView() {
         mSimpleAdapterView.refresh();
+    }
+
+    @Override
+    public void showCancelConfirmationDialog(String requestDate) {
+                /*
+        * TODO Change format date to user format
+        * */
+        CharSequence textMsg = Html.fromHtml("Apakah anda yakin akan <b>membatalkan pengajuan Clock In/Out</b>"+
+                "pada <b>" + requestDate + "</b>?");
+
+        HelperUtil.showConfirmationAlertDialog(textMsg, getContext(), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                getPresenter().onCancelationSubmitted();
+            }
+        });
     }
 }

@@ -148,7 +148,7 @@ public class CiCoRequestFragment extends TiFragment<CiCoRequestPresenter, CiCoRe
                     getResources().getStringArray(R.array.cico_tipe_array_val),
                     mSpinnerTransactionType.getSelectedItem().toString());
             getPresenter().onSubmitClicked(
-                    mEtDate.getText().toString(),
+                    mDatePickerToEditTextDialog.getDateServerFormat(),
                     mEtTime.getText().toString(),
                     mSpinnerReason.getSelectedItem().toString(),
                     requestCicoCode);

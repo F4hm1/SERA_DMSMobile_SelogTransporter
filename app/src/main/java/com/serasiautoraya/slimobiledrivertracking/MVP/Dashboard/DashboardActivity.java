@@ -1,6 +1,7 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.Dashboard;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -20,17 +22,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.serasiautoraya.slimobiledrivertracking.MVP.Absence.AbsenceRequestFragment;
+import com.serasiautoraya.slimobiledrivertracking.MVP.ChangePassword.ChangePasswordActivity;
 import com.serasiautoraya.slimobiledrivertracking.MVP.CiCo.CiCoFragment;
 import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Assigned.AssignedFragment;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RequestHistory.RequestHistoryFragment;
 import com.serasiautoraya.slimobiledrivertracking.R;
-import com.serasiautoraya.slimobiledrivertracking.activity.ChangePasswordActivity;
+import com.serasiautoraya.slimobiledrivertracking.listener.TextViewTouchListener;
 import com.serasiautoraya.slimobiledrivertracking.util.LocationServiceUtil;
 
 import net.grandcentrix.thirtyinch.TiActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Randi Dwi Nandra on 27/03/2017.
@@ -222,5 +226,48 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
         mImageViewNavImg = (ImageView) mNavHeader.findViewById(R.id.nav_header_img);
         mTextViewNavNama = (TextView) mNavHeader.findViewById(R.id.nav_header_name);
         mTextViewNavPosisi = (TextView) mNavHeader.findViewById(R.id.nav_header_posisi);
+        mImageViewNavImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getPresenter().loadDetailProfile();
+            }
+        });
+        mTextViewNavNama.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getPresenter().loadDetailProfile();
+            }
+        });
+        mTextViewNavPosisi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getPresenter().loadDetailProfile();
+            }
+        });
+        mTextViewNavNama.setOnTouchListener(new TextViewTouchListener(this, R.color.colorPrimary, R.color.colorTextIcon));
+        mTextViewNavPosisi.setOnTouchListener(new TextViewTouchListener(this, R.color.colorPrimary, R.color.colorTextIcon));
+        mImageViewNavImg.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                    mImageViewNavImg.setColorFilter(Color.argb(90, 255, 87 ,34));
+                }
+                if(event.getAction() == MotionEvent.ACTION_UP){
+                    mImageViewNavImg.setColorFilter(Color.argb(0, 0, 0, 0));
+                }
+                return false;
+            }
+        });
     }
+
+
+    @Override
+    public void onProfileDetailClicked() {
+        getPresenter().loadDetailProfile();
+    }
+
+
+
+
+
 }

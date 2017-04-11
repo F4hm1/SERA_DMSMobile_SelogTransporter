@@ -14,4 +14,8 @@ public interface RequestHistoryView extends BaseViewInterface{
 
     void onTextStartDateChangeAfter(Editable editable);
 
+    void setTextEndDate(String textEndDate);
+
+    void setTextStartDate(String textStartDate);
+
 }

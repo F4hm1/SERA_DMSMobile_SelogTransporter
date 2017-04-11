@@ -18,7 +18,7 @@ public class LoginSendModel extends Model{
     @Expose
     private String password;
 
-    @SerializedName("FCM")
+    @SerializedName("TokenFCM")
     @Expose
     private String tokenFCM;
 

@@ -6,11 +6,14 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Vibrator;
 import android.support.annotation.IntegerRes;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,8 +23,9 @@ import android.widget.RemoteViews;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.serasiautoraya.slimobiledrivertracking.MVP.Login.LoginActivity;
 import com.serasiautoraya.slimobiledrivertracking.R;
-import com.serasiautoraya.slimobiledrivertracking.activity.LoginActivity;
+//import com.serasiautoraya.slimobiledrivertracking.activity.LoginActivity;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperKey;
 
 import java.util.Map;
@@ -39,12 +43,13 @@ public class FCMMessageService extends FirebaseMessagingService {
 //        String value1  = data.get("title");
 //        String value2 = data.get("content");
 
-        if(!SharedPrefsUtil.getString(this, HelperKey.KEY_USERNAME, "").equalsIgnoreCase(data.get("IdPersonal"))){
-            Log.d("NOTIF_TAG", "Usernya logout");
+//        if(!SharedPrefsUtil.getString(this, HelperKey.KEY_USERNAME, "").equalsIgnoreCase(data.get("IdPersonal"))){
+//            Log.d("NOTIF_TAG", "Usernya logout");
 
-        }else {
+//        }else {
             showNotification(data);
-        }
+//        }
+
 //        showPopUpAlert(data.get("title"));
     }
 
@@ -58,14 +63,19 @@ public class FCMMessageService extends FirebaseMessagingService {
 //        contentView.setTextViewText(R.id.title, message.get("title"));
 //        contentView.setTextViewText(R.id.text, message.get("content"));
 
+        int iconColor = ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark);
+        Bitmap bitmapIcon = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.logoselog);
+
         PendingIntent pendingIntent = PendingIntent.getActivity(this,0,i,PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setDefaults(Notification.DEFAULT_ALL)
+                .setLargeIcon(bitmapIcon)
                 .setSmallIcon(R.drawable.logoselog)
+                .setColor(iconColor)
                 .setAutoCancel(true)
                 .setContentTitle(message.get("Title"))
-//                .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(message.get("Body")))
                 .setContentText(message.get("Body"))
 //                .setCustomHeadsUpContentView(contentView)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(message.get("Body")))

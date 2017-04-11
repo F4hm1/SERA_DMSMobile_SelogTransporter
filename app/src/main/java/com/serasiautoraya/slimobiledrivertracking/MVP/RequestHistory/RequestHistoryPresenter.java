@@ -10,6 +10,7 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperBridge;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperTransactionCode;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperUrl;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
+import com.serasiautoraya.slimobiledrivertracking.helper.HelperKey;
 import com.serasiautoraya.slimobiledrivertracking.util.HttpsTrustManager;
 
 import net.grandcentrix.thirtyinch.TiPresenter;
@@ -17,9 +18,13 @@ import net.grandcentrix.thirtyinch.TiPresenter;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
+import java.util.TimeZone;
 
 /**
  * Created by Randi Dwi Nandra on 03/04/2017.
@@ -40,6 +45,21 @@ public class RequestHistoryPresenter extends TiPresenter<RequestHistoryView> {
         getView().initialize();
     }
 
+    public void initialRequestHistoryData(){
+        SimpleDateFormat dateFormatter = new SimpleDateFormat(HelperKey.USER_DATE_FORMAT, Locale.getDefault());
+        Calendar calendarMulai = Calendar.getInstance(TimeZone.getDefault());
+        calendarMulai.set(Calendar.DAY_OF_MONTH, 1);
+        String startdate = dateFormatter.format(calendarMulai.getTime());
+
+        Calendar calendarAkhir = Calendar.getInstance(TimeZone.getDefault());
+        calendarAkhir.set(Calendar.DAY_OF_MONTH, 1);
+        calendarAkhir.set(Calendar.MONTH, calendarAkhir.get(Calendar.MONTH) + 1);
+        String enddate = dateFormatter.format(calendarAkhir.getTime());
+
+        getView().setTextStartDate(startdate);
+        getView().setTextStartDate(enddate);
+    }
+
     public void loadRequestHistoryData(String startDate, String endDate) {
         HelperBridge.sAbsenceRequestHistoryList = new ArrayList<>();
         HelperBridge.sCiCoRequestHistoryList = new ArrayList<>();
@@ -48,43 +68,43 @@ public class RequestHistoryPresenter extends TiPresenter<RequestHistoryView> {
         /*
         * TODO Delete this method calling & uncomment + test data retrieval from API
         * */
-        setdatadummmy();
+//        setdatadummmy();
 
-//        getView().toggleLoading(true);
-//        RequestHistorySendModel requestHistorySendModel = new RequestHistorySendModel(
-//                HelperBridge.sModelLoginResponse.getPersonalId(),
-//                startDate,
-//                endDate);
-//
-//        mRestConnection.getData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.GET_REQUEST_HISTORY, requestHistorySendModel.getHashMapType(), new RestCallBackInterfaceModel() {
-//            @Override
-//            public void callBackOnSuccess(BaseResponseModel response) {
-//                List<RequestHistoryResponseModel> requestHistoryResponseModels = new ArrayList<>();
-//                for (int i = 0; i < response.getData().length; i++) {
-//                    requestHistoryResponseModels.add(Model.getModelInstance(response.getData()[i], RequestHistoryResponseModel.class));
-//                }
-//                mergeRequestHistoryData(requestHistoryResponseModels);
-//                getView().toggleLoading(false);
-//            }
-//
-//            @Override
-//            public void callBackOnFail(String response) {
-//                /*
-//                * TODO change this!
-//                * */
-//                getView().showToast("FAILLLLSSS: " + response);
-//                getView().toggleLoading(false);
-//            }
-//
-//            @Override
-//            public void callBackOnError(VolleyError error) {
-//                /*
-//                * TODO change this!
-//                * */
-//                getView().showToast("FAIL: " + error.toString());
-//                getView().toggleLoading(false);
-//            }
-//        });
+        getView().toggleLoading(true);
+        RequestHistorySendModel requestHistorySendModel = new RequestHistorySendModel(
+                HelperBridge.sModelLoginResponse.getPersonalId(),
+                startDate,
+                endDate);
+
+        mRestConnection.getData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.GET_REQUEST_HISTORY, requestHistorySendModel.getHashMapType(), new RestCallBackInterfaceModel() {
+            @Override
+            public void callBackOnSuccess(BaseResponseModel response) {
+                List<RequestHistoryResponseModel> requestHistoryResponseModels = new ArrayList<>();
+                for (int i = 0; i < response.getData().length; i++) {
+                    requestHistoryResponseModels.add(Model.getModelInstance(response.getData()[i], RequestHistoryResponseModel.class));
+                }
+                mergeRequestHistoryData(requestHistoryResponseModels);
+                getView().toggleLoading(false);
+            }
+
+            @Override
+            public void callBackOnFail(String response) {
+                /*
+                * TODO change this!
+                * */
+                getView().showToast("FAILLLLSSS: " + response);
+                getView().toggleLoading(false);
+            }
+
+            @Override
+            public void callBackOnError(VolleyError error) {
+                /*
+                * TODO change this!
+                * */
+                getView().showToast("FAIL: " + error.toString());
+                getView().toggleLoading(false);
+            }
+        });
     }
 
     /*

@@ -28,7 +28,9 @@ public class DatePickerToEditTextDialog {
     private EditText editText;
     private DatePickerDialog datePickerDialog;
     private SimpleDateFormat dateFormatter;
+    private SimpleDateFormat serverDateFormatter;
     private Context context;
+    private String dateServerFormat;
     private static String dateFormat = HelperKey.USER_DATE_FORMAT;
 
     private boolean isBeforeToday, isInMaxRequest, isToday, isMaxDateToday, isNormalDate;
@@ -39,7 +41,7 @@ public class DatePickerToEditTextDialog {
         this.context = context;
         this.isMaxDateToday = isMaxDateToday;
         this.isNormalDate = isNormalDate;
-
+        serverDateFormatter = new SimpleDateFormat(HelperKey.SERVER_DATE_FORMAT, Locale.getDefault());
         dateFormatter = new SimpleDateFormat(dateFormat, Locale.getDefault());
         editText.setInputType(InputType.TYPE_NULL);
         editText.requestFocus();
@@ -52,6 +54,7 @@ public class DatePickerToEditTextDialog {
         this.context = context;
         this.isMaxDateToday = isMaxDateToday;
         this.isNormalDate = isNormalDate;
+        serverDateFormatter = new SimpleDateFormat(HelperKey.SERVER_DATE_FORMAT, Locale.getDefault());
         dateFormatter = new SimpleDateFormat(dateFormat, Locale.getDefault());
         editText.setInputType(InputType.TYPE_NULL);
         editText.requestFocus();
@@ -73,6 +76,7 @@ public class DatePickerToEditTextDialog {
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
                 String date = dateFormatter.format(newDate.getTime());
+                dateServerFormat = serverDateFormatter.format(newDate.getTime());
                 editText.setText(date);
                 isBeforeToday = checkBeforeToday(date);
                 isInMaxRequest = checkInMaxRequest(date);
@@ -105,6 +109,7 @@ public class DatePickerToEditTextDialog {
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
                 String date = dateFormatter.format(newDate.getTime());
+                dateServerFormat = serverDateFormatter.format(newDate.getTime());
                 editText.setText(date);
                 isBeforeToday = checkBeforeToday(date);
                 isInMaxRequest = checkInMaxRequest(date);
@@ -199,4 +204,7 @@ public class DatePickerToEditTextDialog {
         datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() + (days*24*60*60*1000));
     }
 
+    public String getDateServerFormat() {
+        return dateServerFormat;
+    }
 }

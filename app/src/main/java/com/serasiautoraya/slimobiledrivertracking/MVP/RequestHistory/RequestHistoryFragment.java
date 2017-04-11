@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import com.serasiautoraya.slimobiledrivertracking.subfragment.CicoRequestHistory
 
 import net.grandcentrix.thirtyinch.TiFragment;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,12 +65,17 @@ public class RequestHistoryFragment extends TiFragment<RequestHistoryPresenter, 
         this.setupViewPager(mViewPager);
         mTabLayout.setupWithViewPager(mViewPager);
         this.initializePickerDialog();
-        getPresenter().loadRequestHistoryData(mEtDateStart.getText().toString(), mEtDateEnd.getText().toString());
+        getPresenter().initialRequestHistoryData();
+        getPresenter().loadRequestHistoryData("2017-04-01", "2017-05-01");
     }
 
     @Override
     public void toggleLoading(boolean isLoading) {
-
+        if(isLoading){
+            mProgressDialog = ProgressDialog.show(getContext(), getResources().getString(R.string.prog_msg_cancel_request),getResources().getString(R.string.prog_msg_wait),true,false);
+        }else{
+            mProgressDialog.dismiss();
+        }
     }
 
     @Override
@@ -90,13 +97,32 @@ public class RequestHistoryFragment extends TiFragment<RequestHistoryPresenter, 
     @Override
     @OnTextChanged(value = R.id.edittext_attendance_history_datemulai, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void onTextStartDateChangeAfter(Editable editable) {
+        try {
+            mDatePickerToEditTextDialogEnd = new DatePickerToEditTextDialog(mEtDateEnd, getContext(), false, true);
+            mDatePickerToEditTextDialogEnd.setMaxDateHistory(mEtDateStart.getText().toString());
+            mDatePickerToEditTextDialogEnd.setMinDateHistory(mEtDateStart.getText().toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
 
+    @Override
+    public void setTextEndDate(String textEndDate) {
+        mEtDateEnd.setText(textEndDate);
+    }
+
+    @Override
+    public void setTextStartDate(String textStartDate) {
+        mEtDateStart.setText(textStartDate);
     }
 
     @Override
     @OnTextChanged(value = R.id.edittext_attendance_history_dateakhir, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void onTextEndDateChangeAfter(Editable editable) {
-
+//        if (!mEtDateEnd.getText().toString().equalsIgnoreCase("")) {
+//            getPresenter().loadRequestHistoryData(mEtDateStart.getText().toString(), mEtDateEnd.getText().toString());
+//        }
+        Log.d("TAG_ENDDATE", "Text After changed");
     }
 
     private void setupViewPager(final ViewPager viewPager) {

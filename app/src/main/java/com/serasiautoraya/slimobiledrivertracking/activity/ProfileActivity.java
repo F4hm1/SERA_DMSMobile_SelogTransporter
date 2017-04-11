@@ -46,6 +46,7 @@ public class ProfileActivity extends AppCompatActivity{
 
     private void assignContent() {
         Picasso.with(ProfileActivity.this).load(HelperBridge.MODEL_LOGIN_DATA.getPhotoFront()).into(imgProfilePhoto);
+
         textProfileNameFp.setText(HelperBridge.MODEL_LOGIN_DATA.getFullName());
         String position = HelperBridge.MODEL_LOGIN_DATA.getPosition() == "Driver"? "Transporter": HelperBridge.MODEL_LOGIN_DATA.getPosition();
         textProfilePosisiFp.setText(HelperBridge.MODEL_LOGIN_DATA.getPosition());
@@ -93,8 +94,7 @@ public class ProfileActivity extends AppCompatActivity{
     }
 
     private void assignActionBar() {
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_profile);
         String title = getIntent().getStringExtra(HelperKey.EXTRA_KEY_TITLE);
         ActionBar actionBar = getSupportActionBar();

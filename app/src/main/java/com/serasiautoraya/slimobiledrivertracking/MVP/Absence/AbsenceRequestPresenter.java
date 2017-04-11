@@ -61,7 +61,7 @@ public class AbsenceRequestPresenter extends TiPresenter<AbsenceRequestView> {
 
     public void onRequestSubmitted(){
         getView().toggleLoading(true);
-        mRestConnection.postData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.POST_ABSENCE_TEMPORARY, mAbsenceRequestSendModel.getHashMapType(), new RestCallbackInterfaceJSON() {
+        mRestConnection.postData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.POST_ABSENCE, mAbsenceRequestSendModel.getHashMapType(), new RestCallbackInterfaceJSON() {
             @Override
             public void callBackOnSuccess(JSONObject response) {
                 try {
@@ -84,7 +84,7 @@ public class AbsenceRequestPresenter extends TiPresenter<AbsenceRequestView> {
                 * TODO change this, jadikan value nya dari string values!
                 * */
                 getView().toggleLoading(false);
-                getView().showStandardDialog("Gagal melakukan cico, silahkan periksa koneksi anda kemudian coba kembali", "Perhatian");
+                getView().showStandardDialog("Gagal melakukan pengajuan ketidakhadiran, silahkan periksa koneksi anda kemudian coba kembali", "Perhatian");
             }
         });
     }

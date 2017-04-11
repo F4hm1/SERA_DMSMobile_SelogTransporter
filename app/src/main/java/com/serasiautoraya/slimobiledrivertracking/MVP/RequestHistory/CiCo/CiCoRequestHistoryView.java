@@ -10,4 +10,6 @@ public interface CiCoRequestHistoryView extends BaseViewInterface{
 
     void refreshRecyclerView();
 
+    void showCancelConfirmationDialog(String requestDate);
+
 }
