@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -23,11 +24,16 @@ import android.widget.RemoteViews;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.SharedPrefsModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Login.LoginActivity;
+import com.serasiautoraya.slimobiledrivertracking.MVP.SQLIte.DBHelper;
 import com.serasiautoraya.slimobiledrivertracking.R;
 //import com.serasiautoraya.slimobiledrivertracking.activity.LoginActivity;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperKey;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -37,7 +43,6 @@ public class FCMMessageService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-//        Log.d("TAG_NOTIF", "Message Received here");
         Map<String, String> data = remoteMessage.getData();
 
 //        String value1  = data.get("title");
@@ -55,6 +60,8 @@ public class FCMMessageService extends FirebaseMessagingService {
 
     public void showNotification(Map<String, String> message)
     {
+        SharedPrefsModel sharedPrefsModel = new SharedPrefsModel(getApplicationContext());
+
         Intent i = new Intent(this, LoginActivity.class);
 //        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP ); //FLAG_ACTIVITY_CLEAR_TOP
 
@@ -87,8 +94,23 @@ public class FCMMessageService extends FirebaseMessagingService {
 
         NotificationManager manager =   (NotificationManager)getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
 //        Integer index = Integer.parseInt();
-        manager.notify(SharedPrefsUtil.getInt(this, HelperKey.KEY_NOTIF_ID, 0),builder.build());
-        SharedPrefsUtil.apply(this, HelperKey.KEY_NOTIF_ID, SharedPrefsUtil.getInt(this, HelperKey.KEY_NOTIF_ID, 0) + 1);
+        manager.notify(sharedPrefsModel.get(HelperKey.KEY_NOTIF_ID, 0),builder.build());
+        sharedPrefsModel.apply(HelperKey.KEY_NOTIF_ID, sharedPrefsModel.get(HelperKey.KEY_NOTIF_ID, 0) + 1);
+
+        saveToDatabase(message);
+    }
+
+    private void saveToDatabase(Map<String, String> message){
+        Calendar dateCal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy, hh:mm:ss");
+        String dateString = sdf.format(dateCal.getTime());
+
+        DBHelper dbHelper = DBHelper.getInstance(getApplicationContext());
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DBHelper.NOTIFICATION_COLUMN_TITLE, message.get("Title"));
+        contentValues.put(DBHelper.NOTIFICATION_COLUMN_MESSAGE, message.get("Body"));
+        contentValues.put(DBHelper.NOTIFICATION_COLUMN_DATE, dateString);
+        dbHelper.insert(DBHelper.NOTIFICATION_TABLE_NAME, contentValues);
     }
 
     public void showPopUpAlert(String message){

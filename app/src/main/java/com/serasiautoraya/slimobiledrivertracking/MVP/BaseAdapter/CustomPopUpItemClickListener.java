@@ -6,8 +6,8 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.RequestHistory.RequestHist
  * Created by Randi Dwi Nandra on 04/04/2017.
  */
 
-public interface CustomPopUpItemClickListener {
+public interface CustomPopUpItemClickListener<T> {
 
-    boolean startAction(RequestHistoryResponseModel requestHistoryResponseModel, int menuId);
+    boolean startAction(T model, int menuId);
 
 }

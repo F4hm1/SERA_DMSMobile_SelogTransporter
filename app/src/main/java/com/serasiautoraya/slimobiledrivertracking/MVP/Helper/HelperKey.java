@@ -16,6 +16,12 @@ public class HelperKey {
 
     public static final String KEY_INTENT_ORDERCODE = "KEY_ORDERCODE";
 
+    //Permission Code
+    public static final int STORAGE_PERMISSION_GRANTED_CODE = 1001;
+    public static final int LOCATION_PERMISSION_GRANTED_CODE = 1002;
+    public static final int SYSWINDOWS_PERMISSION_GRANTED_CODE = 1003;
+    public static final int VIBRATE_PERMISSION_GRANTED_CODE = 1004;
+
 
 
 

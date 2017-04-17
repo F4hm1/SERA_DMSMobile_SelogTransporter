@@ -30,4 +30,7 @@ public class HelperTransactionCode {
     public static final String REQUEST_HISTORY_OLCTRIP_CODE = "OLCTRIP";
     public static final String REQUEST_HISTORY_OVERTIME_CODE = "OVERTIME";
 
+    public static final String FATIGUE_NO_ANSWER_CODE = "TIDAK";
+    public static final String FATIGUE_YES_ANSWER_CODE = "IYA";
+
 }

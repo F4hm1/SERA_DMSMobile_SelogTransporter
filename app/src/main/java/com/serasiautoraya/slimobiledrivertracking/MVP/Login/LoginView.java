@@ -15,4 +15,5 @@ public interface LoginView extends BaseViewInterface, FormViewInterface {
 
     void changeActivity(Class targetActivity);
 
+    void startInitializeLocation();
 }

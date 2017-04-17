@@ -42,6 +42,7 @@
     <string name="title_absence_request">Pengajuan Ketidakhadiran</string>
     <string name="title_history_attendance">Riwayat Kehadiran</string>
     <string name="title_ganti_password">Ganti Kata Sandi</string>
+    <string name="title_notification_list">Riwayat Notifikasi</string>
     <string name="title_logout">Keluar</string>
 
     <!--ContentFragment-->
@@ -187,6 +188,7 @@
     <string name="fi_dialog_quest_3">Tidak mengkonsumsi alkohol</string>
     <string name="fi_dialog_quest_4">Tidak mengkonsumsi obat-obatan terlarang (Narkoba)</string>
     <string name="fi_dialog_quest_5">Siap untuk bertugas mengemudi</string>
+    <string name="progress_msg_fatigue">Menyimpan data fatigue</string>
 
     <!--Expanse Capture-->
     <string name="expanse_label_type">Tipe Expanse</string>

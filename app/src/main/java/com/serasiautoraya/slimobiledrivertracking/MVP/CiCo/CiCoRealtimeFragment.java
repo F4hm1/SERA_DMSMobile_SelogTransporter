@@ -86,11 +86,7 @@ public class CiCoRealtimeFragment extends TiFragment<CiCoRealtimePresenter, CiCo
         HelperUtil.showConfirmationAlertDialog(textMsg, getContext(), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if(!PermissionsUtil.issLocationGranted()){
-                    PermissionsUtil.requestLocationPermission(getActivity());
-                }else {
-                    getPresenter().onSubmitCiCo();
-                }
+                getPresenter().onSubmitCiCo();
             }
         });
     }

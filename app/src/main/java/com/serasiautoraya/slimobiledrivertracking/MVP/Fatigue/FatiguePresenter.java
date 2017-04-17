@@ -1,0 +1,94 @@
+package com.serasiautoraya.slimobiledrivertracking.MVP.Fatigue;
+
+import android.support.annotation.NonNull;
+
+import com.android.volley.error.VolleyError;
+import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallbackInterfaceJSON;
+import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperBridge;
+import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperTransactionCode;
+import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperUrl;
+import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
+import com.serasiautoraya.slimobiledrivertracking.util.HttpsTrustManager;
+
+import net.grandcentrix.thirtyinch.TiPresenter;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+/**
+ * Created by Randi Dwi Nandra on 12/04/2017.
+ */
+
+public class FatiguePresenter extends TiPresenter<FatigueView>{
+
+    private RestConnection mRestConnection;
+    private FatigueSubmitSendModel mFatigueSubmitSendModel;
+
+    public FatiguePresenter(RestConnection mRestConnection) {
+        this.mRestConnection = mRestConnection;
+    }
+
+    @Override
+    protected void onAttachView(@NonNull final FatigueView view) {
+        super.onAttachView(view);
+        HttpsTrustManager.allowAllSSL();
+        getView().initialize();
+    }
+
+    public void onRequestSubmitted() {
+        getView().toggleLoading(true);
+        mRestConnection.postData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.POST_FATIGUE_INTERVIEW, mFatigueSubmitSendModel.getHashMapType(), new RestCallbackInterfaceJSON() {
+            @Override
+            public void callBackOnSuccess(JSONObject response) {
+                try {
+                    getView().toggleLoading(false);
+                    getView().showStandardDialog(response.getString("responseText"), "Berhasil");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void callBackOnFail(String response) {
+                getView().toggleLoading(false);
+                getView().showStandardDialog(response, "Perhatian");
+            }
+
+            @Override
+            public void callBackOnError(VolleyError error) {
+                /*
+                * TODO change this, jadikan value nya dari string values!
+                * */
+                getView().toggleLoading(false);
+                getView().showStandardDialog("Gagal mengirim data fatigue interview, silahkan periksa koneksi anda kemudian coba kembali", "Perhatian");
+            }
+        });
+    }
+
+    public void onSubmitClicked(
+            String resultQuestion1,
+            String resultQuestion2,
+            String resultQuestion3,
+            String resultQuestion4,
+            String resultQuestion5) {
+
+        boolean result = false;
+        String notFatigueReason = "";
+        String resultQuestions[] = {resultQuestion1, resultQuestion2, resultQuestion3, resultQuestion4, resultQuestion5};
+
+        for (String resultQuestion :
+                resultQuestions) {
+            if(!resultQuestion.equalsIgnoreCase(HelperTransactionCode.FATIGUE_YES_ANSWER_CODE)){
+                notFatigueReason += resultQuestion +" (Jawaban: Tidak) - \n";
+                result = true;
+            }
+        }
+
+        mFatigueSubmitSendModel = new FatigueSubmitSendModel(
+                HelperBridge.sModelLoginResponse.getPersonalId(),
+                result?"1":"0",
+                notFatigueReason
+        );
+        getView().showConfirmationDialog();
+    }
+}

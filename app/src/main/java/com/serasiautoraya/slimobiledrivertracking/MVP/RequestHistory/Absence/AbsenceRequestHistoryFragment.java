@@ -77,7 +77,7 @@ implements AbsenceRequestHistoryView{
     }
 
     private void initializeRecylerView() {
-        RequestHistoryAdapter simpleListAdapter = new RequestHistoryAdapter(new CustomPopUpItemClickListener() {
+        RequestHistoryAdapter simpleListAdapter = new RequestHistoryAdapter(new CustomPopUpItemClickListener<RequestHistoryResponseModel>() {
             @Override
             public boolean startAction(RequestHistoryResponseModel requestHistoryResponseModel, int menuId) {
                 switch (menuId) {

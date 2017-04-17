@@ -24,9 +24,12 @@ import android.widget.TextView;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Absence.AbsenceRequestFragment;
 import com.serasiautoraya.slimobiledrivertracking.MVP.ChangePassword.ChangePasswordActivity;
 import com.serasiautoraya.slimobiledrivertracking.MVP.CiCo.CiCoFragment;
+import com.serasiautoraya.slimobiledrivertracking.MVP.Fatigue.FatigueActivity;
 import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Assigned.AssignedFragment;
+import com.serasiautoraya.slimobiledrivertracking.MVP.NotificatonList.NotificationListActivity;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RequestHistory.RequestHistoryFragment;
 import com.serasiautoraya.slimobiledrivertracking.R;
+import com.serasiautoraya.slimobiledrivertracking.activity.FatigueInterviewActivity;
 import com.serasiautoraya.slimobiledrivertracking.listener.TextViewTouchListener;
 import com.serasiautoraya.slimobiledrivertracking.util.LocationServiceUtil;
 
@@ -154,7 +157,12 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
     public Class getTargetActivityClass(int idNavItem) {
         switch (idNavItem) {
             case R.id.nav_change_pass:
-                return ChangePasswordActivity.class;
+//                return ChangePasswordActivity.class;
+                return FatigueActivity.class;
+            case R.id.nav_notification_list:
+                return NotificationListActivity.class;
+//            case R.id.nav_logout:
+//                return logout();
             default:
                 return ChangePasswordActivity.class;
         }
@@ -196,7 +204,7 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         this.mFragmentSelectedID = id;
-        if(id != R.id.nav_change_pass && id != R.id.nav_logout){
+        if(id != R.id.nav_change_pass && id != R.id.nav_logout && id != R.id.nav_notification_list){
             getPresenter().onNavigationItemSelectedForFragment(id);
         }else{
             getPresenter().onNavigationItemSelectedForActivity(id);

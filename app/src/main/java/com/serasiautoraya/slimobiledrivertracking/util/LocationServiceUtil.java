@@ -79,12 +79,10 @@ public class LocationServiceUtil implements LocationListener, GoogleApiClient.On
 
     public void connectGoogleAPIClient(){
         if (mGoogleApiClient != null) {
-//            Log.d("LOHIN_TAG", "connect try");
             if(!mGoogleApiClient.isConnected()){
                 mGoogleApiClient.connect();
             }
         }
-//        Log.d("LOHIN_TAG", "connect pass: ");
     }
 
     /**
@@ -94,7 +92,6 @@ public class LocationServiceUtil implements LocationListener, GoogleApiClient.On
     public static LocationServiceUtil getLocationManager(Context context) {
         GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
         int result = googleAPI.isGooglePlayServicesAvailable(context);
-//        Log.d("LOHIN_TAG", "logintag: "+result);
         if(result != ConnectionResult.SUCCESS) {
             if(googleAPI.isUserResolvableError(result)) {
                 googleAPI.getErrorDialog((LoginActivity) context, result, 9001).show();
@@ -131,14 +128,11 @@ public class LocationServiceUtil implements LocationListener, GoogleApiClient.On
     public void onLocationChanged(Location location) {
         if(location != null){
             this.sLocation = location;
-//            Log.d("GPS_LOC", "GPS Enabled "+location.getProvider()+": "+ location.getLatitude()+" - "+location.getLongitude());
-//            HelperUtil.showSimpleToast(location.getProvider()+": \n"+ location.getLatitude()+"\n"+location.getLongitude(), mTemporaryContext);
         }
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-//        Log.d("LOHIN_TAG", "connect failed: "+connectionResult.getErrorCode());
         if(connectionResult.getErrorCode() != ConnectionResult.SUCCESS) {
             GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
             if(googleAPI.isUserResolvableError(connectionResult.getErrorCode())) {

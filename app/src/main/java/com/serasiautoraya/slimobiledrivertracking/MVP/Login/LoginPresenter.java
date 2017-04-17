@@ -12,6 +12,7 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.Dashboard.DashboardActivit
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperBridge;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperKey;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperUrl;
+import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.PermissionsHelper;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking.util.FirebaseInstanceIdServiceUtil;
 import com.serasiautoraya.slimobiledrivertracking.util.HttpsTrustManager;
@@ -28,52 +29,70 @@ import org.json.JSONObject;
 public class LoginPresenter extends TiPresenter<LoginView> {
     private SharedPrefsModel mSharedPrefsModel;
     private RestConnection mRestConnection;
+    private PermissionsHelper mPermissionsHelper;
 
-    public LoginPresenter(SharedPrefsModel sharedPrefsModel, RestConnection mRestConnection) {
+    public LoginPresenter(SharedPrefsModel sharedPrefsModel, RestConnection mRestConnection, PermissionsHelper permissionsHelper) {
         this.mSharedPrefsModel = sharedPrefsModel;
         this.mRestConnection = mRestConnection;
+        this.mPermissionsHelper = permissionsHelper;
     }
 
+    public void initializePermissions(){
+        mPermissionsHelper.requestLocationPermission();
+    }
 
     public void onLogin(String username, String password){
-        final String fUsername = username;
-        final String fPassword = password;
+        if(mPermissionsHelper.isAllPermissionsGranted()){
+            if(mPermissionsHelper.isAllPermissionsGranted()){
+                getView().startInitializeLocation();
+            }
+            final String fUsername = username;
+            final String fPassword = password;
 
-        LoginSendModel loginSendModel = new LoginSendModel(username, password, mSharedPrefsModel.get(HelperKey.KEY_TOKEN_SAVED, "token-not-defined"));
-        getView().toggleLoading(true);
-        mRestConnection.postData("", HelperUrl.POST_LOGIN, loginSendModel.getHashMapType(), new RestCallbackInterfaceJSON() {
-            @Override
-            public void callBackOnSuccess(JSONObject response) {
-                try {
-                    JSONObject jsonObject = response.getJSONArray("data").getJSONObject(0);
-                    HelperBridge.sModelLoginResponse = Model.getModelInstanceFromString(jsonObject.toString(), LoginResponseModel.class);
-                    mSharedPrefsModel.apply(HelperKey.KEY_USERNAME, fUsername);
-                    mSharedPrefsModel.apply(HelperKey.KEY_PASSWORD, fPassword);
-                    getView().toggleLoading(false);
-                    getView().changeActivity(DashboardActivity.class);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+            String tokenFCM = mSharedPrefsModel.get(HelperKey.KEY_TOKEN_SAVED, "token-not-defined");
+            if(tokenFCM.equalsIgnoreCase("token-not-defined")){
+                tokenFCM = FirebaseInstanceId.getInstance().getToken();
+            }
+
+            LoginSendModel loginSendModel = new LoginSendModel(username, password, tokenFCM);
+            getView().toggleLoading(true);
+            mRestConnection.postData("", HelperUrl.POST_LOGIN, loginSendModel.getHashMapType(), new RestCallbackInterfaceJSON() {
+                @Override
+                public void callBackOnSuccess(JSONObject response) {
+                    try {
+                        JSONObject jsonObject = response.getJSONArray("data").getJSONObject(0);
+                        HelperBridge.sModelLoginResponse = Model.getModelInstanceFromString(jsonObject.toString(), LoginResponseModel.class);
+                        mSharedPrefsModel.apply(HelperKey.HAS_LOGIN, true);
+                        mSharedPrefsModel.apply(HelperKey.KEY_USERNAME, fUsername);
+                        mSharedPrefsModel.apply(HelperKey.KEY_PASSWORD, fPassword);
+                        getView().toggleLoading(false);
+                        getView().changeActivity(DashboardActivity.class);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
 
-            @Override
-            public void callBackOnFail(String response) {
+                @Override
+                public void callBackOnFail(String response) {
                 /*
                 * TODO change this!
                 * */
-                getView().showToast("FAILLLLSSS: "+response);
-                getView().toggleLoading(false);
-            }
+                    getView().showToast("FAILLLLSSS: "+response);
+                    getView().toggleLoading(false);
+                }
 
-            @Override
-            public void callBackOnError(VolleyError error) {
+                @Override
+                public void callBackOnError(VolleyError error) {
                 /*
                 * TODO change this!
                 * */
-                getView().showToast("FAIL: "+error.toString());
-                getView().toggleLoading(false);
-            }
-        });
+                    getView().showToast("FAIL: "+error.toString());
+                    getView().toggleLoading(false);
+                }
+            });
+        }else {
+            mPermissionsHelper.requestLocationPermission();
+        }
     }
 
     @Override
@@ -81,6 +100,9 @@ public class LoginPresenter extends TiPresenter<LoginView> {
         super.onAttachView(view);
         HttpsTrustManager.allowAllSSL();
         getView().initialize();
+        if(mPermissionsHelper.isAllPermissionsGranted()){
+            getView().startInitializeLocation();
+        }
         /*
         * TODO Change / uncomment this, and init location and get permissions?
         * */
@@ -90,6 +112,9 @@ public class LoginPresenter extends TiPresenter<LoginView> {
         if(mSharedPrefsModel.get(HelperKey.HAS_LOGIN, false)){
             String password = mSharedPrefsModel.get(HelperKey.KEY_PASSWORD, "");
             String username = mSharedPrefsModel.get(HelperKey.KEY_USERNAME, "");
+            /*
+            * TODO change foreground of login view to full white or other solid color
+            * */
             onLogin(username, password);
         }
     }

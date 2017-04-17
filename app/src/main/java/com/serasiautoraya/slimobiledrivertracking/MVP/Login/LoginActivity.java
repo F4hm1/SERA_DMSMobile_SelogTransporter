@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.SharedPrefsModel;
+import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.PermissionsHelper;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking.R;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
@@ -50,14 +51,18 @@ public class LoginActivity extends TiActivity<LoginPresenter, LoginView> impleme
     @NonNull
     @Override
     public LoginPresenter providePresenter() {
-        return new LoginPresenter(new SharedPrefsModel(LoginActivity.this), new RestConnection(LoginActivity.this));
+        return new LoginPresenter(
+                new SharedPrefsModel(LoginActivity.this),
+                new RestConnection(LoginActivity.this),
+                PermissionsHelper.getInstance(this, this)
+        );
     }
 
     @Override
     public void initialize() {
         this.setLocaleDefault();
         this.startFCMServices();
-        this.startInitializeLocation();
+        getPresenter().initializePermissions();
     }
 
     @Override
@@ -92,7 +97,8 @@ public class LoginActivity extends TiActivity<LoginPresenter, LoginView> impleme
         startService(new Intent(this, FCMMessageService.class));
     }
 
-    private void startInitializeLocation() {
+    @Override
+    public void startInitializeLocation() {
         LocationServiceUtil.getLocationManager(LoginActivity.this);
     }
 
@@ -141,5 +147,6 @@ public class LoginActivity extends TiActivity<LoginPresenter, LoginView> impleme
     public void changeActivity(Class targetActivity) {
         Intent intent = new Intent(LoginActivity.this, targetActivity);
         startActivity(intent);
+        this.finish();
     }
 }

@@ -1,11 +1,9 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.Absence;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.android.volley.error.VolleyError;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallbackInterfaceJSON;
-import com.serasiautoraya.slimobiledrivertracking.MVP.CiCo.CiCoRequestSendModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperBridge;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperTransactionCode;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperUrl;
