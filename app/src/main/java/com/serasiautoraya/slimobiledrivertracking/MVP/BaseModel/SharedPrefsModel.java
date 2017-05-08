@@ -52,7 +52,7 @@ public class SharedPrefsModel {
 
 
     /*Clear All (When Logout)*/
-    private void clearAll() {
+    public void clearAll() {
         SharedPreferences.Editor e = sharedPrefs.edit();
         e.clear();
         e.apply();

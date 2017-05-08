@@ -16,6 +16,8 @@ public interface CiCoRealtimeView extends BaseViewInterface{
 
     void showConfirmationDialog(String type, String timeZone, String dateMessage, String monthMessage, String yearMessage, String timeMessage);
 
+    void changeActivity(Class cls);
+
     @DistinctUntilChanged
     @CallOnMainThread
     void toggleLoadingCiCo(boolean isLoading);

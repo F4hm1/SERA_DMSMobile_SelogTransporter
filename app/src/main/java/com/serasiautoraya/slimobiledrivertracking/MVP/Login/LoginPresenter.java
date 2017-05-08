@@ -1,6 +1,8 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.Login;
 
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import com.android.volley.error.VolleyError;
@@ -14,7 +16,6 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperKey;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperUrl;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.PermissionsHelper;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
-import com.serasiautoraya.slimobiledrivertracking.util.FirebaseInstanceIdServiceUtil;
 import com.serasiautoraya.slimobiledrivertracking.util.HttpsTrustManager;
 
 import net.grandcentrix.thirtyinch.TiPresenter;
@@ -30,11 +31,13 @@ public class LoginPresenter extends TiPresenter<LoginView> {
     private SharedPrefsModel mSharedPrefsModel;
     private RestConnection mRestConnection;
     private PermissionsHelper mPermissionsHelper;
+    private TelephonyManager mTelephonyManager;
 
-    public LoginPresenter(SharedPrefsModel sharedPrefsModel, RestConnection mRestConnection, PermissionsHelper permissionsHelper) {
+    public LoginPresenter(SharedPrefsModel sharedPrefsModel, RestConnection mRestConnection, PermissionsHelper permissionsHelper, TelephonyManager mTelephonyManager) {
         this.mSharedPrefsModel = sharedPrefsModel;
         this.mRestConnection = mRestConnection;
         this.mPermissionsHelper = permissionsHelper;
+        this.mTelephonyManager = mTelephonyManager;
     }
 
     public void initializePermissions(){
@@ -49,12 +52,21 @@ public class LoginPresenter extends TiPresenter<LoginView> {
             final String fUsername = username;
             final String fPassword = password;
 
+            String deviceID = "";
+            if (Build.VERSION.SDK_INT >= 23){
+                deviceID = mTelephonyManager.getDeviceId(0);
+            }else {
+                deviceID = mTelephonyManager.getDeviceId();
+            }
+
+            getView().showToast("DEVICE-ID: "+deviceID);
+
             String tokenFCM = mSharedPrefsModel.get(HelperKey.KEY_TOKEN_SAVED, "token-not-defined");
             if(tokenFCM.equalsIgnoreCase("token-not-defined")){
                 tokenFCM = FirebaseInstanceId.getInstance().getToken();
             }
 
-            LoginSendModel loginSendModel = new LoginSendModel(username, password, tokenFCM);
+            LoginSendModel loginSendModel = new LoginSendModel(username, password, tokenFCM, deviceID);
             getView().toggleLoading(true);
             mRestConnection.postData("", HelperUrl.POST_LOGIN, loginSendModel.getHashMapType(), new RestCallbackInterfaceJSON() {
                 @Override

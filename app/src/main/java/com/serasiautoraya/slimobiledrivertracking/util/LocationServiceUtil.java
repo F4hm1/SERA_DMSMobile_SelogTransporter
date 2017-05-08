@@ -1,7 +1,6 @@
 package com.serasiautoraya.slimobiledrivertracking.util;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -13,7 +12,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -22,7 +20,6 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.serasiautoraya.slimobiledrivertracking.activity.LoginActivity;
-import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
 
 import java.io.IOException;
 import java.util.List;

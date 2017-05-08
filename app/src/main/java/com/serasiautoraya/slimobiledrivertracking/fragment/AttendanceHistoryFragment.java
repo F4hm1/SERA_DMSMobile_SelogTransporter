@@ -30,7 +30,6 @@ import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
 import com.serasiautoraya.slimobiledrivertracking.listener.ClickListener;
 import com.serasiautoraya.slimobiledrivertracking.listener.RecyclerTouchListener;
 import com.serasiautoraya.slimobiledrivertracking.model.ModelArrayData;
-import com.serasiautoraya.slimobiledrivertracking.model.ModelPersonalData;
 import com.serasiautoraya.slimobiledrivertracking.model.ModelReportResponse;
 import com.serasiautoraya.slimobiledrivertracking.model.VolleyUtil;
 import com.serasiautoraya.slimobiledrivertracking.util.DividerRecycleViewDecoration;

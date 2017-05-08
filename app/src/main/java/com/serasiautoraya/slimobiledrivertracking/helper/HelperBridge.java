@@ -6,7 +6,6 @@ import com.serasiautoraya.slimobiledrivertracking.adapter.GeneralSingleList;
 import com.serasiautoraya.slimobiledrivertracking.adapter.OrderSingleList;
 import com.serasiautoraya.slimobiledrivertracking.model.ModelActivityJourney;
 import com.serasiautoraya.slimobiledrivertracking.model.ModelLoginResponse;
-import com.serasiautoraya.slimobiledrivertracking.model.ModelPersonalData;
 import com.serasiautoraya.slimobiledrivertracking.model.ModelReportResponse;
 import com.serasiautoraya.slimobiledrivertracking.model.ModelRequestReportResponse;
 import com.serasiautoraya.slimobiledrivertracking.util.GPSTracker;

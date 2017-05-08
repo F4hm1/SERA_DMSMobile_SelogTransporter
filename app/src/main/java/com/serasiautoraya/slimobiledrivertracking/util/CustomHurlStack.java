@@ -4,7 +4,6 @@ package com.serasiautoraya.slimobiledrivertracking.util;
 import com.android.volley.Request;
 import com.android.volley.error.AuthFailureError;
 import com.android.volley.toolbox.HttpStack;
-import com.android.volley.toolbox.HurlStack;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;

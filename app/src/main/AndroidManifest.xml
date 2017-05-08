@@ -3,7 +3,7 @@
     package="com.serasiautoraya.slimobiledrivertracking">
 
     <application
-        android:name=".util.AppInit"
+        android:name="com.serasiautoraya.slimobiledrivertracking.util.AppInit"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".activity.LoginActivity"
+            android:name=".MVP.Login.LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -21,38 +21,42 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MVP.Dashboard.DashboardActivity" android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".MVP.JourneyOrder.Activity.ActivityDetailActivity"/>
-        <activity android:name=".MVP.Profiling.ProfileActivity"/>
-        <activity android:name=".MVP.ChangePassword.ChangePasswordActivity"/>
-        <activity android:name=".MVP.NotificatonList.NotificationListActivity"/>
-        <activity android:name=".MVP.Fatigue.FatigueActivity"/>
-
-        <activity android:name=".activity.DashboardActivity" android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".activity.EvidenceCaptureActivity"/>
-        <activity android:name=".activity.ExpanseCaptureActivity"/>
-        <activity android:name=".activity.OrderDetailActivity"/>
-        <activity android:name=".activity.ChangePasswordActivity"/>
-        <activity android:name=".activity.FatigueInterviewActivity"/>
-        <activity android:name=".activity.ProveActivity"/>
-        <activity android:name=".activity.SignatureActivity"/>
-        <activity android:name=".activity.ProfileActivity"/>
-        <activity android:name=".activity.ActionActivityActivity"/>
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.Dashboard.DashboardActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Activity.ActivityDetailActivity"/>
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.Profiling.ProfileActivity"/>
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.ChangePassword.ChangePasswordActivity"/>
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.NotificatonList.NotificationListActivity"/>
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.Fatigue.FatigueActivity"/>
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.DocumentCapture.DocumentCaptureActivity"/>
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.DocumentCapture.SigningActivity"/>
 
 
-        <service android:name=".util.GPSTracker"
+
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking.activity.DashboardActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking.activity.EvidenceCaptureActivity"/>
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking.activity.ExpanseCaptureActivity"/>
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking.activity.OrderDetailActivity"/>
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking.activity.ChangePasswordActivity"/>
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking.activity.FatigueInterviewActivity"/>
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking.activity.ProveActivity"/>
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking.activity.SignatureActivity"/>
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking.activity.ProfileActivity"/>
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking.activity.ActionActivityActivity"/>
+
+
+        <service android:name="com.serasiautoraya.slimobiledrivertracking.util.GPSTracker"
             android:enabled="true"
             android:exported="false"
             android:label="LocationService"
         />
 
-        <service android:name=".util.FCMMessageService">
+        <service android:name="com.serasiautoraya.slimobiledrivertracking.util.FCMMessageService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
 
-        <service android:name=".util.FirebaseInstanceIdServiceUtil">
+        <service android:name="com.serasiautoraya.slimobiledrivertracking.util.FirebaseInstanceIdServiceUtil">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
@@ -66,9 +70,9 @@
         <!--</receiver>-->
 
         <service
-            android:name=".util.GPSTrackerService"
+            android:name="com.serasiautoraya.slimobiledrivertracking.util.GPSTrackerService"
             android:exported="false"></service>
-        <receiver android:name=".util.GPSTrackerServiceReceiver"></receiver>
+        <receiver android:name="com.serasiautoraya.slimobiledrivertracking.util.GPSTrackerServiceReceiver"></receiver>
 
     </application>
 
@@ -76,5 +80,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
 </manifest>

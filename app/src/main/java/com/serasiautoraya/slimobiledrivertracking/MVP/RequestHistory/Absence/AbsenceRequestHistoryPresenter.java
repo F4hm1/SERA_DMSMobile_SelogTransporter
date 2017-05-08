@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import com.android.volley.error.VolleyError;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseAdapter.SimpleAdapterModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallBackInterfaceModel;
-import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallbackInterfaceJSON;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.BaseResponseModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperBridge;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperUrl;
@@ -14,9 +13,6 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking.util.HttpsTrustManager;
 
 import net.grandcentrix.thirtyinch.TiPresenter;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * Created by Randi Dwi Nandra on 03/04/2017.

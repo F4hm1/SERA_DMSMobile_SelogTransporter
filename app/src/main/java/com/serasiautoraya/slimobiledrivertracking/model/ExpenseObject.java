@@ -1,18 +1,8 @@
 package com.serasiautoraya.slimobiledrivertracking.model;
 
-import android.app.Activity;
-import android.content.ContentResolver;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.provider.MediaStore;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 
 /**
  * Created by Randi Dwi Nandra on 13/03/2017.

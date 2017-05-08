@@ -12,9 +12,6 @@ import android.widget.TextView;
 import com.serasiautoraya.slimobiledrivertracking.R;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
 import com.serasiautoraya.slimobiledrivertracking.listener.CancelableRequest;
-import com.serasiautoraya.slimobiledrivertracking.listener.ServerCallBack;
-import com.serasiautoraya.slimobiledrivertracking.model.ModelTimeRESTResponse;
-import com.serasiautoraya.slimobiledrivertracking.util.TimeWebRestAPI;
 
 import java.util.List;
 

@@ -1,6 +1,5 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Activity;
 
-import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,8 +13,6 @@ import android.widget.TextView;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperKey;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking.R;
-import com.serasiautoraya.slimobiledrivertracking.activity.ActionActivityActivity;
-import com.serasiautoraya.slimobiledrivertracking.activity.EvidenceCaptureActivity;
 
 import net.grandcentrix.thirtyinch.TiActivity;
 

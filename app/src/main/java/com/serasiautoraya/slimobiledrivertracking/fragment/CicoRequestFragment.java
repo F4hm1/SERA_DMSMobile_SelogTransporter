@@ -9,9 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
-import com.android.volley.RequestQueue;
 import com.serasiautoraya.slimobiledrivertracking.R;
 import com.serasiautoraya.slimobiledrivertracking.subfragment.CicoRealtimeSubFragment;
 import com.serasiautoraya.slimobiledrivertracking.subfragment.CicoRequestSubFragment;

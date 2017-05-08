@@ -89,6 +89,30 @@ public class ActivityDetailResponseModel {
     @Expose
     private String Customer;
 
+    @SerializedName("CargoType")
+    @Expose
+    private String CargoType;
+
+    @SerializedName("UnitModel")
+    @Expose
+    private String UnitModel;
+
+    @SerializedName("UnitNumber")
+    @Expose
+    private String UnitNumber;
+
+    @SerializedName("NextActivity")
+    @Expose
+    private String NextActivity;
+
+    @SerializedName("NextActivityLocation")
+    @Expose
+    private String NextActivityLocation;
+
+    @SerializedName("NextActivityTimeTarget")
+    @Expose
+    private String NextActivityTimeTarget;
+
     public String getOrderCode() {
         return OrderCode;
     }
@@ -167,5 +191,29 @@ public class ActivityDetailResponseModel {
 
     public String getCustomer() {
         return Customer;
+    }
+
+    public String getCargoType() {
+        return CargoType;
+    }
+
+    public String getUnitModel() {
+        return UnitModel;
+    }
+
+    public String getUnitNumber() {
+        return UnitNumber;
+    }
+
+    public String getNextActivity() {
+        return NextActivity;
+    }
+
+    public String getNextActivityLocation() {
+        return NextActivityLocation;
+    }
+
+    public String getNextActivityTimeTarget() {
+        return NextActivityTimeTarget;
     }
 }

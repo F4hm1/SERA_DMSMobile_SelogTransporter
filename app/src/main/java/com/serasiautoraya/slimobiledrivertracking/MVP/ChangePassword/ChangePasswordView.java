@@ -3,7 +3,6 @@ package com.serasiautoraya.slimobiledrivertracking.MVP.ChangePassword;
 import android.view.View;
 
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.BaseViewInterface;
-import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.FormViewInterface;
 
 /**
  * Created by Randi Dwi Nandra on 10/04/2017.

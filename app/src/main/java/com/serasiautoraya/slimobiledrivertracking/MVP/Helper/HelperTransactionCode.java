@@ -33,4 +33,14 @@ public class HelperTransactionCode {
     public static final String FATIGUE_NO_ANSWER_CODE = "TIDAK";
     public static final String FATIGUE_YES_ANSWER_CODE = "IYA";
 
+    public static final String FATIGUE_HARD_CODE = "FAT004";
+    public static final String FATIGUE_FREE_CODE = "FAT001";
+
+    public static final int ACTIVITY_PHOTOS_NEED_INDEX = 0;
+    public static final int ACTIVITY_SIGNATURE_NEED_INDEX = 1;
+    public static final int ACTIVITY_EXPENSES_NEED_INDEX = 2;
+    public static final int ACTIVITY_VERIFICATION_NEED_INDEX = 3;
+
+    public static final int ACTIVITY_UPDATE_DOCUMENT_MAX_LENGTH = 4;
+
 }

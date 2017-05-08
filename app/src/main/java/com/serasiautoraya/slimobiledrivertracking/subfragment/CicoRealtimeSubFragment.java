@@ -2,28 +2,21 @@ package com.serasiautoraya.slimobiledrivertracking.subfragment;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.ThemedSpinnerAdapter;
 import android.text.Html;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.GsonRequest;
 import com.serasiautoraya.slimobiledrivertracking.R;
-import com.serasiautoraya.slimobiledrivertracking.activity.FatigueInterviewActivity;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperBridge;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperKey;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperUrl;
@@ -33,14 +26,10 @@ import com.serasiautoraya.slimobiledrivertracking.model.ModelSingleData;
 import com.serasiautoraya.slimobiledrivertracking.model.ModelTimeRESTResponse;
 import com.serasiautoraya.slimobiledrivertracking.model.VolleyUtil;
 import com.serasiautoraya.slimobiledrivertracking.util.GPSTracker;
-import com.serasiautoraya.slimobiledrivertracking.util.LocationManagerUtil;
 import com.serasiautoraya.slimobiledrivertracking.util.LocationServiceUtil;
 import com.serasiautoraya.slimobiledrivertracking.util.PermissionsUtil;
 import com.serasiautoraya.slimobiledrivertracking.util.TimeWebRestAPI;
 
-import java.sql.Time;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 
 /**

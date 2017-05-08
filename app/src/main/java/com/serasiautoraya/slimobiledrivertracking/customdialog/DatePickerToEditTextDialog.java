@@ -2,9 +2,7 @@ package com.serasiautoraya.slimobiledrivertracking.customdialog;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.res.Configuration;
 import android.text.InputType;
-import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;

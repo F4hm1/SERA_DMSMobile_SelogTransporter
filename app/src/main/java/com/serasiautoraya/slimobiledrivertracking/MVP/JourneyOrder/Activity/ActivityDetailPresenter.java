@@ -2,12 +2,7 @@ package com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Activity;
 
 import android.support.annotation.NonNull;
 
-import com.android.volley.error.VolleyError;
-import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallBackInterfaceModel;
-import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.BaseResponseModel;
-import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.Model;
-import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperBridge;
-import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperUrl;
+import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.DocumentCapture.DocumentCaptureActivity;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking.activity.EvidenceCaptureActivity;
 import com.serasiautoraya.slimobiledrivertracking.util.HttpsTrustManager;
@@ -35,7 +30,7 @@ public class ActivityDetailPresenter extends TiPresenter<ActivityDetailView>  {
     }
 
     public void onActionClicked(){
-        getView().changeActivity(EvidenceCaptureActivity.class);
+        getView().changeActivity(DocumentCaptureActivity.class);
     }
 
     public void loadDetailOrderData(String orderCode){

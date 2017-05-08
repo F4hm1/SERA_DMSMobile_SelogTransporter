@@ -3,7 +3,6 @@ package com.serasiautoraya.slimobiledrivertracking.activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -16,10 +15,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.serasiautoraya.slimobiledrivertracking.R;
-import com.serasiautoraya.slimobiledrivertracking.adapter.OrderSingleList;
-import com.serasiautoraya.slimobiledrivertracking.helper.HelperBridge;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperKey;
-import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
 
 /**
  * Created by Randi Dwi Nandra on 06/12/2016.

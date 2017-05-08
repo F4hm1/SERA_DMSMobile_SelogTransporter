@@ -13,4 +13,8 @@ public interface FatigueView extends BaseViewInterface, FormViewInterface{
 
     void showConfirmationDialog();
 
+    void showSuccessDialog(String message, String title);
+
+    void finishActivity();
+
 }

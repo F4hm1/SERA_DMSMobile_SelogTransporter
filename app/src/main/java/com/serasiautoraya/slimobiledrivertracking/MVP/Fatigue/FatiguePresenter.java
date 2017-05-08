@@ -4,7 +4,9 @@ import android.support.annotation.NonNull;
 
 import com.android.volley.error.VolleyError;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallbackInterfaceJSON;
+import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.SharedPrefsModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperBridge;
+import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperKey;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperTransactionCode;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperUrl;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
@@ -15,17 +17,22 @@ import net.grandcentrix.thirtyinch.TiPresenter;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 /**
  * Created by Randi Dwi Nandra on 12/04/2017.
  */
 
-public class FatiguePresenter extends TiPresenter<FatigueView>{
+public class FatiguePresenter extends TiPresenter<FatigueView> {
 
     private RestConnection mRestConnection;
+    private SharedPrefsModel mSharedPrefsModel;
     private FatigueSubmitSendModel mFatigueSubmitSendModel;
 
-    public FatiguePresenter(RestConnection mRestConnection) {
+    public FatiguePresenter(RestConnection mRestConnection, SharedPrefsModel sharedPrefsModel) {
         this.mRestConnection = mRestConnection;
+        this.mSharedPrefsModel = sharedPrefsModel;
     }
 
     @Override
@@ -42,7 +49,16 @@ public class FatiguePresenter extends TiPresenter<FatigueView>{
             public void callBackOnSuccess(JSONObject response) {
                 try {
                     getView().toggleLoading(false);
-                    getView().showStandardDialog(response.getString("responseText"), "Berhasil");
+                    HelperBridge.sModelLoginResponse.setIsDoneFatigueInterview("0");
+                    getView().showSuccessDialog(response.getString("responseText"), "Berhasil");
+
+                    Calendar calendar = Calendar.getInstance();
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(HelperKey.SERVER_DATE_FORMAT);
+                    String dateToday = simpleDateFormat.format(calendar.getTime());
+                    mSharedPrefsModel.apply(HelperKey.KEY_LAST_FATIGUE_INTERVIEW, dateToday + "");
+
+//                    getView().finishActivity();
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -73,22 +89,23 @@ public class FatiguePresenter extends TiPresenter<FatigueView>{
             String resultQuestion5) {
 
         boolean result = false;
-        String notFatigueReason = "";
+        String notFatigueReason = "Alasan: \n";
         String resultQuestions[] = {resultQuestion1, resultQuestion2, resultQuestion3, resultQuestion4, resultQuestion5};
 
         for (String resultQuestion :
                 resultQuestions) {
-            if(!resultQuestion.equalsIgnoreCase(HelperTransactionCode.FATIGUE_YES_ANSWER_CODE)){
-                notFatigueReason += resultQuestion +" (Jawaban: Tidak) - \n";
+            if (!resultQuestion.equalsIgnoreCase(HelperTransactionCode.FATIGUE_YES_ANSWER_CODE)) {
+                notFatigueReason += resultQuestion + " (Jawaban: Tidak) - \n";
                 result = true;
             }
         }
 
         mFatigueSubmitSendModel = new FatigueSubmitSendModel(
                 HelperBridge.sModelLoginResponse.getPersonalId(),
-                result?"1":"0",
+                result ? HelperTransactionCode.FATIGUE_HARD_CODE : HelperTransactionCode.FATIGUE_FREE_CODE,
                 notFatigueReason
         );
         getView().showConfirmationDialog();
     }
+
 }

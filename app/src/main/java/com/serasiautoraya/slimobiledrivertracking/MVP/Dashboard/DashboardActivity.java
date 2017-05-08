@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.serasiautoraya.slimobiledrivertracking.MVP.Absence.AbsenceRequestFragment;
+import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.SharedPrefsModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.ChangePassword.ChangePasswordActivity;
 import com.serasiautoraya.slimobiledrivertracking.MVP.CiCo.CiCoFragment;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Fatigue.FatigueActivity;
@@ -29,15 +30,14 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Assigned.Assi
 import com.serasiautoraya.slimobiledrivertracking.MVP.NotificatonList.NotificationListActivity;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RequestHistory.RequestHistoryFragment;
 import com.serasiautoraya.slimobiledrivertracking.R;
-import com.serasiautoraya.slimobiledrivertracking.activity.FatigueInterviewActivity;
 import com.serasiautoraya.slimobiledrivertracking.listener.TextViewTouchListener;
 import com.serasiautoraya.slimobiledrivertracking.util.LocationServiceUtil;
+import com.squareup.picasso.Picasso;
 
 import net.grandcentrix.thirtyinch.TiActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by Randi Dwi Nandra on 27/03/2017.
@@ -90,7 +90,7 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
     @NonNull
     @Override
     public DashboardPresenter providePresenter() {
-        return new DashboardPresenter();
+        return new DashboardPresenter(new SharedPrefsModel(DashboardActivity.this));
     }
 
 
@@ -157,8 +157,8 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
     public Class getTargetActivityClass(int idNavItem) {
         switch (idNavItem) {
             case R.id.nav_change_pass:
-//                return ChangePasswordActivity.class;
-                return FatigueActivity.class;
+                return ChangePasswordActivity.class;
+//                return FatigueActivity.class;
             case R.id.nav_notification_list:
                 return NotificationListActivity.class;
 //            case R.id.nav_logout:
@@ -175,7 +175,8 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
 
     @Override
     public void logout() {
-
+        getPresenter().logout();
+        this.finish();
     }
 
 
@@ -207,7 +208,11 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
         if(id != R.id.nav_change_pass && id != R.id.nav_logout && id != R.id.nav_notification_list){
             getPresenter().onNavigationItemSelectedForFragment(id);
         }else{
-            getPresenter().onNavigationItemSelectedForActivity(id);
+            if(id == R.id.nav_logout){
+                logout();
+            }else{
+                getPresenter().onNavigationItemSelectedForActivity(id);
+            }
         }
 
         mDrawer.closeDrawer(GravityCompat.START);
@@ -274,8 +279,12 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
         getPresenter().loadDetailProfile();
     }
 
-
-
+    @Override
+    public void setDrawerProfile(String name, String position, String urlPhoto) {
+        Picasso.with(DashboardActivity.this).load(urlPhoto).into(mImageViewNavImg);
+        mTextViewNavNama.setText(name);
+        mTextViewNavPosisi.setText(position);
+    }
 
 
 }

@@ -11,7 +11,7 @@ public class HelperUrl {
      */
 //    private static final String HOST = "http://seradmapimanagementdev.azure-api.net//";
 
-    private static final String HOST = "http://seradrivermanagementapi.azurewebsites.net/";
+    private static final String HOST = "http://drivermanagementapidev.azurewebsites.net/";
 
     public static final String GET_SERVER_LOCALTIME = "http://api.geonames.org/timezoneJSON";
 

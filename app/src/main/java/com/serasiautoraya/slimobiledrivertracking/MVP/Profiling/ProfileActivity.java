@@ -107,7 +107,7 @@ public class ProfileActivity extends TiActivity<ProfilePresenter, ProfileView> i
     }
 
     @Override
-    public void setProfileContent(String nameFp, String posisiFp, String companyFp, String poolNameFp, String nrp, String fullname, String userCostumer, String doo, String kTPExp, String sIMExp) {
+    public void setProfileContent(String nameFp, String posisiFp, String companyFp, String poolNameFp, String nrp, String fullname, String userCostumer, String doo, String kTPExp, String sIMExp, String sIMType) {
         mTvProfileNameFp.setText(nameFp);
         mTvProfilePosisiFp.setText(posisiFp);
         mTvProfileCompanyFp.setText(companyFp);
@@ -118,7 +118,7 @@ public class ProfileActivity extends TiActivity<ProfilePresenter, ProfileView> i
         mTvProfileDoo.setText(doo);
         mTvProfileKTPExp.setText(kTPExp);
         mTvProfileSIMExp.setText(sIMExp);
-        mTvTitleSIMExp.setText(nameFp);
+        mTvTitleSIMExp.setText(sIMType);
     }
 
     @Override

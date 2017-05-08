@@ -121,6 +121,18 @@ public class LoginResponseModel {
     @Expose
     private String MinHariRequestAbsence;
 
+    @SerializedName("IsDoneFatigueInterview")
+    @Expose
+    private String IsDoneFatigueInterview;
+
+    public void setIsDoneFatigueInterview(String isDoneFatigueInterview) {
+        IsDoneFatigueInterview = isDoneFatigueInterview;
+    }
+
+    public String getIsDoneFatigueInterview() {
+        return IsDoneFatigueInterview;
+    }
+
     public String getPersonalId() {
         return PersonalId;
     }

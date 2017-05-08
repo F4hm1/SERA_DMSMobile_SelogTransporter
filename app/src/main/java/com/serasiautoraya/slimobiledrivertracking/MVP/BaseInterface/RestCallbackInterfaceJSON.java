@@ -1,7 +1,6 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface;
 
 import com.android.volley.error.VolleyError;
-import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.BaseResponseModel;
 
 import org.json.JSONObject;
 

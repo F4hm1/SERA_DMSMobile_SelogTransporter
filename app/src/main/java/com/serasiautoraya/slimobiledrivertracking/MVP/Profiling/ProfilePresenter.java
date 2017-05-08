@@ -26,10 +26,11 @@ public class ProfilePresenter extends TiPresenter<ProfileView> {
                 HelperBridge.sModelLoginResponse.getPoolName(),
                 HelperBridge.sModelLoginResponse.getPersonalId(),
                 HelperBridge.sModelLoginResponse.getFullname(),
-                "Customer - ",
+                HelperBridge.sModelLoginResponse.getPersonalApprovalName(),
                 HelperBridge.sModelLoginResponse.getPersonalCoordinatorName(),
                 HelperBridge.sModelLoginResponse.getKtpEndDate(),
-                HelperBridge.sModelLoginResponse.getSIMEndDate()
+                HelperBridge.sModelLoginResponse.getSIMEndDate(),
+                "Tanggal Berakhir "+ HelperBridge.sModelLoginResponse.getSimType()
         );
         getView().setProfilePhoto(HelperBridge.sModelLoginResponse.getPhotoFront());
     }

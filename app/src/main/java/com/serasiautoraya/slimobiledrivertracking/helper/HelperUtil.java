@@ -16,6 +16,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,8 +26,8 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.serasiautoraya.slimobiledrivertracking.R;
-import com.serasiautoraya.slimobiledrivertracking.activity.DashboardActivity;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -136,12 +137,23 @@ public class HelperUtil {
         try {
             out = new FileOutputStream(targetPath);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+            e.printStackTrace();}
+
         scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+
 //        scaledBitmap = null;
         return scaledBitmap;
     }
+
+    public static String encodeTobase64(Bitmap image) {
+        Bitmap immagex = image;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        immagex.compress(Bitmap.CompressFormat.JPEG, 90, baos);
+        byte[] b = baos.toByteArray();
+        String imageEncoded = Base64.encodeToString(b, Base64.URL_SAFE);
+        return imageEncoded;
+    }
+
 
     public static void showConfirmationAlertDialog(CharSequence msg, Context context, DialogInterface.OnClickListener onClickListener){
         AlertDialog alertDialog = new AlertDialog.Builder(context).create();

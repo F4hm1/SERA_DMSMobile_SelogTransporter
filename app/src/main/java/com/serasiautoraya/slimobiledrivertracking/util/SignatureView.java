@@ -55,6 +55,7 @@ public class SignatureView extends View {
         }
         //Spesial akses ke HelperBridge
         HelperBridge.sTtdBitmap = bitmap;
+        com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperBridge.sBitmapSignature = bitmap;
         //---
         Canvas canvas = new Canvas(bitmap);
         try {

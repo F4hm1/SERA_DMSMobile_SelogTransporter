@@ -2,6 +2,7 @@ package com.serasiautoraya.slimobiledrivertracking.MVP.CiCo;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.Html;
@@ -13,7 +14,6 @@ import android.widget.Toast;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking.R;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
-import com.serasiautoraya.slimobiledrivertracking.util.PermissionsUtil;
 
 import net.grandcentrix.thirtyinch.TiFragment;
 
@@ -89,6 +89,12 @@ public class CiCoRealtimeFragment extends TiFragment<CiCoRealtimePresenter, CiCo
                 getPresenter().onSubmitCiCo();
             }
         });
+    }
+
+    @Override
+    public void changeActivity(Class cls) {
+        Intent intent = new Intent(getActivity(), cls);
+        startActivity(intent);
     }
 
     @Override

@@ -12,7 +12,6 @@ import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Vibrator;
-import android.support.annotation.IntegerRes;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -33,7 +32,6 @@ import com.serasiautoraya.slimobiledrivertracking.helper.HelperKey;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Map;
 
 /**

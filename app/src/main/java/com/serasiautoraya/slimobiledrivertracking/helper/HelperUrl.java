@@ -2,8 +2,6 @@ package com.serasiautoraya.slimobiledrivertracking.helper;
 
 import android.os.Environment;
 
-import java.util.Locale;
-
 /**
  * Created by Randi Dwi Nandra on 21/11/2016.
  */

@@ -2,11 +2,13 @@ package com.serasiautoraya.slimobiledrivertracking.MVP.Helper;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.telephony.TelephonyManager;
 
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.BaseViewInterface;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.SharedPrefsModel;
@@ -31,6 +33,12 @@ public class PermissionsHelper implements ActivityCompat.OnRequestPermissionsRes
 
     private static PermissionsHelper sPermissionsHelper = null;
 
+    private String mDeviceID = "";
+
+    public String getsDeviceID() {
+        return mDeviceID;
+    }
+
     public PermissionsHelper(Activity mCurrentActivity, BaseViewInterface mBaseViewInterface) {
         this.mCurrentActivity = mCurrentActivity;
         this.mBaseViewInterface = mBaseViewInterface;
@@ -52,12 +60,14 @@ public class PermissionsHelper implements ActivityCompat.OnRequestPermissionsRes
         if (Build.VERSION.SDK_INT >= 23 &&
                 ContextCompat.checkSelfPermission(mCurrentActivity, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(mCurrentActivity, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(mCurrentActivity, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ContextCompat.checkSelfPermission(mCurrentActivity, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(mCurrentActivity, android.Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
 
             ActivityCompat.requestPermissions(mCurrentActivity, new String[] {
                             Manifest.permission.ACCESS_COARSE_LOCATION,
                             Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_PHONE_STATE},
                     HelperKey.LOCATION_PERMISSION_GRANTED_CODE);
         }else{
             isAllPermissionsGranted = true;
@@ -85,8 +95,13 @@ public class PermissionsHelper implements ActivityCompat.OnRequestPermissionsRes
             case HelperKey.LOCATION_PERMISSION_GRANTED_CODE: {
                 if (grantResults.length > 0 &&
                         grantResults[0] == PackageManager.PERMISSION_GRANTED &&
-                        grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                        grantResults[1] == PackageManager.PERMISSION_GRANTED &&
+                        grantResults[2] == PackageManager.PERMISSION_GRANTED) {
                     isAllPermissionsGranted = true;
+
+//                    TelephonyManager mTelephonyManager = (TelephonyManager) mCurrentActivity.getSystemService(Context.TELEPHONY_SERVICE);
+//                    mDeviceID = mTelephonyManager.getDeviceId();
+
                 } else {
                     if(mSharedPrefsModel.get(HelperKey.HAS_LOGIN, false)){
                         System.exit(0);

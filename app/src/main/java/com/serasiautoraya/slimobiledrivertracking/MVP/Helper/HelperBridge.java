@@ -1,6 +1,8 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.Helper;
 
 
+import android.graphics.Bitmap;
+
 import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Assigned.AssignedOrderResponseModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Login.LoginResponseModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RequestHistory.RequestHistoryResponseModel;
@@ -22,6 +24,8 @@ public class HelperBridge {
     public static List<RequestHistoryResponseModel> sOLCRequestHistoryList;
     public static List<RequestHistoryResponseModel> sOvertimeRequestHistoryList;
     public static List<RequestHistoryResponseModel> sAbsenceRequestHistoryList;
+
+    public static Bitmap sBitmapSignature = null;
 
 
 }

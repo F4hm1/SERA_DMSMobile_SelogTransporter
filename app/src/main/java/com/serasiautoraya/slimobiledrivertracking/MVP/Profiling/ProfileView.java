@@ -19,7 +19,8 @@ public interface ProfileView extends BaseViewInterface{
             String userCostumer,
             String doo,
             String kTPExp,
-            String sIMExp
+            String sIMExp,
+            String sIMType
     );
 
     void setProfilePhoto(String url);

@@ -46,11 +46,31 @@ public class StatusUpdateSendModel extends Model {
     @Expose
     private String Signature;
 
-    @SerializedName("Expenses")
+    @SerializedName("ExpenseFuel")
     @Expose
-    private String Expenses;
+    private String ExpenseFuel;
 
-    public StatusUpdateSendModel(String activityCode, String personalId, String locationRealCoordinates, String locationRealText, String photo1, String photo2, String photo3, String codeVerification, String signature, String expenses) {
+    @SerializedName("ExpenseTollParking")
+    @Expose
+    private String ExpenseTollParking;
+
+    @SerializedName("ExpenseEscort")
+    @Expose
+    private String ExpenseEscort;
+
+    @SerializedName("ExpenseASDP")
+    @Expose
+    private String ExpenseASDP;
+
+    @SerializedName("ExpensePortal")
+    @Expose
+    private String ExpensePortal;
+
+    @SerializedName("ExpenseBMSPSI")
+    @Expose
+    private String ExpenseBMSPSI;
+
+    public StatusUpdateSendModel(String activityCode, String personalId, String locationRealCoordinates, String locationRealText, String photo1, String photo2, String photo3, String codeVerification, String signature, String expenseFuel, String expenseTollParking, String expenseEscort, String expenseASDP, String expensePortal, String expenseBMSPSI) {
         ActivityCode = activityCode;
         PersonalId = personalId;
         LocationRealCoordinates = locationRealCoordinates;
@@ -60,7 +80,12 @@ public class StatusUpdateSendModel extends Model {
         Photo3 = photo3;
         CodeVerification = codeVerification;
         Signature = signature;
-        Expenses = expenses;
+        ExpenseFuel = expenseFuel;
+        ExpenseTollParking = expenseTollParking;
+        ExpenseEscort = expenseEscort;
+        ExpenseASDP = expenseASDP;
+        ExpensePortal = expensePortal;
+        ExpenseBMSPSI = expenseBMSPSI;
     }
 
     public String getActivityCode() {
@@ -99,7 +124,27 @@ public class StatusUpdateSendModel extends Model {
         return Signature;
     }
 
-    public String getExpenses() {
-        return Expenses;
+    public String getExpenseFuel() {
+        return ExpenseFuel;
+    }
+
+    public String getExpenseTollParking() {
+        return ExpenseTollParking;
+    }
+
+    public String getExpenseEscort() {
+        return ExpenseEscort;
+    }
+
+    public String getExpenseASDP() {
+        return ExpenseASDP;
+    }
+
+    public String getExpensePortal() {
+        return ExpensePortal;
+    }
+
+    public String getExpenseBMSPSI() {
+        return ExpenseBMSPSI;
     }
 }

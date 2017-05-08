@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.serasiautoraya.slimobiledrivertracking.R;
@@ -18,7 +17,6 @@ import com.serasiautoraya.slimobiledrivertracking.activity.ActionActivityActivit
 import com.serasiautoraya.slimobiledrivertracking.adapter.GeneralListAdapter;
 import com.serasiautoraya.slimobiledrivertracking.adapter.GeneralOrderSingleList;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperBridge;
-import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
 import com.serasiautoraya.slimobiledrivertracking.listener.ClickListener;
 import com.serasiautoraya.slimobiledrivertracking.listener.RecyclerTouchListener;
 import com.serasiautoraya.slimobiledrivertracking.model.VolleyUtil;

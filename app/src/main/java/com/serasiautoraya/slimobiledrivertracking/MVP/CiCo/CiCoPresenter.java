@@ -2,9 +2,6 @@ package com.serasiautoraya.slimobiledrivertracking.MVP.CiCo;
 
 import android.support.annotation.NonNull;
 
-import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperKey;
-import com.serasiautoraya.slimobiledrivertracking.MVP.Login.LoginView;
-import com.serasiautoraya.slimobiledrivertracking.util.FirebaseInstanceIdServiceUtil;
 import com.serasiautoraya.slimobiledrivertracking.util.HttpsTrustManager;
 
 import net.grandcentrix.thirtyinch.TiPresenter;

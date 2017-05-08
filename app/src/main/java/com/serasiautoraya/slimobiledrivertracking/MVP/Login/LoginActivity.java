@@ -1,10 +1,13 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.Login;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
@@ -54,7 +57,8 @@ public class LoginActivity extends TiActivity<LoginPresenter, LoginView> impleme
         return new LoginPresenter(
                 new SharedPrefsModel(LoginActivity.this),
                 new RestConnection(LoginActivity.this),
-                PermissionsHelper.getInstance(this, this)
+                PermissionsHelper.getInstance(this, this),
+                (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE)
         );
     }
 

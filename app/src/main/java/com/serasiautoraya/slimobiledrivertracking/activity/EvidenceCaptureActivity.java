@@ -2,29 +2,19 @@ package com.serasiautoraya.slimobiledrivertracking.activity;
 
 import android.app.ActivityOptions;
 import android.app.Dialog;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.transition.Explode;
-import android.transition.Slide;
-import android.transition.Transition;
-import android.transition.TransitionInflater;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.animation.AnticipateOvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -41,7 +31,6 @@ import com.serasiautoraya.slimobiledrivertracking.model.ExpenseObject;
 import org.apmem.tools.layouts.FlowLayout;
 
 import java.io.File;
-import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -71,12 +60,12 @@ public class EvidenceCaptureActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         HelperKey.TransitionType  transitionType = (HelperKey.TransitionType) getIntent().getSerializableExtra(HelperKey.KEY_TRANSITION_TYPE);
-        String toolbarTitle = getIntent().getExtras().getString(HelperKey.KEY_TITLE_ANIM);
+        String toolbarTitle = "Evidence Capture";
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(toolbarTitle);
 
-        HelperTransition.startEnterTransition(transitionType, getWindow(), EvidenceCaptureActivity.this);
+//        HelperTransition.startEnterTransition(transitionType, getWindow(), EvidenceCaptureActivity.this);
     }
 
     private Uri mImageUri;

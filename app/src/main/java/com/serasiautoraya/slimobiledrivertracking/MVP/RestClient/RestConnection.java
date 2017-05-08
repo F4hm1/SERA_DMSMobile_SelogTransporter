@@ -1,7 +1,7 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.RestClient;
 
-import android.app.ProgressDialog;
 import android.content.Context;
+import android.location.Location;
 import android.util.Log;
 
 import com.android.volley.NetworkResponse;
@@ -12,9 +12,7 @@ import com.android.volley.error.AuthFailureError;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.GsonRequest;
 import com.android.volley.request.JsonObjectRequest;
-import com.android.volley.request.StringRequest;
 import com.android.volley.toolbox.HttpHeaderParser;
-import com.android.volley.toolbox.HttpStack;
 import com.android.volley.toolbox.Volley;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallBackInterfaceModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallbackInterfaceJSON;
@@ -22,18 +20,11 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.TimeRestCall
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.BaseResponseModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.TimeRESTResponseModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperUrl;
-import com.serasiautoraya.slimobiledrivertracking.R;
-import com.serasiautoraya.slimobiledrivertracking.fragment.RequestHistoryFragment;
-import com.serasiautoraya.slimobiledrivertracking.helper.HelperBridge;
-import com.serasiautoraya.slimobiledrivertracking.helper.HelperKey;
-import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
 import com.serasiautoraya.slimobiledrivertracking.util.LocationServiceUtil;
-import com.serasiautoraya.slimobiledrivertracking.util.OverrideHurlStack;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -439,6 +430,25 @@ public class RestConnection {
 
         request.setShouldCache(false);
         mRequestQueue.add(request);
+    }
+
+    public LocationModel getCurrentLocation(){
+
+        String tempLatitude;
+        String tempLongitude;
+        String tempAddress;
+
+        if ((LocationServiceUtil.getLocationManager(mContext).getLastLocation() != null) && LocationServiceUtil.getLocationManager(mContext).isGPSEnabled()) {
+            tempLatitude = "" + LocationServiceUtil.getLocationManager(mContext).getLastLocation().getLatitude();
+            tempLongitude = "" + LocationServiceUtil.getLocationManager(mContext).getLastLocation().getLongitude();
+            tempAddress = "" + LocationServiceUtil.getLocationManager(mContext).getLastLocationName();
+        } else {
+            tempLatitude = "null";
+            tempLongitude = "null";
+            tempAddress = "null";
+        }
+
+        return new LocationModel(tempLongitude, tempLatitude, tempAddress);
     }
 
 }

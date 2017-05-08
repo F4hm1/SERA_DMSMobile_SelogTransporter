@@ -16,6 +16,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.SharedPrefsModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperTransactionCode;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking.R;
@@ -54,6 +55,11 @@ public class FatigueActivity extends TiActivity<FatiguePresenter, FatigueView> i
     }
 
     @Override
+    public void onBackPressed() {
+        showToast("Anda harus menjawab semua pertanyaan fatigue ini terlebih dahulu.");
+    }
+
+    @Override
     public void initialize() {
         this.initializeActionBar();
         this.initializeConfirmationDialog();
@@ -75,18 +81,19 @@ public class FatigueActivity extends TiActivity<FatiguePresenter, FatigueView> i
 
     @Override
     public void showStandardDialog(String message, String Title) {
-        HelperUtil.showSimpleAlertDialogCustomTitle(message, FatigueActivity.this, Title);
+//        HelperUtil.showSimpleAlertDialogCustomTitle(message, FatigueActivity.this, Title);
+
     }
 
     @Override
     public boolean getValidationForm() {
-        return false;
+        return true;
     }
 
     @NonNull
     @Override
     public FatiguePresenter providePresenter() {
-        return new FatiguePresenter(new RestConnection(FatigueActivity.this));
+        return new FatiguePresenter(new RestConnection(FatigueActivity.this), new SharedPrefsModel(FatigueActivity.this));
     }
 
     private void initializeActionBar(){
@@ -140,6 +147,31 @@ public class FatigueActivity extends TiActivity<FatiguePresenter, FatigueView> i
         textViewAns3.setText(((RadioButton)findViewById(mRgQuestion3.getCheckedRadioButtonId())).getText().toString());
         textViewAns4.setText(((RadioButton)findViewById(mRgQuestion4.getCheckedRadioButtonId())).getText().toString());
         textViewAns5.setText(((RadioButton)findViewById(mRgQuestion5.getCheckedRadioButtonId())).getText().toString());
+    }
+
+    @Override
+    public void showSuccessDialog(String message, String title) {
+        AlertDialog alertDialog = new AlertDialog.Builder(FatigueActivity.this).create();
+        alertDialog.setTitle(title);
+        alertDialog.setMessage(message);
+        alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                finishActivity();
+            }
+        });
+        alertDialog.setButton(android.app.AlertDialog.BUTTON_NEUTRAL, "YA",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
+    }
+
+    @Override
+    public void finishActivity() {
+        this.finish();
     }
 
 }

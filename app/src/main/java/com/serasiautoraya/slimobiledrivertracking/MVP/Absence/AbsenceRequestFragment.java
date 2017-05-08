@@ -18,7 +18,6 @@ import android.widget.Toast;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking.R;
 import com.serasiautoraya.slimobiledrivertracking.customdialog.DatePickerToEditTextDialog;
-import com.serasiautoraya.slimobiledrivertracking.customdialog.TimePickerToEditTextDialog;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
 
 import net.grandcentrix.thirtyinch.TiFragment;

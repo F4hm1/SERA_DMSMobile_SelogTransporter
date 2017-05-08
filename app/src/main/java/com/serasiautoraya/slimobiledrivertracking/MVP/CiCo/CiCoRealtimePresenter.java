@@ -3,17 +3,22 @@ package com.serasiautoraya.slimobiledrivertracking.MVP.CiCo;
 import com.android.volley.error.VolleyError;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallbackInterfaceJSON;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.TimeRestCallBackInterface;
+import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.SharedPrefsModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.TimeRESTResponseModel;
+import com.serasiautoraya.slimobiledrivertracking.MVP.Fatigue.FatigueActivity;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperBridge;
+import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperKey;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperTransactionCode;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperUrl;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
-import com.serasiautoraya.slimobiledrivertracking.helper.HelperKey;
 
 import net.grandcentrix.thirtyinch.TiPresenter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * Created by Randi Dwi Nandra on 29/03/2017.
@@ -23,10 +28,12 @@ public class  CiCoRealtimePresenter extends TiPresenter<CiCoRealtimeView> {
 
     private RestConnection mRestConnection;
     private CiCoRealtimeSendModel mCiCoRealtimeSendModel;
+//    private SharedPrefsModel mSharedPrefsModel;
     private String mUrlSubmit;
 
     public CiCoRealtimePresenter(RestConnection mRestConnection) {
         this.mRestConnection = mRestConnection;
+//        this.mSharedPrefsModel = sharedPrefsModel;
     }
 
     public void onSubmitCiCo(){
@@ -37,6 +44,13 @@ public class  CiCoRealtimePresenter extends TiPresenter<CiCoRealtimeView> {
                 try {
                     getView().toggleLoading(false);
                     getView().showStandardDialog(response.getString("responseText"), "Berhasil");
+                    getView().changeActivity(FatigueActivity.class);
+
+//                    Calendar calendar = Calendar.getInstance();
+//                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperKey.SERVER_DATE_FORMAT);
+//                    String dateToday = simpleDateFormat.format(calendar.getTime());
+//                    mSharedPrefsModel.apply(HelperKey.KEY_LAST_CLOCKIN, dateToday);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

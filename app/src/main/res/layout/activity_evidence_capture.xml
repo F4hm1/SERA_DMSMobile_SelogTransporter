@@ -16,6 +16,8 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+
+
             <RelativeLayout
                 android:id="@+id/evidence_button_capture"
                 android:padding="15dp"

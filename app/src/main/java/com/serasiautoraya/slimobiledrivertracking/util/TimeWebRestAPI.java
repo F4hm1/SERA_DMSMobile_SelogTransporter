@@ -9,13 +9,9 @@ import com.android.volley.Response;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.GsonRequest;
 import com.serasiautoraya.slimobiledrivertracking.R;
-import com.serasiautoraya.slimobiledrivertracking.helper.HelperBridge;
-import com.serasiautoraya.slimobiledrivertracking.helper.HelperKey;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperUrl;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
 import com.serasiautoraya.slimobiledrivertracking.listener.ServerCallBack;
-import com.serasiautoraya.slimobiledrivertracking.model.ModelArrayData;
-import com.serasiautoraya.slimobiledrivertracking.model.ModelReportResponse;
 import com.serasiautoraya.slimobiledrivertracking.model.ModelTimeRESTResponse;
 import com.serasiautoraya.slimobiledrivertracking.model.VolleyUtil;
 

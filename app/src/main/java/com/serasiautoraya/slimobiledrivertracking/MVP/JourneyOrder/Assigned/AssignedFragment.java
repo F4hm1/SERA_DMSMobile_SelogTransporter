@@ -12,8 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.serasiautoraya.slimobiledrivertracking.MVP.CiCo.CiCoPresenter;
-import com.serasiautoraya.slimobiledrivertracking.MVP.CiCo.CiCoView;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking.R;
 

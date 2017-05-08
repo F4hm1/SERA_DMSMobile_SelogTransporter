@@ -1,9 +1,6 @@
-package com.serasiautoraya.slimobiledrivertracking.activity;
+package com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.DocumentCapture;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +12,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.serasiautoraya.slimobiledrivertracking.R;
+import com.serasiautoraya.slimobiledrivertracking.activity.SignatureActivity;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperUrl;
 import com.serasiautoraya.slimobiledrivertracking.util.SignatureView;
 
@@ -23,9 +21,10 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * Created by Randi Dwi Nandra on 21/11/2016.
+ * Created by Randi Dwi Nandra on 03/05/2017.
  */
-public class SignatureActivity extends AppCompatActivity {
+
+public class SigningActivity extends AppCompatActivity {
 
     private LinearLayout mContent;
     private Button mClear;
@@ -70,7 +69,7 @@ public class SignatureActivity extends AppCompatActivity {
         mGetSign = (Button) findViewById(R.id.getsign);
 
         mSignature = new SignatureView(getApplicationContext(), null, mContent, mGetSign);
-        mSignature.setBackgroundColor(ContextCompat.getColor(SignatureActivity.this, R.color.colorDeepOn));
+        mSignature.setBackgroundColor(ContextCompat.getColor(SigningActivity.this, R.color.colorDeepOn));
         // Dynamically generating Layout through java code
         mContent.addView(mSignature, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         mGetSign.setEnabled(false);
@@ -86,19 +85,10 @@ public class SignatureActivity extends AppCompatActivity {
             public void onClick(View v) {
                 view.setDrawingCacheEnabled(true);
                 mSignature.save(view, StoredPath);
-//                Toast.makeText(getApplicationContext(), "Successfully Saved", Toast.LENGTH_SHORT).show();
                 recreate();
                 onBackPressed();
             }
         });
     }
 
-
-    //Belum dikasih exception kalo misal di "deny" user, maka munculkan toast, dan eksekusi lain jangan dijalankan
-    private void getPermission() {
-        if(ContextCompat.checkSelfPermission(SignatureActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(SignatureActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-        }
-    }
 }

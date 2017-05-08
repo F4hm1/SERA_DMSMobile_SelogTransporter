@@ -22,10 +22,15 @@ public class LoginSendModel extends Model{
     @Expose
     private String tokenFCM;
 
-    public LoginSendModel(String username, String password, String tokenFCM) {
+    @SerializedName("IMEIPhone")
+    @Expose
+    private String iMEIPhone;
+
+    public LoginSendModel(String username, String password, String tokenFCM, String iMEIPhone) {
         this.username = username;
         this.password = password;
         this.tokenFCM = tokenFCM;
+        this.iMEIPhone = iMEIPhone;
     }
 
     public String getUsername() {
@@ -38,5 +43,9 @@ public class LoginSendModel extends Model{
 
     public String getTokenFCM() {
         return tokenFCM;
+    }
+
+    public String getiMEIPhone() {
+        return iMEIPhone;
     }
 }

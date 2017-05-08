@@ -1,8 +1,17 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.Dashboard;
 
 import android.support.annotation.NonNull;
+
+import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.SharedPrefsModel;
+import com.serasiautoraya.slimobiledrivertracking.MVP.Fatigue.FatigueActivity;
+import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperBridge;
+import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperKey;
+import com.serasiautoraya.slimobiledrivertracking.MVP.Login.LoginActivity;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Profiling.ProfileActivity;
 import net.grandcentrix.thirtyinch.TiPresenter;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * Created by Randi Dwi Nandra on 27/03/2017.
@@ -10,10 +19,27 @@ import net.grandcentrix.thirtyinch.TiPresenter;
 
 public class DashboardPresenter extends TiPresenter<DashboardView> {
 
+    private SharedPrefsModel mSharedPrefsModel;
+
+    public DashboardPresenter(SharedPrefsModel sharedPrefsModel) {
+        this.mSharedPrefsModel = sharedPrefsModel;
+    }
+
     @Override
     protected void onAttachView(@NonNull final DashboardView view) {
         super.onAttachView(view);
         getView().initialize();
+//        Calendar calendar = Calendar.getInstance();
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(HelperKey.SERVER_DATE_FORMAT);
+//        String dateToday = simpleDateFormat.format(calendar.getTime());
+//        if(mSharedPrefsModel.get(HelperKey.KEY_LAST_CLOCKIN, "").equalsIgnoreCase(dateToday)
+//                && !mSharedPrefsModel.get(HelperKey.KEY_LAST_FATIGUE_INTERVIEW, "").equalsIgnoreCase(dateToday)){
+        getView().changeFragment(getView().getActiveFragment(0));
+        getView().setDrawerProfile(HelperBridge.sModelLoginResponse.getFullname(), HelperBridge.sModelLoginResponse.getCompany(), HelperBridge.sModelLoginResponse.getPhotoFront());
+        if(HelperBridge.sModelLoginResponse.getIsDoneFatigueInterview().equalsIgnoreCase("1")){
+            getView().changeActivity(FatigueActivity.class);
+        }
+//        }
     }
 
     public void onNavigationItemSelectedForFragment(int id){
@@ -22,6 +48,12 @@ public class DashboardPresenter extends TiPresenter<DashboardView> {
 
     public void onNavigationItemSelectedForActivity(int id){
         getView().changeActivity(getView().getTargetActivityClass(id));
+    }
+
+    public void logout(){
+        mSharedPrefsModel.clearAll();
+        getView().changeActivity(LoginActivity.class);
+        getView().showToast("Berhasil keluar");
     }
 
     public void loadDetailProfile(){

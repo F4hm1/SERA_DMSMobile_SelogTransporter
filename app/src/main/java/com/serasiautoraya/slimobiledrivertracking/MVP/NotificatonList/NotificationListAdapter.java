@@ -13,7 +13,6 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.BaseAdapter.CustomPopUpIte
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseAdapter.SimpleAdapterModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseAdapter.SimpleAdapterView;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseAdapter.SimpleListViewHolder;
-import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.Model;
 import com.serasiautoraya.slimobiledrivertracking.R;
 
 import java.util.List;
