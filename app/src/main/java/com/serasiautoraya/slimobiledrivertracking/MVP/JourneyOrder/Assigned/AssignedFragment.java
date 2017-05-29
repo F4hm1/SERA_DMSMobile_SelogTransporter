@@ -1,6 +1,7 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Assigned;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
@@ -8,12 +9,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.SharedPrefsModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking.R;
+import com.serasiautoraya.slimobiledrivertracking.util.GPSTrackerService;
 
 import net.grandcentrix.thirtyinch.TiFragment;
 
@@ -46,8 +50,6 @@ public class AssignedFragment extends TiFragment<AssignedPresenter, AssignedView
 
     @Override
     public void initialize() {
-        setupViewPager(mViewPager);
-        mTabLayout.setupWithViewPager(mViewPager);
         getPresenter().loadOrdersData();
     }
 
@@ -73,7 +75,7 @@ public class AssignedFragment extends TiFragment<AssignedPresenter, AssignedView
     @NonNull
     @Override
     public AssignedPresenter providePresenter() {
-        return new AssignedPresenter(new RestConnection(getContext()));
+        return new AssignedPresenter(new RestConnection(getContext()), new SharedPrefsModel(getContext()));
     }
 
     private void setupViewPager(final ViewPager viewPager) {
@@ -81,6 +83,28 @@ public class AssignedFragment extends TiFragment<AssignedPresenter, AssignedView
         adapter.addFragment(new ActiveOrderFragment(), "Active Order");
         adapter.addFragment(new PlanOrderFragment(), "Plan Order");
         viewPager.setAdapter(adapter);
+    }
+
+    @Override
+    public void initializeTabs(boolean isAnyOrderActive, boolean isUpdateLocationActive) {
+        setupViewPager(mViewPager);
+        mTabLayout.setupWithViewPager(mViewPager);
+
+        /*
+        * TODO uncomment this
+        * */
+        /*
+        if(isAnyOrderActive){
+            if(!isUpdateLocationActive){
+                getActivity().startService(new Intent(getActivity(), GPSTrackerService.class));
+                getPresenter().setUpdateLocationActive(true);
+            }
+        }else{
+            if(isUpdateLocationActive){
+                getActivity().stopService(new Intent(getActivity(), GPSTrackerService.class));
+                getPresenter().setUpdateLocationActive(false);
+            }
+        }*/
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {

@@ -14,6 +14,10 @@ public class StatusUpdateSendModel extends Model {
     @Expose
     private String ActivityCode;
 
+    @SerializedName("OrderCode")
+    @Expose
+    private String OrderCode;
+
     @SerializedName("PersonalId")
     @Expose
     private String PersonalId;
@@ -70,8 +74,13 @@ public class StatusUpdateSendModel extends Model {
     @Expose
     private String ExpenseBMSPSI;
 
-    public StatusUpdateSendModel(String activityCode, String personalId, String locationRealCoordinates, String locationRealText, String photo1, String photo2, String photo3, String codeVerification, String signature, String expenseFuel, String expenseTollParking, String expenseEscort, String expenseASDP, String expensePortal, String expenseBMSPSI) {
+    @SerializedName("Reason")
+    @Expose
+    private String Reason;
+
+    public StatusUpdateSendModel(String activityCode, String orderCode, String personalId, String locationRealCoordinates, String locationRealText, String photo1, String photo2, String photo3, String codeVerification, String signature, String expenseFuel, String expenseTollParking, String expenseEscort, String expenseASDP, String expensePortal, String expenseBMSPSI, String reason) {
         ActivityCode = activityCode;
+        OrderCode = orderCode;
         PersonalId = personalId;
         LocationRealCoordinates = locationRealCoordinates;
         LocationRealText = locationRealText;
@@ -86,6 +95,7 @@ public class StatusUpdateSendModel extends Model {
         ExpenseASDP = expenseASDP;
         ExpensePortal = expensePortal;
         ExpenseBMSPSI = expenseBMSPSI;
+        Reason = reason;
     }
 
     public String getActivityCode() {

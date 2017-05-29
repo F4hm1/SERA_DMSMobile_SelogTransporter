@@ -18,9 +18,27 @@ public class AcknowledgeOrderSendModel extends Model {
     @Expose
     private String PersonalId;
 
-    public AcknowledgeOrderSendModel(String orderCode, String personalId) {
+    @SerializedName("DateAck")
+    @Expose
+    private String DateAck;
+
+    @SerializedName("TimeAck")
+    @Expose
+    private String TimeAck;
+
+    public AcknowledgeOrderSendModel(String orderCode, String personalId, String dateAck, String timeAck) {
         OrderCode = orderCode;
         PersonalId = personalId;
+        DateAck = dateAck;
+        TimeAck = timeAck;
+    }
+
+    public String getDateAck() {
+        return DateAck;
+    }
+
+    public String getTimeAck() {
+        return TimeAck;
     }
 
     public String getOrderCode() {

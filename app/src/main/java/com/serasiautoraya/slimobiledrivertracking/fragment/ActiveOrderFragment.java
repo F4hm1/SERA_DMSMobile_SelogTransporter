@@ -51,7 +51,7 @@ public class ActiveOrderFragment extends Fragment {
     }
 
     private void assignView(View view) {
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_order_history);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_order_active);
         orderListAdapter = new OrderListAdapter(orderSingleListList);
         textViewKosong = (TextView)  view.findViewById(R.id.text_view_kosong);
         assignRecycler();

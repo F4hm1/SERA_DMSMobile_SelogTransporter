@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseAdapter.CustomPopUpItemClickListener;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseAdapter.SimpleAdapterView;
+import com.serasiautoraya.slimobiledrivertracking.MVP.CustomView.EmptyInfoView;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RequestHistory.RequestHistoryAdapter;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RequestHistory.RequestHistoryResponseModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
@@ -35,6 +36,9 @@ public class CiCoRequestHistoryFragment extends TiFragment<CiCoRequestHistoryPre
         implements CiCoRequestHistoryView{
 
     @BindView(R.id.recycler_cico_request_history) RecyclerView mRecyclerView;
+    @BindView(R.id.layout_empty_info)
+    EmptyInfoView mEmptyInfoView;
+
     private SimpleAdapterView mSimpleAdapterView;
     private ProgressDialog mProgressDialog;
 
@@ -47,6 +51,8 @@ public class CiCoRequestHistoryFragment extends TiFragment<CiCoRequestHistoryPre
 
     @Override
     public void initialize() {
+        mEmptyInfoView.setIcon(R.drawable.ic_empty_attendance);
+        mEmptyInfoView.setText("Tidak terdapat riwayat pengajuan Clock In/Out");
         this.initializeRecylerView();
         getPresenter().loadRequestHistoryData();
     }
@@ -102,6 +108,7 @@ public class CiCoRequestHistoryFragment extends TiFragment<CiCoRequestHistoryPre
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.addItemDecoration(new DividerRecycleViewDecoration(getContext(), LinearLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(simpleListAdapter);
+        mRecyclerView.setNestedScrollingEnabled(false);
         getPresenter().setAdapter(simpleListAdapter);
     }
 
@@ -124,5 +131,14 @@ public class CiCoRequestHistoryFragment extends TiFragment<CiCoRequestHistoryPre
                 getPresenter().onCancelationSubmitted();
             }
         });
+    }
+
+    @Override
+    public void toggleEmptyInfo(boolean show) {
+        if(show){
+            mEmptyInfoView.setVisibility(View.VISIBLE);
+        }else {
+            mEmptyInfoView.setVisibility(View.GONE);
+        }
     }
 }

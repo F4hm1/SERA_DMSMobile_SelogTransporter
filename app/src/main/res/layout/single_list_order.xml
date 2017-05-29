@@ -12,7 +12,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/single_list_code"
+        android:id="@+id/acknowledge_dialog_ordercode"
         android:textColor="@color/colorAccentDark"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -23,7 +23,7 @@
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_below="@+id/single_list_code"
+        android:layout_below="@+id/acknowledge_dialog_ordercode"
         android:layout_height="wrap_content">
 
         <!--order_title_hub-->
@@ -41,7 +41,7 @@
                 android:paddingTop="2dip" />
 
             <TextView
-                android:id="@+id/single_list_hub" android:text="Row 3 column 2"
+                android:id="@+id/acknowledge_dialog_hub" android:text="Row 3 column 2"
                 android:layout_weight="1"
                 android:paddingBottom="2dip"
                 android:paddingTop="2dip" />
@@ -62,7 +62,7 @@
                 android:paddingTop="2dip" />
 
             <TextView
-                android:id="@+id/single_list_nextdriver" android:text="Row 3 column 2"
+                android:id="@+id/acknowledge_dialog_nextdriver" android:text="Row 3 column 2"
                 android:layout_weight="1"
                 android:paddingBottom="2dip"
                 android:paddingTop="2dip" />
@@ -83,7 +83,7 @@
                 android:paddingTop="2dip" />
 
             <TextView
-                android:id="@+id/single_list_origin" android:text="Row 3 column 2"
+                android:id="@+id/acknowledge_dialog_origin" android:text="Row 3 column 2"
                 android:layout_weight="1"
                 android:paddingBottom="2dip"
                 android:paddingTop="2dip" />
@@ -104,7 +104,7 @@
                 android:paddingTop="2dip" />
 
             <TextView
-                android:id="@+id/single_list_etd" android:text="Row 3 column 2"
+                android:id="@+id/acknowledge_dialog_etd" android:text="Row 3 column 2"
                 android:layout_weight="1"
                 android:paddingBottom="2dip"
                 android:paddingTop="2dip" />
@@ -125,7 +125,7 @@
                 android:paddingTop="2dip" />
 
             <TextView
-                android:id="@+id/single_list_eta" android:text="Row 3 column 2"
+                android:id="@+id/acknowledge_dialog_eta" android:text="Row 3 column 2"
                 android:layout_weight="1"
                 android:paddingBottom="2dip"
                 android:paddingTop="2dip" />
@@ -146,7 +146,7 @@
                 android:paddingTop="2dip" />
 
             <TextView
-                android:id="@+id/single_list_customer" android:text="Row 3 column 2"
+                android:id="@+id/acknowledge_dialog_customer" android:text="Row 3 column 2"
                 android:layout_weight="1"
                 android:paddingBottom="2dip"
                 android:paddingTop="2dip" />
@@ -167,7 +167,7 @@
                 android:paddingTop="2dip" />
 
             <TextView
-                android:id="@+id/single_list_unit" android:text="Row 3 column 2"
+                android:id="@+id/acknowledge_dialog_unit" android:text="Row 3 column 2"
                 android:layout_weight="1"
                 android:paddingBottom="2dip"
                 android:paddingTop="2dip" />

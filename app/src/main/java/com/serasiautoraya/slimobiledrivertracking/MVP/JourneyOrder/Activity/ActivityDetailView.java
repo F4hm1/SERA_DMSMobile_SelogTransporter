@@ -30,6 +30,8 @@ public interface ActivityDetailView extends BaseViewInterface{
 
     void setButtonText(String text);
 
+    void setButtonColor(String hexaCode);
+
     void changeActivity(Class cls);
 
 }

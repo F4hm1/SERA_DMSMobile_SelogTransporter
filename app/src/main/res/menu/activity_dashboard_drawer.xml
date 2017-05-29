@@ -18,10 +18,10 @@
             android:id="@+id/nav_attendance_history"
             android:icon="@drawable/ic_history_24dp"
             android:title="@string/title_history_attendance" />
-        <!--<item-->
-            <!--android:id="@+id/nav_order_history"-->
-            <!--android:icon="@drawable/ic_history_24dp"-->
-            <!--android:title="@string/title_order_history" />-->
+        <item
+            android:id="@+id/nav_order_history"
+            android:icon="@drawable/ic_riwayat_order_24_black"
+            android:title="@string/title_order_history" />
     </group>
 
     <item android:title="Setting">

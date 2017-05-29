@@ -40,6 +40,10 @@ public class CiCoRequestHistoryPresenter extends TiPresenter<CiCoRequestHistoryV
     }
 
     public void loadRequestHistoryData(){
+        getView().toggleEmptyInfo(true);
+        if (!HelperBridge.sCiCoRequestHistoryList.isEmpty()) {
+            getView().toggleEmptyInfo(false);
+        }
         mSimpleAdapterModel.setItemList(HelperBridge.sCiCoRequestHistoryList);
         getView().refreshRecyclerView();
     }

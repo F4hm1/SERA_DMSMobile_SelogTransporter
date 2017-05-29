@@ -59,11 +59,8 @@ public class RequestHistoryFragment extends TiFragment<RequestHistoryPresenter, 
 
     @Override
     public void initialize() {
-        this.setupViewPager(mViewPager);
-        mTabLayout.setupWithViewPager(mViewPager);
         this.initializePickerDialog();
         getPresenter().initialRequestHistoryData();
-        getPresenter().loadRequestHistoryData("2017-04-01", "2017-05-01");
     }
 
     @Override
@@ -114,12 +111,26 @@ public class RequestHistoryFragment extends TiFragment<RequestHistoryPresenter, 
     }
 
     @Override
+    public void toggleLoadingInitialLoad(boolean isLoading) {
+        if(isLoading){
+            mProgressDialog = ProgressDialog.show(getContext(), getResources().getString(R.string.progress_msg_loaddata),getResources().getString(R.string.prog_msg_wait),true,false);
+        }else{
+            mProgressDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void initializeTabs() {
+        this.setupViewPager(mViewPager);
+        mTabLayout.setupWithViewPager(mViewPager);
+    }
+
+    @Override
     @OnTextChanged(value = R.id.edittext_attendance_history_dateakhir, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void onTextEndDateChangeAfter(Editable editable) {
-//        if (!mEtDateEnd.getText().toString().equalsIgnoreCase("")) {
-//            getPresenter().loadRequestHistoryData(mEtDateStart.getText().toString(), mEtDateEnd.getText().toString());
-//        }
-        Log.d("TAG_ENDDATE", "Text After changed");
+        if (!mEtDateEnd.getText().toString().equalsIgnoreCase("")) {
+            getPresenter().loadRequestHistoryData(mEtDateStart.getText().toString(), mEtDateEnd.getText().toString());
+        }
     }
 
     private void setupViewPager(final ViewPager viewPager) {

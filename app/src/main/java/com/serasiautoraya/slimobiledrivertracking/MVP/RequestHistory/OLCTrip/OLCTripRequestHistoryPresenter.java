@@ -34,6 +34,10 @@ public class OLCTripRequestHistoryPresenter extends TiPresenter<OLCTripRequestHi
     }
 
     public void loadRequestHistoryData(){
+        getView().toggleEmptyInfo(true);
+        if (!HelperBridge.sOLCRequestHistoryList.isEmpty()) {
+            getView().toggleEmptyInfo(false);
+        }
         mSimpleAdapterModel.setItemList(HelperBridge.sOLCRequestHistoryList);
         getView().refreshRecyclerView();
     }

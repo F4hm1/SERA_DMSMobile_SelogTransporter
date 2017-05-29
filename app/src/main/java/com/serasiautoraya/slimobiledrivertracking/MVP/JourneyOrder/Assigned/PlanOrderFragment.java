@@ -12,9 +12,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseAdapter.SimpleAdapterView;
+import com.serasiautoraya.slimobiledrivertracking.MVP.CustomView.EmptyInfoView;
+import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking.R;
 import com.serasiautoraya.slimobiledrivertracking.listener.ClickListener;
 import com.serasiautoraya.slimobiledrivertracking.listener.RecyclerTouchListener;
@@ -33,6 +36,8 @@ public class PlanOrderFragment extends TiFragment<PlanOrderPresenter, PlanOrderV
 
     @BindView(R.id.recycler_plan_orders)
     RecyclerView mRecyclerView;
+    @BindView(R.id.layout_empty_info)
+    EmptyInfoView mEmptyInfoView;
 
     private SimpleAdapterView mSimpleAdapterView;
 
@@ -45,6 +50,8 @@ public class PlanOrderFragment extends TiFragment<PlanOrderPresenter, PlanOrderV
 
     @Override
     public void initialize() {
+        mEmptyInfoView.setIcon(R.drawable.ic_empty_order);
+        mEmptyInfoView.setText("Tidak terdapat order terencana yang belum aktif");
         this.initializeRecylerView();
         this.initializeRecylerListener();
         getPresenter().loadOrdersdata();
@@ -78,27 +85,60 @@ public class PlanOrderFragment extends TiFragment<PlanOrderPresenter, PlanOrderV
     }
 
     @Override
-    public void showAcknowledgeDialog() {
+    public void showAcknowledgeDialog(String ordercode, String destination, String origin, String etd, String eta, String customer) {
+        final String OrderCode = ordercode;
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        builder.setView(inflater.inflate(R.layout.dialog_confirmation, null))
+        builder.setView(inflater.inflate(R.layout.dialog_order_acknowledge, null))
                 .setPositiveButton("Diterima", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        getPresenter().onAcknowledgeOrder();
+                        getPresenter().onAcknowledgeOrder(OrderCode);
                     }
                 });
         Dialog dialog = builder.create();
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
+        TextView tvOrderCode = (TextView) dialog.findViewById(R.id.acknowledge_dialog_ordercode);
+        tvOrderCode.setText(ordercode);
+
+        TextView tvDestination = (TextView) dialog.findViewById(R.id.acknowledge_dialog_destination);
+        tvDestination.setText(destination);
+
+        TextView tvOrigin= (TextView) dialog.findViewById(R.id.acknowledge_dialog_origin);
+        tvOrigin.setText(origin);
+
+        TextView tvEtd= (TextView) dialog.findViewById(R.id.acknowledge_dialog_etd);
+        tvEtd.setText(etd);
+
+        TextView tvEta= (TextView) dialog.findViewById(R.id.acknowledge_dialog_eta);
+        tvEta.setText(eta);
+
+        TextView tvCustomer = (TextView) dialog.findViewById(R.id.acknowledge_dialog_customer);
+        tvCustomer.setText(customer);
+    }
+
+    @Override
+    public void refreshAllData() {
+        AssignedView assignedView = (AssignedView) getParentFragment();
+        assignedView.initialize();
+    }
+
+    @Override
+    public void toggleEmptyInfo(boolean show) {
+        if(show){
+            mEmptyInfoView.setVisibility(View.VISIBLE);
+        }else {
+            mEmptyInfoView.setVisibility(View.GONE);
+        }
     }
 
     @NonNull
     @Override
     public PlanOrderPresenter providePresenter() {
-        return new PlanOrderPresenter();
+        return new PlanOrderPresenter(new RestConnection(getContext()));
     }
 
     private void initializeRecylerView(){

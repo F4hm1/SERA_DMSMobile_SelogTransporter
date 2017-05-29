@@ -12,7 +12,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/single_list_code"
+        android:id="@+id/acknowledge_dialog_ordercode"
         android:textColor="@color/colorAccentDark"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -23,7 +23,7 @@
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_below="@+id/single_list_code"
+        android:layout_below="@+id/acknowledge_dialog_ordercode"
         android:layout_height="wrap_content">
 
         <!--order_title_hub-->
@@ -41,7 +41,7 @@
                 android:paddingTop="2dip" />
 
             <TextView
-                android:id="@+id/dialog_dest" android:text="Surabaya"
+                android:id="@+id/acknowledge_dialog_destination" android:text="Surabaya"
                 android:textStyle="bold"
                 android:layout_weight="1"
                 android:paddingBottom="2dip"
@@ -62,7 +62,7 @@
                 android:paddingTop="2dip" />
 
             <TextView
-                android:id="@+id/single_list_hub" android:text="Yes"
+                android:id="@+id/acknowledge_dialog_hub" android:text="Yes"
                 android:layout_weight="1"
                 android:paddingBottom="2dip"
                 android:paddingTop="2dip" />
@@ -82,7 +82,7 @@
                 android:paddingTop="2dip" />
 
             <TextView
-                android:id="@+id/single_list_origin" android:text="Jakarta"
+                android:id="@+id/acknowledge_dialog_origin" android:text="Jakarta"
                 android:layout_weight="1"
                 android:paddingBottom="2dip"
                 android:paddingTop="2dip" />
@@ -102,7 +102,7 @@
                 android:paddingTop="2dip" />
 
             <TextView
-                android:id="@+id/single_list_etd" android:text="15/11/2016 08:00:00"
+                android:id="@+id/acknowledge_dialog_etd" android:text="15/11/2016 08:00:00"
                 android:layout_weight="1"
                 android:paddingBottom="2dip"
                 android:paddingTop="2dip" />
@@ -122,7 +122,7 @@
                 android:paddingTop="2dip" />
 
             <TextView
-                android:id="@+id/single_list_eta" android:text="16/11/2016 18:00:00"
+                android:id="@+id/acknowledge_dialog_eta" android:text="16/11/2016 18:00:00"
                 android:layout_weight="1"
                 android:paddingBottom="2dip"
                 android:paddingTop="2dip" />
@@ -142,7 +142,7 @@
                 android:paddingTop="2dip" />
 
             <TextView
-                android:id="@+id/single_list_customer" android:text="HMS"
+                android:id="@+id/acknowledge_dialog_customer" android:text="HMS"
                 android:layout_weight="1"
                 android:paddingBottom="2dip"
                 android:paddingTop="2dip" />
@@ -162,7 +162,7 @@
                 android:paddingTop="2dip" />
 
             <TextView
-                android:id="@+id/single_list_unit" android:text="B 1916 TOW"
+                android:id="@+id/acknowledge_dialog_unit" android:text="B 1916 TOW"
                 android:layout_weight="1"
                 android:paddingBottom="2dip"
                 android:paddingTop="2dip" />

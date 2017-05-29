@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:isScrollContainer="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -22,6 +23,7 @@
                 xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/documents_card_photos"
                 card_view:contentPadding="6dp"
                 android:layout_marginBottom="8dp"
                 card_view:cardUseCompatPadding="true"
@@ -119,6 +121,130 @@
             <android.support.v7.widget.CardView
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/documents_card_POD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                card_view:contentPadding="6dp"
+                android:layout_marginBottom="8dp"
+                card_view:cardUseCompatPadding="true"
+                card_view:cardCornerRadius="2dp">
+
+                <LinearLayout
+                    android:id="@+id/documents_lin_POD"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorTextPrimary"
+                        android:text="Foto Bukti POD (Prove of Delivery)"/>
+
+                    <TextView
+                        android:id="@+id/documents_tv_podguide"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:textSize="14sp"
+                        android:textStyle="normal"
+                        android:textColor="@color/colorAccentDark"
+                        android:text="Panduan POD Disiniii, lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "/>
+
+                    <LinearLayout
+                        android:weightSum="3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.CardView
+                            xmlns:android="http://schemas.android.com/apk/res/android"
+                            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                            android:layout_marginRight="6dp"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            card_view:cardUseCompatPadding="true"
+                            card_view:cardElevation="3dp"
+                            card_view:cardCornerRadius="2dp">
+
+                            <com.serasiautoraya.slimobiledrivertracking.MVP.CustomView.SquareImageView
+                                android:id="@+id/documents_iv_capPOD1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/no_preview_available2"
+                                android:scaleType="centerCrop"/>
+
+                        </android.support.v7.widget.CardView>
+
+                        <android.support.v7.widget.CardView
+                            xmlns:android="http://schemas.android.com/apk/res/android"
+                            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                            android:layout_marginRight="6dp"
+                            android:layout_marginLeft="6dp"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            card_view:cardUseCompatPadding="true"
+                            card_view:cardElevation="3dp"
+                            card_view:cardCornerRadius="2dp">
+
+                            <com.serasiautoraya.slimobiledrivertracking.MVP.CustomView.SquareImageView
+                                android:id="@+id/documents_iv_capPOD2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/no_preview_available2"
+                                android:scaleType="centerCrop"/>
+
+                        </android.support.v7.widget.CardView>
+
+                        <android.support.v7.widget.CardView
+                            xmlns:android="http://schemas.android.com/apk/res/android"
+                            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                            android:layout_marginLeft="6dp"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            card_view:cardUseCompatPadding="true"
+                            card_view:cardElevation="3dp"
+                            card_view:cardCornerRadius="2dp">
+
+                            <com.serasiautoraya.slimobiledrivertracking.MVP.CustomView.SquareImageView
+                                android:id="@+id/documents_iv_capPOD3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/no_preview_available2"
+                                android:scaleType="centerCrop"/>
+
+                        </android.support.v7.widget.CardView>
+
+                    </LinearLayout>
+
+                    <!--Input Alasan (Spinner)-->
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:paddingLeft="6dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/documents_podreason_spinner_reason" />
+                    <Spinner
+                        android:layout_marginBottom="20dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/documents_spinner_podreason" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/documents_card_expenses"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 card_view:contentPadding="6dp"
@@ -340,8 +466,6 @@
 
                     </LinearLayout>
 
-
-
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
@@ -349,6 +473,7 @@
             <android.support.v7.widget.CardView
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/documents_card_signature"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 card_view:contentPadding="6dp"
@@ -397,6 +522,7 @@
             <android.support.v7.widget.CardView
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/documents_card_verificationcode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 card_view:contentPadding="6dp"
@@ -438,7 +564,6 @@
                         android:layout_height="wrap_content"
                         android:textSize="34sp"
                         android:singleLine="true"
-                        android:maxLength="11"
                         android:hint="masukan kode"
                         android:inputType="number"
                         android:gravity="center"

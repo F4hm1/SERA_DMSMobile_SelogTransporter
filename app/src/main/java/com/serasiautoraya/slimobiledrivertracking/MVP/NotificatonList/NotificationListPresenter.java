@@ -44,10 +44,15 @@ public class NotificationListPresenter extends TiPresenter<NotificationListView>
             notificationResponseModels.add(visitorModel);
             res.moveToNext();
         }
-        if (notificationResponseModels.size() > 0) {
-            mSimpleAdapterModel.setItemList(notificationResponseModels);
-            getView().refreshRecyclerView();
+
+        if (!notificationResponseModels.isEmpty()) {
+            getView().toggleEmptyInfo(false);
+        } else {
+            getView().toggleEmptyInfo(true);
         }
+        mSimpleAdapterModel.setItemList(notificationResponseModels);
+        getView().refreshRecyclerView();
+
     }
 
     public void setAdapter(SimpleAdapterModel simpleAdapterModel) {

@@ -34,6 +34,10 @@ public class OvertimeRequestHistoryPresenter extends TiPresenter<OvertimeRequest
     }
 
     public void loadRequestHistoryData(){
+        getView().toggleEmptyInfo(true);
+        if (!HelperBridge.sOvertimeRequestHistoryList.isEmpty()) {
+            getView().toggleEmptyInfo(false);
+        }
         mSimpleAdapterModel.setItemList(HelperBridge.sOvertimeRequestHistoryList);
         getView().refreshRecyclerView();
     }

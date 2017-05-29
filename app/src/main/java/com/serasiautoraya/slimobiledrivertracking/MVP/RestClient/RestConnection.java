@@ -9,15 +9,18 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.error.AuthFailureError;
+import com.android.volley.error.ParseError;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.GsonRequest;
 import com.android.volley.request.JsonObjectRequest;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.JsonSyntaxException;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallBackInterfaceModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallbackInterfaceJSON;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.TimeRestCallBackInterface;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.BaseResponseModel;
+import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.Model;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.TimeRESTResponseModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperUrl;
 import com.serasiautoraya.slimobiledrivertracking.util.LocationServiceUtil;
@@ -25,6 +28,7 @@ import com.serasiautoraya.slimobiledrivertracking.util.LocationServiceUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -240,20 +244,58 @@ public class RestConnection {
                 new Response.Listener<BaseResponseModel>() {
                     @Override
                     public void onResponse(BaseResponseModel response) {
-                        if (response != null) {
+                        if (mStatusCode == 200) {
                             restcall.callBackOnSuccess(response);
                         } else {
+                            Log.d("ANJIRRRRS", "code: "+mStatusCode);
+                            Log.d("ANJIRRRRS", "datas: "+response.getResponseText());
+                            Log.d("ANJIRRRRS", "codess: "+response.getResponse());
                             restcall.callBackOnFail(response.getResponseText());
                         }
+//                        if (response != null) {
+//                            if(mStatusCode)
+//                            restcall.callBackOnSuccess(response);
+//                        } else {
+//                            restcall.callBackOnFail(response.getResponseText());
+//                        }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        Log.d("ANJIRRRRS", "errors: "+error.getMessage());
                         restcall.callBackOnFail(error.getMessage());
                     }
                 }
-        );
+        )
+        {
+            @Override
+            protected VolleyError parseNetworkError(VolleyError volleyError) {
+                if (volleyError.networkResponse != null && volleyError.networkResponse.data != null) {
+                    JSONObject jsonResponse = null;
+                    String responseText = "Terjadi Kesalahan";
+                    try {
+                        jsonResponse = new JSONObject(new String(volleyError.networkResponse.data));
+                        responseText = jsonResponse.getString("responseText");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    VolleyError error = new VolleyError(responseText);
+                    volleyError = error;
+                }
+                return volleyError;
+            }
+
+            @Override
+            protected Response<BaseResponseModel> parseNetworkResponse(NetworkResponse response) {
+                mStatusCode = response.statusCode;
+                String json = new String(response.data);
+                return Response.success(
+                        Model.getModelInstanceFromString(json, BaseResponseModel.class), HttpHeaderParser.parseCacheHeaders(response)
+                );
+            }
+        };
         request.setShouldCache(false);
         mRequestQueue.add(request);
 
@@ -362,6 +404,7 @@ public class RestConnection {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        Log.d("ANJIRRRRS", "code: "+mStatusCode);
                         if (mStatusCode == 200) {
                             restcall.callBackOnSuccess(response);
                         } else {
@@ -419,6 +462,8 @@ public class RestConnection {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                Log.d("ANJIRRRRS", "code-1: "+mStatusCode);
+                Log.d("ANJIRRRRS", "code-2: "+obj.toString());
                 return Response.success(obj, HttpHeaderParser.parseCacheHeaders(response));
             }
 
@@ -451,5 +496,20 @@ public class RestConnection {
         return new LocationModel(tempLongitude, tempLatitude, tempAddress);
     }
 
+    public static String getTimeZoneID(TimeRESTResponseModel timeRESTResponseModel){
+        String result = "";
+        switch (timeRESTResponseModel.getGmtOffset()){
+            case "7":
+                result = "WIB";
+                break;
+            case "8":
+                result = "WITA";
+                break;
+            case "9":
+                result = "WIT";
+                break;
+        }
+        return result;
+    }
 }
 

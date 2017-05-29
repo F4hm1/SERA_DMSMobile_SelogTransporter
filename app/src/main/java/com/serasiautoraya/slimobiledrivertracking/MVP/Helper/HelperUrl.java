@@ -56,4 +56,11 @@ public class HelperUrl {
     public static final String POST_OLCTRIP = HOST + "attendance/olctrip/";
 
     public static final String DELETE_OLCTRIP = HOST + "attendance/overtime/";
+
+    public static final String GET_ORDER_HISTORY = HOST + "order/history/";
+
+    /*
+    * URl/{OrderCode}
+    * */
+    public static final String GET_ORDER_HISTORY_DETAIL = HOST + "order/history/";
 }

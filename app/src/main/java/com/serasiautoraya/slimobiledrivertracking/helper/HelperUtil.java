@@ -88,7 +88,7 @@ public class HelperUtil {
         boolean result = true;
         try {
             FileOutputStream mFileOutStream = new FileOutputStream(storedPath);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, mFileOutStream);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, mFileOutStream);
             mFileOutStream.flush();
             mFileOutStream.close();
         } catch (Exception e) {
@@ -354,7 +354,7 @@ public class HelperUtil {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         LayoutInflater inflater = activity.getLayoutInflater();
 
-        builder.setView(inflater.inflate(R.layout.dialog_confirmation, null))
+        builder.setView(inflater.inflate(R.layout.dialog_order_acknowledge, null))
                 .setPositiveButton("Diterima", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {

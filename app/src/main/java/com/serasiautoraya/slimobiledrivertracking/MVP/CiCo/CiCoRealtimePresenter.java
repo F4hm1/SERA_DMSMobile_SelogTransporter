@@ -78,7 +78,7 @@ public class  CiCoRealtimePresenter extends TiPresenter<CiCoRealtimeView> {
         mRestConnection.getServerTime(new TimeRestCallBackInterface() {
             @Override
             public void callBackOnSuccess(TimeRESTResponseModel timeRESTResponseModel, String latitude, String longitude, String address) {
-                String timeZoneId = getTimeZoneID(timeRESTResponseModel);
+                String timeZoneId = RestConnection.getTimeZoneID(timeRESTResponseModel);
                 String[] timeSplit = timeRESTResponseModel.getTime().split(" ");
                 String[] dateSplit =  timeSplit[0].split(HelperKey.USER_DATE_FORMAT_SEPARATOR);
                 String date = timeSplit[0];
@@ -126,7 +126,7 @@ public class  CiCoRealtimePresenter extends TiPresenter<CiCoRealtimeView> {
         mRestConnection.getServerTime(new TimeRestCallBackInterface() {
             @Override
             public void callBackOnSuccess(TimeRESTResponseModel timeRESTResponseModel, String latitude, String longitude, String address) {
-                String timeZoneId = getTimeZoneID(timeRESTResponseModel);
+                String timeZoneId = RestConnection.getTimeZoneID(timeRESTResponseModel);
                 String[] timeSplit = timeRESTResponseModel.getTime().split(" ");
                 String[] dateSplit =  timeSplit[0].split(HelperKey.USER_DATE_FORMAT_SEPARATOR);
                 String date = timeSplit[0];
@@ -167,22 +167,6 @@ public class  CiCoRealtimePresenter extends TiPresenter<CiCoRealtimeView> {
                 getView().showStandardDialog(message, "Perhatian");
             }
         });
-    }
-
-    public static String getTimeZoneID(TimeRESTResponseModel timeRESTResponseModel){
-        String result = "";
-        switch (timeRESTResponseModel.getGmtOffset()){
-            case "7":
-                result = "WIB";
-                break;
-            case "8":
-                result = "WITA";
-                break;
-            case "9":
-                result = "WIT";
-                break;
-        }
-        return result;
     }
 
 

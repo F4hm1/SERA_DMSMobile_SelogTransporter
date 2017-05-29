@@ -1,7 +1,9 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Activity;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
+import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperBridge;
 import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.DocumentCapture.DocumentCaptureActivity;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking.activity.EvidenceCaptureActivity;
@@ -34,7 +36,6 @@ public class ActivityDetailPresenter extends TiPresenter<ActivityDetailView>  {
     }
 
     public void loadDetailOrderData(String orderCode){
-
 
         /*
         * TODO change this lines code below
@@ -77,7 +78,7 @@ public class ActivityDetailPresenter extends TiPresenter<ActivityDetailView>  {
 //                "Order "+mActivityDetailResponseModel.getOrderCode(),
 //                mActivityDetailResponseModel.getOrderCode(),
 //                mActivityDetailResponseModel.getActivityName(),
-//                mActivityDetailResponseModel.getAcitivityType(),
+//                mActivityDetailResponseModel.getActivityType(),
 //                mActivityDetailResponseModel.getOrigin(),
 //                mActivityDetailResponseModel.getDestination(),
 //                mActivityDetailResponseModel.getETD(),
@@ -91,22 +92,29 @@ public class ActivityDetailPresenter extends TiPresenter<ActivityDetailView>  {
 //        getView().setButtonText(mActivityDetailResponseModel.getActivityName());
 
         getView().setDetailData(
-                "Order "+orderCode,
-                "Ordercode "+orderCode,
-                "Activity Name",
-                "Activity Type",
-                "Origins",
-                "Destination",
-                "ETEDE",
-                "ETEA",
-                "Customer",
-                "Location target",
-                "Time Target",
-                "Baseline",
-                "Actual"
+                "Order "+ HelperBridge.sActivityDetailResponseModel.getOrderCode(),
+                HelperBridge.sActivityDetailResponseModel.getOrderCode(),
+                HelperBridge.sActivityDetailResponseModel.getActivityName(),
+                HelperBridge.sActivityDetailResponseModel.getAcitivityType(),
+                HelperBridge.sActivityDetailResponseModel.getOrigin(),
+                HelperBridge.sActivityDetailResponseModel.getDestination(),
+                HelperBridge.sActivityDetailResponseModel.getETD(),
+                HelperBridge.sActivityDetailResponseModel.getETA(),
+                HelperBridge.sActivityDetailResponseModel.getCustomer(),
+                HelperBridge.sActivityDetailResponseModel.getLocationTargetText(),
+                HelperBridge.sActivityDetailResponseModel.getTimeTarget(),
+                HelperBridge.sActivityDetailResponseModel.getTimeBaseline(),
+                HelperBridge.sActivityDetailResponseModel.getTimeActual()
         );
 
-        getView().setButtonText("Act Name");
+        Log.d("ACTIVITY DET:", HelperBridge.sActivityDetailResponseModel.getHashMapType().toString());
+
+        /*
+        * TODO uncomment this
+        * */
+//        getView().setButtonColor(HelperBridge.sActivityDetailResponseModel.getButtonActivityColor());
+        getView().setButtonColor("#1976D2");
+        getView().setButtonText(HelperBridge.sActivityDetailResponseModel.getActivityName());
 
     }
 

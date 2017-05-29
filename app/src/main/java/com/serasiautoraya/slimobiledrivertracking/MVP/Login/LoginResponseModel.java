@@ -121,16 +121,97 @@ public class LoginResponseModel {
     @Expose
     private String MinHariRequestAbsence;
 
-    @SerializedName("IsDoneFatigueInterview")
+    @SerializedName("IsNeedFatigueInterview")
     @Expose
-    private String IsDoneFatigueInterview;
+    private String IsNeedFatigueInterview;
 
-    public void setIsDoneFatigueInterview(String isDoneFatigueInterview) {
-        IsDoneFatigueInterview = isDoneFatigueInterview;
+    @SerializedName("LocationUpdateInterval")
+    @Expose
+    private String LocationUpdateInterval;
+
+    @SerializedName("RequestCiCo")
+    @Expose
+    private String RequestCiCo;
+
+    @SerializedName("ReportCiCo")
+    @Expose
+    private String ReportCiCo;
+
+    @SerializedName("RequestAbsence")
+    @Expose
+    private String RequestAbsence;
+
+    @SerializedName("ReportAbsence")
+    @Expose
+    private String ReportAbsence;
+
+    @SerializedName("RequestOLCTrip")
+    @Expose
+    private String RequestOLCTrip;
+
+    @SerializedName("ReportOLCTrip")
+    @Expose
+    private String ReportOLCTrip;
+
+    @SerializedName("RequestOvertime")
+    @Expose
+    private String RequestOvertime;
+
+    @SerializedName("ReportOvertime")
+    @Expose
+    private String ReportOvertime;
+
+    @SerializedName("ReportServiceHour")
+    @Expose
+    private String ReportServiceHour;
+
+
+    public String getRequestCiCo() {
+        return RequestCiCo;
     }
 
-    public String getIsDoneFatigueInterview() {
-        return IsDoneFatigueInterview;
+    public String getReportCiCo() {
+        return ReportCiCo;
+    }
+
+    public String getRequestAbsence() {
+        return RequestAbsence;
+    }
+
+    public String getReportAbsence() {
+        return ReportAbsence;
+    }
+
+    public String getRequestOLCTrip() {
+        return RequestOLCTrip;
+    }
+
+    public String getReportOLCTrip() {
+        return ReportOLCTrip;
+    }
+
+    public String getRequestOvertime() {
+        return RequestOvertime;
+    }
+
+    public String getReportOvertime() {
+        return ReportOvertime;
+    }
+
+    public String getReportServiceHour() {
+        return ReportServiceHour;
+    }
+
+    public String getLocationUpdateInterval() {
+        return LocationUpdateInterval;
+    }
+
+    public void setIsNeedFatigueInterview(String isNeedFatigueInterview) {
+        IsNeedFatigueInterview = isNeedFatigueInterview;
+    }
+
+    public String getIsNeedFatigueInterview() {
+        return IsNeedFatigueInterview;
     }
 
     public String getPersonalId() {

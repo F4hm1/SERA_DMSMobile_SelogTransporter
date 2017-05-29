@@ -1,6 +1,7 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.RequestHistory.Absence;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.android.volley.error.VolleyError;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseAdapter.SimpleAdapterModel;
@@ -40,6 +41,10 @@ public class AbsenceRequestHistoryPresenter extends TiPresenter<AbsenceRequestHi
     }
 
     public void loadRequestHistoryData(){
+        getView().toggleEmptyInfo(true);
+        if (!HelperBridge.sAbsenceRequestHistoryList.isEmpty()) {
+            getView().toggleEmptyInfo(false);
+        }
         mSimpleAdapterModel.setItemList(HelperBridge.sAbsenceRequestHistoryList);
         getView().refreshRecyclerView();
     }
@@ -54,31 +59,33 @@ public class AbsenceRequestHistoryPresenter extends TiPresenter<AbsenceRequestHi
     public void onCancelationSubmitted(){
         getView().toggleLoading(true);
         mRestConnection.deleteData(
-                HelperBridge.sModelLoginResponse.getTransactionToken(),
-                HelperUrl.DELETE_ABSENCE,
-                mAbsenceDeleteSendModel.getHashMapType(),
-                new RestCallBackInterfaceModel() {
-                    @Override
-                    public void callBackOnSuccess(BaseResponseModel response) {
-                        getView().toggleLoading(false);
-                        getView().showStandardDialog(response.getResponseText(), "Berhasil");
-                    }
+            HelperBridge.sModelLoginResponse.getTransactionToken(),
+            HelperUrl.DELETE_ABSENCE,
+            mAbsenceDeleteSendModel.getHashMapType(),
+            new RestCallBackInterfaceModel() {
+                @Override
+                public void callBackOnSuccess(BaseResponseModel response) {
+                    getView().toggleLoading(false);
+                    getView().showStandardDialog(response.getResponseText(), "Berhasil");
+                    getView().refreshAllData();
+                }
 
-                    @Override
-                    public void callBackOnFail(String response) {
-                        getView().toggleLoading(false);
-                        getView().showStandardDialog(response, "Perhatian");
-                    }
+                @Override
+                public void callBackOnFail(String response) {
+                    getView().toggleLoading(false);
+                    getView().showStandardDialog(response, "Perhatian");
+                }
 
-                    @Override
-                    public void callBackOnError(VolleyError error) {
-                        /*
-                        * TODO change this, jadikan value nya dari string values!
-                        * */
-                        getView().toggleLoading(false);
-                        getView().showStandardDialog("Gagal membatalkan pengajuan ketidakhadiran, silahkan periksa koneksi anda kemudian coba kembali", "Perhatian");
-                    }
-                });
+                @Override
+                public void callBackOnError(VolleyError error) {
+                    /*
+                    * TODO change this, jadikan value nya dari string values!
+                    * */
+                    getView().toggleLoading(false);
+                    getView().showStandardDialog("Gagal membatalkan pengajuan ketidakhadiran, silahkan periksa koneksi anda kemudian coba kembali", "Perhatian");
+                }
+            }
+        );
     }
 
 }

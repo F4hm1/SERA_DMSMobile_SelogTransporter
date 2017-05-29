@@ -1,10 +1,14 @@
 package com.serasiautoraya.slimobiledrivertracking.util;
 
 import android.Manifest;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -14,17 +18,29 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
+import com.android.volley.error.VolleyError;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallbackInterfaceJSON;
+import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.SharedPrefsModel;
+import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperBridge;
+import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperUrl;
+import com.serasiautoraya.slimobiledrivertracking.MVP.LocationUpdate.LocationUpdateSendModel;
+import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
+import com.serasiautoraya.slimobiledrivertracking.R;
 import com.serasiautoraya.slimobiledrivertracking.activity.LoginActivity;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperKey;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -39,12 +55,15 @@ public class GPSTrackerService extends Service implements LocationListener, Goog
 
     private static GPSTrackerService instance = null;
     private static final int UPDATE_INTERVAL = 1000 * 10; //in milliseconds
-    private static final int UPDATE_INTERVAL_FASTEST = 1000 * 5; //in milliseconds
+    private static final int UPDATE_INTERVAL_FASTEST = 1000 * 20; //in milliseconds
     private Geocoder mGeocoder;
     private GoogleApiClient mGoogleApiClient = null;
     private LocationRequest mLocationRequest;
     private Location sLocation;
     private Context mTemporaryContext;
+    private static final int FOREGROUND_ID = 9898;
+
+    private Context mApplicationContext;
 
     /*
     * TODO Delete this
@@ -66,22 +85,42 @@ public class GPSTrackerService extends Service implements LocationListener, Goog
     @Override
     public void onCreate() {
 //        getLocationManager(AppInit.getAppContext());
+        mApplicationContext = getApplicationContext();
         Log.d(TAG, "CREATED SERVICES");
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         getLocationManager(AppInit.getAppContext());
+
+        Intent i = new Intent(this, com.serasiautoraya.slimobiledrivertracking.MVP.Login.LoginActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,0,i,PendingIntent.FLAG_UPDATE_CURRENT);
+        Bitmap bitmapIcon = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.logoselog);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setLargeIcon(bitmapIcon)
+                .setSmallIcon(R.drawable.logoselog)
+                .setAutoCancel(true)
+                .setContentTitle("SELOG Transporter")
+                .setContentText("Terdapat order yang sedang berjalan")
+                .setTicker("Terdapat order yang sedang berjalan")
+                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setContentIntent(pendingIntent)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE);
+
+        startForeground(FOREGROUND_ID, builder.build());
         Log.d(TAG, "STARTED SERVICES");
         return START_STICKY;
     }
 
     private void initGoogleApiClient(Context context) {
         Log.d(TAG, "1: initGoogleApiClient");
+        SharedPrefsModel sharedPrefsModel = new SharedPrefsModel(context);
+        int locationUpdateInterval = sharedPrefsModel.get(com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperKey.KEY_LOCATION_UPDATE_INTERVAL, 60);
         mLocationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setInterval(UPDATE_INTERVAL)
-                .setFastestInterval(UPDATE_INTERVAL_FASTEST);
+                .setFastestInterval(locationUpdateInterval);
         this.mGeocoder = new Geocoder(context, Locale.getDefault());
 
         if (mGoogleApiClient == null) {
@@ -180,9 +219,37 @@ public class GPSTrackerService extends Service implements LocationListener, Goog
             String latitude = SharedPrefsUtil.getString(mContext, HelperKey.KEY_LOC_LAT, "");
             String longitude = SharedPrefsUtil.getString(mContext, HelperKey.KEY_LOC_LONG, "");
             String waktu = SharedPrefsUtil.getString(mContext, "CUR_TIME", "");
-
             Log.d(TAG, "Loc updated: "+waktu+" oo "+latitude+" - "+sLocation.getLongitude());
         }
+        updateToServer();
+    }
+
+    private void updateToServer(){
+        LocationUpdateSendModel locationUpdateSendModel = new LocationUpdateSendModel(
+                HelperBridge.sModelLoginResponse.getPersonalId(),
+                sLocation.getLatitude()+"",
+                sLocation.getLongitude()+"",
+                getLastLocationName()
+        );
+
+        RestConnection restConnection = new RestConnection(AppInit.getAppContext());
+        restConnection.putData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.PUT_LOCATION_UPDATE, locationUpdateSendModel.getHashMapType(), new RestCallbackInterfaceJSON() {
+            @Override
+            public void callBackOnSuccess(JSONObject response) {
+                Log.d("LOCATION_UPDATE", "SERV_SUCCESS");
+            }
+
+            @Override
+            public void callBackOnFail(String response) {
+                Log.d("LOCATION_UPDATE", "SERV_FAIL");
+            }
+
+            @Override
+            public void callBackOnError(VolleyError error) {
+                Log.d("LOCATION_UPDATE", "SERV_ERROR");
+            }
+        });
+
     }
 
     @Override

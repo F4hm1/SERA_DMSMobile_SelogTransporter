@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseAdapter.CustomPopUpItemClickListener;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseAdapter.SimpleAdapterView;
+import com.serasiautoraya.slimobiledrivertracking.MVP.CustomView.EmptyInfoView;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RequestHistory.RequestHistoryAdapter;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RequestHistory.RequestHistoryResponseModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
@@ -31,6 +32,9 @@ public class OvertimeRequestHistoryFragment extends TiFragment<OvertimeRequestHi
         implements  OvertimeRequestHistoryView{
 
     @BindView(R.id.recycler_overtime_request_history) RecyclerView mRecyclerView;
+    @BindView(R.id.layout_empty_info)
+    EmptyInfoView mEmptyInfoView;
+
     private SimpleAdapterView mSimpleAdapterView;
 
     @Override
@@ -42,6 +46,8 @@ public class OvertimeRequestHistoryFragment extends TiFragment<OvertimeRequestHi
 
     @Override
     public void initialize() {
+        mEmptyInfoView.setIcon(R.drawable.ic_empty_attendance);
+        mEmptyInfoView.setText("Tidak terdapat riwayat pengajuan overtime");
         this.initializeRecylerView();
         getPresenter().loadRequestHistoryData();
     }
@@ -95,11 +101,21 @@ public class OvertimeRequestHistoryFragment extends TiFragment<OvertimeRequestHi
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.addItemDecoration(new DividerRecycleViewDecoration(getContext(), LinearLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(simpleListAdapter);
+        mRecyclerView.setNestedScrollingEnabled(false);
         getPresenter().setAdapter(simpleListAdapter);
     }
 
     @Override
     public void refreshRecyclerView() {
         mSimpleAdapterView.refresh();
+    }
+
+    @Override
+    public void toggleEmptyInfo(boolean show) {
+        if(show){
+            mEmptyInfoView.setVisibility(View.VISIBLE);
+        }else {
+            mEmptyInfoView.setVisibility(View.GONE);
+        }
     }
 }

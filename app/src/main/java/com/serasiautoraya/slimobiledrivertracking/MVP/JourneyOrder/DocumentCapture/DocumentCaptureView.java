@@ -15,7 +15,6 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.FormViewInte
  */
 
 public interface DocumentCaptureView extends BaseViewInterface, FormViewInterface {
-    void onTextFuelChangeAfter(Editable editable);
 
     void onClickPhotoCapture1(View view);
 
@@ -31,13 +30,17 @@ public interface DocumentCaptureView extends BaseViewInterface, FormViewInterfac
 
     void startActivitySignature();
 
-    void setImageThumbnail(Bitmap bitmap, int targetIvID);
+    void setImageThumbnail(Bitmap bitmap, int targetIvID, boolean isPOD);
 
     void setImageSign(Bitmap bitmap);
 
     void onClickSubmit(View view);
 
     void showConfirmationDialog(String activityName);
+
+    void initializeFormContent(boolean isPhoto, boolean isSignature, boolean isVerificationCode, boolean isPOD, String pODGuide);
+
+    void setSubmitText(String text);
 
 
 }

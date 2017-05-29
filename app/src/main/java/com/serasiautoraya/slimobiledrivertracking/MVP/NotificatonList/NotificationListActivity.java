@@ -9,11 +9,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseAdapter.CustomPopUpItemClickListener;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseAdapter.SimpleAdapterView;
+import com.serasiautoraya.slimobiledrivertracking.MVP.CustomView.EmptyInfoView;
 import com.serasiautoraya.slimobiledrivertracking.MVP.SQLIte.DBHelper;
 import com.serasiautoraya.slimobiledrivertracking.R;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
@@ -32,13 +34,16 @@ public class NotificationListActivity extends TiActivity<NotificationListPresent
 
     @BindView(R.id.recycler_notification_list) RecyclerView mRecyclerView;
 
+    @BindView(R.id.layout_empty_info)
+    EmptyInfoView mEmptyInfoView;
+
     private SimpleAdapterView mSimpleAdapterView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_notification_list);
         ButterKnife.bind(this);
     }
@@ -57,6 +62,8 @@ public class NotificationListActivity extends TiActivity<NotificationListPresent
 
     @Override
     public void initialize() {
+        mEmptyInfoView.setIcon(R.drawable.ic_empty_notification);
+        mEmptyInfoView.setText("Tidak terdapat riwayat notifikasi");
         this.initializeActionBar();
         this.initializeRecylerView();
         getPresenter().loadNotificationListData();
@@ -129,5 +136,14 @@ public class NotificationListActivity extends TiActivity<NotificationListPresent
                 getPresenter().onDeleteSubmitted();
             }
         });
+    }
+
+    @Override
+    public void toggleEmptyInfo(boolean show) {
+        if(show){
+            mEmptyInfoView.setVisibility(View.VISIBLE);
+        }else {
+            mEmptyInfoView.setVisibility(View.GONE);
+        }
     }
 }

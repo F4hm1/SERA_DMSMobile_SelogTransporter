@@ -1,17 +1,14 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.Dashboard;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.SharedPrefsModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Fatigue.FatigueActivity;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperBridge;
-import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperKey;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Login.LoginActivity;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Profiling.ProfileActivity;
 import net.grandcentrix.thirtyinch.TiPresenter;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 /**
  * Created by Randi Dwi Nandra on 27/03/2017.
@@ -34,9 +31,10 @@ public class DashboardPresenter extends TiPresenter<DashboardView> {
 //        String dateToday = simpleDateFormat.format(calendar.getTime());
 //        if(mSharedPrefsModel.get(HelperKey.KEY_LAST_CLOCKIN, "").equalsIgnoreCase(dateToday)
 //                && !mSharedPrefsModel.get(HelperKey.KEY_LAST_FATIGUE_INTERVIEW, "").equalsIgnoreCase(dateToday)){
-        getView().changeFragment(getView().getActiveFragment(0));
+        getView().changeFragment(getView().getActiveFragment(HelperBridge.sTempFragmentTarget));
+        HelperBridge.sTempFragmentTarget = 0;
         getView().setDrawerProfile(HelperBridge.sModelLoginResponse.getFullname(), HelperBridge.sModelLoginResponse.getCompany(), HelperBridge.sModelLoginResponse.getPhotoFront());
-        if(HelperBridge.sModelLoginResponse.getIsDoneFatigueInterview().equalsIgnoreCase("1")){
+        if(!HelperBridge.sModelLoginResponse.getIsNeedFatigueInterview().equalsIgnoreCase("0")){
             getView().changeActivity(FatigueActivity.class);
         }
 //        }
@@ -44,6 +42,7 @@ public class DashboardPresenter extends TiPresenter<DashboardView> {
 
     public void onNavigationItemSelectedForFragment(int id){
         getView().changeFragment(getView().getActiveFragment(id));
+        HelperBridge.sTempFragmentTarget = 0;
     }
 
     public void onNavigationItemSelectedForActivity(int id){

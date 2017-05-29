@@ -12,6 +12,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -28,6 +29,7 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.CiCo.CiCoFragment;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Fatigue.FatigueActivity;
 import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Assigned.AssignedFragment;
 import com.serasiautoraya.slimobiledrivertracking.MVP.NotificatonList.NotificationListActivity;
+import com.serasiautoraya.slimobiledrivertracking.MVP.OrderHistory.OrderHistoryFragment;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RequestHistory.RequestHistoryFragment;
 import com.serasiautoraya.slimobiledrivertracking.R;
 import com.serasiautoraya.slimobiledrivertracking.listener.TextViewTouchListener;
@@ -135,20 +137,26 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
         switch (idNavItem) {
             case R.id.nav_active_order:
                 AssignedFragment assignedFragment = new AssignedFragment();
+                mNavigationView.setCheckedItem(R.id.nav_active_order);
                 return assignedFragment;
             case R.id.nav_cico_request:
                 CiCoFragment ciCoFragment = new CiCoFragment();
+                mNavigationView.setCheckedItem(R.id.nav_cico_request);
                 return ciCoFragment;
             case R.id.nav_absence_request:
                 AbsenceRequestFragment absenceRequestFragment = new AbsenceRequestFragment();
+                mNavigationView.setCheckedItem(R.id.nav_absence_request);
                 return absenceRequestFragment;
             case R.id.nav_attendance_history:
                 RequestHistoryFragment attendanceHistoryFragment = new RequestHistoryFragment();
+                mNavigationView.setCheckedItem(R.id.nav_attendance_history);
                 return attendanceHistoryFragment;
-//            case R.id.nav_order_history:
-//                OrderHistoryFragment orderHistoryFragment = new OrderHistoryFragment();
-//                return orderHistoryFragment;
+            case R.id.nav_order_history:
+                OrderHistoryFragment orderHistoryFragment = new OrderHistoryFragment();
+                mNavigationView.setCheckedItem(R.id.nav_order_history);
+                return orderHistoryFragment;
             default:
+                mNavigationView.setCheckedItem(R.id.nav_active_order);
                 return new AssignedFragment();
         }
     }

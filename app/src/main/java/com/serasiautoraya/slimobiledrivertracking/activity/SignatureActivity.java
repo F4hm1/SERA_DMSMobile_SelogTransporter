@@ -34,7 +34,7 @@ public class SignatureActivity extends AppCompatActivity {
     private SignatureView mSignature;
     private View view;
     String pic_name = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-    String StoredPath = HelperUrl.SAVE_DIRECTORY + "ttd_" +pic_name + ".png";
+    String StoredPath = HelperUrl.SAVE_DIRECTORY + "ttd_" +pic_name + ".jpeg";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

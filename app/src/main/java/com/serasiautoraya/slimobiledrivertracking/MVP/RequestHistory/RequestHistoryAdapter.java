@@ -1,7 +1,9 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.RequestHistory;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -72,8 +74,12 @@ public class RequestHistoryAdapter extends RecyclerView.Adapter<SimpleListViewHo
 
     @Override
     public void onBindViewHolder(SimpleListViewHolder holder, int position) {
-        RequestHistoryResponseModel simpleSingleList = mSimpleSingleLists.get(position);
+        final RequestHistoryResponseModel simpleSingleList = mSimpleSingleLists.get(position);
         final int itemPosition = position;
+
+        holder.getTitle().setText("Pengajuan " + simpleSingleList.getRequestDate());
+        holder.getInformation().setText(simpleSingleList.getDateStart() + " - " + simpleSingleList.getDateEnd());
+        holder.getStatus().setText(simpleSingleList.getRequestStatus());
 
         switch (simpleSingleList.getTransType()) {
             case HelperTransactionCode.REQUEST_HISTORY_ABSENCE_CODE: {
@@ -107,7 +113,9 @@ public class RequestHistoryAdapter extends RecyclerView.Adapter<SimpleListViewHo
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showPopupMenu(imageButton, itemPosition);
+                Log.d("ANCURRR", simpleSingleList.getRequestStatus());
+                String status = simpleSingleList.getRequestStatus().replace(" ", "");
+                showPopupMenu(imageButton, itemPosition, status.equalsIgnoreCase(HelperTransactionCode.REQUEST_WAITING_APPROVAL_STATUS));
             }
         });
     }
@@ -117,11 +125,13 @@ public class RequestHistoryAdapter extends RecyclerView.Adapter<SimpleListViewHo
         return mSimpleSingleLists.size();
     }
 
-    private void showPopupMenu(View view, int position) {
+    private void showPopupMenu(View view, int position, boolean isCancelable) {
         final int itemPosition = position;
         PopupMenu popup = new PopupMenu(view.getContext(), view);
+        Menu menu = popup.getMenu();
         MenuInflater inflater = popup.getMenuInflater();
-        inflater.inflate(R.menu.popup_request_history, popup.getMenu());
+        inflater.inflate(R.menu.popup_request_history, menu);
+
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
@@ -129,6 +139,10 @@ public class RequestHistoryAdapter extends RecyclerView.Adapter<SimpleListViewHo
             }
         });
         popup.show();
+        if(!isCancelable){
+            MenuItem menuItem =  menu.findItem(R.id.menu_popup_cancel_request);
+            menuItem.setVisible(false);
+        }
     }
 
 }

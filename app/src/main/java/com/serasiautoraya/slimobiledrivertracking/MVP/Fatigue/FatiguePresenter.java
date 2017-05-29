@@ -49,7 +49,7 @@ public class FatiguePresenter extends TiPresenter<FatigueView> {
             public void callBackOnSuccess(JSONObject response) {
                 try {
                     getView().toggleLoading(false);
-                    HelperBridge.sModelLoginResponse.setIsDoneFatigueInterview("0");
+                    HelperBridge.sModelLoginResponse.setIsNeedFatigueInterview("0");
                     getView().showSuccessDialog(response.getString("responseText"), "Berhasil");
 
                     Calendar calendar = Calendar.getInstance();

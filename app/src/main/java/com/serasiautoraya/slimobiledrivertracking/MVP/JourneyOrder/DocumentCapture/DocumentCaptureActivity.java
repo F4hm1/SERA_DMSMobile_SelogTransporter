@@ -1,27 +1,29 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.DocumentCapture;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.text.Editable;
 import android.text.Html;
 import android.text.InputFilter;
 import android.text.TextWatcher;
-import android.util.Base64;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperKey;
@@ -31,12 +33,9 @@ import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
 
 import net.grandcentrix.thirtyinch.TiActivity;
 
-import java.io.ByteArrayOutputStream;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnTextChanged;
 import butterknife.OnTouch;
 
 /**
@@ -44,6 +43,18 @@ import butterknife.OnTouch;
  */
 
 public class DocumentCaptureActivity extends TiActivity<DocumentCapturePresenter, DocumentCaptureView> implements DocumentCaptureView {
+
+    @BindView(R.id.documents_card_photos)
+    CardView mCardDocumentsPhotos;
+    @BindView(R.id.documents_card_expenses)
+    CardView mCardDocumentsExpenses;
+    @BindView(R.id.documents_card_signature)
+    CardView mCardDocumentsSignature;
+    @BindView(R.id.documents_card_verificationcode)
+    CardView mCardDocumentsVerificationCode;
+    @BindView(R.id.documents_card_POD)
+    CardView mCardDocumentsPOD;
+
 
     @BindView(R.id.documents_iv_capture1)
     ImageView mEtDocumentsIvCapture1;
@@ -72,39 +83,49 @@ public class DocumentCaptureActivity extends TiActivity<DocumentCapturePresenter
     EditText mEtDocumentsVerificationCode;
 
 
+    @BindView(R.id.documents_iv_capPOD1)
+    ImageView mEtDocumentsIvCapturePOD1;
+    @BindView(R.id.documents_iv_capPOD2)
+    ImageView mEtDocumentsIvCapturePOD2;
+    @BindView(R.id.documents_iv_capPOD3)
+    ImageView mEtDocumentsIvCapturePOD3;
+    @BindView(R.id.documents_tv_podguide)
+    TextView mTvDocumentsPODGuide;
+    @BindView(R.id.documents_spinner_podreason)
+    Spinner mSpinnerDocumentsPODReason;
+
+    @BindView(R.id.documents_btn_submit)
+    Button mBtnDocumentsSubmit;
+
+
     private String mCurrentVerificationCodeVal = "";
     private boolean isFromCameraActivity = false;
     private boolean isFromSigningActivity = false;
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_documents_capture);
         ButterKnife.bind(this);
     }
 
     @Override
-    @OnTextChanged(value = R.id.documents_et_fuel, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void onTextFuelChangeAfter(Editable editable) {
-
-    }
-
-    @Override
-    @OnClick(R.id.documents_iv_capture1)
+    @OnClick({R.id.documents_iv_capture1, R.id.documents_iv_capPOD1})
     public void onClickPhotoCapture1(View view) {
         getPresenter().capturePhoto(1);
     }
 
     @Override
-    @OnClick(R.id.documents_iv_capture2)
+    @OnClick({R.id.documents_iv_capture2, R.id.documents_iv_capPOD2})
     public void onClickPhotoCapture2(View view) {
         getPresenter().capturePhoto(2);
     }
 
     @Override
-    @OnClick(R.id.documents_iv_capture3)
+    @OnClick({R.id.documents_iv_capture3, R.id.documents_iv_capPOD3})
     public void onClickPhotoCapture3(View view) {
         getPresenter().capturePhoto(3);
     }
@@ -150,21 +171,21 @@ public class DocumentCaptureActivity extends TiActivity<DocumentCapturePresenter
     }
 
     @Override
-    public void setImageThumbnail(Bitmap bitmap, int targetIvID) {
+    public void setImageThumbnail(Bitmap bitmap, int targetIvID, boolean isPOD) {
         final Bitmap scaledBitmap = bitmap;
         ImageView imageView;
-        switch (targetIvID){
+        switch (targetIvID) {
             case 1:
-                imageView = mEtDocumentsIvCapture1;
+                imageView = isPOD ? mEtDocumentsIvCapturePOD1 : mEtDocumentsIvCapture1;
                 break;
             case 2:
-                imageView = mEtDocumentsIvCapture2;
+                imageView = isPOD ? mEtDocumentsIvCapturePOD2 : mEtDocumentsIvCapture2;
                 break;
             case 3:
-                imageView = mEtDocumentsIvCapture3;
+                imageView = isPOD ? mEtDocumentsIvCapturePOD3 : mEtDocumentsIvCapture3;
                 break;
             default:
-                imageView = mEtDocumentsIvCapture1;
+                imageView = isPOD ? mEtDocumentsIvCapturePOD1 : mEtDocumentsIvCapture1;
                 break;
         }
 
@@ -191,23 +212,26 @@ public class DocumentCaptureActivity extends TiActivity<DocumentCapturePresenter
     @Override
     @OnClick(R.id.documents_btn_submit)
     public void onClickSubmit(View view) {
-        if(getValidationForm()){
+        if (getValidationForm()) {
             getPresenter().onClickSubmit(
                     mEtDocumentsVerificationCode.getText().toString(),
+                    mSpinnerDocumentsPODReason.getSelectedItem().toString(),
                     mEtDocumentsFuel.getText().toString(),
                     mEtDocumentsTollparking.getText().toString(),
                     mEtDocumentsEscort.getText().toString(),
                     mEtDocumentsAsdp.getText().toString(),
                     mEtDocumentsPortal.getText().toString(),
-                    mEtDocumentsBmspsi.getText().toString()
+                    mEtDocumentsBmspsi.getText().toString(),
+                    getResources().getStringArray(R.array.documents_podreason_array),
+                    getResources().getStringArray(R.array.documents_podreason_array_val)
             );
         }
     }
 
     @Override
     public void showConfirmationDialog(String activityName) {
-        CharSequence textMsg = Html.fromHtml("Apakah anda yakin semua dokumen telah terpenuhi, dan akan melakukan proses "+
-                "<b>"+activityName+"</b>"+"?");
+        CharSequence textMsg = Html.fromHtml("Apakah anda yakin semua dokumen telah terpenuhi, dan akan melakukan proses " +
+                "<b>" + activityName + "</b>" + "?");
 
         HelperUtil.showConfirmationAlertDialog(textMsg, DocumentCaptureActivity.this, new DialogInterface.OnClickListener() {
             @Override
@@ -215,6 +239,38 @@ public class DocumentCaptureActivity extends TiActivity<DocumentCapturePresenter
                 getPresenter().onRequestSubmitActivity();
             }
         });
+    }
+
+    @Override
+    public void initializeFormContent(boolean isPhoto, boolean isSignature, boolean isVerificationCode, boolean isPOD, String pODGuide) {
+        mCardDocumentsPhotos.setVisibility(View.GONE);
+        mCardDocumentsExpenses.setVisibility(View.GONE);
+        mCardDocumentsSignature.setVisibility(View.GONE);
+        mCardDocumentsVerificationCode.setVisibility(View.GONE);
+        mCardDocumentsPOD.setVisibility(View.GONE);
+        mTvDocumentsPODGuide.setText("");
+
+        if (isPhoto) {
+            mCardDocumentsPhotos.setVisibility(View.VISIBLE);
+        }
+
+        if (isSignature) {
+            mCardDocumentsSignature.setVisibility(View.VISIBLE);
+        }
+
+        if (isVerificationCode) {
+            mCardDocumentsVerificationCode.setVisibility(View.VISIBLE);
+        }
+
+        if (isPOD) {
+            mCardDocumentsPOD.setVisibility(View.VISIBLE);
+            mTvDocumentsPODGuide.setText(pODGuide);
+        }
+    }
+
+    @Override
+    public void setSubmitText(String text) {
+        mBtnDocumentsSubmit.setText(text);
     }
 
     @Override
@@ -269,12 +325,16 @@ public class DocumentCaptureActivity extends TiActivity<DocumentCapturePresenter
 
             }
         });
-
+        this.initializeSpinnersContent();
     }
 
     @Override
     public void toggleLoading(boolean isLoading) {
-
+        if (isLoading) {
+            mProgressDialog = ProgressDialog.show(DocumentCaptureActivity.this, getResources().getString(R.string.progress_msg_loaddata), getResources().getString(R.string.prog_msg_wait), true, false);
+        } else {
+            mProgressDialog.dismiss();
+        }
     }
 
     @Override
@@ -284,7 +344,7 @@ public class DocumentCaptureActivity extends TiActivity<DocumentCapturePresenter
 
     @Override
     public void showStandardDialog(String message, String Title) {
-
+        HelperUtil.showSimpleAlertDialogCustomTitle(message, DocumentCaptureActivity.this, Title);
     }
 
     @NonNull
@@ -296,10 +356,10 @@ public class DocumentCaptureActivity extends TiActivity<DocumentCapturePresenter
     @Override
     protected void onResume() {
         super.onResume();
-        if(isFromCameraActivity){
+        if (isFromCameraActivity) {
             getPresenter().setBitmapCaptured();
             isFromCameraActivity = false;
-        }else if(isFromSigningActivity){
+        } else if (isFromSigningActivity) {
             getPresenter().setSignCaptured();
             isFromSigningActivity = false;
         }
@@ -307,13 +367,13 @@ public class DocumentCaptureActivity extends TiActivity<DocumentCapturePresenter
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode){
-            case HelperKey.ACTIVITY_SIGNATURE_CAPTURE:{
+        switch (requestCode) {
+            case HelperKey.ACTIVITY_SIGNATURE_CAPTURE: {
                 isFromSigningActivity = true;
                 break;
             }
-            case HelperKey.ACTIVITY_IMAGE_CAPTURE:{
-                if (resultCode == RESULT_OK ) {
+            case HelperKey.ACTIVITY_IMAGE_CAPTURE: {
+                if (resultCode == RESULT_OK) {
                     isFromCameraActivity = true;
                 }
                 break;
@@ -321,8 +381,8 @@ public class DocumentCaptureActivity extends TiActivity<DocumentCapturePresenter
         }
     }
 
-    private void showPreviewImage(Bitmap bitmap){
-        View view = getLayoutInflater().inflate( R.layout.dialog_image_preview, null);
+    private void showPreviewImage(Bitmap bitmap) {
+        View view = getLayoutInflater().inflate(R.layout.dialog_image_preview, null);
 
         ImageView postImage = (ImageView) view.findViewById(R.id.iv_container);
         postImage.setImageBitmap(bitmap);
@@ -335,6 +395,13 @@ public class DocumentCaptureActivity extends TiActivity<DocumentCapturePresenter
         builder.show();
     }
 
+    private void initializeSpinnersContent() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(DocumentCaptureActivity.this,
+                R.array.documents_podreason_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinnerDocumentsPODReason.setAdapter(adapter);
+    }
+
     @Override
     public boolean getValidationForm() {
 
@@ -345,7 +412,6 @@ public class DocumentCaptureActivity extends TiActivity<DocumentCapturePresenter
 
         return true;
     }
-
 
 
 }

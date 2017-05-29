@@ -11,6 +11,7 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperTransactionCo
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperUrl;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperKey;
+import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
 import com.serasiautoraya.slimobiledrivertracking.util.HttpsTrustManager;
 
 import net.grandcentrix.thirtyinch.TiPresenter;
@@ -54,25 +55,25 @@ public class RequestHistoryPresenter extends TiPresenter<RequestHistoryView> {
         String enddate = dateFormatter.format(calendarAkhir.getTime());
 
         getView().setTextStartDate(startdate);
-        getView().setTextStartDate(enddate);
+        getView().setTextEndDate(enddate);
     }
 
     public void loadRequestHistoryData(String startDate, String endDate) {
+        startDate = HelperUtil.getServerFormDate(startDate);
+        endDate = HelperUtil.getServerFormDate(endDate);
+
         HelperBridge.sAbsenceRequestHistoryList = new ArrayList<>();
         HelperBridge.sCiCoRequestHistoryList = new ArrayList<>();
         HelperBridge.sOvertimeRequestHistoryList = new ArrayList<>();
         HelperBridge.sOLCRequestHistoryList = new ArrayList<>();
-        /*
-        * TODO Delete this method calling & uncomment + test data retrieval from API
-        * */
-//        setdatadummmy();
 
-        getView().toggleLoading(true);
+        getView().toggleLoadingInitialLoad(true);
         RequestHistorySendModel requestHistorySendModel = new RequestHistorySendModel(
                 HelperBridge.sModelLoginResponse.getPersonalId(),
                 startDate,
                 endDate);
 
+        final RequestHistoryView requestHistoryView = getView();
         mRestConnection.getData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.GET_REQUEST_HISTORY, requestHistorySendModel.getHashMapType(), new RestCallBackInterfaceModel() {
             @Override
             public void callBackOnSuccess(BaseResponseModel response) {
@@ -81,7 +82,8 @@ public class RequestHistoryPresenter extends TiPresenter<RequestHistoryView> {
                     requestHistoryResponseModels.add(Model.getModelInstance(response.getData()[i], RequestHistoryResponseModel.class));
                 }
                 mergeRequestHistoryData(requestHistoryResponseModels);
-                getView().toggleLoading(false);
+                requestHistoryView.initializeTabs();
+                requestHistoryView.toggleLoadingInitialLoad(false);
             }
 
             @Override
@@ -89,8 +91,9 @@ public class RequestHistoryPresenter extends TiPresenter<RequestHistoryView> {
                 /*
                 * TODO change this!
                 * */
-                getView().showToast("FAILLLLSSS: " + response);
-                getView().toggleLoading(false);
+                requestHistoryView.initializeTabs();
+                requestHistoryView.showToast("FAILLLLSSS: " + response);
+                requestHistoryView.toggleLoadingInitialLoad(false);
             }
 
             @Override
@@ -98,8 +101,9 @@ public class RequestHistoryPresenter extends TiPresenter<RequestHistoryView> {
                 /*
                 * TODO change this!
                 * */
-                getView().showToast("FAIL: " + error.toString());
-                getView().toggleLoading(false);
+                requestHistoryView.initializeTabs();
+                requestHistoryView.showToast("FAIL: " + error.toString());
+                requestHistoryView.toggleLoadingInitialLoad(false);
             }
         });
     }
@@ -151,6 +155,11 @@ public class RequestHistoryPresenter extends TiPresenter<RequestHistoryView> {
     }
 
     private void mergeRequestHistoryData(List<RequestHistoryResponseModel> requestHistoryResponseModels) {
+        HelperBridge.sAbsenceRequestHistoryList = new ArrayList<>();
+        HelperBridge.sCiCoRequestHistoryList = new ArrayList<>();
+        HelperBridge.sOvertimeRequestHistoryList = new ArrayList<>();
+        HelperBridge.sOLCRequestHistoryList = new ArrayList<>();
+
         for (RequestHistoryResponseModel requestHistory :
                 requestHistoryResponseModels) {
 

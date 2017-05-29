@@ -39,6 +39,10 @@ import java.util.Map;
  */
 public class FCMMessageService extends FirebaseMessagingService {
 
+    public final void molo(){
+
+    }
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         Map<String, String> data = remoteMessage.getData();

@@ -27,8 +27,10 @@
         <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.ChangePassword.ChangePasswordActivity"/>
         <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.NotificatonList.NotificationListActivity"/>
         <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.Fatigue.FatigueActivity"/>
-        <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.DocumentCapture.DocumentCaptureActivity"/>
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.DocumentCapture.DocumentCaptureActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
         <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.DocumentCapture.SigningActivity"/>
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.OrderHistory.OrderHistoryDetail.OrderHistoryDetailActivity"/>
 
 
 
@@ -70,8 +72,10 @@
         <!--</receiver>-->
 
         <service
-            android:name="com.serasiautoraya.slimobiledrivertracking.util.GPSTrackerService"
-            android:exported="false"></service>
+            android:name="com.serasiautoraya.slimobiledrivertracking.util.GPSTrackerService">
+        </service>
+
+
         <receiver android:name="com.serasiautoraya.slimobiledrivertracking.util.GPSTrackerServiceReceiver"></receiver>
 
     </application>

@@ -62,8 +62,8 @@ public class SignatureView extends View {
             // Output the file
             FileOutputStream mFileOutStream = new FileOutputStream(StoredPath);
             v.draw(canvas);
-            // Convert the output file to Image such as .png
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, mFileOutStream);
+            // Convert the output file to Image such as .jpeg
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, mFileOutStream);
             mFileOutStream.flush();
             mFileOutStream.close();
         } catch (Exception e) {

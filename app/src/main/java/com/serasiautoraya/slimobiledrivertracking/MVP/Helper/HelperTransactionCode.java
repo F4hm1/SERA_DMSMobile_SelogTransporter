@@ -43,4 +43,14 @@ public class HelperTransactionCode {
 
     public static final int ACTIVITY_UPDATE_DOCUMENT_MAX_LENGTH = 4;
 
+    public static final String ASSIGNED_ORDER_ACTIVE_CODE = "1";
+    public static final String ASSIGNED_ORDER_INACTIVE_CODE = "0";
+
+    public static final String ASSIGNED_ORDER_ACK_CODE = "1";
+    public static final String ASSIGNED_ORDER_INACK_CODE = "0";
+
+    public static final String TRUE_BINARY = "1";
+    public static final String FALSE_BINARY = "0";
+
+    public static final String REQUEST_WAITING_APPROVAL_STATUS = "WaitingApproval";
 }

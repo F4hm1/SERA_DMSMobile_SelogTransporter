@@ -23,14 +23,14 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
 
         public OrderListViewHolder(View view) {
             super(view);
-            mSingleListCode = (TextView) view.findViewById(R.id.single_list_code);
-            mSingleListHub = (TextView) view.findViewById(R.id.single_list_hub);
-            mSingleListNextdriver = (TextView) view.findViewById(R.id.single_list_nextdriver);
-            mSingleListOrigin = (TextView) view.findViewById(R.id.single_list_origin);
-            mSingleListEtd = (TextView) view.findViewById(R.id.single_list_etd);
-            mSingleListEta = (TextView) view.findViewById(R.id.single_list_eta);
-            mSingleListCustomer = (TextView) view.findViewById(R.id.single_list_customer);
-            mSingleListUnit = (TextView) view.findViewById(R.id.single_list_unit);
+            mSingleListCode = (TextView) view.findViewById(R.id.acknowledge_dialog_ordercode);
+            mSingleListHub = (TextView) view.findViewById(R.id.acknowledge_dialog_hub);
+            mSingleListNextdriver = (TextView) view.findViewById(R.id.acknowledge_dialog_nextdriver);
+            mSingleListOrigin = (TextView) view.findViewById(R.id.acknowledge_dialog_origin);
+            mSingleListEtd = (TextView) view.findViewById(R.id.acknowledge_dialog_etd);
+            mSingleListEta = (TextView) view.findViewById(R.id.acknowledge_dialog_eta);
+            mSingleListCustomer = (TextView) view.findViewById(R.id.acknowledge_dialog_customer);
+            mSingleListUnit = (TextView) view.findViewById(R.id.acknowledge_dialog_unit);
             mSingleListDest = (TextView) view.findViewById(R.id.single_list_dest);
         }
     }

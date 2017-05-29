@@ -74,9 +74,11 @@ public class LoginPresenter extends TiPresenter<LoginView> {
                     try {
                         JSONObject jsonObject = response.getJSONArray("data").getJSONObject(0);
                         HelperBridge.sModelLoginResponse = Model.getModelInstanceFromString(jsonObject.toString(), LoginResponseModel.class);
+                        int updateLocationInterval = Math.round(Float.valueOf(HelperBridge.sModelLoginResponse.getLocationUpdateInterval()));
                         mSharedPrefsModel.apply(HelperKey.HAS_LOGIN, true);
                         mSharedPrefsModel.apply(HelperKey.KEY_USERNAME, fUsername);
                         mSharedPrefsModel.apply(HelperKey.KEY_PASSWORD, fPassword);
+                        mSharedPrefsModel.apply(HelperKey.KEY_LOCATION_UPDATE_INTERVAL, updateLocationInterval);
                         getView().toggleLoading(false);
                         getView().changeActivity(DashboardActivity.class);
                     } catch (JSONException e) {

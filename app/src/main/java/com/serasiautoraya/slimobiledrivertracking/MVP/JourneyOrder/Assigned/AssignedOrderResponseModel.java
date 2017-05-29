@@ -38,7 +38,15 @@ public class AssignedOrderResponseModel extends Model{
     @Expose
     private String ETD;
 
-    public AssignedOrderResponseModel(String orderCode, String status, String customer, String origin, String destination, String ETA, String ETD) {
+    @SerializedName("Active")
+    @Expose
+    private String Active;
+
+    @SerializedName("Acknowledge")
+    @Expose
+    private String Acknowledge;
+
+    public AssignedOrderResponseModel(String orderCode, String status, String customer, String origin, String destination, String ETA, String ETD, String active, String acknowledge) {
         OrderCode = orderCode;
         Status = status;
         Customer = customer;
@@ -46,6 +54,12 @@ public class AssignedOrderResponseModel extends Model{
         Destination = destination;
         this.ETA = ETA;
         this.ETD = ETD;
+        Active = active;
+        Acknowledge = acknowledge;
+    }
+
+    public String getAcknowledge() {
+        return Acknowledge;
     }
 
     public void setStatus(String status) {
@@ -78,5 +92,9 @@ public class AssignedOrderResponseModel extends Model{
 
     public String getETD() {
         return ETD;
+    }
+
+    public String getActive() {
+        return Active;
     }
 }

@@ -15,8 +15,10 @@ import android.widget.Toast;
 
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseAdapter.CustomPopUpItemClickListener;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseAdapter.SimpleAdapterView;
+import com.serasiautoraya.slimobiledrivertracking.MVP.CustomView.EmptyInfoView;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RequestHistory.RequestHistoryAdapter;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RequestHistory.RequestHistoryResponseModel;
+import com.serasiautoraya.slimobiledrivertracking.MVP.RequestHistory.RequestHistoryView;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking.R;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
@@ -35,6 +37,9 @@ public class AbsenceRequestHistoryFragment extends TiFragment<AbsenceRequestHist
 implements AbsenceRequestHistoryView{
 
     @BindView(R.id.recycler_absence_request_history) RecyclerView mRecyclerView;
+    @BindView(R.id.layout_empty_info)
+    EmptyInfoView mEmptyInfoView;
+
     private SimpleAdapterView mSimpleAdapterView;
     private ProgressDialog mProgressDialog;
 
@@ -47,6 +52,8 @@ implements AbsenceRequestHistoryView{
 
     @Override
     public void initialize() {
+        mEmptyInfoView.setIcon(R.drawable.ic_empty_attendance);
+        mEmptyInfoView.setText("Tidak terdapat riwayat pengajuan ketidakhadiran");
         this.initializeRecylerView();
         getPresenter().loadRequestHistoryData();
     }
@@ -67,7 +74,7 @@ implements AbsenceRequestHistoryView{
 
     @Override
     public void showStandardDialog(String message, String Title) {
-
+        HelperUtil.showSimpleAlertDialogCustomTitle(message, getContext(), Title);
     }
 
     @NonNull
@@ -102,6 +109,7 @@ implements AbsenceRequestHistoryView{
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.addItemDecoration(new DividerRecycleViewDecoration(getContext(), LinearLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(simpleListAdapter);
+        mRecyclerView.setNestedScrollingEnabled(false);
         getPresenter().setAdapter(simpleListAdapter);
     }
 
@@ -124,5 +132,20 @@ implements AbsenceRequestHistoryView{
                 getPresenter().onCancelationSubmitted();
             }
         });
+    }
+
+    @Override
+    public void refreshAllData() {
+        RequestHistoryView requestHistoryView = (RequestHistoryView) getParentFragment();
+        requestHistoryView.initialize();
+    }
+
+    @Override
+    public void toggleEmptyInfo(boolean show) {
+        if(show){
+            mEmptyInfoView.setVisibility(View.VISIBLE);
+        }else {
+            mEmptyInfoView.setVisibility(View.GONE);
+        }
     }
 }

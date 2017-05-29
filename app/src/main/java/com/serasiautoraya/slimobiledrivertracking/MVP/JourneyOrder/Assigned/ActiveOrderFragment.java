@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseAdapter.SimpleAdapterView;
+import com.serasiautoraya.slimobiledrivertracking.MVP.CustomView.EmptyInfoView;
+import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking.R;
 import com.serasiautoraya.slimobiledrivertracking.listener.ClickListener;
 import com.serasiautoraya.slimobiledrivertracking.listener.RecyclerTouchListener;
@@ -29,6 +31,8 @@ import butterknife.ButterKnife;
 public class ActiveOrderFragment extends TiFragment<ActiveOrderPresenter, ActiveOrderView> implements ActiveOrderView{
 
     @BindView(R.id.recycler_active_orders) RecyclerView mRecyclerView;
+    @BindView(R.id.layout_empty_info)
+    EmptyInfoView mEmptyInfoView;
 
     private SimpleAdapterView mSimpleAdapterView;
 
@@ -41,6 +45,8 @@ public class ActiveOrderFragment extends TiFragment<ActiveOrderPresenter, Active
 
     @Override
     public void initialize() {
+        mEmptyInfoView.setIcon(R.drawable.ic_empty_order);
+        mEmptyInfoView.setText("Tidak terdapat order yang aktif");
         this.initializeRecylerView();
         this.initializeRecylerListener();
         getPresenter().loadOrdersdata();
@@ -73,10 +79,19 @@ public class ActiveOrderFragment extends TiFragment<ActiveOrderPresenter, Active
         startActivity(intent);
     }
 
+    @Override
+    public void toggleEmptyInfo(boolean show) {
+        if(show){
+            mEmptyInfoView.setVisibility(View.VISIBLE);
+        }else {
+            mEmptyInfoView.setVisibility(View.GONE);
+        }
+    }
+
     @NonNull
     @Override
     public ActiveOrderPresenter providePresenter() {
-        return new ActiveOrderPresenter();
+        return new ActiveOrderPresenter(new RestConnection(getContext()));
     }
 
     private void initializeRecylerView(){

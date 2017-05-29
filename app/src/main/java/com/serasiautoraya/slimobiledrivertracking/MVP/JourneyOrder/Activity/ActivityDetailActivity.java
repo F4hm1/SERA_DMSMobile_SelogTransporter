@@ -2,6 +2,7 @@ package com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
@@ -48,8 +49,8 @@ public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_actionactivity);
         ButterKnife.bind(this);
         Bundle bundle = getIntent().getExtras();
@@ -114,6 +115,11 @@ public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, 
     @Override
     public void setButtonText(String text) {
         mTvButtonAction.setText(text);
+    }
+
+    @Override
+    public void setButtonColor(String hexaCode) {
+        mTvButtonAction.setBackgroundColor(Color.parseColor(hexaCode));
     }
 
     @Override

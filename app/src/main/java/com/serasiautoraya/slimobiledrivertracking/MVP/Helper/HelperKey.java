@@ -15,6 +15,8 @@ public class HelperKey {
     public static final String KEY_PASSWORD = "KEY_PASSWORD";
     public static final String KEY_LAST_FATIGUE_INTERVIEW = "LAST_FATIGUE_INTERVIEW";
     public static final String KEY_LAST_CLOCKIN = "LAST_CLOCKED_IN";
+    public static final String KEY_IS_UPDATE_LOCATION_ACTIVE = "KEY_IS_UPDATE_LOCATION_ACTIVE";
+    public static final String KEY_LOCATION_UPDATE_INTERVAL = "KEY_LOCATION_UPDATE_INTERVAL";
 
     public static final String KEY_INTENT_ORDERCODE = "KEY_ORDERCODE";
 
