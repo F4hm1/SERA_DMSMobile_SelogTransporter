@@ -26,6 +26,7 @@
     <string name="prog_msg_cp">Mengganti kata sandi...</string>
     <string name="prog_msg_cico">Menyimpan data clock in/out...</string>
     <string name="prog_msg_absence">Menyimpan data ketidakhadiran...</string>
+    <string name="prog_msg_olctrip">Menyimpan data OLC/Trip...</string>
     <string name="prog_msg_report">Mengambil data...</string>
     <string name="prog_msg_cancel_request">Membatalkan pengajuan...</string>
     <string name="prog_msg_foto">Mengambil foto profil...</string>
@@ -212,6 +213,13 @@
         <item>5000</item>
         <item>6000</item>
     </string-array>
+
+    <!--OLC/Trip-->
+    <string name="olctrip_label_date">Tanggal OLC\Trip</string>
+    <string name="olctrip_label_olc">OLC</string>
+    <string name="olctrip_label_tripamount">Jumlah Trip</string>
+    <string name="olctrip_label_reason">Alasan/Keterangan</string>
+    <string name="olctrip_label_submit">Kirim</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
