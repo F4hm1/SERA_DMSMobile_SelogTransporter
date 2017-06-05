@@ -15,6 +15,14 @@
             android:icon="@drawable/ic_person_pin_black_24dp"
             android:title="@string/title_absence_request" />
         <item
+            android:id="@+id/nav_olctrip_request"
+            android:icon="@drawable/ic_olctrip_black_24dp"
+            android:title="@string/title_olctrip_request" />
+        <item
+            android:id="@+id/nav_overtime_request"
+            android:icon="@drawable/ic_overtime_black_24dp"
+            android:title="@string/title_overtime_request" />
+        <item
             android:id="@+id/nav_attendance_history"
             android:icon="@drawable/ic_history_24dp"
             android:title="@string/title_history_attendance" />

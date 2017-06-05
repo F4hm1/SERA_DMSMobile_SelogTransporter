@@ -29,7 +29,9 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.CiCo.CiCoFragment;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Fatigue.FatigueActivity;
 import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Assigned.AssignedFragment;
 import com.serasiautoraya.slimobiledrivertracking.MVP.NotificatonList.NotificationListActivity;
+import com.serasiautoraya.slimobiledrivertracking.MVP.OLCTrip.OLCTripFragment;
 import com.serasiautoraya.slimobiledrivertracking.MVP.OrderHistory.OrderHistoryFragment;
+import com.serasiautoraya.slimobiledrivertracking.MVP.Overtime.OvertimeRequestFragment;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RequestHistory.RequestHistoryFragment;
 import com.serasiautoraya.slimobiledrivertracking.R;
 import com.serasiautoraya.slimobiledrivertracking.listener.TextViewTouchListener;
@@ -147,6 +149,14 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
                 AbsenceRequestFragment absenceRequestFragment = new AbsenceRequestFragment();
                 mNavigationView.setCheckedItem(R.id.nav_absence_request);
                 return absenceRequestFragment;
+            case R.id.nav_olctrip_request:
+                OLCTripFragment olcTripFragment = new OLCTripFragment();
+                mNavigationView.setCheckedItem(R.id.nav_olctrip_request);
+                return olcTripFragment;
+            case R.id.nav_overtime_request:
+                OvertimeRequestFragment overtimeRequestFragment = new OvertimeRequestFragment();
+                mNavigationView.setCheckedItem(R.id.nav_overtime_request);
+                return overtimeRequestFragment;
             case R.id.nav_attendance_history:
                 RequestHistoryFragment attendanceHistoryFragment = new RequestHistoryFragment();
                 mNavigationView.setCheckedItem(R.id.nav_attendance_history);

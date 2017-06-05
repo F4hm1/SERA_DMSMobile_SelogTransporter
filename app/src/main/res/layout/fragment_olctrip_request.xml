@@ -27,7 +27,7 @@
                     android:id="@+id/olctrip_edittext_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
+                    android:maxLines="1"
                     android:hint="@string/olctrip_label_date"
                     android:focusable="false"
                     android:textColor="@color/colorTextSecondary"/>
@@ -43,9 +43,9 @@
                     android:id="@+id/olctrip_edittext_tripamount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
+                    android:inputType="number"
+                    android:maxLines="1"
                     android:hint="@string/olctrip_label_tripamount"
-                    android:focusable="false"
                     android:textColor="@color/colorTextSecondary"/>
             </android.support.design.widget.TextInputLayout>
 

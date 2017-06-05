@@ -1,16 +1,21 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.OLCTrip;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.Html;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking.R;
 import com.serasiautoraya.slimobiledrivertracking.customdialog.DatePickerToEditTextDialog;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
@@ -19,6 +24,7 @@ import net.grandcentrix.thirtyinch.TiFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Randi Dwi Nandra on 02/06/2017.
@@ -49,7 +55,8 @@ public class OLCTripFragment extends TiFragment<OLCTripPresenter, OLCTripView> i
 
     @Override
     public void initialize() {
-
+        this.initializeSpinnersContent();
+        this.initializePickerDialog();
     }
 
     @Override
@@ -74,11 +81,92 @@ public class OLCTripFragment extends TiFragment<OLCTripPresenter, OLCTripView> i
     @NonNull
     @Override
     public OLCTripPresenter providePresenter() {
-        return null;
+        return new OLCTripPresenter(new RestConnection(getContext()));
     }
 
     @Override
     public boolean getValidationForm() {
-        return false;
+        boolean result = true;
+        String errText = "";
+        View focusView = null;
+
+        if(TextUtils.isEmpty(mEtDate.getText().toString())){
+            focusView = mEtDate;
+            errText = getResources().getString(R.string.err_msg_empty_olctrip_date);
+            showToast(errText);
+            result = false;
+        }else if(!mDatePickerToEditTextDialog.isInMaxRequest() || !mDatePickerToEditTextDialog.isBeforeToday()){
+            focusView = mEtDate;
+            errText = getResources().getString(R.string.err_msg_wrong_olctrip_date);
+            showToast(errText);
+            result = false;
+        }
+
+        if(TextUtils.isEmpty(mEtTripAmount.getText().toString())){
+            focusView = mEtReason;
+            errText = getResources().getString(R.string.err_msg_empty_olctrip_trip);
+            mEtReason.setError(errText);
+            result = false;
+        }
+
+        if(mSpinnerOLC.getSelectedItem().toString().equalsIgnoreCase("Pilih")){
+            focusView = mSpinnerOLC;
+            errText = getResources().getString(R.string.err_msg_empty_olctrip_olc);
+            showToast(errText);
+            result = false;
+        }
+
+        if(TextUtils.isEmpty(mEtReason.getText().toString())){
+            focusView = mEtReason;
+            errText = getResources().getString(R.string.err_msg_empty_olctrip_keterangan);
+            mEtReason.setError(errText);
+            result = false;
+        }
+
+        if(result == false){
+            focusView.requestFocus();
+        }
+
+        return result;
+    }
+
+    @Override
+    public void showConfirmationDialog() {
+        CharSequence textMsg = Html.fromHtml("Apakah anda yakin akan melakukan pengajuan "+
+                "<b>"+"OLC/Trip"+"</b>"+" pada "+
+                "<b>"+ mEtDate.getText().toString()+"</b>"+"?");
+        HelperUtil.showConfirmationAlertDialog(textMsg, getContext(), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                getPresenter().onRequestSubmitted();
+            }
+        });
+    }
+
+    @Override
+    @OnClick(R.id.olctrip_btn_submit)
+    public void onSubmitClicked(View view) {
+        if(getValidationForm()){
+            String requestCicoCode = HelperUtil.getValueStringArrayXML(
+                    getResources().getStringArray(R.array.cico_tipe_array),
+                    getResources().getStringArray(R.array.cico_tipe_array_val),
+                    mSpinnerOLC.getSelectedItem().toString());
+            getPresenter().onSubmitClicked(
+                    mDatePickerToEditTextDialog.getDateServerFormat(),
+                    requestCicoCode,
+                    mEtTripAmount.getText().toString(),
+                    mEtReason.getText().toString());
+        }
+    }
+
+    private void initializeSpinnersContent(){
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(),
+                R.array.olctrip_olc_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinnerOLC.setAdapter(adapter);
+    }
+
+    private void initializePickerDialog(){
+        mDatePickerToEditTextDialog = new DatePickerToEditTextDialog(mEtDate, getContext(), true, false);
     }
 }

@@ -41,6 +41,8 @@
     <string name="title_order_history">Riwayat Order</string>
     <string name="title_cico_request">Pengajuan Clock In/Out</string>
     <string name="title_absence_request">Pengajuan Ketidakhadiran</string>
+    <string name="title_olctrip_request">Pengajuan OLC/Trip</string>
+    <string name="title_overtime_request">Pengajuan Lembur</string>
     <string name="title_history_attendance">Riwayat Kehadiran</string>
     <string name="title_ganti_password">Ganti Kata Sandi</string>
     <string name="title_notification_list">Riwayat Notifikasi</string>
@@ -220,6 +222,29 @@
     <string name="olctrip_label_tripamount">Jumlah Trip</string>
     <string name="olctrip_label_reason">Alasan/Keterangan</string>
     <string name="olctrip_label_submit">Kirim</string>
+    <string name="err_msg_empty_olctrip_keterangan">Harap isi kolom alasan</string>
+    <string name="err_msg_empty_olctrip_olc">Harap pilih apakah anda OLC atau tidak</string>
+    <string name="err_msg_empty_olctrip_date">Harap pilih tanggal</string>
+    <string name="err_msg_empty_olctrip_trip">Harap masukan jumlah trip (ketik 0 jika tidak melakukan)</string>
+    <string name="err_msg_wrong_olctrip_date">Tanggal tidak valid atau melebihi max hari request</string>
+    <string-array name="olctrip_olc_array">
+        <item>Pilih</item>
+        <item>Ya</item>
+        <item>Tidak</item>
+    </string-array>
+
+    <string-array name="olctrip_olc_array_val">
+        <item>-1</item>
+        <item>1</item>
+        <item>0</item>
+    </string-array>
+
+    <!--Overtime-->
+    <string name="overtime_label_datechoice">Tanggal Lembur</string>
+    <string name="overtime_label_type">Tipe Lembur</string>
+    <string name="overtime_label_starttime">Waktu Mulai</string>
+    <string name="overtime_label_endtime">Waktu Selesai</string>
+    <string name="overtime_label_submit">Kirim</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
