@@ -93,8 +93,7 @@ public class AssignedFragment extends TiFragment<AssignedPresenter, AssignedView
         /*
         * TODO uncomment this
         * */
-                getActivity().startService(new Intent(getActivity(), GPSTrackerService.class));
-                getPresenter().setUpdateLocationActive(true);
+        
 //        if(isAnyOrderActive){
 //            if(!isUpdateLocationActive){
 //                getActivity().startService(new Intent(getActivity(), GPSTrackerService.class));
