@@ -93,18 +93,19 @@ public class AssignedFragment extends TiFragment<AssignedPresenter, AssignedView
         /*
         * TODO uncomment this
         * */
-        /*
-        if(isAnyOrderActive){
-            if(!isUpdateLocationActive){
                 getActivity().startService(new Intent(getActivity(), GPSTrackerService.class));
                 getPresenter().setUpdateLocationActive(true);
-            }
-        }else{
-            if(isUpdateLocationActive){
-                getActivity().stopService(new Intent(getActivity(), GPSTrackerService.class));
-                getPresenter().setUpdateLocationActive(false);
-            }
-        }*/
+//        if(isAnyOrderActive){
+//            if(!isUpdateLocationActive){
+//                getActivity().startService(new Intent(getActivity(), GPSTrackerService.class));
+//                getPresenter().setUpdateLocationActive(true);
+//            }
+//        }else{
+//            if(isUpdateLocationActive){
+//                getActivity().stopService(new Intent(getActivity(), GPSTrackerService.class));
+//                getPresenter().setUpdateLocationActive(false);
+//            }
+//        }
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {

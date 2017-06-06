@@ -242,9 +242,13 @@
     <!--Overtime-->
     <string name="overtime_label_datechoice">Tanggal Lembur</string>
     <string name="overtime_label_type">Tipe Lembur</string>
+    <string name="overtime_label_reason">Alasan/Keterangan</string>
     <string name="overtime_label_starttime">Waktu Mulai</string>
     <string name="overtime_label_endtime">Waktu Selesai</string>
+    <string name="overtime_label_startdate">Tanggal Mulai</string>
+    <string name="overtime_label_enddate">Tanggal Selesai</string>
     <string name="overtime_label_submit">Kirim</string>
+    <string name="overtime_label_sd">.sd.</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

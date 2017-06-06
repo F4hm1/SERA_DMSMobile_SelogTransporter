@@ -37,6 +37,14 @@ public class OvertimeAvailableResponseModel {
     @Expose
     private String Freeday;
 
+    @SerializedName("OvertimeTypeCode")
+    @Expose
+    private String OvertimeTypeCode;
+
+    @SerializedName("OvertimeTypeName")
+    @Expose
+    private String OvertimeTypeName;
+
     public String getDate() {
         return Date;
     }

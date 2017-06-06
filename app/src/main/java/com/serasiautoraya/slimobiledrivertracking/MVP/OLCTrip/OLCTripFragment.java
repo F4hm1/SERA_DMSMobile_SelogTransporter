@@ -147,13 +147,13 @@ public class OLCTripFragment extends TiFragment<OLCTripPresenter, OLCTripView> i
     @OnClick(R.id.olctrip_btn_submit)
     public void onSubmitClicked(View view) {
         if(getValidationForm()){
-            String requestCicoCode = HelperUtil.getValueStringArrayXML(
-                    getResources().getStringArray(R.array.cico_tipe_array),
-                    getResources().getStringArray(R.array.cico_tipe_array_val),
+            String isOLC = HelperUtil.getValueStringArrayXML(
+                    getResources().getStringArray(R.array.olctrip_olc_array),
+                    getResources().getStringArray(R.array.olctrip_olc_array_val),
                     mSpinnerOLC.getSelectedItem().toString());
             getPresenter().onSubmitClicked(
                     mDatePickerToEditTextDialog.getDateServerFormat(),
-                    requestCicoCode,
+                    isOLC,
                     mEtTripAmount.getText().toString(),
                     mEtReason.getText().toString());
         }

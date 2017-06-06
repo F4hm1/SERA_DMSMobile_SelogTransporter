@@ -1,6 +1,7 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.OLCTrip;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.android.volley.error.VolleyError;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallbackInterfaceJSON;
@@ -49,6 +50,10 @@ public class OLCTripPresenter extends TiPresenter<OLCTripView> {
                 HelperBridge.sModelLoginResponse.getPersonalCoordinatorId(),
                 HelperBridge.sModelLoginResponse.getPersonalCoordinatorEmail()
         );
+        Log.d("OLCTRIP", "APPROVAL: "+ HelperBridge.sModelLoginResponse.getPersonalApprovalId()+" \n"+
+                HelperBridge.sModelLoginResponse.getPersonalApprovalEmail()+" \n"+
+                HelperBridge.sModelLoginResponse.getPersonalCoordinatorId()+" \n"+
+                HelperBridge.sModelLoginResponse.getPersonalCoordinatorEmail());
         getView().showConfirmationDialog();
     }
 
