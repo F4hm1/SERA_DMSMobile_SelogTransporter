@@ -22,6 +22,7 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -48,22 +49,18 @@ public class OvertimeRequestPresenter extends TiPresenter<OvertimeRequestView>{
 
     public void initialRequestHistoryData(){
         SimpleDateFormat dateFormatter = new SimpleDateFormat(HelperKey.USER_DATE_FORMAT, Locale.getDefault());
-        Calendar calendarMulai = Calendar.getInstance(TimeZone.getDefault());
-        calendarMulai.set(Calendar.DAY_OF_MONTH, 1);
-        String startdate = dateFormatter.format(calendarMulai.getTime());
+        String startdate = dateFormatter.format(new Date());
 
-        Calendar calendarAkhir = Calendar.getInstance(TimeZone.getDefault());
-        calendarAkhir.set(Calendar.DAY_OF_MONTH, 1);
-        calendarAkhir.set(Calendar.MONTH, calendarAkhir.get(Calendar.MONTH) + 1);
-        String enddate = dateFormatter.format(calendarAkhir.getTime());
+        int maxRetrieveDays = 7;
+        String cutOffDate = dateFormatter.format(new Date(System.currentTimeMillis() - (maxRetrieveDays*24*60*60*1000)));
 
-        getView().setTextStartDate(startdate);
-        getView().setTextEndDate(enddate);
+
     }
 
     public void loadRequestHistoryData(String startDate, String endDate) {
         startDate = HelperUtil.getServerFormDate(startDate);
         endDate = HelperUtil.getServerFormDate(endDate);
+        
 
         getView().toggleLoadingInitialLoad(true);
         OvertimeAvailableSendModel overtimeAvailableSendModel = new OvertimeAvailableSendModel(

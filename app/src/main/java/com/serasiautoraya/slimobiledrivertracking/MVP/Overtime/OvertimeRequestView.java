@@ -16,14 +16,6 @@ import net.grandcentrix.thirtyinch.distinctuntilchanged.DistinctUntilChanged;
 
 public interface OvertimeRequestView extends BaseViewInterface, FormViewInterface{
 
-    void onTextEndDateChangeAfter(Editable editable);
-
-    void onTextStartDateChangeAfter(Editable editable);
-
-    void setTextEndDate(String textEndDate);
-
-    void setTextStartDate(String textStartDate);
-
     @CallOnMainThread
     @DistinctUntilChanged
     void toggleLoadingInitialLoad(boolean isLoading);

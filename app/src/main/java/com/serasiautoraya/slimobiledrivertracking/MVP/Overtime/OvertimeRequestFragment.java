@@ -40,10 +40,6 @@ public class OvertimeRequestFragment extends TiFragment<OvertimeRequestPresenter
     Spinner mSpinnerDateChoice;
     @BindView(R.id.overtime_spinner_type)
     Spinner mSpinnerType;
-    @BindView(R.id.overtime_edittext_startdate)
-    EditText mEtDateStart;
-    @BindView(R.id.overtime_edittext_enddate)
-    EditText mEtDateEnd;
     @BindView(R.id.overtime_edittext_endtime)
     EditText mEtEndTime;
     @BindView(R.id.overtime_edittext_starttime)
@@ -56,9 +52,6 @@ public class OvertimeRequestFragment extends TiFragment<OvertimeRequestPresenter
     @BindView(R.id.overtime_lin_timerange)
     Button mLinearTimeRange;
 
-
-    private DatePickerToEditTextDialog mDatePickerToEditTextDialogStart;
-    private DatePickerToEditTextDialog mDatePickerToEditTextDialogEnd;
     private ProgressDialog mProgressDialog;
 
     private ArrayAdapter<String> mArrayAdapterDatesChoice;
@@ -73,7 +66,6 @@ public class OvertimeRequestFragment extends TiFragment<OvertimeRequestPresenter
 
     @Override
     public void initialize() {
-        this.initializePickerDialog();
         this.initializeSpinners();
         this.hideHideableView();
         getPresenter().initialRequestHistoryData();
@@ -135,36 +127,6 @@ public class OvertimeRequestFragment extends TiFragment<OvertimeRequestPresenter
     }
 
     @Override
-    @OnTextChanged(value = R.id.overtime_edittext_enddate, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void onTextEndDateChangeAfter(Editable editable) {
-        if (!mEtDateEnd.getText().toString().equalsIgnoreCase("")) {
-            getPresenter().loadRequestHistoryData(mEtDateStart.getText().toString(), mEtDateEnd.getText().toString());
-        }
-    }
-
-    @Override
-    @OnTextChanged(value = R.id.overtime_edittext_startdate, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void onTextStartDateChangeAfter(Editable editable) {
-        try {
-            mDatePickerToEditTextDialogEnd = new DatePickerToEditTextDialog(mEtDateEnd, getContext(), false, true);
-            mDatePickerToEditTextDialogEnd.setMaxDateHistory(mEtDateStart.getText().toString());
-            mDatePickerToEditTextDialogEnd.setMinDateHistory(mEtDateStart.getText().toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void setTextEndDate(String textEndDate) {
-        mEtDateEnd.setText(textEndDate);
-    }
-
-    @Override
-    public void setTextStartDate(String textStartDate) {
-        mEtDateStart.setText(textStartDate);
-    }
-
-    @Override
     public void toggleLoadingInitialLoad(boolean isLoading) {
         if(isLoading){
             mProgressDialog = ProgressDialog.show(getContext(), getResources().getString(R.string.progress_msg_loaddata),getResources().getString(R.string.prog_msg_wait),true,false);
@@ -208,10 +170,5 @@ public class OvertimeRequestFragment extends TiFragment<OvertimeRequestPresenter
         mArrayAdapterDatesChoice = datesArray;
         mArrayAdapterDatesChoice.setNotifyOnChange(true);
         mArrayAdapterDatesChoice.notifyDataSetChanged();
-    }
-
-    private void initializePickerDialog(){
-        mDatePickerToEditTextDialogStart = new DatePickerToEditTextDialog(mEtDateStart, getContext(), false, true);
-        mDatePickerToEditTextDialogEnd = new DatePickerToEditTextDialog(mEtDateEnd, getContext(), false, true);
     }
 }
