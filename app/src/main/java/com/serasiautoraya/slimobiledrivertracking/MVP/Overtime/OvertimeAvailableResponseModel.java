@@ -72,4 +72,24 @@ public class OvertimeAvailableResponseModel {
     public String getFreeday() {
         return Freeday;
     }
+
+    /*
+    * TODO delete this constructor
+    * */
+    public OvertimeAvailableResponseModel(String date, String idCico, String scheduleIn, String scheduleOut, String overtimeStart, String overtimeEnd, String freeday, String overtimeTypeCode, String overtimeTypeName) {
+        Date = date;
+        IdCico = idCico;
+        ScheduleIn = scheduleIn;
+        ScheduleOut = scheduleOut;
+        OvertimeStart = overtimeStart;
+        OvertimeEnd = overtimeEnd;
+        Freeday = freeday;
+        OvertimeTypeCode = overtimeTypeCode;
+        OvertimeTypeName = overtimeTypeName;
+    }
+
+    @Override
+    public String toString() {
+        return this.Date;
+    }
 }

@@ -32,6 +32,7 @@
 
             <!--Input Overtime Type (Spinner)-->
             <TextView
+                android:id="@+id/overtime_spinner_type_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"

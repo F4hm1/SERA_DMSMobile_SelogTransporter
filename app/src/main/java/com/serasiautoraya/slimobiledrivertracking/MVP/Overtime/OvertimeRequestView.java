@@ -10,6 +10,8 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.FormViewInte
 import net.grandcentrix.thirtyinch.callonmainthread.CallOnMainThread;
 import net.grandcentrix.thirtyinch.distinctuntilchanged.DistinctUntilChanged;
 
+import java.util.ArrayList;
+
 /**
  * Created by Randi Dwi Nandra on 03/06/2017.
  */
@@ -24,5 +26,5 @@ public interface OvertimeRequestView extends BaseViewInterface, FormViewInterfac
 
     void onSubmitClicked(View view);
 
-    void initializeOvertimeDates(ArrayAdapter<String> datesArray);
+    void initializeOvertimeDates(ArrayList<OvertimeAvailableResponseModel> arrayList);
 }

@@ -13,7 +13,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
@@ -24,6 +26,7 @@ import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
 import net.grandcentrix.thirtyinch.TiFragment;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,11 +53,14 @@ public class OvertimeRequestFragment extends TiFragment<OvertimeRequestPresenter
     Button mButtonSubmit;
 
     @BindView(R.id.overtime_lin_timerange)
-    Button mLinearTimeRange;
+    LinearLayout mLinearTimeRange;
+
+    @BindView(R.id.overtime_spinner_type_label)
+    TextView mTvLabelType;
 
     private ProgressDialog mProgressDialog;
 
-    private ArrayAdapter<String> mArrayAdapterDatesChoice;
+    private ArrayAdapter<OvertimeAvailableResponseModel> mArrayAdapterDatesChoice;
     private ArrayAdapter<String> mArrayAdapterOvertimeTypes;
 
     @Override
@@ -72,6 +78,7 @@ public class OvertimeRequestFragment extends TiFragment<OvertimeRequestPresenter
     }
 
     private void hideHideableView() {
+        mTvLabelType.setVisibility(View.GONE);
         mSpinnerType.setVisibility(View.GONE);
         mLinearTimeRange.setVisibility(View.GONE);
         mEtReason.setVisibility(View.GONE);
@@ -79,21 +86,22 @@ public class OvertimeRequestFragment extends TiFragment<OvertimeRequestPresenter
     }
 
     private void initializeSpinners() {
-        String[] tanggalOvertime = {"Tidak terdapat overtime"};
-        mArrayAdapterDatesChoice = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, tanggalOvertime);
-        mArrayAdapterDatesChoice.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSpinnerDateChoice.setAdapter(mArrayAdapterDatesChoice);
-        mSpinnerDateChoice.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                getPresenter().onDateSelected(adapterView.getSelectedItem().toString(), i);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
+//        String[] tanggalOvertime = {"Tidak terdapat overtime"};
+//        mArrayAdapterDatesChoice = new ArrayAdapter<OvertimeAvailableResponseModel>(getContext(), android.R.layout.simple_spinner_item, tanggalOvertime);
+//        mArrayAdapterDatesChoice.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        mSpinnerDateChoice.setAdapter(mArrayAdapterDatesChoice);
+//        mSpinnerDateChoice.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                getPresenter().onDateSelected(adapterView.getSelectedItem().toString(), i);
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
+        mArrayAdapterDatesChoice = new ArrayAdapter<OvertimeAvailableResponseModel>(getContext(), android.R.layout.simple_spinner_item);
     }
 
     @Override
@@ -165,9 +173,23 @@ public class OvertimeRequestFragment extends TiFragment<OvertimeRequestPresenter
     }
 
     @Override
-    public void initializeOvertimeDates(ArrayAdapter<String> datesArray) {
+    public void initializeOvertimeDates(ArrayList<OvertimeAvailableResponseModel> arrayList) {
         mArrayAdapterDatesChoice.clear();
-        mArrayAdapterDatesChoice = datesArray;
+        mArrayAdapterDatesChoice = new ArrayAdapter<OvertimeAvailableResponseModel>(getContext(), android.R.layout.simple_spinner_item, arrayList);
+        mArrayAdapterDatesChoice.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinnerDateChoice.setAdapter(mArrayAdapterDatesChoice);
+        mSpinnerDateChoice.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                getPresenter().onDateSelected((OvertimeAvailableResponseModel) adapterView.getSelectedItem(), i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         mArrayAdapterDatesChoice.setNotifyOnChange(true);
         mArrayAdapterDatesChoice.notifyDataSetChanged();
     }

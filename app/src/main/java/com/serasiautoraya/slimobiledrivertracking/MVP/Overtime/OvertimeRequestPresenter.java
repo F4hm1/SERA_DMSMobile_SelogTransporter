@@ -1,6 +1,7 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.Overtime;
 
 import android.support.annotation.NonNull;
+import android.widget.ArrayAdapter;
 
 import com.android.volley.error.VolleyError;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallBackInterfaceModel;
@@ -35,6 +36,7 @@ public class OvertimeRequestPresenter extends TiPresenter<OvertimeRequestView>{
 
     private RestConnection mRestConnection;
     private OvertimeSendModel mOvertimeSendModel;
+    private ArrayList<OvertimeAvailableResponseModel> overtimeAvailableResponseModelList;
 
     public OvertimeRequestPresenter(RestConnection restConnection) {
         this.mRestConnection = restConnection;
@@ -49,18 +51,52 @@ public class OvertimeRequestPresenter extends TiPresenter<OvertimeRequestView>{
 
     public void initialRequestHistoryData(){
         SimpleDateFormat dateFormatter = new SimpleDateFormat(HelperKey.USER_DATE_FORMAT, Locale.getDefault());
-        String startdate = dateFormatter.format(new Date());
+        String endDate = dateFormatter.format(new Date());
 
+        /*
+        * TODO Change this with actual maximaum retrieve overtime
+        * */
         int maxRetrieveDays = 7;
         String cutOffDate = dateFormatter.format(new Date(System.currentTimeMillis() - (maxRetrieveDays*24*60*60*1000)));
 
+//        loadRequestHistoryData(cutOffDate, endDate);
+        setDummyData();
+    }
 
+    private void setDummyData() {
+        overtimeAvailableResponseModelList = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            overtimeAvailableResponseModelList.add(new OvertimeAvailableResponseModel(
+                    (i*2-1+3) +" Januari 2017",
+                    "ID_01",
+                    "08."+i,
+                    "16."+i,
+                    "06."+i,
+                    "08."+i,
+                    "Freeday False",
+                    "OV_01",
+                    "Overtime Awal"
+            ));
+
+            overtimeAvailableResponseModelList.add(new OvertimeAvailableResponseModel(
+                    (i*2-1+3) +" Januari 2017",
+                    "ID_01",
+                    "08."+i,
+                    "16."+i,
+                    "16."+i,
+                    "18."+i,
+                    "Freeday False",
+                    "OV_02",
+                    "Overtime Akhir"
+            ));
+        }
+
+        getView().initializeOvertimeDates(overtimeAvailableResponseModelList);
     }
 
     public void loadRequestHistoryData(String startDate, String endDate) {
         startDate = HelperUtil.getServerFormDate(startDate);
         endDate = HelperUtil.getServerFormDate(endDate);
-        
 
         getView().toggleLoadingInitialLoad(true);
         OvertimeAvailableSendModel overtimeAvailableSendModel = new OvertimeAvailableSendModel(
@@ -73,11 +109,12 @@ public class OvertimeRequestPresenter extends TiPresenter<OvertimeRequestView>{
         mRestConnection.getData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.GET_OVERTIME_AVAILABLE, overtimeAvailableSendModel.getHashMapType(), new RestCallBackInterfaceModel() {
             @Override
             public void callBackOnSuccess(BaseResponseModel response) {
-                List<OvertimeAvailableResponseModel> requestHistoryResponseModels = new ArrayList<>();
+                ArrayList<OvertimeAvailableResponseModel> overtimeAvailableResponseModelList = new ArrayList<>();
                 for (int i = 0; i < response.getData().length; i++) {
-                    requestHistoryResponseModels.add(Model.getModelInstance(response.getData()[i], OvertimeAvailableResponseModel.class));
+                    overtimeAvailableResponseModelList.add(Model.getModelInstance(response.getData()[i], OvertimeAvailableResponseModel.class));
                 }
 
+                overtimeRequestView.initializeOvertimeDates(overtimeAvailableResponseModelList);
                 overtimeRequestView.toggleLoadingInitialLoad(false);
             }
 
@@ -132,7 +169,7 @@ public class OvertimeRequestPresenter extends TiPresenter<OvertimeRequestView>{
     }
 
 
-    public void onDateSelected(String date, int i) {
+    public void onDateSelected(OvertimeAvailableResponseModel itemSelected, int i) {
 
     }
 }
