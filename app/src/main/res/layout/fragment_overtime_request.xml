@@ -19,6 +19,7 @@
 
             <!--Input Date Choice (Spinner)-->
             <TextView
+                android:id="@+id/overtime_spinner_datechoice_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -50,6 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_marginBottom="20dp"
                 android:weightSum="3">
 
 
@@ -144,4 +146,9 @@
         </LinearLayout>
     </ScrollView>
 
+    <include
+        android:id="@+id/layout_empty_info"
+        layout="@layout/single_empty_info"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </RelativeLayout>

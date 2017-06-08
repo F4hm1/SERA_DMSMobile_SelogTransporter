@@ -261,6 +261,7 @@
     <string name="order_history_detail_location_target">Target Lokasi</string>
 
     <string name="documents_podreason_spinner_reason">Alasan tidak melampirkan bukti foto POD:</string>
+    <string name="err_msg_empty_overtime_keterangan">Harap isi dengan alasa/keterangan anda lembur</string>
     <string-array name="documents_podreason_array">
         <item>Pilih</item>
         <item>Tertahan oleh customer</item>

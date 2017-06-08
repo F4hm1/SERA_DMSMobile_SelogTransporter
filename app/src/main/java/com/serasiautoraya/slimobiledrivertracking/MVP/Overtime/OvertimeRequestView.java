@@ -27,4 +27,10 @@ public interface OvertimeRequestView extends BaseViewInterface, FormViewInterfac
     void onSubmitClicked(View view);
 
     void initializeOvertimeDates(ArrayList<OvertimeAvailableResponseModel> arrayList);
+
+    void initializeOvertimeTypes(ArrayList<OvertimeAvailableTypeAdapter> arrayList);
+
+    void initializeOvertimeTimes(String startTime, String endTime);
+
+    void setNoOvertime();
 }

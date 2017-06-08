@@ -73,9 +73,17 @@ public class OvertimeAvailableResponseModel {
         return Freeday;
     }
 
+    public String getOvertimeTypeCode() {
+        return OvertimeTypeCode;
+    }
+
+    public String getOvertimeTypeName() {
+        return OvertimeTypeName;
+    }
+
     /*
-    * TODO delete this constructor
-    * */
+        * TODO delete this constructor
+        * */
     public OvertimeAvailableResponseModel(String date, String idCico, String scheduleIn, String scheduleOut, String overtimeStart, String overtimeEnd, String freeday, String overtimeTypeCode, String overtimeTypeName) {
         Date = date;
         IdCico = idCico;

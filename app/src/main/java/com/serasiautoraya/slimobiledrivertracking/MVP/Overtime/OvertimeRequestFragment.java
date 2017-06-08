@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.serasiautoraya.slimobiledrivertracking.MVP.CustomView.EmptyInfoView;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking.R;
 import com.serasiautoraya.slimobiledrivertracking.customdialog.DatePickerToEditTextDialog;
@@ -58,10 +60,16 @@ public class OvertimeRequestFragment extends TiFragment<OvertimeRequestPresenter
     @BindView(R.id.overtime_spinner_type_label)
     TextView mTvLabelType;
 
+    @BindView(R.id.overtime_spinner_datechoice_label)
+    TextView mTvLabelDatechoice;
+
     private ProgressDialog mProgressDialog;
 
     private ArrayAdapter<OvertimeAvailableResponseModel> mArrayAdapterDatesChoice;
-    private ArrayAdapter<String> mArrayAdapterOvertimeTypes;
+    private ArrayAdapter<OvertimeAvailableTypeAdapter> mArrayAdapterOvertimeTypes;
+
+    @BindView(R.id.layout_empty_info)
+    EmptyInfoView mEmptyInfoView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -72,12 +80,17 @@ public class OvertimeRequestFragment extends TiFragment<OvertimeRequestPresenter
 
     @Override
     public void initialize() {
+        mEmptyInfoView.setIcon(R.drawable.ic_empty_overtime);
+        mEmptyInfoView.setText("Anda tidak memiliki lembur untuk diajukan");
+        mEmptyInfoView.setVisibility(View.GONE);
         this.initializeSpinners();
         this.hideHideableView();
         getPresenter().initialRequestHistoryData();
     }
 
     private void hideHideableView() {
+        mTvLabelDatechoice.setVisibility(View.GONE);
+        mSpinnerDateChoice.setVisibility(View.GONE);
         mTvLabelType.setVisibility(View.GONE);
         mSpinnerType.setVisibility(View.GONE);
         mLinearTimeRange.setVisibility(View.GONE);
@@ -102,6 +115,7 @@ public class OvertimeRequestFragment extends TiFragment<OvertimeRequestPresenter
 //            }
 //        });
         mArrayAdapterDatesChoice = new ArrayAdapter<OvertimeAvailableResponseModel>(getContext(), android.R.layout.simple_spinner_item);
+        mArrayAdapterOvertimeTypes = new ArrayAdapter<OvertimeAvailableTypeAdapter>(getContext(), android.R.layout.simple_spinner_item);
     }
 
     @Override
@@ -131,7 +145,21 @@ public class OvertimeRequestFragment extends TiFragment<OvertimeRequestPresenter
 
     @Override
     public boolean getValidationForm() {
-        return false;
+        boolean result = true;
+        String errText = "";
+        View focusView = null;
+
+        if(TextUtils.isEmpty(mEtReason.getText().toString())){
+            focusView = mEtReason;
+            mEtReason.setError(getResources().getString(R.string.err_msg_empty_overtime_keterangan));
+            result = false;
+        }
+
+        if(result == false){
+            focusView.requestFocus();
+        }
+
+        return result;
     }
 
     @Override
@@ -160,20 +188,16 @@ public class OvertimeRequestFragment extends TiFragment<OvertimeRequestPresenter
     @OnClick(R.id.overtime_btn_submit)
     public void onSubmitClicked(View view) {
         if(getValidationForm()){
-//            String requestCicoCode = HelperUtil.getValueStringArrayXML(
-//                    getResources().getStringArray(R.array.cico_tipe_array),
-//                    getResources().getStringArray(R.array.cico_tipe_array_val),
-//                    mSpinnerOLC.getSelectedItem().toString());
-//            getPresenter().onSubmitClicked(
-//                    mDatePickerToEditTextDialog.getDateServerFormat(),
-//                    requestCicoCode,
-//                    mEtTripAmount.getText().toString(),
-//                    mEtReason.getText().toString());
+            getPresenter().onSubmitClicked(
+                    mSpinnerType.getSelectedItem(),
+                    mEtReason.getText().toString());
         }
     }
 
     @Override
     public void initializeOvertimeDates(ArrayList<OvertimeAvailableResponseModel> arrayList) {
+        mTvLabelDatechoice.setVisibility(View.VISIBLE);
+        mSpinnerDateChoice.setVisibility(View.VISIBLE);
         mArrayAdapterDatesChoice.clear();
         mArrayAdapterDatesChoice = new ArrayAdapter<OvertimeAvailableResponseModel>(getContext(), android.R.layout.simple_spinner_item, arrayList);
         mArrayAdapterDatesChoice.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -192,5 +216,45 @@ public class OvertimeRequestFragment extends TiFragment<OvertimeRequestPresenter
 
         mArrayAdapterDatesChoice.setNotifyOnChange(true);
         mArrayAdapterDatesChoice.notifyDataSetChanged();
+    }
+
+    @Override
+    public void initializeOvertimeTypes(ArrayList<OvertimeAvailableTypeAdapter> arrayList) {
+        mTvLabelType.setVisibility(View.VISIBLE);
+        mSpinnerType.setVisibility(View.VISIBLE);
+        mArrayAdapterOvertimeTypes.clear();
+
+        mArrayAdapterOvertimeTypes = new ArrayAdapter<OvertimeAvailableTypeAdapter>(getContext(), android.R.layout.simple_spinner_item, arrayList);
+        mArrayAdapterOvertimeTypes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinnerType.setAdapter(mArrayAdapterOvertimeTypes);
+        mSpinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                getPresenter().onTypeSelected((OvertimeAvailableTypeAdapter) adapterView.getSelectedItem(), i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        mArrayAdapterOvertimeTypes.setNotifyOnChange(true);
+        mArrayAdapterOvertimeTypes.notifyDataSetChanged();
+    }
+
+    @Override
+    public void initializeOvertimeTimes(String startTime, String endTime) {
+        mLinearTimeRange.setVisibility(View.VISIBLE);
+        mEtStartTime.setText(startTime);
+        mEtEndTime.setText(endTime);
+        mEtReason.setVisibility(View.VISIBLE);
+        mButtonSubmit.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void setNoOvertime() {
+        mEmptyInfoView.setVisibility(View.VISIBLE);
+        hideHideableView();
     }
 }
