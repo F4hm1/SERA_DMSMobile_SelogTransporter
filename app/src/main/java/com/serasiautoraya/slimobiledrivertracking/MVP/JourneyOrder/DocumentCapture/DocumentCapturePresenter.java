@@ -86,6 +86,12 @@ public class DocumentCapturePresenter extends TiPresenter<DocumentCaptureView> {
         if (!tempDir.exists()) {
             tempDir.mkdirs();
         }
+        File appStorageDir = Environment.getExternalStorageDirectory();
+        appStorageDir = new File(appStorageDir.getPath() + "/"+ com.serasiautoraya.slimobiledrivertracking.helper.HelperUrl.DIRECTORY_NAME+"/");
+        if (!appStorageDir.exists()) {
+            appStorageDir.mkdirs();
+        }
+
         return File.createTempFile(part, ext, tempDir);
     }
 

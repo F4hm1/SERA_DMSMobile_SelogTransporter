@@ -59,8 +59,11 @@ public class HelperUrl {
 
     public static final String GET_ORDER_HISTORY = HOST + "order/history/";
 
-    /*
-    * URl/{OrderCode}
-    * */
-    public static final String GET_ORDER_HISTORY_DETAIL = HOST + "order/history/";
+    public static final String GET_WSINOUT_HISTORY = HOST + "attendance/reportrecap/";
+
+    public static final String GET_ORDER_HISTORY_DETAIL = HOST + "order/detailhistory/";
+
+    public static final String GET_EXPENSE_AVAILABLE= HOST + "order/expensechecking/";
+
+    public static final String POST_EXPENSE= HOST + "order/expense/";
 }

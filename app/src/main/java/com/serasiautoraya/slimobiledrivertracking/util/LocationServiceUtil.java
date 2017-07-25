@@ -160,19 +160,20 @@ public class LocationServiceUtil implements LocationListener, GoogleApiClient.On
     }
 
     public String getLastLocationName(){
-        String address = "";
+        String address = "Nama lokasi tidak terdeteksi";
         List<Address> addresses;
         try {
-            addresses = mGeocoder.getFromLocation(sLocation.getLatitude(),
-                    sLocation.getLongitude(), 1);
+            addresses = mGeocoder.getFromLocation(sLocation.getLatitude(), sLocation.getLongitude(), 1);
             if (addresses.size() > 0) {
-                System.out.println(addresses.get(0).getLocality());
-                for (int i=0;i<addresses.get(0).getMaxAddressLineIndex();i++){
-                    address += "\n"+addresses.get(0).getAddressLine(i)+" ";
+                address = "";
+
+                for (Address adrs : addresses) {
+                    address = adrs.getAddressLine(0);
                 }
+
             }
         } catch (IOException e) {
-            address = "err";
+            address = "Err. Nama lokasi tidak terdeteksi";
             e.printStackTrace();
         }
         return address;

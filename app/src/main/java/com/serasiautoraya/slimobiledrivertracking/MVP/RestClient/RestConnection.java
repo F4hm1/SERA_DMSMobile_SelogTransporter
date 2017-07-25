@@ -15,6 +15,7 @@ import com.android.volley.request.GsonRequest;
 import com.android.volley.request.JsonObjectRequest;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallBackInterfaceModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallbackInterfaceJSON;
@@ -200,11 +201,12 @@ public class RestConnection {
                 new Response.Listener<BaseResponseModel>() {
                     @Override
                     public void onResponse(BaseResponseModel response) {
-                        if (response != null) {
+                        if (mStatusCode == 200) {
                             restcall.callBackOnSuccess(response);
                         } else {
-                            restcall.callBackOnFail(response.getResponseText());
+                                restcall.callBackOnFail(response.getResponseText());
                         }
+
                     }
                 },
                 new Response.ErrorListener() {
@@ -213,7 +215,41 @@ public class RestConnection {
                         restcall.callBackOnFail(error.getMessage());
                     }
                 }
-        );
+        ){
+            @Override
+            protected VolleyError parseNetworkError(VolleyError volleyError) {
+                if (volleyError.networkResponse != null && volleyError.networkResponse.data != null) {
+                    JSONObject jsonResponse = null;
+                    String responseText = "Terjadi Kesalahan";
+                    try {
+                        jsonResponse = new JSONObject(new String(volleyError.networkResponse.data));
+                        responseText = jsonResponse.getString("responseText");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    VolleyError error = new VolleyError(responseText);
+                    volleyError = error;
+                }
+                return volleyError;
+            }
+
+            @Override
+            protected Response<BaseResponseModel> parseNetworkResponse(NetworkResponse response) {
+                mStatusCode = response.statusCode;
+                String jsonString = new String(response.data);
+                JSONObject obj = null;
+                Gson gson = new Gson();
+                BaseResponseModel baseResponseModel = null;
+                try {
+                    obj = new JSONObject(jsonString);
+                    baseResponseModel = Model.getModelInstanceFromString(jsonString, BaseResponseModel.class);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                return Response.success(baseResponseModel, HttpHeaderParser.parseCacheHeaders(response));
+            }
+        };
         request.setShouldCache(false);
         mRequestQueue.add(request);
     }

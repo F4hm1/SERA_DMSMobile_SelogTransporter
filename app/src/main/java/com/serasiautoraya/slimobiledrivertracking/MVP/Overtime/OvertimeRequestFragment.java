@@ -121,7 +121,7 @@ public class OvertimeRequestFragment extends TiFragment<OvertimeRequestPresenter
     @Override
     public void toggleLoading(boolean isLoading) {
         if(isLoading){
-            mProgressDialog = ProgressDialog.show(getContext(), getResources().getString(R.string.prog_msg_olctrip),getResources().getString(R.string.prog_msg_wait),true,false);
+            mProgressDialog = ProgressDialog.show(getContext(), getResources().getString(R.string.prog_msg_overtime),getResources().getString(R.string.prog_msg_wait),true,false);
         }else{
             mProgressDialog.dismiss();
         }

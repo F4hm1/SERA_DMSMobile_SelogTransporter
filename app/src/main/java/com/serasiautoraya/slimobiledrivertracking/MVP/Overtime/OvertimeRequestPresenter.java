@@ -63,8 +63,8 @@ public class OvertimeRequestPresenter extends TiPresenter<OvertimeRequestView> {
         int maxRetrieveDays = 7;
         String cutOffDate = dateFormatter.format(new Date(System.currentTimeMillis() - (maxRetrieveDays * 24 * 60 * 60 * 1000)));
 
-//        loadRequestHistoryData(cutOffDate, endDate);
-        setDummyData();
+        loadRequestHistoryData(cutOffDate, endDate);
+//        setDummyData();
     }
 
     private void setDummyData() {

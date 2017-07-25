@@ -100,7 +100,7 @@ public class HelperUtil {
 
     public static Bitmap saveScaledBitmap(String storedPath, String targetPath){
         int desiredWidth = HelperKey.SAVED_IMAGE_DESIRED_WITDH;
-
+        Log.d("COMPRESS", storedPath +" >> "+targetPath);
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(storedPath, options);

@@ -41,9 +41,6 @@ public class OrderHistoryPresenter extends TiPresenter<OrderHistoryView> {
     protected void onAttachView(@NonNull final OrderHistoryView view) {
         super.onAttachView(view);
         HttpsTrustManager.allowAllSSL();
-        Log.d("DASHBOARDSS", "ORHISTOPpp: " + HelperBridge.sTempFragmentTarget);
-//        HelperBridge.sTempFragmentTarget = 0;
-        Log.d("DASHBOARDSS", "ORHISTOP: " + HelperBridge.sTempFragmentTarget);
         getView().initialize();
     }
 

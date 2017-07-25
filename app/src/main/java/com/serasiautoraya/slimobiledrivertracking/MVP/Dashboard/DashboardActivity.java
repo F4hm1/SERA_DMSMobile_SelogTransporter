@@ -26,6 +26,7 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.Absence.AbsenceRequestFrag
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.SharedPrefsModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.ChangePassword.ChangePasswordActivity;
 import com.serasiautoraya.slimobiledrivertracking.MVP.CiCo.CiCoFragment;
+import com.serasiautoraya.slimobiledrivertracking.MVP.ExpensesRequest.ExpenseRequestFragment;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Fatigue.FatigueActivity;
 import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Assigned.AssignedFragment;
 import com.serasiautoraya.slimobiledrivertracking.MVP.NotificatonList.NotificationListActivity;
@@ -33,6 +34,7 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.OLCTrip.OLCTripFragment;
 import com.serasiautoraya.slimobiledrivertracking.MVP.OrderHistory.OrderHistoryFragment;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Overtime.OvertimeRequestFragment;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RequestHistory.RequestHistoryFragment;
+import com.serasiautoraya.slimobiledrivertracking.MVP.WsInOutHistory.WsInOutFragment;
 import com.serasiautoraya.slimobiledrivertracking.R;
 import com.serasiautoraya.slimobiledrivertracking.listener.TextViewTouchListener;
 import com.serasiautoraya.slimobiledrivertracking.util.LocationServiceUtil;
@@ -157,6 +159,14 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
                 OvertimeRequestFragment overtimeRequestFragment = new OvertimeRequestFragment();
                 mNavigationView.setCheckedItem(R.id.nav_overtime_request);
                 return overtimeRequestFragment;
+            case R.id.nav_expense_request:
+                ExpenseRequestFragment expenseRequestFragment = new ExpenseRequestFragment();
+                mNavigationView.setCheckedItem(R.id.nav_expense_request);
+                return expenseRequestFragment;
+            case R.id.nav_ws_history:
+                WsInOutFragment wsInOutFragment = new WsInOutFragment();
+                mNavigationView.setCheckedItem(R.id.nav_ws_history);
+                return wsInOutFragment;
             case R.id.nav_attendance_history:
                 RequestHistoryFragment attendanceHistoryFragment = new RequestHistoryFragment();
                 mNavigationView.setCheckedItem(R.id.nav_attendance_history);

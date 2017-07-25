@@ -6,7 +6,8 @@ import android.os.Environment;
  * Created by Randi Dwi Nandra on 21/11/2016.
  */
 public class HelperUrl {
-    public static final String SAVE_DIRECTORY = Environment.getExternalStorageDirectory().getPath() + "/SLI-Driver-Tracing/";
+    public static final String DIRECTORY_NAME = "SLI-Transporter";
+    public static final String SAVE_DIRECTORY = Environment.getExternalStorageDirectory().getPath() + "/"+DIRECTORY_NAME+"/";
 
 
     /**
