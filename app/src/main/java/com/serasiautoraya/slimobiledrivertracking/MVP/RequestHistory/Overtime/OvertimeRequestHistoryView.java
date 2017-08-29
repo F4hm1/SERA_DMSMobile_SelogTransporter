@@ -12,6 +12,20 @@ public interface OvertimeRequestHistoryView extends BaseViewInterface{
 
     void refreshRecyclerView();
 
+    void showCancelConfirmationDialog(String requestDate);
+
+    void refreshAllData();
+
     @DistinctUntilChanged
     void toggleEmptyInfo(boolean show);
+
+    void showDetailDialog(
+            String transType,
+            String dateTimeStart,
+            String dateTimeEnd,
+            String overtimeType,
+            String requestDate,
+            String requestStatus,
+            String approvalBy
+    );
 }

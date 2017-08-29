@@ -18,4 +18,14 @@ public interface AbsenceRequestHistoryView extends BaseViewInterface {
 
     @DistinctUntilChanged
     void toggleEmptyInfo(boolean show);
+
+    void showDetailDialog(
+            String transType,
+            String dateStart,
+            String dateEnd,
+            String absenceType,
+            String requestDate,
+            String requestStatus,
+            String approvalBy
+    );
 }

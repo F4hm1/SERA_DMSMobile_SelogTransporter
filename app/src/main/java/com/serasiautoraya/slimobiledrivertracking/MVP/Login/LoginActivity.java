@@ -106,6 +106,12 @@ public class LoginActivity extends TiActivity<LoginPresenter, LoginView> impleme
         LocationServiceUtil.getLocationManager(LoginActivity.this);
     }
 
+    @Override
+    public void setCachedFormLogin(String username, String password) {
+        mEtUsername.setText(username);
+        mEtPassword.setText(password);
+    }
+
 
     @Override
     public boolean getValidationForm() {

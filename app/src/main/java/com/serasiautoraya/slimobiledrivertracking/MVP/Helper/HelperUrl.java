@@ -49,13 +49,13 @@ public class HelperUrl {
 
     public static final String POST_OVERTIME = HOST + "attendance/overtime/";
 
-    public static final String GET_OVERTIME_AVAILABLE= HOST + "attendance/overtimechecking/";
+    public static final String GET_OVERTIME_AVAILABLE = HOST + "attendance/overtimechecking/";
 
     public static final String DELETE_OVERTIME = HOST + "attendance/overtime/";
 
     public static final String POST_OLCTRIP = HOST + "attendance/olctrip/";
 
-    public static final String DELETE_OLCTRIP = HOST + "attendance/overtime/";
+    public static final String DELETE_OLCTRIP = HOST + "attendance/olctrip/";
 
     public static final String GET_ORDER_HISTORY = HOST + "order/history/";
 
@@ -63,7 +63,11 @@ public class HelperUrl {
 
     public static final String GET_ORDER_HISTORY_DETAIL = HOST + "order/detailhistory/";
 
-    public static final String GET_EXPENSE_AVAILABLE= HOST + "order/expensechecking/";
+    public static final String GET_EXPENSE_AVAILABLE = HOST + "order/expensechecking/";
 
-    public static final String POST_EXPENSE= HOST + "order/expense/";
+    public static final String POST_EXPENSE = HOST + "order/expense/";
+
+    public static final String GET_QUESTIONNAIRE = HOST + "training/questionnaire/";
+
+    public static final String POST_QUESTIONNAIRE_ANSWER = HOST + "training/questionnaireanswer/";
 }

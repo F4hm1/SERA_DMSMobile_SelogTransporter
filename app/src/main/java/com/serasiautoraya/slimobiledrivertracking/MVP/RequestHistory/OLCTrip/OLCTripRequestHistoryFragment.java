@@ -1,14 +1,19 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.RequestHistory.OLCTrip;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseAdapter.CustomPopUpItemClickListener;
@@ -16,8 +21,10 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.BaseAdapter.SimpleAdapterV
 import com.serasiautoraya.slimobiledrivertracking.MVP.CustomView.EmptyInfoView;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RequestHistory.RequestHistoryAdapter;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RequestHistory.RequestHistoryResponseModel;
+import com.serasiautoraya.slimobiledrivertracking.MVP.RequestHistory.RequestHistoryView;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking.R;
+import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
 import com.serasiautoraya.slimobiledrivertracking.util.DividerRecycleViewDecoration;
 
 import net.grandcentrix.thirtyinch.TiFragment;
@@ -85,16 +92,10 @@ public class OLCTripRequestHistoryFragment extends TiFragment<OLCTripRequestHist
             public boolean startAction(RequestHistoryResponseModel requestHistoryResponseModel, int menuId) {
                 switch (menuId) {
                     case R.id.menu_popup_detail_request:
-                        /*
-                        * TODO Change this code below
-                        * */
-                        showToast("Detailed bro - "+requestHistoryResponseModel.getRequestDate());
+                        getPresenter().onDetailClicked(requestHistoryResponseModel);
                         return true;
                     case R.id.menu_popup_cancel_request:
-                        /*
-                        * TODO Change this code below
-                        * */
-                        showToast("Canceled bro - "+requestHistoryResponseModel.getRequestDate());
+                        getPresenter().onCancelClicked(requestHistoryResponseModel);
                         return true;
                     default:
                 }
@@ -118,11 +119,72 @@ public class OLCTripRequestHistoryFragment extends TiFragment<OLCTripRequestHist
     }
 
     @Override
+    public void showCancelConfirmationDialog(String requestDate) {
+                                /*
+        * TODO Change format date to user format
+        * */
+        CharSequence textMsg = Html.fromHtml("Apakah anda yakin akan <b>membatalkan pengajuan OLC/Trip</b>"+
+                "pada <b>" + requestDate + "</b>?");
+
+        HelperUtil.showConfirmationAlertDialog(textMsg, getContext(), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                getPresenter().onCancelationSubmitted();
+            }
+        });
+    }
+
+    @Override
+    public void refreshAllData() {
+        RequestHistoryView requestHistoryView = (RequestHistoryView) getParentFragment();
+        requestHistoryView.initialize();
+    }
+
+    @Override
     public void toggleEmptyInfo(boolean show) {
         if(show){
             mEmptyInfoView.setVisibility(View.VISIBLE);
         }else {
             mEmptyInfoView.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void showDetailDialog(String transType, String dateStart, String tripCount, String oLCStatus, String requestDate, String requestStatus, String approvalBy) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        builder.setView(inflater.inflate(R.layout.dialog_detail_olctriphistory, null))
+                .setPositiveButton("TUTUP", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        Dialog dialog = builder.create();
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+
+        TextView tvTransType = (TextView) dialog.findViewById(R.id.history_detail_transtype);
+        tvTransType.setText(transType);
+
+        TextView tvDateStart = (TextView) dialog.findViewById(R.id.history_detail_dateolctrip);
+        tvDateStart.setText(dateStart);
+
+        TextView tvTripCount = (TextView) dialog.findViewById(R.id.history_detail_tripcount);
+        tvTripCount.setText(tripCount);
+
+        TextView tvOLCStatus= (TextView) dialog.findViewById(R.id.history_detail_olctstatus);
+        tvOLCStatus.setText(oLCStatus);
+
+        TextView tvRequestDate= (TextView) dialog.findViewById(R.id.history_detail_requestdate);
+        tvRequestDate.setText(requestDate);
+
+        TextView tvRequestStatus= (TextView) dialog.findViewById(R.id.history_detail_requeststatus);
+        tvRequestStatus.setText(requestStatus);
+
+        TextView tvApprovalBy = (TextView) dialog.findViewById(R.id.history_detail_approvalby);
+        tvApprovalBy.setText(approvalBy);
     }
 }

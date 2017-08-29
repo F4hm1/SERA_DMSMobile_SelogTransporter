@@ -31,6 +31,8 @@
             android:windowSoftInputMode="adjustResize|stateHidden"/>
         <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.DocumentCapture.SigningActivity"/>
         <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.OrderHistory.OrderHistoryDetail.OrderHistoryDetailActivity"/>
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.TrainingQuestionnaire.QuestionnaireActivity"></activity>
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.PODCapture.PODCaptureActivity"></activity>
 
 
 

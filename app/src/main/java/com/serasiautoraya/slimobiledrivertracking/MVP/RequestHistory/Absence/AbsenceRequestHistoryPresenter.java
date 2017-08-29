@@ -36,11 +36,11 @@ public class AbsenceRequestHistoryPresenter extends TiPresenter<AbsenceRequestHi
         getView().initialize();
     }
 
-    public void setAdapter(SimpleAdapterModel simpleAdapterModel){
+    public void setAdapter(SimpleAdapterModel simpleAdapterModel) {
         this.mSimpleAdapterModel = simpleAdapterModel;
     }
 
-    public void loadRequestHistoryData(){
+    public void loadRequestHistoryData() {
         getView().toggleEmptyInfo(true);
         if (!HelperBridge.sAbsenceRequestHistoryList.isEmpty()) {
             getView().toggleEmptyInfo(false);
@@ -49,43 +49,54 @@ public class AbsenceRequestHistoryPresenter extends TiPresenter<AbsenceRequestHi
         getView().refreshRecyclerView();
     }
 
-    public void onCancelClicked(RequestHistoryResponseModel requestHistoryResponseModel){
+    public void onCancelClicked(RequestHistoryResponseModel requestHistoryResponseModel) {
         mAbsenceDeleteSendModel = new AbsenceDeleteSendModel(
                 HelperBridge.sModelLoginResponse.getPersonalId(),
                 requestHistoryResponseModel.getId());
         getView().showCancelConfirmationDialog(requestHistoryResponseModel.getRequestDate());
     }
 
-    public void onCancelationSubmitted(){
+    public void onCancelationSubmitted() {
         getView().toggleLoading(true);
         mRestConnection.deleteData(
-            HelperBridge.sModelLoginResponse.getTransactionToken(),
-            HelperUrl.DELETE_ABSENCE,
-            mAbsenceDeleteSendModel.getHashMapType(),
-            new RestCallBackInterfaceModel() {
-                @Override
-                public void callBackOnSuccess(BaseResponseModel response) {
-                    getView().toggleLoading(false);
-                    getView().showStandardDialog(response.getResponseText(), "Berhasil");
-                    getView().refreshAllData();
-                }
+                HelperBridge.sModelLoginResponse.getTransactionToken(),
+                HelperUrl.DELETE_ABSENCE,
+                mAbsenceDeleteSendModel.getHashMapType(),
+                new RestCallBackInterfaceModel() {
+                    @Override
+                    public void callBackOnSuccess(BaseResponseModel response) {
+                        getView().toggleLoading(false);
+                        getView().showStandardDialog(response.getResponseText(), "Berhasil");
+                        getView().refreshAllData();
+                    }
 
-                @Override
-                public void callBackOnFail(String response) {
-                    getView().toggleLoading(false);
-                    getView().showStandardDialog(response, "Perhatian");
-                }
+                    @Override
+                    public void callBackOnFail(String response) {
+                        getView().toggleLoading(false);
+                        getView().showStandardDialog(response, "Perhatian");
+                    }
 
-                @Override
-                public void callBackOnError(VolleyError error) {
+                    @Override
+                    public void callBackOnError(VolleyError error) {
                     /*
                     * TODO change this, jadikan value nya dari string values!
                     * */
-                    getView().toggleLoading(false);
-                    getView().showStandardDialog("Gagal membatalkan pengajuan ketidakhadiran, silahkan periksa koneksi anda kemudian coba kembali", "Perhatian");
+                        getView().toggleLoading(false);
+                        getView().showStandardDialog("Gagal membatalkan pengajuan ketidakhadiran, silahkan periksa koneksi anda kemudian coba kembali", "Perhatian");
+                    }
                 }
-            }
         );
     }
 
+    public void onDetailClicked(RequestHistoryResponseModel requestHistoryResponseModel) {
+        getView().showDetailDialog(
+                requestHistoryResponseModel.getTransType(),
+                requestHistoryResponseModel.getDateStart(),
+                requestHistoryResponseModel.getDateEnd(),
+                requestHistoryResponseModel.getAbsenceType(),
+                "Pengajuan Tanggal " + requestHistoryResponseModel.getRequestDate(),
+                requestHistoryResponseModel.getRequestStatus(),
+                requestHistoryResponseModel.getApprovalBy()
+        );
+    }
 }

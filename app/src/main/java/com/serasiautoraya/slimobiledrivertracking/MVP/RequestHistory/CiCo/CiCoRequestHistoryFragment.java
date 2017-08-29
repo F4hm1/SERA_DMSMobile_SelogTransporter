@@ -1,5 +1,7 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.RequestHistory.CiCo;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseAdapter.CustomPopUpItemClickListener;
@@ -88,10 +91,7 @@ public class CiCoRequestHistoryFragment extends TiFragment<CiCoRequestHistoryPre
             public boolean startAction(RequestHistoryResponseModel requestHistoryResponseModel, int menuId) {
                 switch (menuId) {
                     case R.id.menu_popup_detail_request:
-                        /*
-                        * TODO Change this code below
-                        * */
-                        showToast("Detailed bro - "+requestHistoryResponseModel.getRequestDate());
+                        getPresenter().onDetailClicked(requestHistoryResponseModel);
                         return true;
                     case R.id.menu_popup_cancel_request:
                         getPresenter().onCancelClicked(requestHistoryResponseModel);
@@ -140,5 +140,38 @@ public class CiCoRequestHistoryFragment extends TiFragment<CiCoRequestHistoryPre
         }else {
             mEmptyInfoView.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void showDetailDialog(String transType, String dateCiCo, String requestDate, String requestStatus, String approvalBy) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        builder.setView(inflater.inflate(R.layout.dialog_detail_cicohistory, null))
+                .setPositiveButton("TUTUP", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        Dialog dialog = builder.create();
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+
+        TextView tvTransType = (TextView) dialog.findViewById(R.id.history_detail_transtype);
+        tvTransType.setText(transType);
+
+        TextView tvDateCiCo = (TextView) dialog.findViewById(R.id.history_detail_datecico);
+        tvDateCiCo.setText(dateCiCo);
+
+        TextView tvRequestDate= (TextView) dialog.findViewById(R.id.history_detail_requestdate);
+        tvRequestDate.setText(requestDate);
+
+        TextView tvRequestStatus= (TextView) dialog.findViewById(R.id.history_detail_requeststatus);
+        tvRequestStatus.setText(requestStatus);
+
+        TextView tvApprovalBy = (TextView) dialog.findViewById(R.id.history_detail_approvalby);
+        tvApprovalBy.setText(approvalBy);
     }
 }

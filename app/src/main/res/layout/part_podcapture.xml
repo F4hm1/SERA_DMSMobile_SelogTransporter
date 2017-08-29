@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/documents_card_photos"
+    android:animateLayoutChanges="true"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    card_view:cardCornerRadius="2dp"
+    card_view:cardUseCompatPadding="true"
+    card_view:contentPadding="6dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <GridLayout
+                android:id="@+id/gridss"
+                android:animateLayoutChanges="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="3"
+                android:rowCount="10">
+
+                <!--<com.serasiautoraya.slimobiledrivertracking.MVP.CustomView.SquareRelativeLayout-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="100dp"-->
+                    <!--android:layout_columnWeight="1"-->
+                    <!--android:layout_margin="4dp"-->
+                    <!--android:layout_rowWeight="1">-->
+
+                    <!--<android.support.v7.widget.CardView-->
+                        <!--xmlns:card_view="http://schemas.android.com/apk/res-auto"-->
+                        <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--app:cardUseCompatPadding="true"-->
+                        <!--android:animateLayoutChanges="true"-->
+                        <!--card_view:cardElevation="2dp">-->
+
+                        <!--<com.serasiautoraya.slimobiledrivertracking.MVP.CustomView.SquareImageView-->
+                            <!--android:id="@+id/pod_iv_prove_1"-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="match_parent"-->
+                            <!--android:layout_rowWeight="1"-->
+                            <!--android:background="@color/colorDeepOn"-->
+                            <!--android:scaleType="centerCrop"-->
+                            <!--android:src="@drawable/add_foto_pod" />-->
+
+                        <!--<TextView-->
+                            <!--android:id="@+id/pod_tv_progress_1"-->
+                            <!--android:visibility="gone"-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="match_parent"-->
+                            <!--android:layout_alignParentBottom="true"-->
+                            <!--android:layout_centerHorizontal="true"-->
+                            <!--android:background="@color/black_transparent"-->
+                            <!--android:gravity="center"-->
+                            <!--android:text="75%"-->
+                            <!--android:textColor="@color/colorDeepOn"-->
+                            <!--android:textStyle="bold" />-->
+
+                        <!--<ProgressBar-->
+                            <!--android:visibility="gone"-->
+                            <!--android:id="@+id/pod_pb_progress_1"-->
+                            <!--style="@android:style/Widget.Material.ProgressBar.Horizontal"-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="9dp"-->
+                            <!--android:layout_gravity="bottom"-->
+                            <!--android:progress="36" />-->
+
+                    <!--</android.support.v7.widget.CardView>-->
+
+                <!--</com.serasiautoraya.slimobiledrivertracking.MVP.CustomView.SquareRelativeLayout>-->
+
+
+            </GridLayout>
+
+            <Button
+                android:layout_below="@+id/gridss"
+                android:id="@+id/pod_btn_submit"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Test Upload" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</android.support.v7.widget.CardView>

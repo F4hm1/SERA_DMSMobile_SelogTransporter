@@ -274,6 +274,20 @@
     <string name="ws_dialog_title_clockin">Clock In</string>
     <string name="ws_dialog_title_clockout">Clock Out</string>
     <string name="ws_dialog_title_absence">Ketidakhadiran</string>
+
+    <string name="history_detail_title_transtype">Tipe pengajuan</string>
+    <string name="history_detail_title_datestart">Tanggal mulai</string>
+    <string name="history_detail_title_dateend">Tanggal akhir</string>
+    <string name="history_detail_title_absencetype">Jenis ketidakhadiran</string>
+    <string name="history_detail_title_requeststatus">Status pengajuan</string>
+    <string name="history_detail_title_approvalby">Pengajuan kepada</string>
+    <string name="history_detail_title_datecico">Tanggal Ci/Co</string>
+    <string name="history_detail_title_dateolctrip">Tanggal OLC/Trip</string>
+    <string name="history_detail_title_tripcount">Jumlah trip</string>
+    <string name="history_detail_title_olctstatus">Terdapat OLC</string>
+    <string name="history_detail_title_overtimestart">Tanggal mulai</string>
+    <string name="history_detail_title_overtimeend">Tanggal berakhir</string>
+    <string name="history_detail_title_overtimetype">Jenis lembur</string>
     <string-array name="documents_podreason_array">
         <item>Pilih</item>
         <item>Tertahan oleh customer</item>

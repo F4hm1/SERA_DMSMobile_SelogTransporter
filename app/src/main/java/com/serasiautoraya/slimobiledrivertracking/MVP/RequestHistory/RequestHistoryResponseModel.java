@@ -137,4 +137,5 @@ public class RequestHistoryResponseModel extends Model {
     public String getApprovalBy() {
         return ApprovalBy;
     }
+
 }

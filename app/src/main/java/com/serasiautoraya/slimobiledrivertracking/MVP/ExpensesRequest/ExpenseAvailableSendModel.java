@@ -10,7 +10,7 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.Model;
 
 public class ExpenseAvailableSendModel extends Model {
 
-    @SerializedName("PersonalId")
+    @SerializedName("Ids")
     @Expose
     private String PersonalId;
 

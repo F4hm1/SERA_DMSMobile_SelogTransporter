@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperBridge;
+import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperTransactionCode;
 import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.DocumentCapture.DocumentCaptureActivity;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking.activity.EvidenceCaptureActivity;
@@ -32,7 +33,11 @@ public class ActivityDetailPresenter extends TiPresenter<ActivityDetailView>  {
     }
 
     public void onActionClicked(){
-        getView().changeActivity(DocumentCaptureActivity.class);
+        if(HelperBridge.sActivityDetailResponseModel.getIsPOD().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)){
+
+        }else {
+            getView().changeActivity(DocumentCaptureActivity.class);
+        }
     }
 
     public void loadDetailOrderData(String orderCode){

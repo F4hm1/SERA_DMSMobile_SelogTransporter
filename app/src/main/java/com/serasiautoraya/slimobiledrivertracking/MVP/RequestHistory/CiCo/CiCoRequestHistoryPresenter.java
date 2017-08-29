@@ -35,11 +35,11 @@ public class CiCoRequestHistoryPresenter extends TiPresenter<CiCoRequestHistoryV
         getView().initialize();
     }
 
-    public void setAdapter(SimpleAdapterModel simpleAdapterModel){
+    public void setAdapter(SimpleAdapterModel simpleAdapterModel) {
         this.mSimpleAdapterModel = simpleAdapterModel;
     }
 
-    public void loadRequestHistoryData(){
+    public void loadRequestHistoryData() {
         getView().toggleEmptyInfo(true);
         if (!HelperBridge.sCiCoRequestHistoryList.isEmpty()) {
             getView().toggleEmptyInfo(false);
@@ -48,14 +48,14 @@ public class CiCoRequestHistoryPresenter extends TiPresenter<CiCoRequestHistoryV
         getView().refreshRecyclerView();
     }
 
-    public void onCancelClicked(RequestHistoryResponseModel requestHistoryResponseModel){
+    public void onCancelClicked(RequestHistoryResponseModel requestHistoryResponseModel) {
         mCiCoDeleteSendModel = new CiCoDeleteSendModel(
                 HelperBridge.sModelLoginResponse.getPersonalId(),
                 requestHistoryResponseModel.getId());
         getView().showCancelConfirmationDialog(requestHistoryResponseModel.getRequestDate());
     }
 
-    public void onCancelationSubmitted(){
+    public void onCancelationSubmitted() {
         getView().toggleLoading(true);
         mRestConnection.deleteData(
                 HelperBridge.sModelLoginResponse.getTransactionToken(),
@@ -85,4 +85,13 @@ public class CiCoRequestHistoryPresenter extends TiPresenter<CiCoRequestHistoryV
                 });
     }
 
+    public void onDetailClicked(RequestHistoryResponseModel requestHistoryResponseModel) {
+        getView().showDetailDialog(
+                requestHistoryResponseModel.getTransType(),
+                requestHistoryResponseModel.getDateStart(),
+                "Pengajuan Tanggal" + requestHistoryResponseModel.getRequestDate(),
+                requestHistoryResponseModel.getRequestStatus(),
+                requestHistoryResponseModel.getApprovalBy()
+        );
+    }
 }

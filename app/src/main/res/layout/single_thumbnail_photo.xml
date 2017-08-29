@@ -11,9 +11,10 @@
     card_view:cardBackgroundColor="@color/colorDeepOn"
     card_view:cardElevation="5dp"
     card_view:cardMaxElevation="5dp">
+
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="100dp"
+        android:layout_height="100dp">
 
         <ImageView
             android:id="@+id/single_thumbnail_image"
@@ -22,5 +23,13 @@
             android:background="@color/colorDeepOn"
             android:src="@drawable/no_preview_available2" />
 
+        <ProgressBar
+            style="@android:style/Widget.Material.ProgressBar.Horizontal"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="9dp"
+            android:progress="36" />
+
     </RelativeLayout>
+
 </android.support.v7.widget.CardView>

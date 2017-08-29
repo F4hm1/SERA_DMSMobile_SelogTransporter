@@ -126,6 +126,7 @@ public class LoginPresenter extends TiPresenter<LoginView> {
         if(mSharedPrefsModel.get(HelperKey.HAS_LOGIN, false)){
             String password = mSharedPrefsModel.get(HelperKey.KEY_PASSWORD, "");
             String username = mSharedPrefsModel.get(HelperKey.KEY_USERNAME, "");
+            getView().setCachedFormLogin(username, password);
             /*
             * TODO change foreground of login view to full white or other solid color
             * */

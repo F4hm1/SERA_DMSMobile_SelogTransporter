@@ -16,4 +16,12 @@ public interface CiCoRequestHistoryView extends BaseViewInterface{
 
     @DistinctUntilChanged
     void toggleEmptyInfo(boolean show);
+
+    void showDetailDialog(
+            String transType,
+            String dateCiCo,
+            String requestDate,
+            String requestStatus,
+            String approvalBy
+    );
 }

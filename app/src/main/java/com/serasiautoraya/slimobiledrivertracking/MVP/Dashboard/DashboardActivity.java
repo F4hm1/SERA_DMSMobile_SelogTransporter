@@ -1,5 +1,6 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.Dashboard;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,7 +13,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -27,8 +27,8 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.SharedPrefsModel
 import com.serasiautoraya.slimobiledrivertracking.MVP.ChangePassword.ChangePasswordActivity;
 import com.serasiautoraya.slimobiledrivertracking.MVP.CiCo.CiCoFragment;
 import com.serasiautoraya.slimobiledrivertracking.MVP.ExpensesRequest.ExpenseRequestFragment;
-import com.serasiautoraya.slimobiledrivertracking.MVP.Fatigue.FatigueActivity;
 import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Assigned.AssignedFragment;
+import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.PODCapture.PODCaptureActivity;
 import com.serasiautoraya.slimobiledrivertracking.MVP.NotificatonList.NotificationListActivity;
 import com.serasiautoraya.slimobiledrivertracking.MVP.OLCTrip.OLCTripFragment;
 import com.serasiautoraya.slimobiledrivertracking.MVP.OrderHistory.OrderHistoryFragment;
@@ -36,6 +36,7 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.Overtime.OvertimeRequestFr
 import com.serasiautoraya.slimobiledrivertracking.MVP.RequestHistory.RequestHistoryFragment;
 import com.serasiautoraya.slimobiledrivertracking.MVP.WsInOutHistory.WsInOutFragment;
 import com.serasiautoraya.slimobiledrivertracking.R;
+import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
 import com.serasiautoraya.slimobiledrivertracking.listener.TextViewTouchListener;
 import com.serasiautoraya.slimobiledrivertracking.util.LocationServiceUtil;
 import com.squareup.picasso.Picasso;
@@ -183,9 +184,15 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
 
     @Override
     public Class getTargetActivityClass(int idNavItem) {
+        /*
+        * TODO change and normalize this
+        * */
+
         switch (idNavItem) {
             case R.id.nav_change_pass:
-                return ChangePasswordActivity.class;
+//                return ChangePasswordActivity.class;
+//                return QuestionnaireActivity.class;
+                return PODCaptureActivity.class;
 //                return FatigueActivity.class;
             case R.id.nav_notification_list:
                 return NotificationListActivity.class;
@@ -315,4 +322,23 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
     }
 
 
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            exitApp();
+        }
+    }
+
+    private void exitApp() {
+        HelperUtil.showConfirmationAlertDialog(getResources().getString(R.string.warn_msg_exit),
+                DashboardActivity.this, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        System.exit(0);
+                    }
+                });
+    }
 }

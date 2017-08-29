@@ -54,32 +54,32 @@ public class ExpenseRequestPresenter extends TiPresenter<ExpenseRequestView> {
         );
 
         final ExpenseRequestView expenseRequestView = getView();
-        mRestConnection.getData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.GET_EXPENSE_AVAILABLE, expenseAvailableSendModel.getHashMapType(), new RestCallBackInterfaceModel() {
-            @Override
-            public void callBackOnSuccess(BaseResponseModel response) {
-                expenseAvailableResponseModel = Model.getModelInstance(response.getData()[0], ExpenseAvailableResponseModel.class);
-                generateExpenseInputValue(expenseAvailableResponseModel);
-                expenseRequestView.toggleLoadingSearchingOrder(false);
-            }
+            mRestConnection.getData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.GET_EXPENSE_AVAILABLE, expenseAvailableSendModel.getHashMapType(), new RestCallBackInterfaceModel() {
+                @Override
+                public void callBackOnSuccess(BaseResponseModel response) {
+                    expenseAvailableResponseModel = Model.getModelInstance(response.getData()[0], ExpenseAvailableResponseModel.class);
+                    generateExpenseInputValue(expenseAvailableResponseModel);
+                    expenseRequestView.toggleLoadingSearchingOrder(false);
+                }
 
-            @Override
-            public void callBackOnFail(String response) {
-                /*
-                * TODO change this!
-                * */
-                expenseRequestView.showToast(response);
-                expenseRequestView.toggleLoadingSearchingOrder(false);
-            }
+                @Override
+                public void callBackOnFail(String response) {
+                    /*
+                    * TODO change this!
+                    * */
+                    expenseRequestView.showToast(response);
+                    expenseRequestView.toggleLoadingSearchingOrder(false);
+                }
 
-            @Override
-            public void callBackOnError(VolleyError error) {
-                /*
-                * TODO change this!
-                * */
-                expenseRequestView.showToast("FAIL: " + error.toString());
-                expenseRequestView.toggleLoadingSearchingOrder(false);
-            }
-        });
+                @Override
+                public void callBackOnError(VolleyError error) {
+                    /*
+                    * TODO change this!
+                    * */
+                    expenseRequestView.showToast("FAIL: " + error.toString());
+                    expenseRequestView.toggleLoadingSearchingOrder(false);
+                }
+            });
     }
 
     private void generateExpenseInputValue(ExpenseAvailableResponseModel expenseAvailableResponseModel) {
@@ -93,7 +93,6 @@ public class ExpenseRequestPresenter extends TiPresenter<ExpenseRequestView> {
         }
 
         getView().setExpenseInputForm(expenseInputList, typeCode);
-
 
     }
 

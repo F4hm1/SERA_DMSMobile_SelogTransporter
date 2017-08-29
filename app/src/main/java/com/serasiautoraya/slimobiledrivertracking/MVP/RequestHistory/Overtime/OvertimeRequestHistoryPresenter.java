@@ -2,8 +2,13 @@ package com.serasiautoraya.slimobiledrivertracking.MVP.RequestHistory.Overtime;
 
 import android.support.annotation.NonNull;
 
+import com.android.volley.error.VolleyError;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseAdapter.SimpleAdapterModel;
+import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallBackInterfaceModel;
+import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.BaseResponseModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperBridge;
+import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperUrl;
+import com.serasiautoraya.slimobiledrivertracking.MVP.RequestHistory.RequestHistoryResponseModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking.util.HttpsTrustManager;
 
@@ -17,6 +22,7 @@ public class OvertimeRequestHistoryPresenter extends TiPresenter<OvertimeRequest
 
     private RestConnection mRestConnection;
     private SimpleAdapterModel mSimpleAdapterModel;
+    private OvertimeDeleteSendModel mOvertimeDeleteSendModel;
 
     public OvertimeRequestHistoryPresenter(RestConnection restConnection) {
         this.mRestConnection = restConnection;
@@ -29,11 +35,11 @@ public class OvertimeRequestHistoryPresenter extends TiPresenter<OvertimeRequest
         getView().initialize();
     }
 
-    public void setAdapter(SimpleAdapterModel simpleAdapterModel){
+    public void setAdapter(SimpleAdapterModel simpleAdapterModel) {
         this.mSimpleAdapterModel = simpleAdapterModel;
     }
 
-    public void loadRequestHistoryData(){
+    public void loadRequestHistoryData() {
         getView().toggleEmptyInfo(true);
         if (!HelperBridge.sOvertimeRequestHistoryList.isEmpty()) {
             getView().toggleEmptyInfo(false);
@@ -42,4 +48,53 @@ public class OvertimeRequestHistoryPresenter extends TiPresenter<OvertimeRequest
         getView().refreshRecyclerView();
     }
 
+    public void onCancelClicked(RequestHistoryResponseModel requestHistoryResponseModel){
+        mOvertimeDeleteSendModel = new OvertimeDeleteSendModel(
+                HelperBridge.sModelLoginResponse.getPersonalId(),
+                requestHistoryResponseModel.getId());
+        getView().showCancelConfirmationDialog(requestHistoryResponseModel.getRequestDate());
+    }
+
+    public void onCancelationSubmitted(){
+        getView().toggleLoading(true);
+        mRestConnection.deleteData(
+                HelperBridge.sModelLoginResponse.getTransactionToken(),
+                HelperUrl.DELETE_OVERTIME,
+                mOvertimeDeleteSendModel.getHashMapType(),
+                new RestCallBackInterfaceModel() {
+                    @Override
+                    public void callBackOnSuccess(BaseResponseModel response) {
+                        getView().toggleLoading(false);
+                        getView().showStandardDialog(response.getResponseText(), "Berhasil");
+                        getView().refreshAllData();
+                    }
+
+                    @Override
+                    public void callBackOnFail(String response) {
+                        getView().toggleLoading(false);
+                        getView().showStandardDialog(response, "Perhatian");
+                    }
+
+                    @Override
+                    public void callBackOnError(VolleyError error) {
+                        /*
+                        * TODO change this, jadikan value nya dari string values!
+                        * */
+                        getView().toggleLoading(false);
+                        getView().showStandardDialog("Gagal membatalkan pengajuan Overtime, silahkan periksa koneksi anda kemudian coba kembali", "Perhatian");
+                    }
+                });
+    }
+
+    public void onDetailClicked(RequestHistoryResponseModel requestHistoryResponseModel) {
+        getView().showDetailDialog(
+                requestHistoryResponseModel.getTransType(),
+                requestHistoryResponseModel.getTimeStart() + " | " + requestHistoryResponseModel.getDateStart(),
+                requestHistoryResponseModel.getTimeEnd() + " | " + requestHistoryResponseModel.getDateEnd(),
+                requestHistoryResponseModel.getOvertimeType(),
+                "Pengajuan Tanggal " + requestHistoryResponseModel.getRequestDate(),
+                requestHistoryResponseModel.getRequestStatus(),
+                requestHistoryResponseModel.getApprovalBy()
+        );
+    }
 }
