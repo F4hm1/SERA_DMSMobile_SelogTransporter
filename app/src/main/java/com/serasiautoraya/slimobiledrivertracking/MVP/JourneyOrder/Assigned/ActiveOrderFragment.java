@@ -28,9 +28,10 @@ import butterknife.ButterKnife;
  * Created by Randi Dwi Nandra on 31/03/2017.
  */
 
-public class ActiveOrderFragment extends TiFragment<ActiveOrderPresenter, ActiveOrderView> implements ActiveOrderView{
+public class ActiveOrderFragment extends TiFragment<ActiveOrderPresenter, ActiveOrderView> implements ActiveOrderView {
 
-    @BindView(R.id.recycler_active_orders) RecyclerView mRecyclerView;
+    @BindView(R.id.recycler_active_orders)
+    RecyclerView mRecyclerView;
     @BindView(R.id.layout_empty_info)
     EmptyInfoView mEmptyInfoView;
 
@@ -81,9 +82,9 @@ public class ActiveOrderFragment extends TiFragment<ActiveOrderPresenter, Active
 
     @Override
     public void toggleEmptyInfo(boolean show) {
-        if(show){
+        if (show) {
             mEmptyInfoView.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             mEmptyInfoView.setVisibility(View.GONE);
         }
     }
@@ -94,7 +95,7 @@ public class ActiveOrderFragment extends TiFragment<ActiveOrderPresenter, Active
         return new ActiveOrderPresenter(new RestConnection(getContext()));
     }
 
-    private void initializeRecylerView(){
+    private void initializeRecylerView() {
         AssignedOrderAdapter simpleListAdapter = new AssignedOrderAdapter();
         mSimpleAdapterView = simpleListAdapter;
 
@@ -106,7 +107,7 @@ public class ActiveOrderFragment extends TiFragment<ActiveOrderPresenter, Active
         getPresenter().setAdapter(simpleListAdapter);
     }
 
-    private void initializeRecylerListener(){
+    private void initializeRecylerListener() {
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), mRecyclerView, new ClickListener() {
             @Override
             public void onClick(View view, final int position) {

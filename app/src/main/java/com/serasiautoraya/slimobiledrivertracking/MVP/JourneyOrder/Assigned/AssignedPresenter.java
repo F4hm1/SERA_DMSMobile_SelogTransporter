@@ -46,7 +46,7 @@ public class AssignedPresenter extends TiPresenter<AssignedView> {
 
     public void loadOrdersData() {
         HelperBridge.sActiveOrdersList = new ArrayList<>();
-        HelperBridge.sPlanOutstandingOrdersList= new ArrayList<>();
+        HelperBridge.sPlanOutstandingOrdersList = new ArrayList<>();
 
         getView().toggleLoading(true);
         final AssignedView assignedView = getView();
@@ -62,7 +62,7 @@ public class AssignedPresenter extends TiPresenter<AssignedView> {
                 List<AssignedOrderResponseModel> assignedOrderResponseModels = new ArrayList<>();
                 for (int i = 0; i < response.getData().length; i++) {
                     assignedOrderResponseModels.add(Model.getModelInstance(response.getData()[i], AssignedOrderResponseModel.class));
-                    Log.d("ANJIRR", "ss2 : "+assignedOrderResponseModels.get(i).getDestination());
+                    Log.d("ANJIRR", "ss2 : " + assignedOrderResponseModels.get(i).getDestination());
                 }
                 mergeAssignedOrderData(assignedOrderResponseModels);
                 assignedView.initializeTabs(isAnyOrderActive, mSharedPrefsModel.get(HelperKey.KEY_IS_UPDATE_LOCATION_ACTIVE, false));
@@ -93,30 +93,34 @@ public class AssignedPresenter extends TiPresenter<AssignedView> {
 
     private void mergeAssignedOrderData(List<AssignedOrderResponseModel> assignedOrderResponseModels) {
         HelperBridge.sActiveOrdersList = new ArrayList<>();
-        HelperBridge.sPlanOutstandingOrdersList= new ArrayList<>();
+        HelperBridge.sPlanOutstandingOrdersList = new ArrayList<>();
         isAnyOrderActive = false;
 
         for (AssignedOrderResponseModel assignedOrderResponseModel :
                 assignedOrderResponseModels) {
             Log.d("ASSIGNED_ORDER", assignedOrderResponseModel.getHashMapType().toString());
-            if (assignedOrderResponseModel.getStatus().equalsIgnoreCase(HelperTransactionCode.ASSIGNED_STATUS_ONJOURNEY)){
+            if (assignedOrderResponseModel.getStatus().equalsIgnoreCase(HelperTransactionCode.ASSIGNED_STATUS_ONJOURNEY)
+                    || assignedOrderResponseModel.getStatus().equalsIgnoreCase(HelperTransactionCode.ASSIGNED_STATUS_ONJOURNEY_D)) {
                 HelperBridge.sActiveOrdersList.add(assignedOrderResponseModel);
                 isAnyOrderActive = true;
-            }else if (assignedOrderResponseModel.getStatus().equalsIgnoreCase(HelperTransactionCode.ASSIGNED_STATUS_ACK)
-                    || assignedOrderResponseModel.getStatus().equalsIgnoreCase(HelperTransactionCode.ASSIGNED_STATUS_NOTACK)){
+            } else if (
+                    (assignedOrderResponseModel.getStatus().equalsIgnoreCase(HelperTransactionCode.ASSIGNED_STATUS_ACK)
+                            || assignedOrderResponseModel.getStatus().equalsIgnoreCase(HelperTransactionCode.ASSIGNED_STATUS_ACK_D))
+                            || (assignedOrderResponseModel.getStatus().equalsIgnoreCase(HelperTransactionCode.ASSIGNED_STATUS_NOTACK)
+                            || assignedOrderResponseModel.getStatus().equalsIgnoreCase(HelperTransactionCode.ASSIGNED_STATUS_NOTACK_D))) {
                 HelperBridge.sPlanOutstandingOrdersList.add(assignedOrderResponseModel);
             }
         }
     }
 
-    public void setUpdateLocationActive(boolean value){
+    public void setUpdateLocationActive(boolean value) {
         mSharedPrefsModel.apply(HelperKey.KEY_IS_UPDATE_LOCATION_ACTIVE, value);
     }
 
     /*
     * TODO delete and change this!
     * */
-    private void setdatadummmy(){
+    private void setdatadummmy() {
         /*
         * TODO retrieve data order (active & outstanding), insert into Helper class, use it from active/plan subfragment
         *
@@ -124,31 +128,31 @@ public class AssignedPresenter extends TiPresenter<AssignedView> {
 
         for (int i = 0; i < 12; i++) {
             AssignedOrderResponseModel activeList = new AssignedOrderResponseModel(
-                    "OC-XX-"+i,
-                    "Assignment-"+i,
-                    "Status-"+i,
-                    "customer -"+i,
-                    "Origin -"+i,
-                    "Destination -"+i,
-                    "ETA -"+i,
-                    "ETD -"+i);
+                    "OC-XX-" + i,
+                    "Assignment-" + i,
+                    "Status-" + i,
+                    "customer -" + i,
+                    "Origin -" + i,
+                    "Destination -" + i,
+                    "ETA -" + i,
+                    "ETD -" + i);
 
             AssignedOrderResponseModel planOutlist = new AssignedOrderResponseModel(
-                    "OC-XX-"+i,
-                    "Assignment-"+i,
-                    "Status-"+i,
-                    "customer -"+i,
-                    "Origin -"+i,
-                    "Destination -"+i,
-                    "ETA -"+i,
-                    "ETD -"+i);
+                    "OC-XX-" + i,
+                    "Assignment-" + i,
+                    "Status-" + i,
+                    "customer -" + i,
+                    "Origin -" + i,
+                    "Destination -" + i,
+                    "ETA -" + i,
+                    "ETD -" + i);
 
-            if(i%2 == 0){
-                planOutlist.setStatus("Status-"+i);
-            }else {
-                if(i%3==0){
+            if (i % 2 == 0) {
+                planOutlist.setStatus("Status-" + i);
+            } else {
+                if (i % 3 == 0) {
                     planOutlist.setStatus(HelperTransactionCode.ASSIGNED_STATUS_NOTACK);
-                }else{
+                } else {
                     planOutlist.setStatus(HelperTransactionCode.ASSIGNED_STATUS_ACK);
                 }
 

@@ -58,6 +58,10 @@ public class HelperTransactionCode {
     public static final String ASSIGNED_STATUS_ACK = "2";
     public static final String ASSIGNED_STATUS_NOTACK = "3";
 
+    public static final String ASSIGNED_STATUS_ONJOURNEY_D = "1.0";
+    public static final String ASSIGNED_STATUS_ACK_D = "2.0";
+    public static final String ASSIGNED_STATUS_NOTACK_D = "3.0";
+
     public static final String ASSIGNED_REQUEST_OPEN = "1";
     public static final String ASSIGNED_REQUEST_CLOSEDEXPENSE = "2";
     public static final String ASSIGNED_REQUEST_ALL = "3";
