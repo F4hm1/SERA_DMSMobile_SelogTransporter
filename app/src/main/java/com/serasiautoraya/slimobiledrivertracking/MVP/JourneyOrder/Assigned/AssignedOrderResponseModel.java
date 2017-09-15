@@ -10,64 +10,48 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.Model;
 
 public class AssignedOrderResponseModel extends Model{
 
-    @SerializedName("OrderCode")
+    @SerializedName("OrderID")
     @Expose
-    private String OrderCode;
-
+    public String OrderID;
+    @SerializedName("AssignmentId")
+    @Expose
+    public String AssignmentId;
     @SerializedName("Status")
     @Expose
-    private String Status;
-
+    public String Status;
     @SerializedName("Customer")
     @Expose
-    private String Customer;
-
+    public String Customer;
     @SerializedName("Origin")
     @Expose
-    private String Origin;
-
+    public String Origin;
     @SerializedName("Destination")
     @Expose
-    private String Destination;
-
+    public String Destination;
     @SerializedName("ETA")
     @Expose
-    private String ETA;
-
+    public String ETA;
     @SerializedName("ETD")
     @Expose
-    private String ETD;
+    public String ETD;
 
-    @SerializedName("Active")
-    @Expose
-    private String Active;
-
-    @SerializedName("Acknowledge")
-    @Expose
-    private String Acknowledge;
-
-    public AssignedOrderResponseModel(String orderCode, String status, String customer, String origin, String destination, String ETA, String ETD, String active, String acknowledge) {
-        OrderCode = orderCode;
+    public AssignedOrderResponseModel(String orderID, String assignmentID, String status, String customer, String origin, String destination, String ETA, String ETD) {
+        OrderID = orderID;
+        AssignmentId = assignmentID;
         Status = status;
         Customer = customer;
         Origin = origin;
         Destination = destination;
         this.ETA = ETA;
         this.ETD = ETD;
-        Active = active;
-        Acknowledge = acknowledge;
     }
 
-    public String getAcknowledge() {
-        return Acknowledge;
+    public String getOrderID() {
+        return OrderID;
     }
 
-    public void setStatus(String status) {
-        Status = status;
-    }
-
-    public String getOrderCode() {
-        return OrderCode;
+    public String getAssignmentId() {
+        return AssignmentId;
     }
 
     public String getStatus() {
@@ -94,7 +78,35 @@ public class AssignedOrderResponseModel extends Model{
         return ETD;
     }
 
-    public String getActive() {
-        return Active;
+    public void setOrderID(String orderID) {
+        OrderID = orderID;
+    }
+
+    public void setAssignmentId(String assignmentId) {
+        AssignmentId = assignmentId;
+    }
+
+    public void setStatus(String status) {
+        Status = status;
+    }
+
+    public void setCustomer(String customer) {
+        Customer = customer;
+    }
+
+    public void setOrigin(String origin) {
+        Origin = origin;
+    }
+
+    public void setDestination(String destination) {
+        Destination = destination;
+    }
+
+    public void setETA(String ETA) {
+        this.ETA = ETA;
+    }
+
+    public void setETD(String ETD) {
+        this.ETD = ETD;
     }
 }

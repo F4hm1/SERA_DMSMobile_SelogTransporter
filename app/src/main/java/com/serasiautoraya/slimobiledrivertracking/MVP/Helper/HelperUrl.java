@@ -65,9 +65,15 @@ public class HelperUrl {
 
     public static final String GET_EXPENSE_AVAILABLE = HOST + "order/expensechecking/";
 
+    public static final String GET_EXPENSE_AVAILABLE_ORDER = HOST + "order/expensechecking/";
+
     public static final String POST_EXPENSE = HOST + "order/expense/";
 
     public static final String GET_QUESTIONNAIRE = HOST + "training/questionnaire/";
 
     public static final String POST_QUESTIONNAIRE_ANSWER = HOST + "training/questionnaireanswer/";
+
+    public static final String POST_POD_PHOTO = HOST + "order/uploadpod/";
+
+    public static final String PUT_POD = HOST + "order/updatepod";
 }

@@ -14,11 +14,38 @@ public class AssignedOrderSendModel extends Model {
     @Expose
     private String PersonalId;
 
-    public AssignedOrderSendModel(String personalId) {
+    @SerializedName("RequestType")
+    @Expose
+    private String RequestType;
+
+    @SerializedName("AssignmentStart")
+    @Expose
+    private String AssignmentStart;
+
+    @SerializedName("AssignmentEnd")
+    @Expose
+    private String AssignmentEnd;
+
+    public AssignedOrderSendModel(String personalId, String requestType, String assignmentStart, String assignmentEnd) {
         PersonalId = personalId;
+        RequestType = requestType;
+        AssignmentStart = assignmentStart;
+        AssignmentEnd = assignmentEnd;
     }
 
     public String getPersonalId() {
         return PersonalId;
+    }
+
+    public String getRequestType() {
+        return RequestType;
+    }
+
+    public String getAssignmentStart() {
+        return AssignmentStart;
+    }
+
+    public String getAssignmentEnd() {
+        return AssignmentEnd;
     }
 }

@@ -5,29 +5,21 @@ import com.google.gson.annotations.SerializedName;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.Model;
 
 /**
- * Created by randi on 03/07/2017.
+ * Created by Randi Dwi Nandra on 30/08/2017.
+ * randi.dwinandra@gmail.com
  */
 
-public class ExpenseAvailableSendModel extends Model {
+public class ExpenseAvailableOrderSendModel extends Model {
 
-    @SerializedName("Ids")
+    @SerializedName("PersonalId")
     @Expose
     private String PersonalId;
 
-    @SerializedName("AssignmentId")
-    @Expose
-    private String AssignmentId;
-
-    public ExpenseAvailableSendModel(String personalId, String assignmentId) {
+    public ExpenseAvailableOrderSendModel(String personalId) {
         PersonalId = personalId;
-        AssignmentId = assignmentId;
     }
 
     public String getPersonalId() {
         return PersonalId;
-    }
-
-    public String getAssignmentId() {
-        return AssignmentId;
     }
 }

@@ -65,7 +65,7 @@ public class ActiveOrderPresenter extends TiPresenter<ActiveOrderView> {
         * */
 
         AssignedOrderResponseModel assignedOrderResponseModel = (AssignedOrderResponseModel) mSimpleAdapterModel.getItem(position);
-        String orderCode = assignedOrderResponseModel.getOrderCode();
+        String orderCode = assignedOrderResponseModel.getOrderID();
 //        setdummydata(orderCode);
 
         /*
@@ -87,7 +87,7 @@ public class ActiveOrderPresenter extends TiPresenter<ActiveOrderView> {
                 /*
                 * TODO change this!
                 * */
-                activeOrderView.showToast("FAILLLLSSS: " + response);
+                activeOrderView.showToast(response);
                 activeOrderView.toggleLoading(false);
             }
 
@@ -96,7 +96,7 @@ public class ActiveOrderPresenter extends TiPresenter<ActiveOrderView> {
                 /*
                 * TODO change this!
                 * */
-                activeOrderView.showToast("FAIL: " + error.toString());
+                activeOrderView.showToast("ERROR: " + error.toString());
                 activeOrderView.toggleLoading(false);
             }
         });

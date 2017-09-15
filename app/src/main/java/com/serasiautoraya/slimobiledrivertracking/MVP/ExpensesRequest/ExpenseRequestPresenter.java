@@ -1,7 +1,6 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.ExpensesRequest;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.android.volley.error.VolleyError;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallBackInterfaceModel;
@@ -20,6 +19,7 @@ import net.grandcentrix.thirtyinch.TiPresenter;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,6 +34,8 @@ public class ExpenseRequestPresenter extends TiPresenter<ExpenseRequestView> {
     ExpenseAvailableResponseModel expenseAvailableResponseModel;
     private String selectedOrderCode;
 
+    private ArrayList<ExpenseAvailableOrderAdapter> expenseAvailableOrderAdapterList;
+
     public ExpenseRequestPresenter(RestConnection restConnection) {
         this.mRestConnection = restConnection;
     }
@@ -45,42 +47,42 @@ public class ExpenseRequestPresenter extends TiPresenter<ExpenseRequestView> {
         getView().initialize();
     }
 
-    public void onSearchClicked(String orderCode) {
-        selectedOrderCode = orderCode;
-        getView().toggleLoadingSearchingOrder(true);
-        final ExpenseAvailableSendModel expenseAvailableSendModel = new ExpenseAvailableSendModel(
-                HelperBridge.sModelLoginResponse.getPersonalId(),
-                orderCode
-        );
-
-        final ExpenseRequestView expenseRequestView = getView();
-            mRestConnection.getData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.GET_EXPENSE_AVAILABLE, expenseAvailableSendModel.getHashMapType(), new RestCallBackInterfaceModel() {
-                @Override
-                public void callBackOnSuccess(BaseResponseModel response) {
-                    expenseAvailableResponseModel = Model.getModelInstance(response.getData()[0], ExpenseAvailableResponseModel.class);
-                    generateExpenseInputValue(expenseAvailableResponseModel);
-                    expenseRequestView.toggleLoadingSearchingOrder(false);
-                }
-
-                @Override
-                public void callBackOnFail(String response) {
-                    /*
-                    * TODO change this!
-                    * */
-                    expenseRequestView.showToast(response);
-                    expenseRequestView.toggleLoadingSearchingOrder(false);
-                }
-
-                @Override
-                public void callBackOnError(VolleyError error) {
-                    /*
-                    * TODO change this!
-                    * */
-                    expenseRequestView.showToast("FAIL: " + error.toString());
-                    expenseRequestView.toggleLoadingSearchingOrder(false);
-                }
-            });
-    }
+//    public void onSearchClicked(String orderCode) {
+//        selectedOrderCode = orderCode;
+//        getView().toggleLoadingSearchingOrder(true);
+//        final ExpenseAvailableSendModel expenseAvailableSendModel = new ExpenseAvailableSendModel(
+//                HelperBridge.sModelLoginResponse.getPersonalId(),
+//                orderCode
+//        );
+//
+//        final ExpenseRequestView expenseRequestView = getView();
+//            mRestConnection.getData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.GET_EXPENSE_AVAILABLE, expenseAvailableSendModel.getHashMapType(), new RestCallBackInterfaceModel() {
+//                @Override
+//                public void callBackOnSuccess(BaseResponseModel response) {
+//                    expenseAvailableResponseModel = Model.getModelInstance(response.getData()[0], ExpenseAvailableResponseModel.class);
+//                    generateExpenseInputValue(expenseAvailableResponseModel);
+//                    expenseRequestView.toggleLoadingSearchingOrder(false);
+//                }
+//
+//                @Override
+//                public void callBackOnFail(String response) {
+//                    /*
+//                    * TODO change this!
+//                    * */
+//                    expenseRequestView.showToast(response);
+//                    expenseRequestView.toggleLoadingSearchingOrder(false);
+//                }
+//
+//                @Override
+//                public void callBackOnError(VolleyError error) {
+//                    /*
+//                    * TODO change this!
+//                    * */
+//                    expenseRequestView.showToast("FAIL: " + error.toString());
+//                    expenseRequestView.toggleLoadingSearchingOrder(false);
+//                }
+//            });
+//    }
 
     private void generateExpenseInputValue(ExpenseAvailableResponseModel expenseAvailableResponseModel) {
         String[] typeCode = expenseAvailableResponseModel.getExpenseTypeCode().split(";");
@@ -165,4 +167,87 @@ public class ExpenseRequestPresenter extends TiPresenter<ExpenseRequestView> {
             }
         });
     }
+
+    public void loadAvailableExpenseData(){
+        getView().toggleLoadingInitialLoad(true);
+        ExpenseAvailableOrderSendModel expenseAvailableOrderSendModel = new ExpenseAvailableOrderSendModel(
+                HelperBridge.sModelLoginResponse.getPersonalId()
+        );
+
+        final ExpenseRequestView expenseRequestView = getView();
+        mRestConnection.getData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.GET_EXPENSE_AVAILABLE_ORDER, expenseAvailableOrderSendModel.getHashMapType(), new RestCallBackInterfaceModel() {
+            @Override
+            public void callBackOnSuccess(BaseResponseModel response) {
+                expenseAvailableOrderAdapterList = new ArrayList<>();
+                for (int i = 0; i < response.getData().length; i++) {
+                    ExpenseAvailableOrderResponseModel expenseAvailableOrderResponseModel = Model.getModelInstance(response.getData()[i], ExpenseAvailableOrderResponseModel.class);
+                    expenseAvailableOrderAdapterList.add(new ExpenseAvailableOrderAdapter(expenseAvailableOrderResponseModel));
+                }
+
+                if(expenseAvailableOrderAdapterList.isEmpty()){
+                    expenseRequestView.setNoAvailableExpense();
+                }else {
+                    expenseRequestView.initializeOvertimeDates(expenseAvailableOrderAdapterList);
+                }
+                expenseRequestView.toggleLoadingInitialLoad(false);
+            }
+
+            @Override
+            public void callBackOnFail(String response) {
+                /*
+                * TODO change this!
+                * */
+                expenseRequestView.setNoAvailableExpense();
+                expenseRequestView.showToast(response);
+                expenseRequestView.toggleLoadingInitialLoad(false);
+            }
+
+            @Override
+            public void callBackOnError(VolleyError error) {
+                /*
+                * TODO change this!
+                * */
+                expenseRequestView.setNoAvailableExpense();
+                expenseRequestView.showToast("ERROR: " + error.toString());
+                expenseRequestView.toggleLoadingInitialLoad(false);
+            }
+        });
+    }
+
+    public void onOrderSelected(ExpenseAvailableOrderAdapter expenseAvailableOrderAdapter){
+        getView().toggleLoadingSearchingOrder(true);
+        final ExpenseAvailableSendModel expenseAvailableSendModel = new ExpenseAvailableSendModel(
+                HelperBridge.sModelLoginResponse.getPersonalId(),
+                expenseAvailableOrderAdapter.getExpenseAvailableOrderResponseModel().getAssignmentId()
+        );
+
+        final ExpenseRequestView expenseRequestView = getView();
+            mRestConnection.getData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.GET_EXPENSE_AVAILABLE, expenseAvailableSendModel.getHashMapType(), new RestCallBackInterfaceModel() {
+                @Override
+                public void callBackOnSuccess(BaseResponseModel response) {
+                    expenseAvailableResponseModel = Model.getModelInstance(response.getData()[0], ExpenseAvailableResponseModel.class);
+                    generateExpenseInputValue(expenseAvailableResponseModel);
+                    expenseRequestView.toggleLoadingSearchingOrder(false);
+                }
+
+                @Override
+                public void callBackOnFail(String response) {
+                    /*
+                    * TODO change this!
+                    * */
+                    expenseRequestView.showToast(response);
+                    expenseRequestView.toggleLoadingSearchingOrder(false);
+                }
+
+                @Override
+                public void callBackOnError(VolleyError error) {
+                    /*
+                    * TODO change this!
+                    * */
+                    expenseRequestView.showToast("FAIL: " + error.toString());
+                    expenseRequestView.toggleLoadingSearchingOrder(false);
+                }
+            });
+    }
+
 }

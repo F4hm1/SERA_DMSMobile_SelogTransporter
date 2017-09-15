@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +18,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.serasiautoraya.slimobiledrivertracking.MVP.CustomView.SquareImageView;
 import com.serasiautoraya.slimobiledrivertracking.MVP.CustomView.SquareRelativeLayout;
+import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperKey;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking.R;
 
@@ -37,7 +40,7 @@ public class PODCaptureActivity extends TiActivity<PODCapturePresenter, PODCaptu
 
     @BindView(R.id.pod_btn_submit)
     Button mBtnSubmit;
-//
+
 //    @BindView(R.id.pod_pb_progress_1)
 //    ProgressBar mPbProgress1;
 //
@@ -50,7 +53,10 @@ public class PODCaptureActivity extends TiActivity<PODCapturePresenter, PODCaptu
 //    @BindView(R.id.pod_pb_progress_4)
 //    ProgressBar mPbProgress4;
 //
-//
+//    @BindView(R.id.pod_pb_progress_5)
+//    ProgressBar mPbProgress5;
+
+
 //    @BindView(R.id.pod_tv_progress_1)
 //    TextView mTvProgress1;
 //
@@ -62,12 +68,32 @@ public class PODCaptureActivity extends TiActivity<PODCapturePresenter, PODCaptu
 //
 //    @BindView(R.id.pod_tv_progress_4)
 //    TextView mTvProgress4;
+//
+//    @BindView(R.id.pod_tv_progress_5)
+//    TextView mTvProgress5;
 
-    @BindView(R.id.gridss)
+    @BindView(R.id.pod_card_container_1)
+    CardView mCardContainer1;
+
+    @BindView(R.id.pod_card_container_2)
+    CardView mCardContainer2;
+
+    @BindView(R.id.pod_card_container_3)
+    CardView mCardContainer3;
+
+    @BindView(R.id.pod_card_container_4)
+    CardView mCardContainer4;
+
+    @BindView(R.id.pod_card_container_5)
+    CardView mCardContainer5;
+
+
+    @BindView(R.id.pod_grid_content)
     GridLayout mGl;
     int totalView = 10;
     int currentTotalViewShown = 0;
     SquareRelativeLayout[] squareRelativeLayoutArr;
+    private boolean isFromCameraActivity = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,37 +108,38 @@ public class PODCaptureActivity extends TiActivity<PODCapturePresenter, PODCaptu
     @OnClick(R.id.pod_btn_submit)
     public void onSubmit(View view) {
 
-        int total = 10;
-        int column = 3;
-        int row = total / column;
-        mGl.setColumnCount(column);
-        mGl.setRowCount(row + 1);
+//        int total = 10;
+//        int column = 3;
+//        int row = total / column;
+//        mGl.setColumnCount(column);
+//        mGl.setRowCount(row + 1);
+//
+//        for (int i = 0, c = 0, r = 0; i < total; i++, c++) {
+//
+//            if (c == column) {
+//                c = 0;
+//                r++;
+//            }
+//            ImageView oImageView = new ImageView(this);
+//            oImageView.setImageResource(R.drawable.ic_empty_attendance);
+//
+//            oImageView.setLayoutParams(new ViewGroup.LayoutParams(100, 100));
+//
+//            GridLayout.Spec rowSpan = GridLayout.spec(GridLayout.UNDEFINED, 1);
+//            GridLayout.Spec colspan = GridLayout.spec(GridLayout.UNDEFINED, 1);
+//            if (r == 0 && c == 0) {
+//
+//                colspan = GridLayout.spec(GridLayout.UNDEFINED, 2);
+//                rowSpan = GridLayout.spec(GridLayout.UNDEFINED, 2);
+//            }
+//
+//            GridLayout.LayoutParams gridParam = new GridLayout.LayoutParams(rowSpan, colspan);
+//
+//            mGl.addView(oImageView, gridParam);
+//        }
 
-        for (int i = 0, c = 0, r = 0; i < total; i++, c++) {
-
-            if (c == column) {
-                c = 0;
-                r++;
-            }
-            ImageView oImageView = new ImageView(this);
-            oImageView.setImageResource(R.drawable.ic_empty_attendance);
-
-            oImageView.setLayoutParams(new ViewGroup.LayoutParams(100, 100));
-
-            GridLayout.Spec rowSpan = GridLayout.spec(GridLayout.UNDEFINED, 1);
-            GridLayout.Spec colspan = GridLayout.spec(GridLayout.UNDEFINED, 1);
-            if (r == 0 && c == 0) {
-
-                colspan = GridLayout.spec(GridLayout.UNDEFINED, 2);
-                rowSpan = GridLayout.spec(GridLayout.UNDEFINED, 2);
-            }
-
-            GridLayout.LayoutParams gridParam = new GridLayout.LayoutParams(rowSpan, colspan);
-
-            mGl.addView(oImageView, gridParam);
-
-        }
-
+        View photoThumbnail = LayoutInflater.from(this).inflate(R.layout.single_pod_thumbnail, null);
+        mGl.addView(photoThumbnail);
 
 
 //        addThumbnail();
@@ -175,6 +202,7 @@ public class PODCaptureActivity extends TiActivity<PODCapturePresenter, PODCaptu
 //        }
     }
 
+
     private void addThumbnail() {
         if (currentTotalViewShown < 10) {
             squareRelativeLayoutArr[currentTotalViewShown].setVisibility(View.VISIBLE);
@@ -236,18 +264,27 @@ public class PODCaptureActivity extends TiActivity<PODCapturePresenter, PODCaptu
     }
 
     @Override
+    @OnClick({R.id.pod_card_container_1, R.id.pod_card_container_2, R.id.pod_card_container_3, R.id.pod_card_container_4, R.id.pod_card_container_5})
     public void onClickAddPhoto(View view) {
-
+        getPresenter().capturePhoto(view.getId());
     }
 
     @Override
     public void startActivityCapture(Intent intent) {
-
+        startActivityForResult(intent, HelperKey.ACTIVITY_IMAGE_CAPTURE);
     }
 
     @Override
     public void setImageThumbnail(Bitmap bitmap, int targetIvID, boolean isPOD) {
-
+        CardView cardView = (CardView) findViewById(targetIvID);
+        int count = cardView.getChildCount();
+        for (int i = 0; i < count; i++) {
+            View v = cardView.getChildAt(i);
+            if (v instanceof SquareImageView) {
+                SquareImageView squareImageView = (SquareImageView) v;
+                squareImageView.setImageBitmap(bitmap);
+            }
+        }
     }
 
     @Override
@@ -263,5 +300,26 @@ public class PODCaptureActivity extends TiActivity<PODCapturePresenter, PODCaptu
     @Override
     public void setSubmitText(String text) {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case HelperKey.ACTIVITY_IMAGE_CAPTURE: {
+                if (resultCode == RESULT_OK) {
+                    isFromCameraActivity = true;
+                }
+                break;
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (isFromCameraActivity) {
+            getPresenter().setBitmapCaptured();
+            isFromCameraActivity = false;
+        }
     }
 }

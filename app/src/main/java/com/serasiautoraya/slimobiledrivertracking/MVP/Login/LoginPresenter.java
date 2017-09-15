@@ -83,6 +83,8 @@ public class LoginPresenter extends TiPresenter<LoginView> {
                         getView().changeActivity(DashboardActivity.class);
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        getView().showToast("Terjadi kesalahan pada saat membaca data");
+                        getView().toggleLoading(false);
                     }
                 }
 
@@ -91,7 +93,7 @@ public class LoginPresenter extends TiPresenter<LoginView> {
                 /*
                 * TODO change this!
                 * */
-                    getView().showToast("FAILLLLSSS: "+response);
+                    getView().showToast(response);
                     getView().toggleLoading(false);
                 }
 
@@ -100,7 +102,7 @@ public class LoginPresenter extends TiPresenter<LoginView> {
                 /*
                 * TODO change this!
                 * */
-                    getView().showToast("FAIL: "+error.toString());
+                    getView().showToast("ERROR: "+error.toString());
                     getView().toggleLoading(false);
                 }
             });

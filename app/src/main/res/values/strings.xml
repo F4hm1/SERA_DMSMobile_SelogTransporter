@@ -288,6 +288,7 @@
     <string name="history_detail_title_overtimestart">Tanggal mulai</string>
     <string name="history_detail_title_overtimeend">Tanggal berakhir</string>
     <string name="history_detail_title_overtimetype">Jenis lembur</string>
+    <string name="expense_label_availableorder">Order tersedia</string>
     <string-array name="documents_podreason_array">
         <item>Pilih</item>
         <item>Tertahan oleh customer</item>

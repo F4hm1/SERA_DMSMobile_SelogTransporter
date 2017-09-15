@@ -8,6 +8,7 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.FormViewInte
 import net.grandcentrix.thirtyinch.callonmainthread.CallOnMainThread;
 import net.grandcentrix.thirtyinch.distinctuntilchanged.DistinctUntilChanged;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -24,8 +25,13 @@ public interface ExpenseRequestView extends BaseViewInterface, FormViewInterface
 
     void onSubmitClicked(View view);
 
-    void onSearchClicked(View view);
-
     void setExpenseInputForm(HashMap<String, ExpenseInputModel> expenseInputList, String[] typeCodeList);
 
+    @CallOnMainThread
+    @DistinctUntilChanged
+    void toggleLoadingInitialLoad(boolean isLoading);
+
+    void setNoAvailableExpense();
+
+    void initializeOvertimeDates(ArrayList<ExpenseAvailableOrderAdapter> expenseAvailableOrderResponseModelList);
 }

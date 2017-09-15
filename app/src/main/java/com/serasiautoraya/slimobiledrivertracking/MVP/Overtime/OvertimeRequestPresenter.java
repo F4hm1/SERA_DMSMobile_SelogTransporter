@@ -166,7 +166,7 @@ public class OvertimeRequestPresenter extends TiPresenter<OvertimeRequestView> {
                 * TODO change this!
                 * */
                 overtimeRequestView.setNoOvertime();
-                overtimeRequestView.showToast("FAILLLLSSS: " + response);
+                overtimeRequestView.showToast(response);
                 overtimeRequestView.toggleLoadingInitialLoad(false);
             }
 
@@ -176,7 +176,7 @@ public class OvertimeRequestPresenter extends TiPresenter<OvertimeRequestView> {
                 * TODO change this!
                 * */
                 overtimeRequestView.setNoOvertime();
-                overtimeRequestView.showToast("FAIL: " + error.toString());
+                overtimeRequestView.showToast("ERROR: " + error.toString());
                 overtimeRequestView.toggleLoadingInitialLoad(false);
             }
         });

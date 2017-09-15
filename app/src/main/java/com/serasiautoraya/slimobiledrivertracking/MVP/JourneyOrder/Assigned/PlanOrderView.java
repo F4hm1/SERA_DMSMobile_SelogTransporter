@@ -16,6 +16,7 @@ public interface PlanOrderView extends BaseViewInterface{
 
     void showAcknowledgeDialog(
             String ordercode,
+            String assignmentId,
             String destination,
             String origin,
             String etd,

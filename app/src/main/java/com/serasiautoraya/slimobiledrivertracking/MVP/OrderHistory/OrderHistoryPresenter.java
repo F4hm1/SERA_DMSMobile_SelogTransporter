@@ -88,7 +88,7 @@ public class OrderHistoryPresenter extends TiPresenter<OrderHistoryView> {
                 /*
                 * TODO change this!
                 */
-                orderHistoryView.showToast("FAILLLLSSS: " + response);
+                orderHistoryView.showToast(response);
                 orderHistoryView.toggleLoading(false);
             }
 
@@ -97,7 +97,7 @@ public class OrderHistoryPresenter extends TiPresenter<OrderHistoryView> {
                 /*
                 * TODO change this!
                 */
-                orderHistoryView.showToast("FAIL: " + error.toString());
+                orderHistoryView.showToast("ERROR: " + error.toString());
                 orderHistoryView.toggleLoading(false);
             }
         });
@@ -156,14 +156,14 @@ public class OrderHistoryPresenter extends TiPresenter<OrderHistoryView> {
             @Override
             public void callBackOnFail(String response) {
                 orderHistoryView.toggleEmptyInfo(true);
-                orderHistoryView.showToast("FAILLLLSSS: " + response);
+                orderHistoryView.showToast(response);
                 orderHistoryView.toggleLoading(false);
             }
 
             @Override
             public void callBackOnError(VolleyError error) {
                 orderHistoryView.toggleEmptyInfo(true);
-                orderHistoryView.showToast("FAIL: " + error.toString());
+                orderHistoryView.showToast("ERROR: " + error.toString());
                 orderHistoryView.toggleLoading(false);
             }
         });

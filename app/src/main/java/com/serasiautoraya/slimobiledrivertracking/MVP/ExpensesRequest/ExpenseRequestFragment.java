@@ -8,6 +8,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +23,7 @@ import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
 
 import net.grandcentrix.thirtyinch.TiFragment;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,27 +37,23 @@ import butterknife.OnClick;
 
 public class ExpenseRequestFragment extends TiFragment<ExpenseRequestPresenter, ExpenseRequestView> implements ExpenseRequestView {
 
-
-    @BindView(R.id.expense_lin_searchgroup)
-    LinearLayout mLinSearchgroup;
-
     @BindView(R.id.expense_lin_requestgroup)
     LinearLayout mLinRequestGroup;
 
     @BindView(R.id.expense_lin_inputgroup)
     LinearLayout mLinInputGroup;
 
-    @BindView(R.id.expense_et_searchfield)
-    EditText mEtSearchOrder;
+    @BindView(R.id.expense_lin_availablegroup)
+    LinearLayout mLinAvailableGroup;
 
-    @BindView(R.id.expense_btn_search)
-    Button mBtnSearch;
+    @BindView(R.id.expense_spinner_available)
+    Spinner mSpinnerAvailable;
 
     @BindView(R.id.expense_btn_submit)
     Button mButtonSubmit;
 
     private ProgressDialog mProgressDialog;
-    private ArrayAdapter<ExpenseAvailableAdapter> mArrayAdapterDatesChoice;
+    private ArrayAdapter<ExpenseAvailableOrderAdapter> mAvailableOrderAdapterArrayAdapter;
     private HashMap<String, EditText> mHashEtAmount;
 
     @Override
@@ -68,6 +66,8 @@ public class ExpenseRequestFragment extends TiFragment<ExpenseRequestPresenter, 
     @Override
     public void initialize() {
         mLinRequestGroup.setVisibility(View.GONE);
+        mLinAvailableGroup.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -122,12 +122,6 @@ public class ExpenseRequestFragment extends TiFragment<ExpenseRequestPresenter, 
     }
 
     @Override
-    @OnClick(R.id.expense_btn_search)
-    public void onSearchClicked(View view) {
-        getPresenter().onSearchClicked(mEtSearchOrder.getText().toString());
-    }
-
-    @Override
     public void setExpenseInputForm(HashMap<String, ExpenseInputModel> expenseInputList, String[] typeCodeList) {
         mHashEtAmount = new HashMap<>();
         if (typeCodeList.length > 0) {
@@ -148,6 +142,44 @@ public class ExpenseRequestFragment extends TiFragment<ExpenseRequestPresenter, 
             mHashEtAmount.put(typeCodeList[i], etAmount);
             mLinInputGroup.addView(v);
         }
+    }
+
+    @Override
+    public void toggleLoadingInitialLoad(boolean isLoading) {
+        if(isLoading){
+            mProgressDialog = ProgressDialog.show(getContext(), getResources().getString(R.string.progress_msg_loaddata),getResources().getString(R.string.prog_msg_wait),true,false);
+        }else{
+            mProgressDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void setNoAvailableExpense() {
+
+    }
+
+    @Override
+    public void initializeOvertimeDates(ArrayList<ExpenseAvailableOrderAdapter> expenseAvailableOrderResponseModelList) {
+        mLinAvailableGroup.setVisibility(View.VISIBLE);
+        mAvailableOrderAdapterArrayAdapter.clear();
+
+        mAvailableOrderAdapterArrayAdapter = new ArrayAdapter<ExpenseAvailableOrderAdapter>(getContext(), android.R.layout.simple_spinner_item, expenseAvailableOrderResponseModelList);
+        mAvailableOrderAdapterArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinnerAvailable.setAdapter(mAvailableOrderAdapterArrayAdapter);
+        mSpinnerAvailable.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                getPresenter().onOrderSelected((ExpenseAvailableOrderAdapter) adapterView.getSelectedItem());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        mAvailableOrderAdapterArrayAdapter.setNotifyOnChange(true);
+        mAvailableOrderAdapterArrayAdapter.notifyDataSetChanged();
     }
 
     @NonNull

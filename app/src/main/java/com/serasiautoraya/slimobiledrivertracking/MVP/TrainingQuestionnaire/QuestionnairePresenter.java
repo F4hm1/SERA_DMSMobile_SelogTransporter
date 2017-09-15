@@ -74,7 +74,7 @@ public class QuestionnairePresenter extends TiPresenter<QuestionnaireView> {
                     /*
                     * TODO change this!
                     * */
-                questionnaireView.showToast("FAIL: " + error.toString());
+                questionnaireView.showToast("ERROR: " + error.toString());
                 questionnaireView.toggleLoading(false);
             }
         });

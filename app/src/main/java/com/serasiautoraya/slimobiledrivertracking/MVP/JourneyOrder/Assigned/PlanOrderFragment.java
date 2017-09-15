@@ -85,8 +85,9 @@ public class PlanOrderFragment extends TiFragment<PlanOrderPresenter, PlanOrderV
     }
 
     @Override
-    public void showAcknowledgeDialog(String ordercode, String destination, String origin, String etd, String eta, String customer) {
-        final String OrderCode = ordercode;
+    public void showAcknowledgeDialog(String ordercode, final String assignmentId, String destination, String origin, String etd, String eta, String customer) {
+        final String fOrderCode = ordercode;
+        final String fAssignmentId = assignmentId;
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
@@ -94,7 +95,7 @@ public class PlanOrderFragment extends TiFragment<PlanOrderPresenter, PlanOrderV
                 .setPositiveButton("Diterima", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        getPresenter().onAcknowledgeOrder(OrderCode);
+                        getPresenter().onAcknowledgeOrder(fOrderCode, assignmentId);
                     }
                 });
         Dialog dialog = builder.create();

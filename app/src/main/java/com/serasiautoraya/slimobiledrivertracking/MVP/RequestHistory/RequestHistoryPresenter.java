@@ -92,7 +92,7 @@ public class RequestHistoryPresenter extends TiPresenter<RequestHistoryView> {
                 * TODO change this!
                 * */
                 requestHistoryView.initializeTabs();
-                requestHistoryView.showToast("FAILLLLSSS: " + response);
+                requestHistoryView.showToast(response);
                 requestHistoryView.toggleLoadingInitialLoad(false);
             }
 
@@ -102,7 +102,7 @@ public class RequestHistoryPresenter extends TiPresenter<RequestHistoryView> {
                 * TODO change this!
                 * */
                 requestHistoryView.initializeTabs();
-                requestHistoryView.showToast("FAIL: " + error.toString());
+                requestHistoryView.showToast("ERROR: " + error.toString());
                 requestHistoryView.toggleLoadingInitialLoad(false);
             }
         });

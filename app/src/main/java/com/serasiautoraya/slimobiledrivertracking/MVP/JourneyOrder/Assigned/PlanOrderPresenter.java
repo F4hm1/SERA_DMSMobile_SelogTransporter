@@ -58,9 +58,10 @@ public class PlanOrderPresenter extends TiPresenter<PlanOrderView> {
         mSimpleAdapterModel.setItemList(HelperBridge.sPlanOutstandingOrdersList);
 
         for (AssignedOrderResponseModel assignedOrderResponseModel:HelperBridge.sPlanOutstandingOrdersList) {
-            if(assignedOrderResponseModel.getAcknowledge().equalsIgnoreCase(HelperTransactionCode.ASSIGNED_ORDER_INACK_CODE)){
+            if(assignedOrderResponseModel.getStatus().equalsIgnoreCase(HelperTransactionCode.ASSIGNED_ORDER_INACK_CODE)){
                 getView().showAcknowledgeDialog(
-                        assignedOrderResponseModel.getOrderCode(),
+                        assignedOrderResponseModel.getOrderID(),
+                        assignedOrderResponseModel.getAssignmentId(),
                         assignedOrderResponseModel.getDestination(),
                         assignedOrderResponseModel.getOrigin(),
                         assignedOrderResponseModel.getETD(),
@@ -84,11 +85,12 @@ public class PlanOrderPresenter extends TiPresenter<PlanOrderView> {
         * */
 
         AssignedOrderResponseModel assignedOrderResponseModel = (AssignedOrderResponseModel) mSimpleAdapterModel.getItem(position);
-        String acknowledge = assignedOrderResponseModel.getAcknowledge();
+        String statusOrder = assignedOrderResponseModel.getStatus();
 
-        if(acknowledge.equalsIgnoreCase(HelperTransactionCode.ASSIGNED_ORDER_INACK_CODE)){
+        if(statusOrder.equalsIgnoreCase(HelperTransactionCode.ASSIGNED_ORDER_INACK_CODE)){
             getView().showAcknowledgeDialog(
-                    assignedOrderResponseModel.getOrderCode(),
+                    assignedOrderResponseModel.getOrderID(),
+                    assignedOrderResponseModel.getAssignmentId(),
                     assignedOrderResponseModel.getDestination(),
                     assignedOrderResponseModel.getOrigin(),
                     assignedOrderResponseModel.getETD(),
@@ -96,12 +98,12 @@ public class PlanOrderPresenter extends TiPresenter<PlanOrderView> {
                     assignedOrderResponseModel.getCustomer()
             );
         }else {
-            String orderCode = assignedOrderResponseModel.getOrderCode();
+            String orderCode = assignedOrderResponseModel.getOrderID();
             loadDetailOrder(orderCode);
         }
     }
 
-    public void onAcknowledgeOrder(final String orderCode){
+    public void onAcknowledgeOrder(final String orderCode, final String assignmentId){
         /*
         * TODO Post ACK order and refresh updated assigned order
         * */
@@ -119,9 +121,7 @@ public class PlanOrderPresenter extends TiPresenter<PlanOrderView> {
 
                 AcknowledgeOrderSendModel acknowledgeOrderSendModel = new AcknowledgeOrderSendModel(
                         orderCode,
-                        HelperBridge.sModelLoginResponse.getPersonalId(),
-                        date,
-                        time);
+                        assignmentId);
                 submitAcknowledgeOrder(acknowledgeOrderSendModel);
             }
 
@@ -186,7 +186,7 @@ public class PlanOrderPresenter extends TiPresenter<PlanOrderView> {
                 /*
                 * TODO change this!
                 * */
-                planOrderView.showToast("FAILLLLSSS: " + response);
+                planOrderView.showToast(response);
                 planOrderView.toggleLoading(false);
             }
 
@@ -195,7 +195,7 @@ public class PlanOrderPresenter extends TiPresenter<PlanOrderView> {
                 /*
                 * TODO change this!
                 * */
-                planOrderView.showToast("FAIL: " + error.toString());
+                planOrderView.showToast("ERROR: " + error.toString());
                 planOrderView.toggleLoading(false);
             }
         });

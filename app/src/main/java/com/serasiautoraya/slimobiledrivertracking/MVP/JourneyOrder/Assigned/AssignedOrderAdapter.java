@@ -55,7 +55,7 @@ public class AssignedOrderAdapter extends RecyclerView.Adapter<SimpleListViewHol
     @Override
     public void onBindViewHolder(SimpleListViewHolder holder, int position) {
         AssignedOrderResponseModel simpleSingleList = mSimpleSingleLists.get(position);
-        holder.getTitle().setText("Order "+simpleSingleList.getOrderCode());
+        holder.getTitle().setText("Order "+simpleSingleList.getOrderID());
         holder.getInformation().setText(simpleSingleList.getOrigin() +" - "+ simpleSingleList.getDestination());
         holder.getStatus().setText(simpleSingleList.getStatus());
     }

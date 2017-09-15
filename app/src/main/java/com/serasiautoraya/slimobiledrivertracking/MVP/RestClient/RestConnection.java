@@ -107,6 +107,7 @@ public class RestConnection {
                 return headers;
             }
 
+
             @Override
             protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
                 mStatusCode = response.statusCode;
@@ -119,6 +120,7 @@ public class RestConnection {
                 }
                 return Response.success(obj, HttpHeaderParser.parseCacheHeaders(response));
             }
+
 
             @Override
             public String getBodyContentType() {
@@ -204,7 +206,7 @@ public class RestConnection {
                         if (mStatusCode == 200) {
                             restcall.callBackOnSuccess(response);
                         } else {
-                                restcall.callBackOnFail(response.getResponseText());
+                            restcall.callBackOnFail(response.getResponseText());
                         }
 
                     }
@@ -215,7 +217,7 @@ public class RestConnection {
                         restcall.callBackOnFail(error.getMessage());
                     }
                 }
-        ){
+        ) {
             @Override
             protected VolleyError parseNetworkError(VolleyError volleyError) {
                 if (volleyError.networkResponse != null && volleyError.networkResponse.data != null) {
@@ -283,9 +285,9 @@ public class RestConnection {
                         if (mStatusCode == 200) {
                             restcall.callBackOnSuccess(response);
                         } else {
-                            Log.d("ANJIRRRRS", "code: "+mStatusCode);
-                            Log.d("ANJIRRRRS", "datas: "+response.getResponseText());
-                            Log.d("ANJIRRRRS", "codess: "+response.getResponse());
+                            Log.d("ANJIRRRRS", "code: " + mStatusCode);
+                            Log.d("ANJIRRRRS", "datas: " + response.getResponseText());
+                            Log.d("ANJIRRRRS", "codess: " + response.getResponse());
                             restcall.callBackOnFail(response.getResponseText());
                         }
 //                        if (response != null) {
@@ -299,12 +301,11 @@ public class RestConnection {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("ANJIRRRRS", "errors: "+error.getMessage());
+                        Log.d("ANJIRRRRS", "errors: " + error.getMessage());
                         restcall.callBackOnFail(error.getMessage());
                     }
                 }
-        )
-        {
+        ) {
             @Override
             protected VolleyError parseNetworkError(VolleyError volleyError) {
                 if (volleyError.networkResponse != null && volleyError.networkResponse.data != null) {
@@ -440,7 +441,7 @@ public class RestConnection {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("ANJIRRRRS", "code: "+mStatusCode);
+                        Log.d("ANJIRRRRS", "code: " + mStatusCode);
                         if (mStatusCode == 200) {
                             restcall.callBackOnSuccess(response);
                         } else {
@@ -498,8 +499,8 @@ public class RestConnection {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                Log.d("ANJIRRRRS", "code-1: "+mStatusCode);
-                Log.d("ANJIRRRRS", "code-2: "+obj.toString());
+                Log.d("ANJIRRRRS", "code-1: " + mStatusCode);
+                Log.d("ANJIRRRRS", "code-2: " + obj.toString());
                 return Response.success(obj, HttpHeaderParser.parseCacheHeaders(response));
             }
 
@@ -513,7 +514,7 @@ public class RestConnection {
         mRequestQueue.add(request);
     }
 
-    public LocationModel getCurrentLocation(){
+    public LocationModel getCurrentLocation() {
 
         String tempLatitude;
         String tempLongitude;
@@ -532,9 +533,9 @@ public class RestConnection {
         return new LocationModel(tempLongitude, tempLatitude, tempAddress);
     }
 
-    public static String getTimeZoneID(TimeRESTResponseModel timeRESTResponseModel){
+    public static String getTimeZoneID(TimeRESTResponseModel timeRESTResponseModel) {
         String result = "";
-        switch (timeRESTResponseModel.getGmtOffset()){
+        switch (timeRESTResponseModel.getGmtOffset()) {
             case "7":
                 result = "WIB";
                 break;

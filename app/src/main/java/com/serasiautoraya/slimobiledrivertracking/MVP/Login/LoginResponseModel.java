@@ -1,5 +1,7 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.Login;
 
+import android.util.Log;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -299,6 +301,7 @@ public class LoginResponseModel {
     }
 
     public String getTransactionToken() {
+        Log.d("LOGGING ORDER", TransactionToken);
         return TransactionToken;
     }
 

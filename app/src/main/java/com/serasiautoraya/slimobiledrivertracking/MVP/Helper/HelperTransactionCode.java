@@ -53,4 +53,12 @@ public class HelperTransactionCode {
     public static final String FALSE_BINARY = "0";
 
     public static final String REQUEST_WAITING_APPROVAL_STATUS = "WaitingApproval";
+
+    public static final String ASSIGNED_STATUS_ONJOURNEY = "1";
+    public static final String ASSIGNED_STATUS_ACK = "2";
+    public static final String ASSIGNED_STATUS_NOTACK = "3";
+
+    public static final String ASSIGNED_REQUEST_OPEN = "1";
+    public static final String ASSIGNED_REQUEST_CLOSEDEXPENSE = "2";
+    public static final String ASSIGNED_REQUEST_ALL = "3";
 }
