@@ -80,8 +80,8 @@ public class ActivityDetailPresenter extends TiPresenter<ActivityDetailView>  {
 
     private void setViewDetailData(String orderCode){
 //        getView().setDetailData(
-//                "Order "+mActivityDetailResponseModel.getOrderCode(),
-//                mActivityDetailResponseModel.getOrderCode(),
+//                "Order "+mActivityDetailResponseModel.getAssignmentId(),
+//                mActivityDetailResponseModel.getAssignmentId(),
 //                mActivityDetailResponseModel.getActivityName(),
 //                mActivityDetailResponseModel.getActivityType(),
 //                mActivityDetailResponseModel.getOrigin(),

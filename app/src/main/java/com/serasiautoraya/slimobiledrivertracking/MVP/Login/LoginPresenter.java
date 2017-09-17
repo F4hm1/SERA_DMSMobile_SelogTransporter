@@ -59,6 +59,8 @@ public class LoginPresenter extends TiPresenter<LoginView> {
                 deviceID = mTelephonyManager.getDeviceId();
             }
 
+            deviceID = "353381079168024";
+
             getView().showToast("DEVICE-ID: "+deviceID);
 
             String tokenFCM = mSharedPrefsModel.get(HelperKey.KEY_TOKEN_SAVED, "token-not-defined");

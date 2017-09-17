@@ -85,9 +85,9 @@ public class PlanOrderFragment extends TiFragment<PlanOrderPresenter, PlanOrderV
     }
 
     @Override
-    public void showAcknowledgeDialog(String ordercode, final String assignmentId, String destination, String origin, String etd, String eta, String customer) {
+    public void showAcknowledgeDialog(String ordercode, final Integer assignmentId, String destination, String origin, String etd, String eta, String customer) {
         final String fOrderCode = ordercode;
-        final String fAssignmentId = assignmentId;
+        final Integer fAssignmentId = assignmentId;
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
 

@@ -57,7 +57,7 @@ public class AssignedOrderAdapter extends RecyclerView.Adapter<SimpleListViewHol
         AssignedOrderResponseModel simpleSingleList = mSimpleSingleLists.get(position);
         holder.getTitle().setText("Order "+simpleSingleList.getOrderID());
         holder.getInformation().setText(simpleSingleList.getOrigin() +" - "+ simpleSingleList.getDestination());
-        holder.getStatus().setText(simpleSingleList.getStatus());
+        holder.getStatus().setText(simpleSingleList.getCurrentActivity());
     }
 
     @Override

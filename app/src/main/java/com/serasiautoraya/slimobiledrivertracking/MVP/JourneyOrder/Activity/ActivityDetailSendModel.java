@@ -10,24 +10,15 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.Model;
 
 public class ActivityDetailSendModel extends Model{
 
-    @SerializedName("OrderCode")
+    @SerializedName("AssignmentId")
     @Expose
-    private String OrderCode;
+    private Integer AssignmentId;
 
-    @SerializedName("PersonalId")
-    @Expose
-    private String PersonalId;
-
-    public ActivityDetailSendModel(String orderCode, String personalId) {
-        OrderCode = orderCode;
-        PersonalId = personalId;
+    public ActivityDetailSendModel(Integer assignmentId) {
+        AssignmentId = assignmentId;
     }
 
-    public String getOrderCode() {
-        return OrderCode;
-    }
-
-    public String getPersonalId() {
-        return PersonalId;
+    public Integer getAssignmentId() {
+        return AssignmentId;
     }
 }

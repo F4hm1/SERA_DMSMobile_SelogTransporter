@@ -13,9 +13,9 @@ public class AssignedOrderResponseModel extends Model{
     @SerializedName("OrderID")
     @Expose
     public String OrderID;
-    @SerializedName("AssignmentId")
+    @SerializedName("AssignmentID")
     @Expose
-    public String AssignmentId;
+    public Integer AssignmentId;
     @SerializedName("Status")
     @Expose
     public String Status;
@@ -34,8 +34,18 @@ public class AssignedOrderResponseModel extends Model{
     @SerializedName("ETD")
     @Expose
     public String ETD;
+    @SerializedName("CurrentActivity")
+    @Expose
+    public String CurrentActivity;
+    @SerializedName("Active")
+    @Expose
+    public String Active;
+    @SerializedName("Acknowledge")
+    @Expose
+    public String Acknowledge;
 
-    public AssignedOrderResponseModel(String orderID, String assignmentID, String status, String customer, String origin, String destination, String ETA, String ETD) {
+
+    public AssignedOrderResponseModel(String orderID, Integer assignmentID, String status, String customer, String origin, String destination, String ETA, String ETD) {
         OrderID = orderID;
         AssignmentId = assignmentID;
         Status = status;
@@ -50,7 +60,7 @@ public class AssignedOrderResponseModel extends Model{
         return OrderID;
     }
 
-    public String getAssignmentId() {
+    public Integer getAssignmentId() {
         return AssignmentId;
     }
 
@@ -82,7 +92,7 @@ public class AssignedOrderResponseModel extends Model{
         OrderID = orderID;
     }
 
-    public void setAssignmentId(String assignmentId) {
+    public void setAssignmentId(Integer assignmentId) {
         AssignmentId = assignmentId;
     }
 
@@ -108,5 +118,17 @@ public class AssignedOrderResponseModel extends Model{
 
     public void setETD(String ETD) {
         this.ETD = ETD;
+    }
+
+    public String getCurrentActivity() {
+        return CurrentActivity;
+    }
+
+    public String getActive() {
+        return Active;
+    }
+
+    public String getAcknowledge() {
+        return Acknowledge;
     }
 }

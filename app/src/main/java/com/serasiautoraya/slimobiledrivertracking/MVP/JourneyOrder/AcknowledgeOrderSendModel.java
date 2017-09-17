@@ -15,9 +15,9 @@ public class AcknowledgeOrderSendModel extends Model {
 
     @SerializedName("AssignmentId")
     @Expose
-    private String AssignmentId;
+    private Integer AssignmentId;
 
-    public AcknowledgeOrderSendModel(String personalId, String assignmentId) {
+    public AcknowledgeOrderSendModel(String personalId, Integer assignmentId) {
         PersonalId = personalId;
         AssignmentId = assignmentId;
     }
@@ -26,7 +26,7 @@ public class AcknowledgeOrderSendModel extends Model {
         return PersonalId;
     }
 
-    public String getAssignmentId() {
+    public Integer getAssignmentId() {
         return AssignmentId;
     }
 }

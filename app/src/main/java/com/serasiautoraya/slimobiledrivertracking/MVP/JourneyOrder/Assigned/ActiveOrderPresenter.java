@@ -65,13 +65,14 @@ public class ActiveOrderPresenter extends TiPresenter<ActiveOrderView> {
         * */
 
         AssignedOrderResponseModel assignedOrderResponseModel = (AssignedOrderResponseModel) mSimpleAdapterModel.getItem(position);
-        String orderCode = assignedOrderResponseModel.getOrderID();
+//        String orderCode = assignedOrderResponseModel.getOrderID();
+        Integer orderCode = assignedOrderResponseModel.getAssignmentId();
 //        setdummydata(orderCode);
 
         /*
         * TODO uncomment this to connect API
         * */
-        ActivityDetailSendModel activityDetailSendModel =  new ActivityDetailSendModel(orderCode, HelperBridge.sModelLoginResponse.getPersonalId());
+        ActivityDetailSendModel activityDetailSendModel =  new ActivityDetailSendModel(orderCode);
         getView().toggleLoading(true);
         final ActiveOrderView activeOrderView = getView();
         mRestConnection.getData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.GET_ORDER_ACTIVITY, activityDetailSendModel.getHashMapType(), new RestCallBackInterfaceModel() {
@@ -110,6 +111,6 @@ public class ActiveOrderPresenter extends TiPresenter<ActiveOrderView> {
                 "Pool HMS Rungkut", "Pool HMS Karawang", "14.55 WIB (Senin, 15 Mei 2017)", "-", "PIC HM Sampoerna", "Raw Material",
                 "HINO 665SX", "B 1916 TOW", "ePOD", "Pool HMS Karawang", "14.55 WIB (Senin, 15 Mei 2017)"
         );
-        getView().changeActivityAction(HelperKey.KEY_INTENT_ORDERCODE, HelperBridge.sActivityDetailResponseModel.getOrderCode(), ActivityDetailActivity.class);
+        getView().changeActivityAction(HelperKey.KEY_INTENT_ORDERCODE, HelperBridge.sActivityDetailResponseModel.getAssignmentId(), ActivityDetailActivity.class);
     }*/
 }

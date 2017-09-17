@@ -129,7 +129,7 @@ public class AssignedPresenter extends TiPresenter<AssignedView> {
         for (int i = 0; i < 12; i++) {
             AssignedOrderResponseModel activeList = new AssignedOrderResponseModel(
                     "OC-XX-" + i,
-                    "Assignment-" + i,
+                    i,
                     "Status-" + i,
                     "customer -" + i,
                     "Origin -" + i,
@@ -139,7 +139,7 @@ public class AssignedPresenter extends TiPresenter<AssignedView> {
 
             AssignedOrderResponseModel planOutlist = new AssignedOrderResponseModel(
                     "OC-XX-" + i,
-                    "Assignment-" + i,
+                    i,
                     "Status-" + i,
                     "customer -" + i,
                     "Origin -" + i,

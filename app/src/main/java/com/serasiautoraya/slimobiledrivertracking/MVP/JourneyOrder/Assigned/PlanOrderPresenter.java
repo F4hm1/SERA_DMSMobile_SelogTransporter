@@ -98,12 +98,12 @@ public class PlanOrderPresenter extends TiPresenter<PlanOrderView> {
                     assignedOrderResponseModel.getCustomer()
             );
         }else {
-            String orderCode = assignedOrderResponseModel.getOrderID();
+            Integer orderCode = assignedOrderResponseModel.getAssignmentId();
             loadDetailOrder(orderCode);
         }
     }
 
-    public void onAcknowledgeOrder(final String orderCode, final String assignmentId){
+    public void onAcknowledgeOrder(final String orderCode, final Integer assignmentId){
         /*
         * TODO Post ACK order and refresh updated assigned order
         * */
@@ -166,11 +166,11 @@ public class PlanOrderPresenter extends TiPresenter<PlanOrderView> {
         });
     }
 
-    private void loadDetailOrder(String orderCode){
+    private void loadDetailOrder(Integer orderCode){
         /*
         * TODO uncomment this to connect API
         * */
-        ActivityDetailSendModel activityDetailSendModel =  new ActivityDetailSendModel(orderCode, HelperBridge.sModelLoginResponse.getPersonalId());
+        ActivityDetailSendModel activityDetailSendModel =  new ActivityDetailSendModel(orderCode);
         getView().toggleLoading(true);
         final PlanOrderView planOrderView = getView();
         mRestConnection.getData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.GET_ORDER_ACTIVITY, activityDetailSendModel.getHashMapType(), new RestCallBackInterfaceModel() {
