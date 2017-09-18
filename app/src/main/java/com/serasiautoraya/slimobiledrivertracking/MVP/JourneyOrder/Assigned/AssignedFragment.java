@@ -131,6 +131,15 @@ public class AssignedFragment extends TiFragment<AssignedPresenter, AssignedView
         }
 
         @Override
+        public void finishUpdate(ViewGroup container) {
+            try{
+                super.finishUpdate(container);
+            } catch (NullPointerException nullPointerException){
+                System.out.println("Catch the NullPointerException in FragmentPagerAdapter.finishUpdate");
+            }
+        }
+
+        @Override
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
