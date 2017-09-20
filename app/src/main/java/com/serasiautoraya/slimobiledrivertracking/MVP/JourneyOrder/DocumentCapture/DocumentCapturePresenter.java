@@ -10,6 +10,8 @@ import android.util.Log;
 
 import com.android.volley.error.VolleyError;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallbackInterfaceJSON;
+import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.TimeRestCallBackInterface;
+import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.TimeRESTResponseModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperBridge;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperKey;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperTransactionCode;
@@ -87,7 +89,7 @@ public class DocumentCapturePresenter extends TiPresenter<DocumentCaptureView> {
             tempDir.mkdirs();
         }
         File appStorageDir = Environment.getExternalStorageDirectory();
-        appStorageDir = new File(appStorageDir.getPath() + "/"+ com.serasiautoraya.slimobiledrivertracking.helper.HelperUrl.DIRECTORY_NAME+"/");
+        appStorageDir = new File(appStorageDir.getPath() + "/" + com.serasiautoraya.slimobiledrivertracking.helper.HelperUrl.DIRECTORY_NAME + "/");
         if (!appStorageDir.exists()) {
             appStorageDir.mkdirs();
         }
@@ -112,52 +114,52 @@ public class DocumentCapturePresenter extends TiPresenter<DocumentCaptureView> {
         }
     }
 
-    public void onClickSubmit(String verificationCode, String pODReason, String exFuel, String exTollPark, String exEscort, String exASDP, String exPortal, String exBMSPSI, String[] pODReasonList, String[] pODReasonListValue) {
-        Log.d("Activiti", "Photo: "+HelperBridge.sActivityDetailResponseModel.getIsPhoto()+"\n"+
-                "Expense: "+HelperBridge.sActivityDetailResponseModel.getIsExpenseForm()+"\n"+
-                "Verification: "+HelperBridge.sActivityDetailResponseModel.getIsCodeVerification()+"\n"+
-                "Signature: "+HelperBridge.sActivityDetailResponseModel.getIsSignature());
+    public void onClickSubmit(String verificationCode, final String pODReason, final String exFuel, final String exTollPark, final String exEscort, final String exASDP, final String exPortal, final String exBMSPSI, String[] pODReasonList, String[] pODReasonListValue) {
+        Log.d("Activiti", "Photo: " + HelperBridge.sActivityDetailResponseModel.getIsPhoto() + "\n" +
+                "POD: " + HelperBridge.sActivityDetailResponseModel.getIsPOD() + "\n" +
+                "Verification: " + HelperBridge.sActivityDetailResponseModel.getIsCodeVerification() + "\n" +
+                "Signature: " + HelperBridge.sActivityDetailResponseModel.getIsSignature());
 
         String errText = "";
         boolean resultValidation = true;
-        String verificationCodeSplitted = verificationCode.replace("-", "");
+        final String verificationCodeSplitted = verificationCode.replace("-", "");
 
-        if(HelperBridge.sActivityDetailResponseModel.getIsPhoto().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)){
+        if (HelperBridge.sActivityDetailResponseModel.getIsPhoto().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)) {
             resultValidation = false;
             errText = "Harap mengambil minimal 1 foto terkait aktifitas ini";
             for (int i = 0; i < mBitmapPhoto.length; i++) {
-                if(mBitmapPhoto[i] != null){
+                if (mBitmapPhoto[i] != null) {
                     resultValidation = true;
                     errText = "";
                 }
             }
         }
 
-        if(HelperBridge.sActivityDetailResponseModel.getIsSignature().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)){
-            if(mBitmapSignature == null){
+        if (HelperBridge.sActivityDetailResponseModel.getIsSignature().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)) {
+            if (mBitmapSignature == null) {
                 resultValidation = false;
                 errText = "Harap meminta tanda tangan digital kepada PIC terkait";
             }
         }
 
-        if(HelperBridge.sActivityDetailResponseModel.getIsCodeVerification().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)){
-            if(verificationCodeSplitted.equalsIgnoreCase("")){
+        if (HelperBridge.sActivityDetailResponseModel.getIsCodeVerification().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)) {
+            if (verificationCodeSplitted.equalsIgnoreCase("")) {
                 resultValidation = false;
                 errText = "Harap isi kode verifikasi terkait aktifitas ini";
             }
         }
 
-        if(HelperBridge.sActivityDetailResponseModel.getIsPOD().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)){
+        if (HelperBridge.sActivityDetailResponseModel.getIsPOD().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)) {
             resultValidation = false;
             errText = "Harap mengambil minimal 1 foto terkait aktifitas ini";
             for (int i = 0; i < mBitmapPhoto.length; i++) {
-                if(mBitmapPhoto[i] != null){
+                if (mBitmapPhoto[i] != null) {
                     resultValidation = true;
                     errText = "";
                 }
             }
 
-            if(!resultValidation){
+            if (!resultValidation) {
                 String reason = HelperUtil.getValueStringArrayXML(pODReasonList, pODReasonListValue, pODReason);
             }
 
@@ -170,33 +172,57 @@ public class DocumentCapturePresenter extends TiPresenter<DocumentCaptureView> {
 ////            }
 //        }
 
-        if(!resultValidation){
+        if (!resultValidation) {
             getView().showToast(errText);
-        }else {
-            LocationModel locationModel = mRestConnection.getCurrentLocation();
-            if(locationModel.getLongitude().equalsIgnoreCase("null")){
+        } else {
+            final LocationModel locationModel = mRestConnection.getCurrentLocation();
+            if (locationModel.getLongitude().equalsIgnoreCase("null")) {
                 getView().showToast("Aplikasi sedang mengambil lokasi (pastikan gps dan peket data tersedia), harap tunggu beberapa saat kemudian silahkan coba kembali.");
-            }else{
-                mStatusUpdateSendModel = new StatusUpdateSendModel(
-                        HelperBridge.sActivityDetailResponseModel.getActivityCode(),
-                        HelperBridge.sActivityDetailResponseModel.getOrderCode(),
-                        HelperBridge.sModelLoginResponse.getPersonalId(),
-                        locationModel.getLatitude()+", "+locationModel.getLongitude(),
-                        locationModel.getAddress(),
-                        mBitmapPhoto[0] == null?"":HelperUtil.encodeTobase64(mBitmapPhoto[0]),
-                        mBitmapPhoto[1] == null?"":HelperUtil.encodeTobase64(mBitmapPhoto[1]),
-                        mBitmapPhoto[2] == null?"":HelperUtil.encodeTobase64(mBitmapPhoto[2]),
-                        verificationCodeSplitted,
-                        mBitmapSignature == null?"":HelperUtil.encodeTobase64(mBitmapSignature),
-                        exFuel,
-                        exTollPark,
-                        exEscort,
-                        exASDP,
-                        exPortal,
-                        exBMSPSI,
-                        pODReason
-                );
-                getView().showConfirmationDialog(HelperBridge.sActivityDetailResponseModel.getActivityName());
+            } else {
+                getView().toggleLoading(true);
+                mRestConnection.getServerTime(new TimeRestCallBackInterface() {
+                    @Override
+                    public void callBackOnSuccess(TimeRESTResponseModel timeRESTResponseModel, String latitude, String longitude, String address) {
+                        String timeZoneId = RestConnection.getTimeZoneID(timeRESTResponseModel);
+                        String[] timeSplit = timeRESTResponseModel.getTime().split(" ");
+                        String[] dateSplit =  timeSplit[0].split(HelperKey.USER_DATE_FORMAT_SEPARATOR);
+                        String date = timeSplit[0];
+                        String time = timeSplit[1];
+                        String dateMessage = dateSplit[2];
+                        String monthMessage = dateSplit[1];
+                        String yearMessage = dateSplit[0];
+
+                        mStatusUpdateSendModel = new StatusUpdateSendModel(
+                                HelperBridge.sActivityDetailResponseModel.getJourneyActivityId() + "",
+                                HelperBridge.sTempSelectedOrderCode,
+                                HelperBridge.sModelLoginResponse.getPersonalId(),
+                                locationModel.getLatitude() + ", " + locationModel.getLongitude(),
+                                locationModel.getAddress(),
+                                mBitmapPhoto[0] == null ? "" : HelperUtil.encodeTobase64(mBitmapPhoto[0]),
+                                mBitmapPhoto[1] == null ? "" : HelperUtil.encodeTobase64(mBitmapPhoto[1]),
+                                mBitmapPhoto[2] == null ? "" : HelperUtil.encodeTobase64(mBitmapPhoto[2]),
+                                verificationCodeSplitted,
+                                timeRESTResponseModel.getTime(),
+                                mBitmapSignature == null ? "" : HelperUtil.encodeTobase64(mBitmapSignature),
+                                exFuel,
+                                exTollPark,
+                                exEscort,
+                                exASDP,
+                                exPortal,
+                                exBMSPSI,
+                                pODReason
+                        );
+                        getView().toggleLoading(false);
+                        getView().showConfirmationDialog(HelperBridge.sActivityDetailResponseModel.getActivityName());
+                    }
+
+                    @Override
+                    public void callBackOnFail(String message) {
+                        getView().toggleLoading(false);
+                        getView().showStandardDialog(message, "Perhatian");
+                    }
+                });
+
             }
         }
     }
@@ -232,35 +258,35 @@ public class DocumentCapturePresenter extends TiPresenter<DocumentCaptureView> {
         });
     }
 
-    public void validateData(String verificationCode){
-        if(HelperBridge.sActivityDetailResponseModel.getIsPhoto().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)){
+    public void validateData(String verificationCode) {
+        if (HelperBridge.sActivityDetailResponseModel.getIsPhoto().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)) {
             boolean isPhotosValid = false;
             for (int i = 0; i < mBitmapPhoto.length; i++) {
-                if(mBitmapPhoto[i] != null){
+                if (mBitmapPhoto[i] != null) {
                     isPhotosValid = true;
                 }
             }
         }
 
-        if(HelperBridge.sActivityDetailResponseModel.getIsSignature().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)){
+        if (HelperBridge.sActivityDetailResponseModel.getIsSignature().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)) {
             boolean isSignatureValid = false;
-            if(mBitmapSignature != null){
+            if (mBitmapSignature != null) {
                 isSignatureValid = true;
             }
         }
 
-        if(HelperBridge.sActivityDetailResponseModel.getIsCodeVerification().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)){
+        if (HelperBridge.sActivityDetailResponseModel.getIsCodeVerification().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)) {
             boolean isVerificationCodeValid = false;
-            if(!verificationCode.equalsIgnoreCase("")){
+            if (!verificationCode.equalsIgnoreCase("")) {
                 isVerificationCodeValid = true;
             }
         }
 
-        if(HelperBridge.sActivityDetailResponseModel.getIsExpenseForm().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)){
-            boolean isExpenseValid = false;
-//            if(!verificationCode.equalsIgnoreCase("")){
-                isExpenseValid = true;
-//            }
-        }
+//        if(HelperBridge.sActivityDetailResponseModel.getIsExpenseForm().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)){
+//            boolean isExpenseValid = false;
+////            if(!verificationCode.equalsIgnoreCase("")){
+//                isExpenseValid = true;
+////            }
+//        }
     }
 }

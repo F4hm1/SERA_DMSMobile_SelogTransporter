@@ -99,15 +99,12 @@ public class AssignedPresenter extends TiPresenter<AssignedView> {
         for (AssignedOrderResponseModel assignedOrderResponseModel :
                 assignedOrderResponseModels) {
             Log.d("ASSIGNED_ORDER", assignedOrderResponseModel.getHashMapType().toString());
-            if (assignedOrderResponseModel.getStatus().equalsIgnoreCase(HelperTransactionCode.ASSIGNED_STATUS_ONJOURNEY)
-                    || assignedOrderResponseModel.getStatus().equalsIgnoreCase(HelperTransactionCode.ASSIGNED_STATUS_ONJOURNEY_D)) {
+            if (assignedOrderResponseModel.getStatus() == HelperTransactionCode.ASSIGNED_STATUS_ONJOURNEY_IN) {
                 HelperBridge.sActiveOrdersList.add(assignedOrderResponseModel);
                 isAnyOrderActive = true;
             } else if (
-                    (assignedOrderResponseModel.getStatus().equalsIgnoreCase(HelperTransactionCode.ASSIGNED_STATUS_ACK)
-                            || assignedOrderResponseModel.getStatus().equalsIgnoreCase(HelperTransactionCode.ASSIGNED_STATUS_ACK_D))
-                            || (assignedOrderResponseModel.getStatus().equalsIgnoreCase(HelperTransactionCode.ASSIGNED_STATUS_NOTACK)
-                            || assignedOrderResponseModel.getStatus().equalsIgnoreCase(HelperTransactionCode.ASSIGNED_STATUS_NOTACK_D))) {
+                    assignedOrderResponseModel.getStatus() == HelperTransactionCode.ASSIGNED_STATUS_ACK_IN
+                            || assignedOrderResponseModel.getStatus() == HelperTransactionCode.ASSIGNED_STATUS_NOTACK_IN) {
                 HelperBridge.sPlanOutstandingOrdersList.add(assignedOrderResponseModel);
             }
         }
@@ -130,7 +127,7 @@ public class AssignedPresenter extends TiPresenter<AssignedView> {
             AssignedOrderResponseModel activeList = new AssignedOrderResponseModel(
                     "OC-XX-" + i,
                     i,
-                    "Status-" + i,
+                    1,
                     "customer -" + i,
                     "Origin -" + i,
                     "Destination -" + i,
@@ -140,7 +137,7 @@ public class AssignedPresenter extends TiPresenter<AssignedView> {
             AssignedOrderResponseModel planOutlist = new AssignedOrderResponseModel(
                     "OC-XX-" + i,
                     i,
-                    "Status-" + i,
+                    2,
                     "customer -" + i,
                     "Origin -" + i,
                     "Destination -" + i,
@@ -148,12 +145,12 @@ public class AssignedPresenter extends TiPresenter<AssignedView> {
                     "ETD -" + i);
 
             if (i % 2 == 0) {
-                planOutlist.setStatus("Status-" + i);
+                planOutlist.setStatus(1);
             } else {
                 if (i % 3 == 0) {
-                    planOutlist.setStatus(HelperTransactionCode.ASSIGNED_STATUS_NOTACK);
+                    planOutlist.setStatus(HelperTransactionCode.ASSIGNED_STATUS_NOTACK_IN);
                 } else {
-                    planOutlist.setStatus(HelperTransactionCode.ASSIGNED_STATUS_ACK);
+                    planOutlist.setStatus(HelperTransactionCode.ASSIGNED_STATUS_ACK_IN);
                 }
 
             }

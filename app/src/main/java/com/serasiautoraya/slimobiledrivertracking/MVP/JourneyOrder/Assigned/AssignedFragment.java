@@ -26,6 +26,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Randi Dwi Nandra on 31/03/2017.
@@ -105,6 +106,12 @@ public class AssignedFragment extends TiFragment<AssignedPresenter, AssignedView
 //                getPresenter().setUpdateLocationActive(false);
 //            }
 //        }
+    }
+
+    @Override
+    @OnClick(R.id.fab_planactive_order)
+    public void onRefreshClicked(View view) {
+        getPresenter().loadOrdersData();
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {

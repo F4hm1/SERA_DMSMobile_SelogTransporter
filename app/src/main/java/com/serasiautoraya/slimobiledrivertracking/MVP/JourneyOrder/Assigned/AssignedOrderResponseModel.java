@@ -18,7 +18,7 @@ public class AssignedOrderResponseModel extends Model{
     public Integer AssignmentId;
     @SerializedName("Status")
     @Expose
-    public String Status;
+    public Integer Status;
     @SerializedName("Customer")
     @Expose
     public String Customer;
@@ -45,7 +45,7 @@ public class AssignedOrderResponseModel extends Model{
     public String Acknowledge;
 
 
-    public AssignedOrderResponseModel(String orderID, Integer assignmentID, String status, String customer, String origin, String destination, String ETA, String ETD) {
+    public AssignedOrderResponseModel(String orderID, Integer assignmentID, Integer status, String customer, String origin, String destination, String ETA, String ETD) {
         OrderID = orderID;
         AssignmentId = assignmentID;
         Status = status;
@@ -64,7 +64,7 @@ public class AssignedOrderResponseModel extends Model{
         return AssignmentId;
     }
 
-    public String getStatus() {
+    public Integer getStatus() {
         return Status;
     }
 
@@ -96,7 +96,7 @@ public class AssignedOrderResponseModel extends Model{
         AssignmentId = assignmentId;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Integer status) {
         Status = status;
     }
 

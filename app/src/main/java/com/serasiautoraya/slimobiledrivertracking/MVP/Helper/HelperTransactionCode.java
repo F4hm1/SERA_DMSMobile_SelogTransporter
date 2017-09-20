@@ -47,7 +47,8 @@ public class HelperTransactionCode {
     public static final String ASSIGNED_ORDER_INACTIVE_CODE = "0";
 
     public static final String ASSIGNED_ORDER_ACK_CODE = "1";
-    public static final String ASSIGNED_ORDER_INACK_CODE = "0";
+    public static final String ASSIGNED_ORDER_INACK_CODE = "3";
+    public static final Integer ASSIGNED_ORDER_INACK_CODE_IN = 3;
 
     public static final String TRUE_BINARY = "1";
     public static final String FALSE_BINARY = "0";
@@ -57,6 +58,10 @@ public class HelperTransactionCode {
     public static final String ASSIGNED_STATUS_ONJOURNEY = "1";
     public static final String ASSIGNED_STATUS_ACK = "2";
     public static final String ASSIGNED_STATUS_NOTACK = "3";
+
+    public static final int ASSIGNED_STATUS_ONJOURNEY_IN = 1;
+    public static final int ASSIGNED_STATUS_ACK_IN = 2;
+    public static final int ASSIGNED_STATUS_NOTACK_IN = 3;
 
     public static final String ASSIGNED_STATUS_ONJOURNEY_D = "1.0";
     public static final String ASSIGNED_STATUS_ACK_D = "2.0";

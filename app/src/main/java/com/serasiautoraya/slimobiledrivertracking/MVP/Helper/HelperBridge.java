@@ -34,6 +34,8 @@ public class HelperBridge {
 
     public static ActivityDetailResponseModel sActivityDetailResponseModel;
 
+    public static String sTempSelectedOrderCode = "";
+
     public static List<OrderHistoryDetailResponseModel> sOrderHistoryDetailActivityList;
 
     public static int sUpdateLocationInterval;

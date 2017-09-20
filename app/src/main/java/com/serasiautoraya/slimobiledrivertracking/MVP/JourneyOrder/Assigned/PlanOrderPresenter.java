@@ -58,7 +58,7 @@ public class PlanOrderPresenter extends TiPresenter<PlanOrderView> {
         mSimpleAdapterModel.setItemList(HelperBridge.sPlanOutstandingOrdersList);
 
         for (AssignedOrderResponseModel assignedOrderResponseModel:HelperBridge.sPlanOutstandingOrdersList) {
-            if(assignedOrderResponseModel.getStatus().equalsIgnoreCase(HelperTransactionCode.ASSIGNED_ORDER_INACK_CODE)){
+            if(assignedOrderResponseModel.getStatus() == HelperTransactionCode.ASSIGNED_ORDER_INACK_CODE_IN){
                 getView().showAcknowledgeDialog(
                         assignedOrderResponseModel.getOrderID(),
                         assignedOrderResponseModel.getAssignmentId(),
@@ -85,9 +85,9 @@ public class PlanOrderPresenter extends TiPresenter<PlanOrderView> {
         * */
 
         AssignedOrderResponseModel assignedOrderResponseModel = (AssignedOrderResponseModel) mSimpleAdapterModel.getItem(position);
-        String statusOrder = assignedOrderResponseModel.getStatus();
+        int statusOrder = assignedOrderResponseModel.getStatus();
 
-        if(statusOrder.equalsIgnoreCase(HelperTransactionCode.ASSIGNED_ORDER_INACK_CODE)){
+        if(statusOrder == HelperTransactionCode.ASSIGNED_ORDER_INACK_CODE_IN){
             getView().showAcknowledgeDialog(
                     assignedOrderResponseModel.getOrderID(),
                     assignedOrderResponseModel.getAssignmentId(),
@@ -98,12 +98,12 @@ public class PlanOrderPresenter extends TiPresenter<PlanOrderView> {
                     assignedOrderResponseModel.getCustomer()
             );
         }else {
-            Integer orderCode = assignedOrderResponseModel.getAssignmentId();
-            loadDetailOrder(orderCode);
+            Integer assignmentId = assignedOrderResponseModel.getAssignmentId();
+            loadDetailOrder(assignedOrderResponseModel.getOrderID(), assignmentId);
         }
     }
 
-    public void onAcknowledgeOrder(final String orderCode, final Integer assignmentId){
+    public void onAcknowledgeOrder(final String orderCode, final Integer assignmentId, final String eTd, final String eTa){
         /*
         * TODO Post ACK order and refresh updated assigned order
         * */
@@ -120,8 +120,12 @@ public class PlanOrderPresenter extends TiPresenter<PlanOrderView> {
                 getView().toggleLoading(false);
 
                 AcknowledgeOrderSendModel acknowledgeOrderSendModel = new AcknowledgeOrderSendModel(
-                        orderCode,
-                        assignmentId);
+                        HelperBridge.sModelLoginResponse.getPersonalId(),
+                        assignmentId,
+                        date,
+                        time,
+                        eTa,
+                        eTd);
                 submitAcknowledgeOrder(acknowledgeOrderSendModel);
             }
 
@@ -166,18 +170,24 @@ public class PlanOrderPresenter extends TiPresenter<PlanOrderView> {
         });
     }
 
-    private void loadDetailOrder(Integer orderCode){
+    private void loadDetailOrder(final String orderId, Integer assignmentId){
+//        setdummydata(orderCode);
+
         /*
         * TODO uncomment this to connect API
         * */
-        ActivityDetailSendModel activityDetailSendModel =  new ActivityDetailSendModel(orderCode);
+        ActivityDetailSendModel activityDetailSendModel =
+                new ActivityDetailSendModel(
+                        HelperBridge.sModelLoginResponse.getPersonalId(), orderId, assignmentId);
+
         getView().toggleLoading(true);
         final PlanOrderView planOrderView = getView();
         mRestConnection.getData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.GET_ORDER_ACTIVITY, activityDetailSendModel.getHashMapType(), new RestCallBackInterfaceModel() {
             @Override
             public void callBackOnSuccess(BaseResponseModel response) {
                 HelperBridge.sActivityDetailResponseModel = Model.getModelInstance(response.getData()[0], ActivityDetailResponseModel.class);
-                getView().changeActivityAction(HelperKey.KEY_INTENT_ORDERCODE, HelperBridge.sActivityDetailResponseModel.getOrderCode(), ActivityDetailActivity.class);
+                HelperBridge.sTempSelectedOrderCode = orderId;
+                getView().changeActivityAction(HelperKey.KEY_INTENT_ORDERCODE, HelperBridge.sActivityDetailResponseModel.getAssignmentId()+"", ActivityDetailActivity.class);
                 planOrderView.toggleLoading(false);
             }
 

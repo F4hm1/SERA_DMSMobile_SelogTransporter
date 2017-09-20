@@ -6,8 +6,8 @@ import android.util.Log;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperBridge;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperTransactionCode;
 import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.DocumentCapture.DocumentCaptureActivity;
+import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.PODCapture.PODCaptureActivity;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
-import com.serasiautoraya.slimobiledrivertracking.activity.EvidenceCaptureActivity;
 import com.serasiautoraya.slimobiledrivertracking.util.HttpsTrustManager;
 
 import net.grandcentrix.thirtyinch.TiPresenter;
@@ -33,8 +33,8 @@ public class ActivityDetailPresenter extends TiPresenter<ActivityDetailView>  {
     }
 
     public void onActionClicked(){
-        if(HelperBridge.sActivityDetailResponseModel.getIsPOD().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)){
-
+        if(!HelperBridge.sActivityDetailResponseModel.getIsPOD().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)){
+            getView().changeActivity(PODCaptureActivity.class);
         }else {
             getView().changeActivity(DocumentCaptureActivity.class);
         }
@@ -97,22 +97,22 @@ public class ActivityDetailPresenter extends TiPresenter<ActivityDetailView>  {
 //        getView().setButtonText(mActivityDetailResponseModel.getActivityName());
 
         getView().setDetailData(
-                "Order "+ HelperBridge.sActivityDetailResponseModel.getOrderCode(),
-                HelperBridge.sActivityDetailResponseModel.getOrderCode(),
+                "Order "+ HelperBridge.sActivityDetailResponseModel.getAssignmentId(),
+                HelperBridge.sActivityDetailResponseModel.getAssignmentId()+"",
                 HelperBridge.sActivityDetailResponseModel.getActivityName(),
                 HelperBridge.sActivityDetailResponseModel.getAcitivityType(),
-                HelperBridge.sActivityDetailResponseModel.getOrigin(),
-                HelperBridge.sActivityDetailResponseModel.getDestination(),
-                HelperBridge.sActivityDetailResponseModel.getETD(),
-                HelperBridge.sActivityDetailResponseModel.getETA(),
-                HelperBridge.sActivityDetailResponseModel.getCustomer(),
+                HelperBridge.sActivityDetailResponseModel.getLocationTargetLat(),
+                HelperBridge.sActivityDetailResponseModel.getLocationTargetLng(),
+                HelperBridge.sActivityDetailResponseModel.getTimeActual(),
+                HelperBridge.sActivityDetailResponseModel.getTimeTarget(),
+                HelperBridge.sActivityDetailResponseModel.getJourneyActivityId()+"",
                 HelperBridge.sActivityDetailResponseModel.getLocationTargetText(),
                 HelperBridge.sActivityDetailResponseModel.getTimeTarget(),
                 HelperBridge.sActivityDetailResponseModel.getTimeBaseline(),
                 HelperBridge.sActivityDetailResponseModel.getTimeActual()
         );
 
-        Log.d("ACTIVITY DET:", HelperBridge.sActivityDetailResponseModel.getHashMapType().toString());
+//        Log.d("ACTIVITY DET:", HelperBridge.sActivityDetailResponseModel.getHashMapType().toString());
 
         /*
         * TODO uncomment this

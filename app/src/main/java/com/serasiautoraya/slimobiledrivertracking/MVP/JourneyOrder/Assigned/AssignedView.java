@@ -1,5 +1,7 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Assigned;
 
+import android.view.View;
+
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.BaseViewInterface;
 
 /**
@@ -9,4 +11,6 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.BaseViewInte
 public interface AssignedView extends BaseViewInterface{
 
     void initializeTabs(boolean isAnyOrderActive, boolean isUpdateLocationActive);
+
+    void onRefreshClicked(View view);
 }

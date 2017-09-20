@@ -1,7 +1,6 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Assigned;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.android.volley.error.VolleyError;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseAdapter.SimpleAdapterModel;
@@ -66,20 +65,23 @@ public class ActiveOrderPresenter extends TiPresenter<ActiveOrderView> {
 
         AssignedOrderResponseModel assignedOrderResponseModel = (AssignedOrderResponseModel) mSimpleAdapterModel.getItem(position);
 //        String orderCode = assignedOrderResponseModel.getOrderID();
-        Integer orderCode = assignedOrderResponseModel.getAssignmentId();
+        final String orderCode = assignedOrderResponseModel.getOrderID();
 //        setdummydata(orderCode);
 
         /*
         * TODO uncomment this to connect API
         * */
-        ActivityDetailSendModel activityDetailSendModel =  new ActivityDetailSendModel(orderCode);
+        ActivityDetailSendModel activityDetailSendModel =
+                new ActivityDetailSendModel(
+                        HelperBridge.sModelLoginResponse.getPersonalId(), orderCode, assignedOrderResponseModel.getAssignmentId());
         getView().toggleLoading(true);
         final ActiveOrderView activeOrderView = getView();
         mRestConnection.getData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.GET_ORDER_ACTIVITY, activityDetailSendModel.getHashMapType(), new RestCallBackInterfaceModel() {
             @Override
             public void callBackOnSuccess(BaseResponseModel response) {
                 HelperBridge.sActivityDetailResponseModel = Model.getModelInstance(response.getData()[0], ActivityDetailResponseModel.class);
-                getView().changeActivityAction(HelperKey.KEY_INTENT_ORDERCODE, HelperBridge.sActivityDetailResponseModel.getOrderCode(), ActivityDetailActivity.class);
+                HelperBridge.sTempSelectedOrderCode = orderCode;
+                getView().changeActivityAction(HelperKey.KEY_INTENT_ORDERCODE, HelperBridge.sActivityDetailResponseModel.getAssignmentId()+"", ActivityDetailActivity.class);
                 activeOrderView.toggleLoading(false);
             }
 

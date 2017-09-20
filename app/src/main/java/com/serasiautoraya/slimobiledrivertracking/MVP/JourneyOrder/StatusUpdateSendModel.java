@@ -46,6 +46,10 @@ public class StatusUpdateSendModel extends Model {
     @Expose
     private String CodeVerification;
 
+    @SerializedName("TimeStamp")
+    @Expose
+    private String TimeStamp;
+
     @SerializedName("Signature")
     @Expose
     private String Signature;
@@ -78,7 +82,7 @@ public class StatusUpdateSendModel extends Model {
     @Expose
     private String Reason;
 
-    public StatusUpdateSendModel(String activityCode, String orderCode, String personalId, String locationRealCoordinates, String locationRealText, String photo1, String photo2, String photo3, String codeVerification, String signature, String expenseFuel, String expenseTollParking, String expenseEscort, String expenseASDP, String expensePortal, String expenseBMSPSI, String reason) {
+    public StatusUpdateSendModel(String activityCode, String orderCode, String personalId, String locationRealCoordinates, String locationRealText, String photo1, String photo2, String photo3, String codeVerification, String timeStamp, String signature, String expenseFuel, String expenseTollParking, String expenseEscort, String expenseASDP, String expensePortal, String expenseBMSPSI, String reason) {
         ActivityCode = activityCode;
         OrderCode = orderCode;
         PersonalId = personalId;
@@ -88,6 +92,7 @@ public class StatusUpdateSendModel extends Model {
         Photo2 = photo2;
         Photo3 = photo3;
         CodeVerification = codeVerification;
+        TimeStamp = timeStamp;
         Signature = signature;
         ExpenseFuel = expenseFuel;
         ExpenseTollParking = expenseTollParking;
@@ -100,6 +105,10 @@ public class StatusUpdateSendModel extends Model {
 
     public String getActivityCode() {
         return ActivityCode;
+    }
+
+    public String getOrderCode() {
+        return OrderCode;
     }
 
     public String getPersonalId() {
@@ -130,6 +139,10 @@ public class StatusUpdateSendModel extends Model {
         return CodeVerification;
     }
 
+    public String getTimeStamp() {
+        return TimeStamp;
+    }
+
     public String getSignature() {
         return Signature;
     }
@@ -156,5 +169,9 @@ public class StatusUpdateSendModel extends Model {
 
     public String getExpenseBMSPSI() {
         return ExpenseBMSPSI;
+    }
+
+    public String getReason() {
+        return Reason;
     }
 }

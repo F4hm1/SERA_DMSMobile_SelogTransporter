@@ -9,24 +9,56 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.Model;
  */
 
 public class AcknowledgeOrderSendModel extends Model {
+
     @SerializedName("PersonalId")
     @Expose
-    private String PersonalId;
-
+    private String personalId;
     @SerializedName("AssignmentId")
     @Expose
-    private Integer AssignmentId;
+    private Integer assignmentId;
+    @SerializedName("DateAck")
+    @Expose
+    private String dateAck;
+    @SerializedName("TimeAck")
+    @Expose
+    private String timeAck;
+    @SerializedName("ETA")
+    @Expose
+    private String eTA;
+    @SerializedName("ETD")
+    @Expose
+    private String eTD;
 
-    public AcknowledgeOrderSendModel(String personalId, Integer assignmentId) {
-        PersonalId = personalId;
-        AssignmentId = assignmentId;
+    public AcknowledgeOrderSendModel(String personalId, Integer assignmentId, String dateAck, String timeAck, String eTA, String eTD) {
+        this.personalId = personalId;
+        this.assignmentId = assignmentId;
+        this.dateAck = dateAck;
+        this.timeAck = timeAck;
+        this.eTA = eTA;
+        this.eTD = eTD;
     }
 
     public String getPersonalId() {
-        return PersonalId;
+        return personalId;
     }
 
     public Integer getAssignmentId() {
-        return AssignmentId;
+        return assignmentId;
+    }
+
+    public String getDateAck() {
+        return dateAck;
+    }
+
+    public String getTimeAck() {
+        return timeAck;
+    }
+
+    public String geteTA() {
+        return eTA;
+    }
+
+    public String geteTD() {
+        return eTD;
     }
 }

@@ -1,5 +1,7 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Assigned;
 
+import android.view.View;
+
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.BaseViewInterface;
 
 import net.grandcentrix.thirtyinch.distinctuntilchanged.DistinctUntilChanged;
