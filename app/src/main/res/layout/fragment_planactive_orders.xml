@@ -33,6 +33,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:clickable="true"
+        app:layout_behavior="com.serasiautoraya.slimobiledrivertracking.util.FloatingActionButtonBehaviour"
         app:backgroundTint="@color/colorPrimaryDark"
         app:borderWidth="0dp"
         app:elevation="6dp"

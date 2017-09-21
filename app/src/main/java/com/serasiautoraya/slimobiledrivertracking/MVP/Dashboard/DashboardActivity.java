@@ -2,24 +2,29 @@ package com.serasiautoraya.slimobiledrivertracking.MVP.Dashboard;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.serasiautoraya.slimobiledrivertracking.MVP.Absence.AbsenceRequestFragment;
@@ -39,6 +44,7 @@ import com.serasiautoraya.slimobiledrivertracking.R;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
 import com.serasiautoraya.slimobiledrivertracking.listener.TextViewTouchListener;
 import com.serasiautoraya.slimobiledrivertracking.util.LocationServiceUtil;
+import com.serasiautoraya.slimobiledrivertracking.util.NetworkChangeReceiver;
 import com.squareup.picasso.Picasso;
 
 import net.grandcentrix.thirtyinch.TiActivity;
@@ -58,10 +64,15 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
     private TextView mTextViewNavPosisi;
     private ImageView mImageViewNavImg;
     @BindView(R.id.drawer_layout) DrawerLayout mDrawer;
+    @BindView(R.id.rel_nointernet)
+    RelativeLayout relNoInternet;
 
     private Handler mHandler;
     private int mFragmentSelectedID;
     private View mNavHeader;
+
+    NetworkChangeReceiver networkChangeReceiver;
+    Snackbar snackbarNetworkChange;
 
 
     @Override
@@ -71,6 +82,38 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_dashboard);
         ButterKnife.bind(this);
+        snackbarNetworkChange = Snackbar.make(getWindow().getDecorView(), "Tidak terdapat koneksi internet", Snackbar.LENGTH_INDEFINITE);
+        View view = snackbarNetworkChange.getView();
+        FrameLayout.LayoutParams params =(FrameLayout.LayoutParams)view.getLayoutParams();
+        params.gravity = Gravity.TOP;
+        view.setLayoutParams(params);
+        networkChangeReceiver = new NetworkChangeReceiver() {
+            @Override
+            protected void onDisconnect() {
+//                snackbarNetworkChange.show();
+                relNoInternet.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            protected void onConnect() {
+//                snackbarNetworkChange.dismiss();
+                relNoInternet.setVisibility(View.GONE);
+            }
+        };
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(networkChangeReceiver);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        registerReceiver(networkChangeReceiver, intentFilter);
     }
 
     @Override

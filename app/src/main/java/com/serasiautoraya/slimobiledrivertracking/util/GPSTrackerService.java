@@ -78,7 +78,7 @@ public class GPSTrackerService extends Service implements LocationListener, Goog
         Log.d(TAG, "3: GPSTrackerService");
     }
 
-    public GPSTrackerService(){
+    public GPSTrackerService() {
 
     }
 
@@ -94,7 +94,7 @@ public class GPSTrackerService extends Service implements LocationListener, Goog
         getLocationManager(AppInit.getAppContext());
 
         Intent i = new Intent(this, com.serasiautoraya.slimobiledrivertracking.MVP.Login.LoginActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,0,i,PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
         Bitmap bitmapIcon = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.logoselog);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setDefaults(Notification.DEFAULT_ALL)
@@ -147,9 +147,9 @@ public class GPSTrackerService extends Service implements LocationListener, Goog
         }
     }
 
-    public void connectGoogleAPIClient(){
+    public void connectGoogleAPIClient() {
         if (mGoogleApiClient != null) {
-            if(!mGoogleApiClient.isConnected()){
+            if (!mGoogleApiClient.isConnected()) {
                 mGoogleApiClient.connect();
             }
         }
@@ -157,15 +157,16 @@ public class GPSTrackerService extends Service implements LocationListener, Goog
 
     /**
      * Singleton implementation
+     *
      * @return
      */
     public static GPSTrackerService getLocationManager(Context context) {
         Log.d(TAG, "1: getLocationManager");
         GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
         int result = googleAPI.isGooglePlayServicesAvailable(context);
-        if(result != ConnectionResult.SUCCESS) {
+        if (result != ConnectionResult.SUCCESS) {
             Log.d(TAG, "2: getLocationManager");
-            if(googleAPI.isUserResolvableError(result)) {
+            if (googleAPI.isUserResolvableError(result)) {
                 Log.d(TAG, "3: getLocationManager");
                 googleAPI.getErrorDialog((LoginActivity) context, result, 9001).show();
             }
@@ -179,9 +180,9 @@ public class GPSTrackerService extends Service implements LocationListener, Goog
         return instance;
     }
 
-    public boolean isGPSEnabled(){
+    public boolean isGPSEnabled() {
         LocationManager lm = (LocationManager) mTemporaryContext.getSystemService(Context.LOCATION_SERVICE);
-        return lm.isProviderEnabled( LocationManager.GPS_PROVIDER);
+        return lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
     @Override
@@ -207,28 +208,28 @@ public class GPSTrackerService extends Service implements LocationListener, Goog
     @Override
     public void onLocationChanged(Location location) {
         Log.d(TAG, "Loc updated: apsopaso");
-        if(location != null){
+        if (location != null) {
             this.sLocation = location;
             Context mContext = AppInit.getAppContext();
             SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
             String time = sdf.format(Calendar.getInstance().getTime());
-            SharedPrefsUtil.apply(mContext, HelperKey.KEY_LOC_LAT, sLocation.getLatitude()+"");
-            SharedPrefsUtil.apply(mContext, HelperKey.KEY_LOC_LONG, sLocation.getLongitude()+"");
-            SharedPrefsUtil.apply(mContext, HelperKey.KEY_LOC_ADDRESS, getLastLocationName()+"");
+            SharedPrefsUtil.apply(mContext, HelperKey.KEY_LOC_LAT, sLocation.getLatitude() + "");
+            SharedPrefsUtil.apply(mContext, HelperKey.KEY_LOC_LONG, sLocation.getLongitude() + "");
+            SharedPrefsUtil.apply(mContext, HelperKey.KEY_LOC_ADDRESS, getLastLocationName() + "");
             SharedPrefsUtil.apply(mContext, "CUR_TIME", time);
             String latitude = SharedPrefsUtil.getString(mContext, HelperKey.KEY_LOC_LAT, "");
             String longitude = SharedPrefsUtil.getString(mContext, HelperKey.KEY_LOC_LONG, "");
             String waktu = SharedPrefsUtil.getString(mContext, "CUR_TIME", "");
-            Log.d(TAG, "Loc updated: "+waktu+" oo "+latitude+" - "+sLocation.getLongitude());
+            Log.d(TAG, "Loc updated: " + waktu + " oo " + latitude + " - " + sLocation.getLongitude());
         }
         updateToServer();
     }
 
-    private void updateToServer(){
+    private void updateToServer() {
         LocationUpdateSendModel locationUpdateSendModel = new LocationUpdateSendModel(
                 HelperBridge.sModelLoginResponse.getPersonalId(),
-                sLocation.getLatitude()+"",
-                sLocation.getLongitude()+"",
+                sLocation.getLatitude() + "",
+                sLocation.getLongitude() + "",
                 getLastLocationName()
         );
 
@@ -241,12 +242,12 @@ public class GPSTrackerService extends Service implements LocationListener, Goog
 
             @Override
             public void callBackOnFail(String response) {
-                Log.d("LOCATION_UPDATE", "SERV_FAIL");
+                Log.d("LOCATION_UPDATE", "SERV_FAIL:" + response);
             }
 
             @Override
             public void callBackOnError(VolleyError error) {
-                Log.d("LOCATION_UPDATE", "SERV_ERROR");
+                Log.d("LOCATION_UPDATE", "SERV_ERROR:" + error);
             }
         });
 
@@ -254,16 +255,16 @@ public class GPSTrackerService extends Service implements LocationListener, Goog
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Log.d("LOHIN_TAG", "connect failed: "+connectionResult.getErrorCode());
-        if(connectionResult.getErrorCode() != ConnectionResult.SUCCESS) {
+        Log.d("LOHIN_TAG", "connect failed: " + connectionResult.getErrorCode());
+        if (connectionResult.getErrorCode() != ConnectionResult.SUCCESS) {
             GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
-            if(googleAPI.isUserResolvableError(connectionResult.getErrorCode())) {
+            if (googleAPI.isUserResolvableError(connectionResult.getErrorCode())) {
                 googleAPI.getErrorDialog((LoginActivity) mTemporaryContext, connectionResult.getErrorCode(), 9001).show();
             }
         }
     }
 
-    private void updateLocation(){
+    private void updateLocation() {
         if (ContextCompat.checkSelfPermission(mTemporaryContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(mTemporaryContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -272,35 +273,41 @@ public class GPSTrackerService extends Service implements LocationListener, Goog
         sLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
     }
 
-    public Location getLastLocation(){
+    public Location getLastLocation() {
         updateLocation();
-        if(sLocation != null){
+        if (sLocation != null) {
 //            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
             Context mContext = AppInit.getAppContext();
-            SharedPrefsUtil.apply(mContext, HelperKey.KEY_LOC_LAT, sLocation.getLatitude()+"");
-            SharedPrefsUtil.apply(mContext, HelperKey.KEY_LOC_LONG, sLocation.getLongitude()+"");
-            SharedPrefsUtil.apply(mContext, HelperKey.KEY_LOC_ADDRESS, getLastLocationName()+"");
+            SharedPrefsUtil.apply(mContext, HelperKey.KEY_LOC_LAT, sLocation.getLatitude() + "");
+            SharedPrefsUtil.apply(mContext, HelperKey.KEY_LOC_LONG, sLocation.getLongitude() + "");
+            SharedPrefsUtil.apply(mContext, HelperKey.KEY_LOC_ADDRESS, getLastLocationName() + "");
             return sLocation;
-        }else {
+        } else {
             return null;
         }
     }
 
-    public String getLastLocationName(){
+    public String getLastLocationName() {
         String address = "";
         List<Address> addresses;
         try {
             addresses = mGeocoder.getFromLocation(sLocation.getLatitude(),
                     sLocation.getLongitude(), 1);
+            Log.d("LOCATION_UPDATE", "Addresses size: " + addresses.size());
             if (addresses.size() > 0) {
+                Log.d("LOCATION_UPDATE", "Locality: " + addresses.get(0).getLocality());
                 System.out.println(addresses.get(0).getLocality());
-                for (int i=0;i<addresses.get(0).getMaxAddressLineIndex();i++){
-                    address += "\n"+addresses.get(0).getAddressLine(i)+" ";
+                for (int i = 0; i < addresses.get(0).getMaxAddressLineIndex(); i++) {
+                    address += "\n" + addresses.get(0).getAddressLine(i) + " ";
                 }
+                Log.d("LOCATION_UPDATE", "Address: " + address);
             }
         } catch (IOException e) {
             address = "err";
             e.printStackTrace();
+        }
+        if (address.equalsIgnoreCase("")) {
+            address = "Tidak terdeteksi";
         }
         return address;
     }

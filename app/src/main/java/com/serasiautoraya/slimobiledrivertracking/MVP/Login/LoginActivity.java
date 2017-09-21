@@ -3,10 +3,12 @@ package com.serasiautoraya.slimobiledrivertracking.MVP.Login;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.View;
@@ -22,6 +24,7 @@ import com.serasiautoraya.slimobiledrivertracking.R;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
 import com.serasiautoraya.slimobiledrivertracking.util.FCMMessageService;
 import com.serasiautoraya.slimobiledrivertracking.util.LocationServiceUtil;
+import com.serasiautoraya.slimobiledrivertracking.util.NetworkChangeReceiver;
 
 import net.grandcentrix.thirtyinch.TiActivity;
 
@@ -41,6 +44,8 @@ public class LoginActivity extends TiActivity<LoginPresenter, LoginView> impleme
     @BindView(R.id.input_password) EditText mEtPassword;
     @BindView(R.id.input_username) EditText mEtUsername;
 
+    NetworkChangeReceiver networkChangeReceiver;
+    Snackbar snackbarNetworkChange;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +54,33 @@ public class LoginActivity extends TiActivity<LoginPresenter, LoginView> impleme
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        snackbarNetworkChange = Snackbar.make(getWindow().getDecorView(), "Tidak terdapat koneksi internet", Snackbar.LENGTH_INDEFINITE);
+        networkChangeReceiver = new NetworkChangeReceiver() {
+            @Override
+            protected void onDisconnect() {
+                snackbarNetworkChange.show();
+            }
+
+            @Override
+            protected void onConnect() {
+                snackbarNetworkChange.dismiss();
+            }
+        };
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(networkChangeReceiver);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        registerReceiver(networkChangeReceiver, intentFilter);
     }
 
     @NonNull

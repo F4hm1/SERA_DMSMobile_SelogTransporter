@@ -3,6 +3,7 @@ package com.serasiautoraya.slimobiledrivertracking.MVP.RestClient;
 import android.content.Context;
 import android.location.Location;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -25,6 +26,7 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.Model;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.TimeRESTResponseModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperUrl;
 import com.serasiautoraya.slimobiledrivertracking.util.LocationServiceUtil;
+import com.serasiautoraya.slimobiledrivertracking.util.NetworkUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,6 +55,10 @@ public class RestConnection {
         final RestCallbackInterfaceJSON restcall = restCallback;
         final String token = transactionToken;
         Log.d("POST_TAGS", params.toString());
+        if(NetworkUtil.LAST_CONNECTION_NETWORK_STATUS == false){
+            restcall.callBackOnFail("Pastikan terdapat koneksi internet, kemudian silahkan coba kembali");
+            return;
+        }
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
                 url,
@@ -137,6 +143,10 @@ public class RestConnection {
         String tempLatitude = "";
         String tempLongitude = "";
         String tempAddress = "";
+        if(NetworkUtil.LAST_CONNECTION_NETWORK_STATUS == false){
+            restcall.callBackOnFail("Pastikan terdapat koneksi internet, kemudian silahkan coba kembali");
+            return;
+        }
 
         if ((LocationServiceUtil.getLocationManager(mContext).getLastLocation() != null) &&
                 LocationServiceUtil.getLocationManager(mContext).isGPSEnabled()) {
@@ -186,6 +196,10 @@ public class RestConnection {
 
     public void getData(String transactionToken, String url, HashMap<String, String> params, RestCallBackInterfaceModel restCallBackInterfaceModel) {
         final RestCallBackInterfaceModel restcall = restCallBackInterfaceModel;
+        if(NetworkUtil.LAST_CONNECTION_NETWORK_STATUS == false){
+            restcall.callBackOnFail("Pastikan terdapat koneksi internet, kemudian silahkan coba kembali");
+            return;
+        }
         HashMap<String, String> headers = new HashMap<>();
 
         headers.put("Content-Type", "application/json");
@@ -265,6 +279,10 @@ public class RestConnection {
 
         final RestCallBackInterfaceModel restcall = restCallBackInterfaceModel;
         HashMap<String, String> params2 = new HashMap<>();
+        if(NetworkUtil.LAST_CONNECTION_NETWORK_STATUS == false){
+            restcall.callBackOnFail("Pastikan terdapat koneksi internet, kemudian silahkan coba kembali");
+            return;
+        }
 
         HashMap<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
@@ -433,6 +451,10 @@ public class RestConnection {
     public void putData(String transactionToken, String url, HashMap<String, String> params, RestCallbackInterfaceJSON restCallback) {
         final RestCallbackInterfaceJSON restcall = restCallback;
         final String token = transactionToken;
+        if(NetworkUtil.LAST_CONNECTION_NETWORK_STATUS == false){
+            restcall.callBackOnFail("Pastikan terdapat koneksi internet, kemudian silahkan coba kembali");
+            return;
+        }
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.PUT,
