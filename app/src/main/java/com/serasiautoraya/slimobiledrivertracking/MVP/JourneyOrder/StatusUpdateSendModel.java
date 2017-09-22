@@ -54,35 +54,11 @@ public class StatusUpdateSendModel extends Model {
     @Expose
     private String Signature;
 
-    @SerializedName("ExpenseFuel")
-    @Expose
-    private String ExpenseFuel;
-
-    @SerializedName("ExpenseTollParking")
-    @Expose
-    private String ExpenseTollParking;
-
-    @SerializedName("ExpenseEscort")
-    @Expose
-    private String ExpenseEscort;
-
-    @SerializedName("ExpenseASDP")
-    @Expose
-    private String ExpenseASDP;
-
-    @SerializedName("ExpensePortal")
-    @Expose
-    private String ExpensePortal;
-
-    @SerializedName("ExpenseBMSPSI")
-    @Expose
-    private String ExpenseBMSPSI;
-
     @SerializedName("Reason")
     @Expose
     private String Reason;
 
-    public StatusUpdateSendModel(String activityCode, String orderCode, String personalId, String locationRealCoordinates, String locationRealText, String photo1, String photo2, String photo3, String codeVerification, String timeStamp, String signature, String expenseFuel, String expenseTollParking, String expenseEscort, String expenseASDP, String expensePortal, String expenseBMSPSI, String reason) {
+    public StatusUpdateSendModel(String activityCode, String orderCode, String personalId, String locationRealCoordinates, String locationRealText, String photo1, String photo2, String photo3, String codeVerification, String timeStamp, String signature, String reason) {
         ActivityCode = activityCode;
         OrderCode = orderCode;
         PersonalId = personalId;
@@ -94,12 +70,6 @@ public class StatusUpdateSendModel extends Model {
         CodeVerification = codeVerification;
         TimeStamp = timeStamp;
         Signature = signature;
-        ExpenseFuel = expenseFuel;
-        ExpenseTollParking = expenseTollParking;
-        ExpenseEscort = expenseEscort;
-        ExpenseASDP = expenseASDP;
-        ExpensePortal = expensePortal;
-        ExpenseBMSPSI = expenseBMSPSI;
         Reason = reason;
     }
 
@@ -145,30 +115,6 @@ public class StatusUpdateSendModel extends Model {
 
     public String getSignature() {
         return Signature;
-    }
-
-    public String getExpenseFuel() {
-        return ExpenseFuel;
-    }
-
-    public String getExpenseTollParking() {
-        return ExpenseTollParking;
-    }
-
-    public String getExpenseEscort() {
-        return ExpenseEscort;
-    }
-
-    public String getExpenseASDP() {
-        return ExpenseASDP;
-    }
-
-    public String getExpensePortal() {
-        return ExpensePortal;
-    }
-
-    public String getExpenseBMSPSI() {
-        return ExpenseBMSPSI;
     }
 
     public String getReason() {

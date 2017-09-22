@@ -185,7 +185,7 @@ public class DocumentCapturePresenter extends TiPresenter<DocumentCaptureView> {
                     public void callBackOnSuccess(TimeRESTResponseModel timeRESTResponseModel, String latitude, String longitude, String address) {
                         String timeZoneId = RestConnection.getTimeZoneID(timeRESTResponseModel);
                         String[] timeSplit = timeRESTResponseModel.getTime().split(" ");
-                        String[] dateSplit =  timeSplit[0].split(HelperKey.USER_DATE_FORMAT_SEPARATOR);
+                        String[] dateSplit = timeSplit[0].split(HelperKey.USER_DATE_FORMAT_SEPARATOR);
                         String date = timeSplit[0];
                         String time = timeSplit[1];
                         String dateMessage = dateSplit[2];
@@ -204,12 +204,6 @@ public class DocumentCapturePresenter extends TiPresenter<DocumentCaptureView> {
                                 verificationCodeSplitted,
                                 timeRESTResponseModel.getTime(),
                                 mBitmapSignature == null ? "" : HelperUtil.encodeTobase64(mBitmapSignature),
-                                exFuel,
-                                exTollPark,
-                                exEscort,
-                                exASDP,
-                                exPortal,
-                                exBMSPSI,
                                 pODReason
                         );
                         getView().toggleLoading(false);
@@ -230,6 +224,9 @@ public class DocumentCapturePresenter extends TiPresenter<DocumentCaptureView> {
     public void onRequestSubmitActivity() {
         getView().toggleLoading(true);
         Log.d("DOCUMENT_CAPTURE", mStatusUpdateSendModel.getHashMapType().toString());
+        Log.d("DOCUMENT_CAPTURE", "Photo 1: " + mStatusUpdateSendModel.getPhoto1().toString());
+        Log.d("DOCUMENT_CAPTURE", "Photo 2: " + mStatusUpdateSendModel.getPhoto2().toString());
+        Log.d("DOCUMENT_CAPTURE", "Photo 3: " + mStatusUpdateSendModel.getPhoto3().toString());
         mRestConnection.putData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.PUT_STATUS_UPDATE, mStatusUpdateSendModel.getHashMapType(), new RestCallbackInterfaceJSON() {
             @Override
             public void callBackOnSuccess(JSONObject response) {

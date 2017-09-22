@@ -35,8 +35,14 @@ public class ActivityDetailPresenter extends TiPresenter<ActivityDetailView>  {
     public void onActionClicked(){
         if(!HelperBridge.sActivityDetailResponseModel.getIsPOD().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)){
             getView().changeActivity(PODCaptureActivity.class);
-        }else {
+        }else if(
+                HelperBridge.sActivityDetailResponseModel.getIsPhoto().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY) ||
+                HelperBridge.sActivityDetailResponseModel.getIsSignature().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY) ||
+                HelperBridge.sActivityDetailResponseModel.getIsCodeVerification().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)
+                ){
             getView().changeActivity(DocumentCaptureActivity.class);
+        }else{
+
         }
     }
 
