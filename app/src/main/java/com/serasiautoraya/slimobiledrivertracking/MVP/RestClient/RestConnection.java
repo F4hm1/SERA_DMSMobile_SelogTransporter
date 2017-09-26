@@ -2,19 +2,28 @@ package com.serasiautoraya.slimobiledrivertracking.MVP.RestClient;
 
 import android.content.Context;
 import android.location.Location;
+import android.net.http.AndroidHttpClient;
+import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.android.volley.Cache;
+import com.android.volley.Network;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.cache.DiskBasedCache;
 import com.android.volley.error.AuthFailureError;
 import com.android.volley.error.ParseError;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.GsonRequest;
 import com.android.volley.request.JsonObjectRequest;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.HttpClientStack;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.HttpStack;
+import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -49,6 +58,114 @@ public class RestConnection {
     public RestConnection(Context context) {
         this.mRequestQueue = Volley.newRequestQueue(context);
         this.mContext = context;
+    }
+
+    int MAX_SERIAL_THREAD_POOL_SIZE = 1;
+    final int MAX_CACHE_SIZE = 2 * 1024 * 1024; //2 MB
+
+    private RequestQueue prepareSerialRequestQueue(Context context) {
+        Cache cache = new DiskBasedCache(context.getCacheDir(), MAX_CACHE_SIZE);
+        Network network = getNetwork();
+        return new RequestQueue(cache, network, MAX_SERIAL_THREAD_POOL_SIZE);
+    }
+
+    private static Network getNetwork() {
+        HttpStack stack;
+        String userAgent = "volley/0";
+        if(Build.VERSION.SDK_INT >= 9) {
+            stack = new HurlStack();
+        } else {
+            stack = new HttpClientStack(AndroidHttpClient.newInstance(userAgent));
+        }
+        return new BasicNetwork(stack);
+    }
+
+    public void postDataSerial(String transactionToken, String url, HashMap<String, String> params, RestCallbackInterfaceJSON restCallback) {
+        final RestCallbackInterfaceJSON restcall = restCallback;
+        final String token = transactionToken;
+        Log.d("POST_TAGS", params.toString());
+        if(NetworkUtil.LAST_CONNECTION_NETWORK_STATUS == false){
+            restcall.callBackOnFail("Pastikan terdapat koneksi internet, kemudian silahkan coba kembali");
+            return;
+        }
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                url,
+                new JSONObject(params),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        if (mStatusCode == 200) {
+                            restcall.callBackOnSuccess(response);
+                        } else {
+                            try {
+                                restcall.callBackOnFail(response.getString("responseText"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        restcall.callBackOnFail(error.getMessage());
+                    }
+                }
+        ) {
+            @Override
+            protected VolleyError parseNetworkError(VolleyError volleyError) {
+                if (volleyError.networkResponse != null && volleyError.networkResponse.data != null) {
+                    JSONObject jsonResponse = null;
+                    String responseText = "Terjadi Kesalahan";
+                    try {
+                        jsonResponse = new JSONObject(new String(volleyError.networkResponse.data));
+                        responseText = jsonResponse.getString("responseText");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    VolleyError error = new VolleyError(responseText);
+                    volleyError = error;
+                }
+                return volleyError;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                headers.put("Ocp-Apim-Subscription-Key", "6b22fb5969084b19a6c449cab37291fe");
+                if (!token.equalsIgnoreCase("")) {
+                    headers.put("Authorization", token);
+                }
+                return headers;
+            }
+
+
+            @Override
+            protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+                mStatusCode = response.statusCode;
+                String jsonString = new String(response.data);
+                JSONObject obj = null;
+                try {
+                    obj = new JSONObject(jsonString);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                return Response.success(obj, HttpHeaderParser.parseCacheHeaders(response));
+            }
+
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+        };
+
+        request.setShouldCache(false);
+        RequestQueue requestQueueSerail = this.prepareSerialRequestQueue(mContext);
+        requestQueueSerail.add(request);
     }
 
     public void postData(String transactionToken, String url, HashMap<String, String> params, RestCallbackInterfaceJSON restCallback) {

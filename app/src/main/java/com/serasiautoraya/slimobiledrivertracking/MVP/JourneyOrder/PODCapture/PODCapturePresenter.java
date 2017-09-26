@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 
 import com.android.volley.error.VolleyError;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallbackInterfaceJSON;
@@ -36,7 +37,7 @@ public class PODCapturePresenter extends TiPresenter<PODCaptureView> {
     private Uri mImageUri;
 
     private ArrayList<String> uploadedPhotos = new ArrayList<>();
-    private HashMap<String, PODPhotoSendModel> mPodPhotoSendModelHashMap;
+    private HashMap<Integer, PODPhotoSendModel> mPodPhotoSendModelHashMap;
 
     public PODCapturePresenter(RestConnection mRestConnection) {
         this.mRestConnection = mRestConnection;
@@ -80,11 +81,11 @@ public class PODCapturePresenter extends TiPresenter<PODCaptureView> {
         final Bitmap bitmapScaled = HelperUtil.saveScaledBitmap(mImageUri.getPath(), HelperUtil.getFirstImageName());
 //        mBitmapPhoto[mSelectedPhotoId - 1] = bitmapScaled;
         mPodPhotoSendModelHashMap.put(
-                mSelectedPhotoId + "",
+                mSelectedPhotoId,
                 new PODPhotoSendModel(
                         HelperUtil.encodeTobase64(bitmapScaled),
-                        "ACTIVITY-1",
-                        "CODE-1",
+                        HelperBridge.sActivityDetailResponseModel.getJourneyActivityId() + "",
+                        HelperBridge.sTempSelectedOrderCode,
                         HelperBridge.sModelLoginResponse.getPersonalId()
                 )
         );
@@ -92,22 +93,25 @@ public class PODCapturePresenter extends TiPresenter<PODCaptureView> {
     }
 
     public void onRequestSubmitted() {
-        for (Map.Entry<String, PODPhotoSendModel> entry : mPodPhotoSendModelHashMap.entrySet()) {
-            String containerId = entry.getKey();
+        for (Map.Entry<Integer, PODPhotoSendModel> entry : mPodPhotoSendModelHashMap.entrySet()) {
+            Integer containerId = entry.getKey();
             PODPhotoSendModel value = entry.getValue();
             postPhoto(value, containerId);
         }
 
     }
 
-    private void postPhoto(PODPhotoSendModel podPhotoSendModel, final String containerId) {
+    private void postPhoto(PODPhotoSendModel podPhotoSendModel, final Integer containerId) {
+        getView().showProgressBar(containerId);
         mRestConnection.postData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.POST_POD_PHOTO, podPhotoSendModel.getHashMapType(), new RestCallbackInterfaceJSON() {
             @Override
             public void callBackOnSuccess(JSONObject response) {
                 try {
                     getView().toggleLoading(false);
                     getView().showToast(response.getString("responseText"));
-                    uploadedPhotos.add(containerId);
+                    uploadedPhotos.add(containerId+"");
+                    getView().hideProgressBar(containerId);
+                    Log.d("PODES", "Success: " + response.getString("responseText"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -117,6 +121,8 @@ public class PODCapturePresenter extends TiPresenter<PODCaptureView> {
             public void callBackOnFail(String response) {
                 getView().toggleLoading(false);
                 getView().showToast(response);
+                getView().hideProgressBar(containerId);
+                Log.d("PODES", "Fail: " + response);
             }
 
             @Override
@@ -126,6 +132,8 @@ public class PODCapturePresenter extends TiPresenter<PODCaptureView> {
                 * */
                 getView().toggleLoading(false);
                 getView().showToast("Gagal melakukan pengajuan ketidakhadiran, silahkan periksa koneksi anda kemudian coba kembali");
+                getView().hideProgressBar(containerId);
+                Log.d("PODES", "Error: " + error.getMessage());
             }
         });
     }

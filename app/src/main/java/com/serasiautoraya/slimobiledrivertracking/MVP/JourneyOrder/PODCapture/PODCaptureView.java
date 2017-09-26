@@ -23,4 +23,8 @@ public interface PODCaptureView extends BaseViewInterface{
     void showConfirmationDialog(String activityName);
 
     void setSubmitText(String text);
+
+    void showProgressBar(Integer containerId);
+
+    void hideProgressBar(Integer containerId);
 }

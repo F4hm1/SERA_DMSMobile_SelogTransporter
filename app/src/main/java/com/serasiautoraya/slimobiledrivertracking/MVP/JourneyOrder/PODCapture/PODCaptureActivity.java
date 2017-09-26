@@ -87,6 +87,21 @@ public class PODCaptureActivity extends TiActivity<PODCapturePresenter, PODCaptu
     @BindView(R.id.pod_card_container_5)
     CardView mCardContainer5;
 
+    @BindView(R.id.pod_card_container_6)
+    CardView mCardContainer6;
+
+    @BindView(R.id.pod_card_container_7)
+    CardView mCardContainer7;
+
+    @BindView(R.id.pod_card_container_8)
+    CardView mCardContainer8;
+
+    @BindView(R.id.pod_card_container_9)
+    CardView mCardContainer9;
+
+    @BindView(R.id.pod_card_container_10)
+    CardView mCardContainer10;
+
 
     @BindView(R.id.pod_grid_content)
     GridLayout mGl;
@@ -102,12 +117,46 @@ public class PODCaptureActivity extends TiActivity<PODCapturePresenter, PODCaptu
         ButterKnife.bind(this);
         squareRelativeLayoutArr = new SquareRelativeLayout[totalView];
 //        generateViewsThumbnail();
+        initializeThumbnails();
+    }
+
+    private void initializeThumbnails() {
+//        View view = (View) mCardContainer1.getParent();
+        mCardContainer1.setVisibility(View.VISIBLE);
+
+//        View view2 = (View) mCardContainer2.getParent();
+        mCardContainer2.setVisibility(View.GONE);
+
+//        View view3 = (View) mCardContainer3.getParent();
+        mCardContainer3.setVisibility(View.GONE);
+
+        View view4 = (View) mCardContainer4.getParent();
+        view4.setVisibility(View.GONE);
+
+        View view5 = (View) mCardContainer5.getParent();
+        view5.setVisibility(View.GONE);
+
+        View view6 = (View) mCardContainer6.getParent();
+        view6.setVisibility(View.GONE);
+
+        View view7 = (View) mCardContainer7.getParent();
+        view7.setVisibility(View.GONE);
+
+        View view8 = (View) mCardContainer8.getParent();
+        view8.setVisibility(View.GONE);
+
+        View view9 = (View) mCardContainer9.getParent();
+        view9.setVisibility(View.GONE);
+
+        View view10 = (View) mCardContainer10.getParent();
+        view10.setVisibility(View.GONE);
+
     }
 
 
     @OnClick(R.id.pod_btn_submit)
     public void onSubmit(View view) {
-
+        getPresenter().onRequestSubmitted();
 //        int total = 10;
 //        int column = 3;
 //        int row = total / column;
@@ -138,8 +187,8 @@ public class PODCaptureActivity extends TiActivity<PODCapturePresenter, PODCaptu
 //            mGl.addView(oImageView, gridParam);
 //        }
 
-        View photoThumbnail = LayoutInflater.from(this).inflate(R.layout.single_pod_thumbnail, null);
-        mGl.addView(photoThumbnail);
+//        View photoThumbnail = LayoutInflater.from(this).inflate(R.layout.single_pod_thumbnail, null);
+//        mGl.addView(photoThumbnail);
 
 
 //        addThumbnail();
@@ -263,7 +312,12 @@ public class PODCaptureActivity extends TiActivity<PODCapturePresenter, PODCaptu
     }
 
     @Override
-    @OnClick({R.id.pod_card_container_1, R.id.pod_card_container_2, R.id.pod_card_container_3, R.id.pod_card_container_4, R.id.pod_card_container_5})
+    @OnClick(
+            {
+                    R.id.pod_card_container_1, R.id.pod_card_container_2, R.id.pod_card_container_3, R.id.pod_card_container_4, R.id.pod_card_container_5,
+                    R.id.pod_card_container_6, R.id.pod_card_container_7, R.id.pod_card_container_8, R.id.pod_card_container_9, R.id.pod_card_container_10
+            }
+    )
     public void onClickAddPhoto(View view) {
         getPresenter().capturePhoto(view.getId());
     }
@@ -282,6 +336,55 @@ public class PODCaptureActivity extends TiActivity<PODCapturePresenter, PODCaptu
             if (v instanceof SquareImageView) {
                 SquareImageView squareImageView = (SquareImageView) v;
                 squareImageView.setImageBitmap(bitmap);
+                toggleNextThumbnail(targetIvID);
+            }
+        }
+    }
+
+    private void toggleNextThumbnail(int targetIvID) {
+        switch (targetIvID){
+            case R.id.pod_card_container_1:{
+                mCardContainer2.setVisibility(View.VISIBLE);
+                break;
+            }
+            case R.id.pod_card_container_2:{
+                mCardContainer3.setVisibility(View.VISIBLE);
+                break;
+            }
+            case R.id.pod_card_container_3:{
+                View view = (View) mCardContainer4.getParent();
+                view.setVisibility(View.VISIBLE);
+                break;
+            }
+            case R.id.pod_card_container_4:{
+                View view = (View) mCardContainer5.getParent();
+                view.setVisibility(View.VISIBLE);
+                break;
+            }
+            case R.id.pod_card_container_5:{
+                View view = (View) mCardContainer6.getParent();
+                view.setVisibility(View.VISIBLE);
+                break;
+            }
+            case R.id.pod_card_container_6:{
+                View view = (View) mCardContainer7.getParent();
+                view.setVisibility(View.VISIBLE);
+                break;
+            }
+            case R.id.pod_card_container_7:{
+                View view = (View) mCardContainer8.getParent();
+                view.setVisibility(View.VISIBLE);
+                break;
+            }
+            case R.id.pod_card_container_8:{
+                View view = (View) mCardContainer9.getParent();
+                view.setVisibility(View.VISIBLE);
+                break;
+            }
+            case R.id.pod_card_container_9:{
+                View view = (View) mCardContainer10.getParent();
+                view.setVisibility(View.VISIBLE);
+                break;
             }
         }
     }
@@ -299,6 +402,37 @@ public class PODCaptureActivity extends TiActivity<PODCapturePresenter, PODCaptu
     @Override
     public void setSubmitText(String text) {
 
+    }
+
+    @Override
+    public void showProgressBar(Integer containerId) {
+        CardView cardView = (CardView) findViewById(containerId);
+        int count = cardView.getChildCount();
+        for (int i = 0; i < count; i++) {
+            View v = cardView.getChildAt(i);
+            if (v instanceof ProgressBar) {
+                ProgressBar progressBar = (ProgressBar) v;
+                progressBar.setVisibility(View.VISIBLE);
+                progressBar.setIndeterminate(true);
+                return;
+            }
+        }
+
+    }
+
+    @Override
+    public void hideProgressBar(Integer containerId) {
+        CardView cardView = (CardView) findViewById(containerId);
+        int count = cardView.getChildCount();
+        for (int i = 0; i < count; i++) {
+            View v = cardView.getChildAt(i);
+            if (v instanceof ProgressBar) {
+                ProgressBar progressBar = (ProgressBar) v;
+                progressBar.setIndeterminate(false);
+                progressBar.setVisibility(View.GONE);
+                return;
+            }
+        }
     }
 
     @Override
