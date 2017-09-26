@@ -1,19 +1,23 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Activity;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.Html;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperKey;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking.R;
+import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
 
 import net.grandcentrix.thirtyinch.TiActivity;
 
@@ -75,13 +79,14 @@ public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, 
 
     @Override
     public void showToast(String text) {
-
+        Toast.makeText(ActivityDetailActivity.this, text, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void showStandardDialog(String message, String Title) {
-
+        HelperUtil.showSimpleAlertDialogCustomTitle(message, ActivityDetailActivity.this, Title);
     }
+
 
     @NonNull
     @Override
@@ -126,5 +131,17 @@ public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, 
     public void changeActivity(Class cls) {
         Intent i = new Intent(ActivityDetailActivity.this, cls);
         startActivity(i);
+    }
+
+    @Override
+    public void showConfirmationDialog(String title, String activity) {
+        CharSequence textMsg = Html.fromHtml("Apakah anda yakin akan melakukan aktifitas "+
+                "<b>"+ activity.toString()+"</b>"+"?");
+        HelperUtil.showConfirmationAlertDialog(textMsg, ActivityDetailActivity.this, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                getPresenter().onRequestSubmitActivity();
+            }
+        });
     }
 }

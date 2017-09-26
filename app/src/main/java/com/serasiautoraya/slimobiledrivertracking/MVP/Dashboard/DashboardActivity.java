@@ -58,12 +58,15 @@ import butterknife.ButterKnife;
 
 public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardView> implements DashboardView, NavigationView.OnNavigationItemSelectedListener {
 
-    @BindView(R.id.nav_view) NavigationView  mNavigationView;
-    @BindView(R.id.toolbar) Toolbar mToolbar;
+    @BindView(R.id.nav_view)
+    NavigationView mNavigationView;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
     private TextView mTextViewNavNama;
     private TextView mTextViewNavPosisi;
     private ImageView mImageViewNavImg;
-    @BindView(R.id.drawer_layout) DrawerLayout mDrawer;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout mDrawer;
     @BindView(R.id.rel_nointernet)
     RelativeLayout relNoInternet;
 
@@ -84,7 +87,7 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
         ButterKnife.bind(this);
         snackbarNetworkChange = Snackbar.make(getWindow().getDecorView(), "Tidak terdapat koneksi internet", Snackbar.LENGTH_INDEFINITE);
         View view = snackbarNetworkChange.getView();
-        FrameLayout.LayoutParams params =(FrameLayout.LayoutParams)view.getLayoutParams();
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) view.getLayoutParams();
         params.gravity = Gravity.TOP;
         view.setLayoutParams(params);
         networkChangeReceiver = new NetworkChangeReceiver() {
@@ -283,12 +286,12 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         this.mFragmentSelectedID = id;
-        if(id != R.id.nav_change_pass && id != R.id.nav_logout && id != R.id.nav_notification_list){
+        if (id != R.id.nav_change_pass && id != R.id.nav_logout && id != R.id.nav_notification_list) {
             getPresenter().onNavigationItemSelectedForFragment(id);
-        }else{
-            if(id == R.id.nav_logout){
+        } else {
+            if (id == R.id.nav_logout) {
                 logout();
-            }else{
+            } else {
                 getPresenter().onNavigationItemSelectedForActivity(id);
             }
         }
@@ -340,10 +343,10 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
         mImageViewNavImg.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_DOWN){
-                    mImageViewNavImg.setColorFilter(Color.argb(90, 255, 87 ,34));
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    mImageViewNavImg.setColorFilter(Color.argb(90, 255, 87, 34));
                 }
-                if(event.getAction() == MotionEvent.ACTION_UP){
+                if (event.getAction() == MotionEvent.ACTION_UP) {
                     mImageViewNavImg.setColorFilter(Color.argb(0, 0, 0, 0));
                 }
                 return false;
@@ -362,6 +365,21 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
         Picasso.with(DashboardActivity.this).load(urlPhoto).into(mImageViewNavImg);
         mTextViewNavNama.setText(name);
         mTextViewNavPosisi.setText(position);
+    }
+
+    @Override
+    public void toggleMenu(boolean requestCiCo, boolean reportCiCo, boolean requestAbsence, boolean reportAbsence, boolean requestOLCTrip, boolean reportOLCTrip, boolean requestOvertime, boolean reportOvertime, boolean reportServiceHour) {
+        Menu navMenu = mNavigationView.getMenu();
+        navMenu.findItem(R.id.nav_cico_request).setVisible(requestCiCo);
+        navMenu.findItem(R.id.nav_absence_request).setVisible(requestAbsence);
+        navMenu.findItem(R.id.nav_olctrip_request).setVisible(requestOLCTrip);
+        navMenu.findItem(R.id.nav_overtime_request).setVisible(requestOvertime);
+
+        if (reportAbsence == false && reportCiCo == false && reportOLCTrip == false && reportOvertime == false) {
+            navMenu.findItem(R.id.nav_attendance_history).setVisible(false);
+        }else {
+            navMenu.findItem(R.id.nav_attendance_history).setVisible(true);
+        }
     }
 
 

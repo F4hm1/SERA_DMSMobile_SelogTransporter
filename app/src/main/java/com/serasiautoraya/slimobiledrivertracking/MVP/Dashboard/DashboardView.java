@@ -8,7 +8,7 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.BaseViewInte
  * Created by Randi Dwi Nandra on 27/03/2017.
  */
 
-public interface DashboardView extends BaseViewInterface{
+public interface DashboardView extends BaseViewInterface {
 
     void initializeMenuAccess();
 
@@ -28,4 +28,16 @@ public interface DashboardView extends BaseViewInterface{
 
     void setDrawerProfile(String name, String position, String urlPhoto);
 
+    void toggleMenu(
+            boolean requestCiCo,
+            boolean reportCiCo,
+            boolean requestAbsence,
+            boolean reportAbsence,
+            boolean requestOLCTrip,
+            boolean reportOLCTrip,
+            boolean requestOvertime,
+            boolean reportOvertime,
+            boolean reportServiceHour
+    );
 }
+

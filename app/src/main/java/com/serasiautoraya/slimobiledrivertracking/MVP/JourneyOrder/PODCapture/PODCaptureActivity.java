@@ -202,7 +202,6 @@ public class PODCaptureActivity extends TiActivity<PODCapturePresenter, PODCaptu
 //        }
     }
 
-
     private void addThumbnail() {
         if (currentTotalViewShown < 10) {
             squareRelativeLayoutArr[currentTotalViewShown].setVisibility(View.VISIBLE);

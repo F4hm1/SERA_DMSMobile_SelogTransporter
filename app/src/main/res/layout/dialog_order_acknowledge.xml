@@ -44,7 +44,7 @@
             <TextView
                 android:id="@+id/acknowledge_dialog_destination" android:text="Surabaya"
                 android:textStyle="bold"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:paddingBottom="2dip"
                 android:paddingTop="2dip" />
         </TableRow>
@@ -64,7 +64,7 @@
 
             <TextView
                 android:id="@+id/acknowledge_dialog_origin" android:text="Jakarta"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:paddingBottom="2dip"
                 android:paddingTop="2dip" />
         </TableRow>
@@ -84,7 +84,7 @@
 
             <TextView
                 android:id="@+id/acknowledge_dialog_etd" android:text=""
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:paddingBottom="2dip"
                 android:paddingTop="2dip" />
         </TableRow>
@@ -104,7 +104,7 @@
 
             <TextView
                 android:id="@+id/acknowledge_dialog_eta" android:text=""
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:paddingBottom="2dip"
                 android:paddingTop="2dip" />
         </TableRow>
@@ -124,7 +124,7 @@
 
             <TextView
                 android:id="@+id/acknowledge_dialog_customer" android:text=""
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:paddingBottom="2dip"
                 android:paddingTop="2dip" />
         </TableRow>

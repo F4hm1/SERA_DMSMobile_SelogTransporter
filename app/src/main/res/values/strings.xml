@@ -78,10 +78,10 @@
     <string name="order_title_code">Order Code</string>
     <string name="order_title_hub">HUB</string>
     <string name="order_title_nextdriver">Next Driver</string>
-    <string name="order_title_origin">Origin</string>
-    <string name="order_title_dest">Destination</string>
-    <string name="order_title_etd">ETD</string>
-    <string name="order_title_eta">ETA</string>
+    <string name="order_title_origin">Asal</string>
+    <string name="order_title_dest">Tujuan</string>
+    <string name="order_title_etd">Perkiraan Keberangkatan</string>
+    <string name="order_title_eta">Perkiraan Tiba</string>
     <string name="order_title_customer">Customer</string>
     <string name="order_title_unit">Unit</string>
     <string name="order_title_nextdest">Next Destination</string>

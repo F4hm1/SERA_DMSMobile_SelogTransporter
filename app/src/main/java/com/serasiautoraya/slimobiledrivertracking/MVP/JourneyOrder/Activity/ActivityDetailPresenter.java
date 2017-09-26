@@ -3,25 +3,38 @@ package com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Activity;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.android.volley.error.VolleyError;
+import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallbackInterfaceJSON;
+import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.TimeRestCallBackInterface;
+import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.TimeRESTResponseModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperBridge;
+import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperKey;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperTransactionCode;
+import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperUrl;
 import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.DocumentCapture.DocumentCaptureActivity;
 import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.PODCapture.PODCaptureActivity;
+import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.StatusUpdateSendModel;
+import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.LocationModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
+import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
 import com.serasiautoraya.slimobiledrivertracking.util.HttpsTrustManager;
 
 import net.grandcentrix.thirtyinch.TiPresenter;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by Randi Dwi Nandra on 02/04/2017.
  */
 
-public class ActivityDetailPresenter extends TiPresenter<ActivityDetailView>  {
+public class ActivityDetailPresenter extends TiPresenter<ActivityDetailView> {
 
     private RestConnection mRestConnection;
     private ActivityDetailResponseModel mActivityDetailResponseModel;
+    private StatusUpdateSendModel mStatusUpdateSendModel;
 
-    public ActivityDetailPresenter(RestConnection restConnection){
+    public ActivityDetailPresenter(RestConnection restConnection) {
         this.mRestConnection = restConnection;
     }
 
@@ -32,21 +45,63 @@ public class ActivityDetailPresenter extends TiPresenter<ActivityDetailView>  {
         getView().initialize();
     }
 
-    public void onActionClicked(){
-        if(!HelperBridge.sActivityDetailResponseModel.getIsPOD().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)){
+    public void onActionClicked() {
+        if (HelperBridge.sActivityDetailResponseModel.getIsPOD().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)) {
             getView().changeActivity(PODCaptureActivity.class);
-        }else if(
+        } else if (
                 HelperBridge.sActivityDetailResponseModel.getIsPhoto().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY) ||
-                HelperBridge.sActivityDetailResponseModel.getIsSignature().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY) ||
-                HelperBridge.sActivityDetailResponseModel.getIsCodeVerification().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)
-                ){
+                        HelperBridge.sActivityDetailResponseModel.getIsSignature().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY) ||
+                        HelperBridge.sActivityDetailResponseModel.getIsCodeVerification().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)
+                ) {
             getView().changeActivity(DocumentCaptureActivity.class);
-        }else{
+        } else {
+            final LocationModel locationModel = mRestConnection.getCurrentLocation();
+            if (locationModel.getLongitude().equalsIgnoreCase("null")) {
+                getView().showToast("Aplikasi sedang mengambil lokasi (pastikan gps dan peket data tersedia), harap tunggu beberapa saat kemudian silahkan coba kembali.");
+            } else {
+                getView().toggleLoading(true);
+                mRestConnection.getServerTime(new TimeRestCallBackInterface() {
+                    @Override
+                    public void callBackOnSuccess(TimeRESTResponseModel timeRESTResponseModel, String latitude, String longitude, String address) {
+//                        String timeZoneId = RestConnection.getTimeZoneID(timeRESTResponseModel);
+//                        String[] timeSplit = timeRESTResponseModel.getTime().split(" ");
+//                        String[] dateSplit = timeSplit[0].split(HelperKey.USER_DATE_FORMAT_SEPARATOR);
+//                        String date = timeSplit[0];
+//                        String time = timeSplit[1];
+//                        String dateMessage = dateSplit[2];
+//                        String monthMessage = dateSplit[1];
+//                        String yearMessage = dateSplit[0];
+
+                        mStatusUpdateSendModel = new StatusUpdateSendModel(
+                                HelperBridge.sActivityDetailResponseModel.getJourneyActivityId() + "",
+                                HelperBridge.sTempSelectedOrderCode,
+                                HelperBridge.sModelLoginResponse.getPersonalId(),
+                                locationModel.getLatitude() + ", " + locationModel.getLongitude(),
+                                locationModel.getAddress(),
+                                "",
+                                "",
+                                "",
+                                "",
+                                timeRESTResponseModel.getTime(),
+                                "",
+                                ""
+                        );
+                        getView().toggleLoading(false);
+                        getView().showConfirmationDialog("Perhatian", HelperBridge.sActivityDetailResponseModel.getActivityName());
+                    }
+
+                    @Override
+                    public void callBackOnFail(String message) {
+                        getView().toggleLoading(false);
+                        getView().showStandardDialog(message, "Perhatian");
+                    }
+                });
+            }
 
         }
     }
 
-    public void loadDetailOrderData(String orderCode){
+    public void loadDetailOrderData(String orderCode) {
 
         /*
         * TODO change this lines code below
@@ -84,7 +139,7 @@ public class ActivityDetailPresenter extends TiPresenter<ActivityDetailView>  {
 //        });
     }
 
-    private void setViewDetailData(String orderCode){
+    private void setViewDetailData(String orderCode) {
 //        getView().setDetailData(
 //                "Order "+mActivityDetailResponseModel.getAssignmentId(),
 //                mActivityDetailResponseModel.getAssignmentId(),
@@ -103,15 +158,15 @@ public class ActivityDetailPresenter extends TiPresenter<ActivityDetailView>  {
 //        getView().setButtonText(mActivityDetailResponseModel.getActivityName());
 
         getView().setDetailData(
-                "Order "+ HelperBridge.sActivityDetailResponseModel.getAssignmentId(),
-                HelperBridge.sActivityDetailResponseModel.getAssignmentId()+"",
+                "Order " + HelperBridge.sActivityDetailResponseModel.getAssignmentId(),
+                HelperBridge.sActivityDetailResponseModel.getAssignmentId() + "",
                 HelperBridge.sActivityDetailResponseModel.getActivityName(),
                 HelperBridge.sActivityDetailResponseModel.getAcitivityType(),
                 HelperBridge.sActivityDetailResponseModel.getLocationTargetLat(),
                 HelperBridge.sActivityDetailResponseModel.getLocationTargetLng(),
                 HelperBridge.sActivityDetailResponseModel.getTimeActual(),
                 HelperBridge.sActivityDetailResponseModel.getTimeTarget(),
-                HelperBridge.sActivityDetailResponseModel.getJourneyActivityId()+"",
+                HelperBridge.sActivityDetailResponseModel.getJourneyActivityId() + "",
                 HelperBridge.sActivityDetailResponseModel.getLocationTargetText(),
                 HelperBridge.sActivityDetailResponseModel.getTimeTarget(),
                 HelperBridge.sActivityDetailResponseModel.getTimeBaseline(),
@@ -129,4 +184,33 @@ public class ActivityDetailPresenter extends TiPresenter<ActivityDetailView>  {
 
     }
 
+    public void onRequestSubmitActivity() {
+        getView().toggleLoading(true);
+        mRestConnection.putData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.PUT_STATUS_UPDATE, mStatusUpdateSendModel.getHashMapType(), new RestCallbackInterfaceJSON() {
+            @Override
+            public void callBackOnSuccess(JSONObject response) {
+                try {
+                    getView().toggleLoading(false);
+                    getView().showStandardDialog(response.getString("responseText"), "Berhasil");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void callBackOnFail(String response) {
+                getView().toggleLoading(false);
+                getView().showStandardDialog(response, "Perhatian");
+            }
+
+            @Override
+            public void callBackOnError(VolleyError error) {
+                /*
+                * TODO change this, jadikan value nya dari string values!
+                * */
+                getView().toggleLoading(false);
+                getView().showStandardDialog("Gagal melakukan update status, silahkan periksa koneksi anda kemudian coba kembali", "Perhatian");
+            }
+        });
+    }
 }

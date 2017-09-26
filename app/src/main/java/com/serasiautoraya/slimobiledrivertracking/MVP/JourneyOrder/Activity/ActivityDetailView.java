@@ -34,4 +34,6 @@ public interface ActivityDetailView extends BaseViewInterface{
 
     void changeActivity(Class cls);
 
+    void showConfirmationDialog(String title, String activity);
+
 }
