@@ -20,6 +20,10 @@ public interface PODCaptureView extends BaseViewInterface{
 
     void onClickSubmit(View view);
 
+    void onClickClose(View view);
+
+    void hideThumbnail(Integer ibId);
+
     void showConfirmationDialog(String activityName);
 
     void setSubmitText(String text);

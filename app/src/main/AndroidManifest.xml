@@ -33,7 +33,7 @@
         <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.OrderHistory.OrderHistoryDetail.OrderHistoryDetailActivity"/>
         <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.TrainingQuestionnaire.QuestionnaireActivity"></activity>
         <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.PODCapture.PODCaptureActivity"></activity>
-
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.PodSubmit.PodSubmitActivity"/>
 
 
         <activity android:name="com.serasiautoraya.slimobiledrivertracking.activity.DashboardActivity" android:theme="@style/AppTheme.NoActionBar"/>
@@ -46,7 +46,6 @@
         <activity android:name="com.serasiautoraya.slimobiledrivertracking.activity.SignatureActivity"/>
         <activity android:name="com.serasiautoraya.slimobiledrivertracking.activity.ProfileActivity"/>
         <activity android:name="com.serasiautoraya.slimobiledrivertracking.activity.ActionActivityActivity"/>
-
 
         <service android:name="com.serasiautoraya.slimobiledrivertracking.util.GPSTracker"
             android:enabled="true"

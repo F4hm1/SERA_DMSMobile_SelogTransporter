@@ -10,8 +10,9 @@ import android.util.Log;
 
 import com.android.volley.error.VolleyError;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallbackInterfaceJSON;
+import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.TimeRestCallBackInterface;
+import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.TimeRESTResponseModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperBridge;
-import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperTransactionCode;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperUrl;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
@@ -120,12 +121,11 @@ public class PODCapturePresenter extends TiPresenter<PODCaptureView> {
             @Override
             public void callBackOnSuccess(JSONObject response) {
                 try {
-                    getView().toggleLoading(false);
                     getView().showToast(response.getString("responseText"));
-                    uploadedPhotos.add(containerId+"");
+                    uploadedPhotos.add(containerId + "");
                     getView().hideProgressBar(containerId);
                     Log.d("PODES", "Success: " + response.getString("responseText"));
-                    if(uploadedPhotos.size() == mPodPhotoSendModelHashMap.size()){
+                    if (uploadedPhotos.size() == mPodPhotoSendModelHashMap.size()) {
                         getView().showConfirmationDialog(HelperBridge.sActivityDetailResponseModel.getActivityName());
                     }
                 } catch (JSONException e) {
@@ -135,7 +135,6 @@ public class PODCapturePresenter extends TiPresenter<PODCaptureView> {
 
             @Override
             public void callBackOnFail(String response) {
-                getView().toggleLoading(false);
                 getView().showToast(response);
                 getView().hideProgressBar(containerId);
                 Log.d("PODES", "Fail: " + response);
@@ -146,7 +145,6 @@ public class PODCapturePresenter extends TiPresenter<PODCaptureView> {
                 /*
                 * TODO change this, jadikan value nya dari string values!
                 * */
-                getView().toggleLoading(false);
                 getView().showToast("Gagal melakukan pengajuan ketidakhadiran, silahkan periksa koneksi anda kemudian coba kembali");
                 getView().hideProgressBar(containerId);
                 Log.d("PODES", "Error: " + error.getMessage());
@@ -155,6 +153,69 @@ public class PODCapturePresenter extends TiPresenter<PODCaptureView> {
     }
 
     public void onRequestSubmitActivity() {
+        getView().toggleLoading(true);
+        mRestConnection.getServerTime(new TimeRestCallBackInterface() {
+            @Override
+            public void callBackOnSuccess(TimeRESTResponseModel timeRESTResponseModel, String latitude, String longitude, String address) {
+                String timeZoneId = RestConnection.getTimeZoneID(timeRESTResponseModel);
+                String[] timeSplit = timeRESTResponseModel.getTime().split(" ");
+                String date = timeSplit[0];
+                String time = timeSplit[1];
 
+                getView().toggleLoading(false);
+
+                PODUpdateSendModel podUpdateSendModel = new PODUpdateSendModel(
+                        HelperBridge.sModelLoginResponse.getPersonalId(),
+                        HelperBridge.sActivityDetailResponseModel.getJourneyActivityId() + "",
+                        "Reason: -",
+                        date + " " + time
+                );
+
+                submitPOD(podUpdateSendModel);
+            }
+
+            @Override
+            public void callBackOnFail(String message) {
+                getView().toggleLoading(false);
+                getView().showStandardDialog(message, "Perhatian");
+            }
+        });
+
+    }
+
+    private void submitPOD(PODUpdateSendModel podUpdateSendModel) {
+        getView().toggleLoading(true);
+        final PODCaptureView podCaptureView = getView();
+        mRestConnection.putData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.PUT_POD, podUpdateSendModel.getHashMapType(), new RestCallbackInterfaceJSON() {
+            @Override
+            public void callBackOnSuccess(JSONObject response) {
+                try {
+                    podCaptureView.toggleLoading(false);
+                    podCaptureView.showToast(response.getString("responseText"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void callBackOnFail(String response) {
+                podCaptureView.toggleLoading(false);
+                podCaptureView.showStandardDialog(response, "Perhatian");
+            }
+
+            @Override
+            public void callBackOnError(VolleyError error) {
+                /*
+                * TODO change this, jadikan value nya dari string values!
+                * */
+                podCaptureView.toggleLoading(false);
+                podCaptureView.showStandardDialog("Gagal melakukan ack order, silahkan periksa koneksi anda kemudian coba kembali", "Perhatian");
+            }
+        });
+    }
+
+    public void onThumbnailClosed(Integer ibId, Integer cardId) {
+        mPodPhotoSendModelHashMap.remove(cardId);
+        getView().hideThumbnail(ibId);
     }
 }

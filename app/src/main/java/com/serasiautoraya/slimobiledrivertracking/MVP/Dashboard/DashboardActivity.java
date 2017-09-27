@@ -34,6 +34,8 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.CiCo.CiCoFragment;
 import com.serasiautoraya.slimobiledrivertracking.MVP.ExpensesRequest.ExpenseRequestFragment;
 import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Assigned.AssignedFragment;
 import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.PODCapture.PODCaptureActivity;
+import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.PodSubmit.PodSubmitActivity;
+import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.PodSubmit.PodSubmitView;
 import com.serasiautoraya.slimobiledrivertracking.MVP.NotificatonList.NotificationListActivity;
 import com.serasiautoraya.slimobiledrivertracking.MVP.OLCTrip.OLCTripFragment;
 import com.serasiautoraya.slimobiledrivertracking.MVP.OrderHistory.OrderHistoryFragment;
@@ -238,7 +240,8 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
             case R.id.nav_change_pass:
 //                return ChangePasswordActivity.class;
 //                return QuestionnaireActivity.class;
-                return PODCaptureActivity.class;
+//                return PODCaptureActivity.class;
+                return PodSubmitActivity.class;
 //                return FatigueActivity.class;
             case R.id.nav_notification_list:
                 return NotificationListActivity.class;

@@ -1,5 +1,6 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.PODCapture;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -112,6 +114,7 @@ public class PODCaptureActivity extends TiActivity<PODCapturePresenter, PODCaptu
     int currentTotalViewShown = 0;
     SquareRelativeLayout[] squareRelativeLayoutArr;
     private boolean isFromCameraActivity = false;
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -295,17 +298,21 @@ public class PODCaptureActivity extends TiActivity<PODCapturePresenter, PODCaptu
 
     @Override
     public void toggleLoading(boolean isLoading) {
-
+        if (isLoading) {
+            mProgressDialog = ProgressDialog.show(PODCaptureActivity.this, getResources().getString(R.string.progress_msg_loaddata), getResources().getString(R.string.prog_msg_wait), true, false);
+        } else {
+            mProgressDialog.dismiss();
+        }
     }
 
     @Override
     public void showToast(String text) {
-
+        Toast.makeText(PODCaptureActivity.this, text, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void showStandardDialog(String message, String Title) {
-
+        HelperUtil.showSimpleAlertDialogCustomTitle(message, PODCaptureActivity.this, Title);
     }
 
     @NonNull
@@ -341,60 +348,103 @@ public class PODCaptureActivity extends TiActivity<PODCapturePresenter, PODCaptu
                 squareImageView.setImageBitmap(bitmap);
                 toggleNextThumbnail(targetIvID);
             }
+
+            if (v instanceof ImageButton) {
+                ImageButton imageButton = (ImageButton) v;
+                imageButton.setVisibility(View.VISIBLE);
+            }
         }
     }
 
     private void toggleNextThumbnail(int targetIvID) {
-        switch (targetIvID){
-            case R.id.pod_card_container_1:{
-                mCardContainer2.setVisibility(View.VISIBLE);
-                break;
-            }
-            case R.id.pod_card_container_2:{
-                mCardContainer3.setVisibility(View.VISIBLE);
-                break;
-            }
-            case R.id.pod_card_container_3:{
-                View view = (View) mCardContainer4.getParent();
-                view.setVisibility(View.VISIBLE);
-                break;
-            }
-            case R.id.pod_card_container_4:{
-                View view = (View) mCardContainer5.getParent();
-                view.setVisibility(View.VISIBLE);
-                break;
-            }
-            case R.id.pod_card_container_5:{
-                View view = (View) mCardContainer6.getParent();
-                view.setVisibility(View.VISIBLE);
-                break;
-            }
-            case R.id.pod_card_container_6:{
-                View view = (View) mCardContainer7.getParent();
-                view.setVisibility(View.VISIBLE);
-                break;
-            }
-            case R.id.pod_card_container_7:{
-                View view = (View) mCardContainer8.getParent();
-                view.setVisibility(View.VISIBLE);
-                break;
-            }
-            case R.id.pod_card_container_8:{
-                View view = (View) mCardContainer9.getParent();
-                view.setVisibility(View.VISIBLE);
-                break;
-            }
-            case R.id.pod_card_container_9:{
-                View view = (View) mCardContainer10.getParent();
-                view.setVisibility(View.VISIBLE);
-                break;
-            }
+        CardView targetCardView = getNextThumbnail(targetIvID);
+        if(targetIvID == R.id.pod_card_container_1 || targetIvID == R.id.pod_card_container_2){
+            targetCardView.setVisibility(View.VISIBLE);
+        }else {
+            View viewParentContainer = (View) targetCardView.getParent();
+            viewParentContainer.setVisibility(View.VISIBLE);
         }
     }
 
+    private CardView getNextThumbnail(int currentId){
+        switch (currentId){
+            case R.id.pod_card_container_1:{
+                return mCardContainer2;
+            }
+            case R.id.pod_card_container_2:{
+                return mCardContainer3;
+            }
+            case R.id.pod_card_container_3:{
+                return mCardContainer4;
+            }
+            case R.id.pod_card_container_4:{
+                return mCardContainer5;
+            }
+            case R.id.pod_card_container_5:{
+                return mCardContainer6;
+            }
+            case R.id.pod_card_container_6:{
+                return mCardContainer7;
+            }
+            case R.id.pod_card_container_7:{
+                return mCardContainer8;
+            }
+            case R.id.pod_card_container_8:{
+                return mCardContainer9;
+            }
+            case R.id.pod_card_container_9:{
+                return mCardContainer10;
+            }
+            default:{
+                return mCardContainer10;
+            }
+        }
+    }
     @Override
     public void onClickSubmit(View view) {
 
+    }
+
+    @Override
+    @OnClick(
+            {
+                    R.id.pod_ib_close_2, R.id.pod_ib_close_3, R.id.pod_ib_close_4, R.id.pod_ib_close_5,
+                    R.id.pod_ib_close_6, R.id.pod_ib_close_7, R.id.pod_ib_close_8, R.id.pod_ib_close_9, R.id.pod_ib_close_10
+            }
+    )
+    public void onClickClose(View view) {
+        View viewCard = (View) view.getParent();
+        getPresenter().onThumbnailClosed(view.getId(), viewCard.getId());
+    }
+
+    @Override
+    public void hideThumbnail(Integer ibId) {
+        View view = (View) findViewById(ibId).getParent();
+        resetThumbnail(view.getId());
+
+        CardView cardView = getNextThumbnail(view.getId());
+        if(ibId == R.id.pod_ib_close_2 || ibId == R.id.pod_ib_close_3){
+            cardView.setVisibility(View.GONE);
+        }else {
+            View viewParentContainer = (View) cardView.getParent();
+            viewParentContainer.setVisibility(View.GONE);
+        }
+    }
+
+    private void resetThumbnail(int targetIvID){
+        CardView cardView = (CardView) findViewById(targetIvID);
+        int count = cardView.getChildCount();
+        for (int i = 0; i < count; i++) {
+            View v = cardView.getChildAt(i);
+            if (v instanceof SquareImageView) {
+                SquareImageView squareImageView = (SquareImageView) v;
+                squareImageView.setImageResource(R.drawable.add_foto_pod);
+            }
+            if (v instanceof ImageButton) {
+                ImageButton imageButton = (ImageButton) v;
+                imageButton.setVisibility(View.GONE);
+            }
+        }
     }
 
     @Override
