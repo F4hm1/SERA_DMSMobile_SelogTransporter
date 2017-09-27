@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.android.volley.error.VolleyError;
@@ -14,6 +15,7 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperTransactionCo
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperUrl;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
+import com.serasiautoraya.slimobiledrivertracking.util.HttpsTrustManager;
 
 import net.grandcentrix.thirtyinch.TiPresenter;
 
@@ -43,6 +45,14 @@ public class PODCapturePresenter extends TiPresenter<PODCaptureView> {
         this.mRestConnection = mRestConnection;
         mPodPhotoSendModelHashMap = new HashMap<>();
         mBitmapPhoto = new Bitmap[10];
+    }
+
+    @Override
+    protected void onAttachView(@NonNull final PODCaptureView view) {
+        super.onAttachView(view);
+        HttpsTrustManager.allowAllSSL();
+        getView().initialize();
+        getView().setSubmitText(HelperBridge.sActivityDetailResponseModel.getActivityName());
     }
 
     public void capturePhoto(int id) {
@@ -95,6 +105,10 @@ public class PODCapturePresenter extends TiPresenter<PODCaptureView> {
     public void onRequestSubmitted() {
         for (Map.Entry<Integer, PODPhotoSendModel> entry : mPodPhotoSendModelHashMap.entrySet()) {
             Integer containerId = entry.getKey();
+            getView().showProgressBar(containerId);
+        }
+        for (Map.Entry<Integer, PODPhotoSendModel> entry : mPodPhotoSendModelHashMap.entrySet()) {
+            Integer containerId = entry.getKey();
             PODPhotoSendModel value = entry.getValue();
             postPhoto(value, containerId);
         }
@@ -102,7 +116,6 @@ public class PODCapturePresenter extends TiPresenter<PODCaptureView> {
     }
 
     private void postPhoto(PODPhotoSendModel podPhotoSendModel, final Integer containerId) {
-        getView().showProgressBar(containerId);
         mRestConnection.postData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.POST_POD_PHOTO, podPhotoSendModel.getHashMapType(), new RestCallbackInterfaceJSON() {
             @Override
             public void callBackOnSuccess(JSONObject response) {
@@ -112,6 +125,9 @@ public class PODCapturePresenter extends TiPresenter<PODCaptureView> {
                     uploadedPhotos.add(containerId+"");
                     getView().hideProgressBar(containerId);
                     Log.d("PODES", "Success: " + response.getString("responseText"));
+                    if(uploadedPhotos.size() == mPodPhotoSendModelHashMap.size()){
+                        getView().showConfirmationDialog(HelperBridge.sActivityDetailResponseModel.getActivityName());
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -136,5 +152,9 @@ public class PODCapturePresenter extends TiPresenter<PODCaptureView> {
                 Log.d("PODES", "Error: " + error.getMessage());
             }
         });
+    }
+
+    public void onRequestSubmitActivity() {
+
     }
 }

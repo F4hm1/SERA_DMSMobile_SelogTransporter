@@ -1,5 +1,6 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.PODCapture;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,7 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.CustomView.SquareRelativeL
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperKey;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking.R;
+import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
 
 import net.grandcentrix.thirtyinch.TiActivity;
 
@@ -396,12 +399,20 @@ public class PODCaptureActivity extends TiActivity<PODCapturePresenter, PODCaptu
 
     @Override
     public void showConfirmationDialog(String activityName) {
+        CharSequence textMsg = Html.fromHtml("Apakah anda yakin semua dokumen telah terpenuhi dan akan melakukan proses " +
+                "<b>" + activityName + "</b>" + "?");
 
+        HelperUtil.showConfirmationAlertDialog(textMsg, PODCaptureActivity.this, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                getPresenter().onRequestSubmitActivity();
+            }
+        });
     }
 
     @Override
     public void setSubmitText(String text) {
-
+        mBtnSubmit.setText(text);
     }
 
     @Override

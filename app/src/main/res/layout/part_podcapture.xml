@@ -539,13 +539,32 @@
 
             </GridLayout>
 
-            <Button
-                android:id="@+id/pod_btn_submit"
-                android:layout_width="wrap_content"
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                card_view:cardUseCompatPadding="true"
                 android:layout_below="@+id/pod_grid_content"
                 android:layout_centerHorizontal="true"
-                android:text="Test Upload" />
+                card_view:cardElevation="3dp"
+                card_view:cardCornerRadius="2dp">
+
+                <Button
+                    android:id="@+id/pod_btn_submit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="28dp"
+                    android:paddingBottom="28dp"
+                    android:textSize="24sp"
+                    android:text="ACTIVITY NAME"
+                    android:background="@drawable/button_bg_clickable"
+                    android:textColor="@color/colorTextIcon">
+
+                </Button>
+
+            </android.support.v7.widget.CardView>
 
         </RelativeLayout>
 
