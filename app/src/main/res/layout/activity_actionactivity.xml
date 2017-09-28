@@ -65,6 +65,30 @@
                     android:text="Row 3 column 2" />
             </TableRow>
 
+            <!--order_title_code-->
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/table_bottom_border"
+                android:gravity="left">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:paddingBottom="10dip"
+
+                    android:paddingLeft="20dip"
+                    android:paddingTop="10dip"
+                    android:text="@string/order_title_assignment" />
+
+                <TextView
+                    android:id="@+id/order_title_assignment"
+                    android:layout_weight="1"
+                    android:paddingBottom="10dip"
+
+                    android:paddingTop="10dip"
+                    android:text="Row 3 column 2" />
+            </TableRow>
+
             <!--order_title_hub-->
             <TableRow
                 android:layout_width="fill_parent"
@@ -79,7 +103,7 @@
                     android:paddingBottom="10dip"
                     android:paddingLeft="20dip"
                     android:paddingTop="10dip"
-                    android:text="@string/order_title_hub" />
+                    android:text="@string/order_title_activityname" />
 
                 <TextView
                     android:id="@+id/order_title_activityname"
@@ -104,7 +128,7 @@
 
                     android:paddingLeft="20dip"
                     android:paddingTop="10dip"
-                    android:text="@string/order_title_nextdriver" />
+                    android:text="@string/order_title_activitytype" />
 
                 <TextView
                     android:id="@+id/order_title_activitytype"
@@ -254,7 +278,7 @@
                     android:paddingBottom="10dip"
                     android:paddingLeft="20dip"
                     android:paddingTop="10dip"
-                    android:text="@string/order_title_unit" />
+                    android:text="@string/order_title_locationtarget" />
 
                 <TextView
                     android:id="@+id/order_title_locationtarget"
@@ -278,7 +302,7 @@
                     android:paddingBottom="10dip"
                     android:paddingLeft="20dip"
                     android:paddingTop="10dip"
-                    android:text="@string/order_title_nextdest"
+                    android:text="@string/order_title_timetarget"
                     android:textColor="@color/colorPrimaryDark" />
 
                 <TextView
@@ -304,7 +328,7 @@
                     android:paddingBottom="10dip"
                     android:paddingLeft="20dip"
                     android:paddingTop="10dip"
-                    android:text="@string/order_title_nexteta"
+                    android:text="@string/order_title_timebaseline"
                     android:textColor="@color/colorPrimaryDark" />
 
                 <TextView
@@ -329,7 +353,7 @@
                     android:paddingBottom="10dip"
                     android:paddingLeft="20dip"
                     android:paddingTop="10dip"
-                    android:text="@string/order_title_laststatus"
+                    android:text="@string/order_title_timeactual"
                     android:textColor="@color/colorPrimaryDark" />
 
                 <TextView
@@ -381,10 +405,10 @@
                     android:paddingBottom="10dip"
                     android:paddingLeft="20dip"
                     android:paddingTop="10dip"
-                    android:text="@string/order_title_quantity" />
+                    android:text="@string/order_title_unitmodel" />
 
                 <TextView
-                    android:id="@+id/order_title_quantity"
+                    android:id="@+id/order_title_unitmodel"
                     android:layout_weight="1"
                     android:paddingBottom="10dip"
 
@@ -406,10 +430,10 @@
                     android:paddingBottom="10dip"
                     android:paddingLeft="20dip"
                     android:paddingTop="10dip"
-                    android:text="@string/order_title_checkpoint" />
+                    android:text="@string/order_title_unitnumber" />
 
                 <TextView
-                    android:id="@+id/order_title_checkpoint"
+                    android:id="@+id/order_title_unitnumber"
                     android:layout_weight="1"
                     android:paddingBottom="10dip"
 
@@ -417,7 +441,7 @@
                     android:text="Row 3 column 2" />
             </TableRow>
 
-            <!--order_title_checkpointeta-->
+            <!--order_title_documentneed-->
             <TableRow
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -431,10 +455,10 @@
                     android:paddingBottom="10dip"
                     android:paddingLeft="20dip"
                     android:paddingTop="10dip"
-                    android:text="@string/order_title_checkpointeta" />
+                    android:text="@string/order_title_documentneed" />
 
                 <TextView
-                    android:id="@+id/order_title_checkpointeta"
+                    android:id="@+id/order_title_documentneed"
                     android:layout_weight="1"
                     android:paddingBottom="10dip"
 
@@ -456,85 +480,10 @@
                     android:paddingBottom="10dip"
                     android:paddingLeft="20dip"
                     android:paddingTop="10dip"
-                    android:text="@string/order_title_loadingloc" />
+                    android:text="@string/order_title_nextlocationtarget" />
 
                 <TextView
-                    android:id="@+id/order_title_loadingloc"
-                    android:layout_weight="1"
-                    android:paddingBottom="10dip"
-
-                    android:paddingTop="10dip"
-                    android:text="Row 3 column 2" />
-            </TableRow>
-
-            <!--order_title_loadingeta-->
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/table_bottom_border"
-                android:gravity="left">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_weight="1"
-
-                    android:paddingBottom="10dip"
-                    android:paddingLeft="20dip"
-                    android:paddingTop="10dip"
-                    android:text="@string/order_title_loadingeta" />
-
-                <TextView
-                    android:id="@+id/order_title_loadingeta"
-                    android:layout_weight="1"
-                    android:paddingBottom="10dip"
-
-                    android:paddingTop="10dip"
-                    android:text="Row 3 column 2" />
-            </TableRow>
-
-            <!--order_title_unloadingloc-->
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/table_bottom_border"
-                android:gravity="left">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_weight="1"
-
-                    android:paddingBottom="10dip"
-                    android:paddingLeft="20dip"
-                    android:paddingTop="10dip"
-                    android:text="@string/order_title_unloadingloc" />
-
-                <TextView
-                    android:id="@+id/order_title_unloadingloc"
-                    android:layout_weight="1"
-                    android:paddingBottom="10dip"
-
-                    android:paddingTop="10dip"
-                    android:text="Row 3 column 2" />
-            </TableRow>
-
-            <!--order_title_unloadinget-->
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/table_bottom_border"
-                android:gravity="left">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_weight="1"
-
-                    android:paddingBottom="10dip"
-                    android:paddingLeft="20dip"
-                    android:paddingTop="10dip"
-                    android:text="@string/order_title_unloadinget" />
-
-                <TextView
-                    android:id="@+id/order_title_unloadinget"
+                    android:id="@+id/order_title_nextlocationtarget"
                     android:layout_weight="1"
                     android:paddingBottom="10dip"
 

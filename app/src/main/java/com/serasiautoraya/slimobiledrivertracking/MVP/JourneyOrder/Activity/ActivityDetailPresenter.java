@@ -1,23 +1,19 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Activity;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.android.volley.error.VolleyError;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallbackInterfaceJSON;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.TimeRestCallBackInterface;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.TimeRESTResponseModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperBridge;
-import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperKey;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperTransactionCode;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperUrl;
 import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.DocumentCapture.DocumentCaptureActivity;
-import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.PODCapture.PODCaptureActivity;
 import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.PodSubmit.PodSubmitActivity;
 import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.StatusUpdateSendModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.LocationModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
-import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
 import com.serasiautoraya.slimobiledrivertracking.util.HttpsTrustManager;
 
 import net.grandcentrix.thirtyinch.TiPresenter;
@@ -141,37 +137,41 @@ public class ActivityDetailPresenter extends TiPresenter<ActivityDetailView> {
     }
 
     private void setViewDetailData(String orderCode) {
-//        getView().setDetailData(
-//                "Order "+mActivityDetailResponseModel.getAssignmentId(),
-//                mActivityDetailResponseModel.getAssignmentId(),
-//                mActivityDetailResponseModel.getActivityName(),
-//                mActivityDetailResponseModel.getActivityType(),
-//                mActivityDetailResponseModel.getOrigin(),
-//                mActivityDetailResponseModel.getDestination(),
-//                mActivityDetailResponseModel.getETD(),
-//                mActivityDetailResponseModel.getETA(),
-//                mActivityDetailResponseModel.getCustomer(),
-//                mActivityDetailResponseModel.getLocationTargetText(),
-//                mActivityDetailResponseModel.getTimeTarget(),
-//                mActivityDetailResponseModel.getTimeBaseline(),
-//                mActivityDetailResponseModel.getTimeActual()
-//        );
-//        getView().setButtonText(mActivityDetailResponseModel.getActivityName());
+        String cargoType = "";
+        String[] cargoTypeArr = HelperBridge.sActivityDetailResponseModel.getCargoType();
+        for (int i = 0; i < cargoTypeArr.length; i++) {
+            cargoType += cargoTypeArr[i];
+            if(i != cargoTypeArr.length - 1){
+                cargoType += ", ";
+            }
+        }
+
+        String docNeed = "";
+        docNeed += HelperBridge.sActivityDetailResponseModel.getIsPhoto().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)?"Foto aktifitas, ":"";
+        docNeed += HelperBridge.sActivityDetailResponseModel.getIsPOD().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)?"Foto bukti POD, ":"";
+        docNeed += HelperBridge.sActivityDetailResponseModel.getIsCodeVerification().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)?"Kode verifikasi, ":"";
+        docNeed += HelperBridge.sActivityDetailResponseModel.getIsSignature().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)?"Tanda tangan digital":"";
 
         getView().setDetailData(
-                "Order " + HelperBridge.sActivityDetailResponseModel.getAssignmentId(),
-                HelperBridge.sActivityDetailResponseModel.getAssignmentId() + "",
+                "Order " + HelperBridge.sTempSelectedOrderCode,
+                HelperBridge.sTempSelectedOrderCode,
                 HelperBridge.sActivityDetailResponseModel.getActivityName(),
-                HelperBridge.sActivityDetailResponseModel.getAcitivityType(),
-                HelperBridge.sActivityDetailResponseModel.getLocationTargetLat(),
-                HelperBridge.sActivityDetailResponseModel.getLocationTargetLng(),
-                HelperBridge.sActivityDetailResponseModel.getTimeActual(),
-                HelperBridge.sActivityDetailResponseModel.getTimeTarget(),
-                HelperBridge.sActivityDetailResponseModel.getJourneyActivityId() + "",
+                HelperBridge.sActivityDetailResponseModel.getActivityType(),
+                HelperBridge.sAssignedOrderResponseModel.getOrigin(),
+                HelperBridge.sAssignedOrderResponseModel.getDestination(),
+                HelperBridge.sAssignedOrderResponseModel.getETD(),
+                HelperBridge.sAssignedOrderResponseModel.getETA(),
+                HelperBridge.sAssignedOrderResponseModel.getCustomer(),
                 HelperBridge.sActivityDetailResponseModel.getLocationTargetText(),
                 HelperBridge.sActivityDetailResponseModel.getTimeTarget(),
                 HelperBridge.sActivityDetailResponseModel.getTimeBaseline(),
-                HelperBridge.sActivityDetailResponseModel.getTimeActual()
+                HelperBridge.sActivityDetailResponseModel.getTimeActual(),
+                HelperBridge.sActivityDetailResponseModel.getAssignmentId()+"",
+                cargoType,
+                HelperBridge.sActivityDetailResponseModel.getUnitModel(),
+                HelperBridge.sActivityDetailResponseModel.getUnitNumber(),
+                docNeed,
+                HelperBridge.sActivityDetailResponseModel.getNextActivityLocationText()
         );
 
 //        Log.d("ACTIVITY DET:", HelperBridge.sActivityDetailResponseModel.getHashMapType().toString());

@@ -63,7 +63,7 @@ public class ActiveOrderPresenter extends TiPresenter<ActiveOrderView> {
          * detail activity view -> initialize all view/field wtith the model from static class before
         * */
 
-        AssignedOrderResponseModel assignedOrderResponseModel = (AssignedOrderResponseModel) mSimpleAdapterModel.getItem(position);
+        final AssignedOrderResponseModel assignedOrderResponseModel = (AssignedOrderResponseModel) mSimpleAdapterModel.getItem(position);
 //        String orderCode = assignedOrderResponseModel.getOrderID();
         final String orderCode = assignedOrderResponseModel.getOrderID();
 //        setdummydata(orderCode);
@@ -81,6 +81,7 @@ public class ActiveOrderPresenter extends TiPresenter<ActiveOrderView> {
             public void callBackOnSuccess(BaseResponseModel response) {
                 HelperBridge.sActivityDetailResponseModel = Model.getModelInstance(response.getData()[0], ActivityDetailResponseModel.class);
                 HelperBridge.sTempSelectedOrderCode = orderCode;
+                HelperBridge.sAssignedOrderResponseModel = assignedOrderResponseModel;
                 getView().changeActivityAction(HelperKey.KEY_INTENT_ORDERCODE, HelperBridge.sActivityDetailResponseModel.getAssignmentId()+"", ActivityDetailActivity.class);
                 activeOrderView.toggleLoading(false);
             }

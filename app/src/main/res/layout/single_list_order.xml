@@ -34,7 +34,7 @@
             android:layout_marginRight="100dp"
             android:gravity="left">
             <TextView
-                android:text="@string/order_title_hub"
+                android:text="@string/order_title_activityname"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:paddingBottom="2dip"
@@ -55,7 +55,7 @@
             android:layout_marginRight="100dp"
             android:gravity="left">
             <TextView
-                android:text="@string/order_title_nextdriver"
+                android:text="@string/order_title_activitytype"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:paddingBottom="2dip"
@@ -160,7 +160,7 @@
             android:layout_marginRight="100dp"
             android:gravity="left">
             <TextView
-                android:text="@string/order_title_unit"
+                android:text="@string/order_title_locationtarget"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:paddingBottom="2dip"

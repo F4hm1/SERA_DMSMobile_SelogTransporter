@@ -99,7 +99,7 @@ public class PlanOrderPresenter extends TiPresenter<PlanOrderView> {
             );
         }else {
             Integer assignmentId = assignedOrderResponseModel.getAssignmentId();
-            loadDetailOrder(assignedOrderResponseModel.getOrderID(), assignmentId);
+            loadDetailOrder(assignedOrderResponseModel.getOrderID(), assignmentId, assignedOrderResponseModel);
         }
     }
 
@@ -170,7 +170,7 @@ public class PlanOrderPresenter extends TiPresenter<PlanOrderView> {
         });
     }
 
-    private void loadDetailOrder(final String orderId, Integer assignmentId){
+    private void loadDetailOrder(final String orderId, Integer assignmentId, final AssignedOrderResponseModel assignedOrderResponseModel){
 //        setdummydata(orderCode);
 
         /*
@@ -187,6 +187,7 @@ public class PlanOrderPresenter extends TiPresenter<PlanOrderView> {
             public void callBackOnSuccess(BaseResponseModel response) {
                 HelperBridge.sActivityDetailResponseModel = Model.getModelInstance(response.getData()[0], ActivityDetailResponseModel.class);
                 HelperBridge.sTempSelectedOrderCode = orderId;
+                HelperBridge.sAssignedOrderResponseModel = assignedOrderResponseModel;
                 getView().changeActivityAction(HelperKey.KEY_INTENT_ORDERCODE, HelperBridge.sActivityDetailResponseModel.getAssignmentId()+"", ActivityDetailActivity.class);
                 planOrderView.toggleLoading(false);
             }

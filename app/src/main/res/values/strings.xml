@@ -74,24 +74,24 @@
     <string name="progress_msg_loaddata">Loading data...</string>
 
     <!--Order Details -->
-    <string name="order_title">Order Details</string>
-    <string name="order_title_code">Order Code</string>
-    <string name="order_title_hub">HUB</string>
-    <string name="order_title_nextdriver">Next Driver</string>
+    <string name="order_title">Detail Order</string>
+    <string name="order_title_code">Nomor Order</string>
+    <string name="order_title_activityname">Nama Aktifitas</string>
+    <string name="order_title_activitytype">Tipe Aktifitas</string>
     <string name="order_title_origin">Asal</string>
     <string name="order_title_dest">Tujuan</string>
     <string name="order_title_etd">Perkiraan Keberangkatan</string>
     <string name="order_title_eta">Perkiraan Tiba</string>
     <string name="order_title_customer">Customer</string>
-    <string name="order_title_unit">Unit</string>
-    <string name="order_title_nextdest">Next Destination</string>
-    <string name="order_title_nexteta">Next ETA</string>
-    <string name="order_title_laststatus">Last Status</string>
-    <string name="order_title_cargotype">Cargo Type</string>
-    <string name="order_title_quantity">Quantity</string>
-    <string name="order_title_checkpoint">Checkpoint</string>
-    <string name="order_title_checkpointeta">Checkpoint ETA</string>
-    <string name="order_title_loadingloc">Loading Location</string>
+    <string name="order_title_locationtarget">Lokasi Aktifitas</string>
+    <string name="order_title_timetarget">Waktu Target</string>
+    <string name="order_title_timebaseline">Waktu Baseline</string>
+    <string name="order_title_timeactual">Waktu Aktual</string>
+    <string name="order_title_cargotype">Tipe Muatan</string>
+    <string name="order_title_unitmodel">Model Unit</string>
+    <string name="order_title_unitnumber">NoPol Unit</string>
+    <string name="order_title_documentneed">Lampiran Dibutuhkan</string>
+    <string name="order_title_nextlocationtarget">Lokasi Aktifitas Selanjutnya</string>
     <string name="order_title_loadingeta">Loading ET</string>
     <string name="order_title_loadingtime">Loading Time</string>
     <string name="order_title_unloadingloc">Unloading Location</string>
@@ -289,6 +289,8 @@
     <string name="history_detail_title_overtimeend">Tanggal berakhir</string>
     <string name="history_detail_title_overtimetype">Jenis lembur</string>
     <string name="expense_label_availableorder">Order tersedia</string>
+    <string name="pod_guide_label">Petunjuk pengambilan foto bukti POD:</string>
+    <string name="order_title_assignment">Nomor Penugasan</string>
     <string-array name="documents_podreason_array">
         <item>POD Tersedia</item>
         <item>Tertahan oleh customer</item>

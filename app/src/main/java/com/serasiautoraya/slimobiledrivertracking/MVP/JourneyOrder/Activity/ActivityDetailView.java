@@ -8,7 +8,7 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.BaseViewInte
  * Created by Randi Dwi Nandra on 02/04/2017.
  */
 
-public interface ActivityDetailView extends BaseViewInterface{
+public interface ActivityDetailView extends BaseViewInterface {
 
     void onActionClicked(View view);
 
@@ -25,8 +25,14 @@ public interface ActivityDetailView extends BaseViewInterface{
             String locationTarget,
             String timeTarget,
             String timeBaseline,
-            String timeActual
-            );
+            String timeActual,
+            String assignmentId,
+            String cargoType,
+            String unitModel,
+            String unitnumber,
+            String docNeed,
+            String nextActivity
+    );
 
     void setButtonText(String text);
 

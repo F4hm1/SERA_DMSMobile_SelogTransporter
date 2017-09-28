@@ -40,8 +40,6 @@
             android:label="Riwayat Order"/>
         <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.TrainingQuestionnaire.QuestionnaireActivity"
             android:label="Kuisioner Training"></activity>
-        <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.PODCapture.PODCaptureActivity"
-            android:label="Pengambilan Bukti POD"></activity>
         <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.PodSubmit.PodSubmitActivity"
             android:label="Pengambilan Bukti POD"/>
 

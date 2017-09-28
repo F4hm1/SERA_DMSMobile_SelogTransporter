@@ -57,6 +57,16 @@ public class PodSubmitPresenter extends TiPresenter<PodSubmitView> {
         HttpsTrustManager.allowAllSSL();
         getView().initialize();
         getView().setSubmitText(HelperBridge.sActivityDetailResponseModel.getActivityName());
+        getView().setGuideText(HelperBridge.sActivityDetailResponseModel.getPODGuide() + " " +
+                HelperBridge.sActivityDetailResponseModel.getPODGuide() + " " +
+                HelperBridge.sActivityDetailResponseModel.getPODGuide() + " " +
+                HelperBridge.sActivityDetailResponseModel.getPODGuide() + " " +
+                HelperBridge.sActivityDetailResponseModel.getPODGuide() + " " +
+                HelperBridge.sActivityDetailResponseModel.getPODGuide() + " " +
+                HelperBridge.sActivityDetailResponseModel.getPODGuide() + " " +
+                HelperBridge.sActivityDetailResponseModel.getPODGuide() + " " +
+                HelperBridge.sActivityDetailResponseModel.getPODGuide() + " " +
+                HelperBridge.sActivityDetailResponseModel.getPODGuide() + " ");
     }
 
     /**
@@ -106,6 +116,10 @@ public class PodSubmitPresenter extends TiPresenter<PodSubmitView> {
 
     public void onRequestSubmitted(ArrayList<PodItemModel> podItemModels) {
         mPodItemCount = 0;
+        if(podItemModels.size() < 2){
+            getView().showPhotosRequiredAlert();
+            return;
+        }
         for (PodItemModel value : podItemModels) {
             if (value.getBitmap() != null) {
                 getView().toggleProgressBar(value.getAdapterIndex(), true);
@@ -136,7 +150,7 @@ public class PodSubmitPresenter extends TiPresenter<PodSubmitView> {
                     getView().toggleProgressBar(position, false);
                     Log.d("PODES", "Success: " + response.getString("responseText"));
                     if (uploadedPhotos.size() == mPodItemCount) {
-                        getView().showConfirmationDialog(HelperBridge.sActivityDetailResponseModel.getActivityName());
+                        onConfirmActivity();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -162,8 +176,11 @@ public class PodSubmitPresenter extends TiPresenter<PodSubmitView> {
         });
     }
 
+    public void onConfirmActivity(){
+        getView().showConfirmationDialog(HelperBridge.sActivityDetailResponseModel.getActivityName());
+    }
 
-    public void onRequestSubmitActivity() {
+    public void onRequestSubmitActivity(final String reason) {
         getView().toggleLoading(true);
         mRestConnection.getServerTime(new TimeRestCallBackInterface() {
             @Override
@@ -178,7 +195,7 @@ public class PodSubmitPresenter extends TiPresenter<PodSubmitView> {
                 PODUpdateSendModel podUpdateSendModel = new PODUpdateSendModel(
                         HelperBridge.sModelLoginResponse.getPersonalId(),
                         HelperBridge.sActivityDetailResponseModel.getJourneyActivityId() + "",
-                        "Reason: -",
+                        reason,
                         date + " " + time
                 );
 

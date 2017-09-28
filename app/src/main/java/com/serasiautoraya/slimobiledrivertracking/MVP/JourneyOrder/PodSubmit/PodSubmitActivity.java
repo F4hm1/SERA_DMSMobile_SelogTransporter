@@ -11,12 +11,15 @@ import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.serasiautoraya.slimobiledrivertracking.MVP.CustomView.SquareImageView;
@@ -37,6 +40,9 @@ import butterknife.OnClick;
  */
 
 public class PodSubmitActivity extends TiActivity<PodSubmitPresenter, PodSubmitView> implements PodSubmitView {
+    @BindView(R.id.pod_card_submit)
+    CardView mCardSubmit;
+
     @BindView(R.id.pod_card_container)
     CardView mCardContainer;
 
@@ -49,15 +55,59 @@ public class PodSubmitActivity extends TiActivity<PodSubmitPresenter, PodSubmitV
     @BindView(R.id.pod_spinner_reason)
     Spinner mSpinnerPodReason;
 
+    @BindView(R.id.pod_tv_guide)
+    TextView mTvPodGuide;
+
     private ProgressDialog mProgressDialog;
     private PodListAdapter mPodListAdapter;
     private boolean isFromCameraActivity = false;
+    private RelativeLayout.LayoutParams mParamBtnSubmitNormal;
+    private RelativeLayout.LayoutParams mParamBtnSubmitBottom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pod_capture);
         ButterKnife.bind(this);
+        initializePodAdapter();
+        initializeDynamicLayoutParams();
+        initializeSpinnerReason();
+
+    }
+
+    private void initializeSpinnerReason() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(PodSubmitActivity.this, R.array.documents_podreason_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinnerPodReason.setAdapter(adapter);
+        mSpinnerPodReason.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                if (position == 0) {
+                    mCardContainer.setVisibility(View.VISIBLE);
+                    mCardSubmit.setLayoutParams(mParamBtnSubmitBottom);
+                } else {
+                    mCardContainer.setVisibility(View.GONE);
+                    mCardSubmit.setLayoutParams(mParamBtnSubmitNormal);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    private void initializeDynamicLayoutParams() {
+        mParamBtnSubmitNormal = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        mParamBtnSubmitNormal.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 0);
+        mParamBtnSubmitNormal.addRule(RelativeLayout.BELOW, R.id.pod_card_reason);
+        mParamBtnSubmitBottom = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        mParamBtnSubmitBottom.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+
+    }
+
+    private void initializePodAdapter() {
         mPodListAdapter = new PodListAdapter(this, new PodItemOnClickListener() {
             @Override
             public void onCapturePhoto(int position, SquareImageView squareImageView) {
@@ -77,25 +127,6 @@ public class PodSubmitActivity extends TiActivity<PodSubmitPresenter, PodSubmitV
         mPodListAdapter.addItem(new PodItemModel(null));
         mGvContainer.setAdapter(mPodListAdapter);
         mPodListAdapter.notifyDataSetChanged();
-
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(PodSubmitActivity.this, R.array.documents_podreason_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSpinnerPodReason.setAdapter(adapter);
-        mSpinnerPodReason.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(adapterView.getSelectedItem().toString().equalsIgnoreCase("POD Tersedia")){
-                    mCardContainer.setVisibility(View.VISIBLE);
-                }else {
-                    mCardContainer.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
     }
 
     @Override
@@ -157,7 +188,11 @@ public class PodSubmitActivity extends TiActivity<PodSubmitPresenter, PodSubmitV
     @Override
     @OnClick(R.id.pod_btn_submit)
     public void onClickSubmit(View view) {
-        getPresenter().onRequestSubmitted(mPodListAdapter.getPodItemModels());
+        if(mSpinnerPodReason.getSelectedItemPosition() == 0){
+            getPresenter().onRequestSubmitted(mPodListAdapter.getPodItemModels());
+        }else{
+            getPresenter().onConfirmActivity();
+        }
     }
 
     @Override
@@ -185,7 +220,7 @@ public class PodSubmitActivity extends TiActivity<PodSubmitPresenter, PodSubmitV
         HelperUtil.showConfirmationAlertDialog(textMsg, PodSubmitActivity.this, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                getPresenter().onRequestSubmitActivity();
+                getPresenter().onRequestSubmitActivity(mSpinnerPodReason.getSelectedItemPosition() == 0?"-":mSpinnerPodReason.getSelectedItem().toString());
             }
         });
     }
@@ -193,6 +228,16 @@ public class PodSubmitActivity extends TiActivity<PodSubmitPresenter, PodSubmitV
     @Override
     public void setSubmitText(String activityName) {
         mBtnSubmit.setText(activityName);
+    }
+
+    @Override
+    public void showPhotosRequiredAlert() {
+        Snackbar.make(mGvContainer, "Harap mengambil minimal 1 foto POD", Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void setGuideText(String text) {
+        mTvPodGuide.setText(text);
     }
 
 }

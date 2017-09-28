@@ -60,7 +60,7 @@
                 android:background="@drawable/table_bottom_border"
                 android:gravity="left">
                 <TextView
-                    android:text="@string/order_title_hub"
+                    android:text="@string/order_title_activityname"
                     android:layout_weight="1"
 
                     android:layout_width="wrap_content"
@@ -83,7 +83,7 @@
                 android:background="@drawable/table_bottom_border"
                 android:gravity="left">
                 <TextView
-                    android:text="@string/order_title_nextdriver"
+                    android:text="@string/order_title_activitytype"
                     android:layout_weight="1"
                     android:layout_width="wrap_content"
 
@@ -211,7 +211,7 @@
                 android:background="@drawable/table_bottom_border"
                 android:gravity="left">
                 <TextView
-                    android:text="@string/order_title_unit"
+                    android:text="@string/order_title_locationtarget"
                     android:layout_weight="1"
 
                     android:layout_width="wrap_content"
@@ -231,7 +231,7 @@
                 android:background="@drawable/table_bottom_border"
                 android:gravity="left">
                 <TextView
-                    android:text="@string/order_title_nextdest"
+                    android:text="@string/order_title_timetarget"
                     android:layout_weight="1"
                     android:textColor="@color/colorPrimaryDark"
                     android:layout_width="wrap_content"
@@ -252,7 +252,7 @@
                 android:background="@drawable/table_bottom_border"
                 android:gravity="left">
                 <TextView
-                    android:text="@string/order_title_nexteta"
+                    android:text="@string/order_title_timebaseline"
                     android:layout_weight="1"
                     android:textColor="@color/colorPrimaryDark"
                     android:layout_width="wrap_content"
@@ -272,7 +272,7 @@
                 android:background="@drawable/table_bottom_border"
                 android:gravity="left">
                 <TextView
-                    android:text="@string/order_title_laststatus"
+                    android:text="@string/order_title_timeactual"
                     android:layout_weight="1"
                     android:textColor="@color/colorPrimaryDark"
                     android:layout_width="wrap_content"
@@ -313,7 +313,7 @@
                 android:background="@drawable/table_bottom_border"
                 android:gravity="left">
                 <TextView
-                    android:text="@string/order_title_quantity"
+                    android:text="@string/order_title_unitmodel"
                     android:layout_weight="1"
 
                     android:layout_width="wrap_content"
@@ -333,7 +333,7 @@
                 android:background="@drawable/table_bottom_border"
                 android:gravity="left">
                 <TextView
-                    android:text="@string/order_title_checkpoint"
+                    android:text="@string/order_title_unitnumber"
                     android:layout_weight="1"
 
                     android:layout_width="wrap_content"
@@ -353,7 +353,7 @@
                 android:background="@drawable/table_bottom_border"
                 android:gravity="left">
                 <TextView
-                    android:text="@string/order_title_checkpointeta"
+                    android:text="@string/order_title_documentneed"
                     android:layout_weight="1"
 
                     android:layout_width="wrap_content"
@@ -373,7 +373,7 @@
                 android:background="@drawable/table_bottom_border"
                 android:gravity="left">
                 <TextView
-                    android:text="@string/order_title_loadingloc"
+                    android:text="@string/order_title_nextlocationtarget"
                     android:layout_weight="1"
 
                     android:layout_width="wrap_content"

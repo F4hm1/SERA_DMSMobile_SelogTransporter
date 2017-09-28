@@ -44,6 +44,12 @@ public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, 
     @BindView(R.id.order_title_timetarget) TextView mTvOrderTimeTarget;
     @BindView(R.id.order_title_timebaseline) TextView mTvOrderTimeBaseline;
     @BindView(R.id.order_title_timeactual) TextView mTvOrderTimeActual;
+    @BindView(R.id.order_title_assignment) TextView mTvOrderAssignment;
+    @BindView(R.id.order_title_cargotype) TextView mTvOrderCargotype;
+    @BindView(R.id.order_title_unitmodel) TextView mTvOrderUnitModel;
+    @BindView(R.id.order_title_unitnumber) TextView mTvOrderUnitNumber;
+    @BindView(R.id.order_title_documentneed) TextView mTvOrderDocumentneed;
+    @BindView(R.id.order_title_nextlocationtarget) TextView mTvOrderNextActivity;
 
     @BindView(R.id.order_button_action) Button mTvButtonAction;
 
@@ -101,7 +107,13 @@ public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, 
     }
 
     @Override
-    public void setDetailData(String codeHead, String code, String activityName, String activityType, String origin, String destination, String etd, String eta, String customer, String locationTarget, String timeTarget, String timeBaseline, String timeActual) {
+    public void setDetailData(String codeHead, String code, String activityName,
+                              String activityType, String origin, String destination,
+                              String etd, String eta, String customer,
+                              String locationTarget, String timeTarget, String timeBaseline,
+                              String timeActual, String assignmentId, String cargoType,
+                              String unitModel, String unitnumber, String docNeed,
+                              String nextActivity) {
         mTvOrderCodeHead.setText(codeHead);
         mTvOrderCode.setText(code);
         mTvOrderActivityName.setText(activityName);
@@ -115,6 +127,12 @@ public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, 
         mTvOrderTimeTarget.setText(timeTarget);
         mTvOrderTimeBaseline.setText(timeBaseline);
         mTvOrderTimeActual.setText(timeActual);
+        mTvOrderAssignment.setText(assignmentId);
+        mTvOrderCargotype.setText(cargoType);
+        mTvOrderUnitModel.setText(unitModel);
+        mTvOrderUnitNumber.setText(unitnumber);
+        mTvOrderDocumentneed.setText(docNeed);
+        mTvOrderNextActivity.setText(nextActivity);
     }
 
     @Override

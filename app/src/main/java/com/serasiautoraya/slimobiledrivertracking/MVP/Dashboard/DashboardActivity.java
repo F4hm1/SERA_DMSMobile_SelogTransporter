@@ -238,15 +238,13 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
 
         switch (idNavItem) {
             case R.id.nav_change_pass:
-//                return ChangePasswordActivity.class;
+                return ChangePasswordActivity.class;
 //                return QuestionnaireActivity.class;
 //                return PODCaptureActivity.class;
-                return PodSubmitActivity.class;
+//                return PodSubmitActivity.class;
 //                return FatigueActivity.class;
             case R.id.nav_notification_list:
                 return NotificationListActivity.class;
-//            case R.id.nav_logout:
-//                return logout();
             default:
                 return ChangePasswordActivity.class;
         }

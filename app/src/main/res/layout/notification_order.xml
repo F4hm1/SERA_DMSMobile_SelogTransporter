@@ -56,7 +56,7 @@
             android:layout_width="fill_parent"
             android:gravity="left">
             <TextView
-                android:text="@string/order_title_hub"
+                android:text="@string/order_title_activityname"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -78,7 +78,7 @@
             android:layout_width="fill_parent"
             android:gravity="left">
             <TextView
-                android:text="@string/order_title_nextdriver"
+                android:text="@string/order_title_activitytype"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -188,7 +188,7 @@
             android:layout_width="fill_parent"
             android:gravity="left">
             <TextView
-                android:text="@string/order_title_unit"
+                android:text="@string/order_title_locationtarget"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

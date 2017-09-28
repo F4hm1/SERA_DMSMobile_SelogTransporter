@@ -24,4 +24,8 @@ public interface PodSubmitView extends BaseViewInterface {
     void showConfirmationDialog(String activityName);
 
     void setSubmitText(String activityName);
+
+    void showPhotosRequiredAlert();
+
+    void setGuideText(String text);
 }
