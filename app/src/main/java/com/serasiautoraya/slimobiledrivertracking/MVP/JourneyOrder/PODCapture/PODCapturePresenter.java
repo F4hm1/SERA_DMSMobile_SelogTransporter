@@ -180,7 +180,6 @@ public class PODCapturePresenter extends TiPresenter<PODCaptureView> {
                 getView().showStandardDialog(message, "Perhatian");
             }
         });
-
     }
 
     private void submitPOD(PODUpdateSendModel podUpdateSendModel) {

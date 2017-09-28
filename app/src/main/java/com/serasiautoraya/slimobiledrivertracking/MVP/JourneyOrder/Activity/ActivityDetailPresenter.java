@@ -13,6 +13,7 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperTransactionCo
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperUrl;
 import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.DocumentCapture.DocumentCaptureActivity;
 import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.PODCapture.PODCaptureActivity;
+import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.PodSubmit.PodSubmitActivity;
 import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.StatusUpdateSendModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.LocationModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
@@ -47,7 +48,7 @@ public class ActivityDetailPresenter extends TiPresenter<ActivityDetailView> {
 
     public void onActionClicked() {
         if (HelperBridge.sActivityDetailResponseModel.getIsPOD().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)) {
-            getView().changeActivity(PODCaptureActivity.class);
+            getView().changeActivity(PodSubmitActivity.class);
         } else if (
                 HelperBridge.sActivityDetailResponseModel.getIsPhoto().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY) ||
                         HelperBridge.sActivityDetailResponseModel.getIsSignature().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY) ||

@@ -1,5 +1,9 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.PodSubmit;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.view.View;
+
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.BaseViewInterface;
 
 /**
@@ -8,4 +12,16 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.BaseViewInte
  */
 
 public interface PodSubmitView extends BaseViewInterface {
+
+    void startActivityCapture(Intent intent);
+
+    void setImageThumbnail(Bitmap bitmapScaled, int mCurrentSelectedPosition, boolean b);
+
+    void onClickSubmit(View view);
+
+    void toggleProgressBar(int position, boolean show);
+
+    void showConfirmationDialog(String activityName);
+
+    void setSubmitText(String activityName);
 }

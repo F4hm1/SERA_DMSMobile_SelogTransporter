@@ -396,7 +396,8 @@ public class DocumentCaptureActivity extends TiActivity<DocumentCapturePresenter
     }
 
     private void initializeSpinnersContent() {
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(DocumentCaptureActivity.this,
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                DocumentCaptureActivity.this,
                 R.array.documents_podreason_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinnerDocumentsPODReason.setAdapter(adapter);

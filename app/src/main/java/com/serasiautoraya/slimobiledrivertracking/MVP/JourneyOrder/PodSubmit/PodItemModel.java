@@ -2,6 +2,7 @@ package com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.PodSubmit;
 
 import android.graphics.Bitmap;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 
 import com.serasiautoraya.slimobiledrivertracking.MVP.CustomView.SquareImageView;
 
@@ -14,6 +15,8 @@ public class PodItemModel {
     private Bitmap bitmap;
     private SquareImageView squareImageView;
     private ImageButton imageButton;
+    private ProgressBar progressBar;
+    private int adapterIndex;
 
     public PodItemModel(Bitmap bitmap) {
         this.bitmap = bitmap;
@@ -35,7 +38,27 @@ public class PodItemModel {
         return imageButton;
     }
 
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
+    }
+
     public Bitmap getBitmap() {
         return bitmap;
+    }
+
+    public void setProgressBar(ProgressBar progressBar) {
+        this.progressBar = progressBar;
+    }
+
+    public void setAdapterIndex(int adapterIndex) {
+        this.adapterIndex = adapterIndex;
+    }
+
+    public ProgressBar getProgressBar() {
+        return progressBar;
+    }
+
+    public int getAdapterIndex() {
+        return adapterIndex;
     }
 }

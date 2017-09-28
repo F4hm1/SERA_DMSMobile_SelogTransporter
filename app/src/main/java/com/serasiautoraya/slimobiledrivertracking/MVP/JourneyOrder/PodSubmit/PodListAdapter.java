@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.serasiautoraya.slimobiledrivertracking.MVP.CustomView.SquareImageView;
 import com.serasiautoraya.slimobiledrivertracking.R;
@@ -26,22 +27,22 @@ public class PodListAdapter extends BaseAdapter {
     private PodItemOnClickListener podItemOnClickListener;
 
     // Keep all Images in array
-    public Integer[] mThumbIds = {
-            R.drawable.add_foto_pod,
-            R.drawable.add_foto_pod,
-            R.drawable.add_foto_pod,
-            R.drawable.add_foto_pod,
-            R.drawable.add_foto_pod,
-            R.drawable.add_foto_pod,
-            R.drawable.add_foto_pod,
-            R.drawable.add_foto_pod,
-            R.drawable.add_foto_pod,
-            R.drawable.add_foto_pod,
-            R.drawable.add_foto_pod,
-            R.drawable.add_foto_pod,
-            R.drawable.add_foto_pod,
-            R.drawable.add_foto_pod
-    };
+//    public Integer[] mThumbIds = {
+//            R.drawable.add_foto_pod,
+//            R.drawable.add_foto_pod,
+//            R.drawable.add_foto_pod,
+//            R.drawable.add_foto_pod,
+//            R.drawable.add_foto_pod,
+//            R.drawable.add_foto_pod,
+//            R.drawable.add_foto_pod,
+//            R.drawable.add_foto_pod,
+//            R.drawable.add_foto_pod,
+//            R.drawable.add_foto_pod,
+//            R.drawable.add_foto_pod,
+//            R.drawable.add_foto_pod,
+//            R.drawable.add_foto_pod,
+//            R.drawable.add_foto_pod
+//    };
 
     public ArrayList<PodItemModel> podItemModels = new ArrayList<PodItemModel>();
 
@@ -54,6 +55,14 @@ public class PodListAdapter extends BaseAdapter {
 
     public void addItem(PodItemModel podItemModel){
         podItemModels.add(podItemModel);
+    }
+
+    public void remove(int position){
+        podItemModels.remove(position);
+    }
+
+    public ArrayList<PodItemModel> getPodItemModels() {
+        return podItemModels;
     }
 
     @Override
@@ -73,11 +82,6 @@ public class PodListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-//        ImageView imageView = new ImageView(mContext);
-//        imageView.setImageResource(mThumbIds[position]);
-//        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-//        imageView.setLayoutParams(new GridView.LayoutParams(100, 100));
-
         final int fPosition = position;
         View rowView = inflater.inflate(R.layout.single_pod_thumbnail, null);
         final SquareImageView squareImageView = (SquareImageView) rowView.findViewById(R.id.pod_iv_prove);
@@ -96,12 +100,19 @@ public class PodListAdapter extends BaseAdapter {
             }
         });
 
+        ProgressBar progressBar = (ProgressBar) rowView.findViewById(R.id.pod_pb_progress);
+
         podItemModels.get(position).setImageButton(imageButton);
         podItemModels.get(position).setSquareImageView(squareImageView);
+        podItemModels.get(position).setAdapterIndex(position);
+        podItemModels.get(position).setProgressBar(progressBar);
 
+        if(podItemModels.get(position).getBitmap() != null){
+            squareImageView.setImageBitmap(podItemModels.get(position).getBitmap());
+        }else{
+            podItemModels.get(position).getImageButton().setVisibility(View.GONE);
+        }
         return rowView;
-
-
     }
 
 }

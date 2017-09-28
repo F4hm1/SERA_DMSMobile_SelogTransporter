@@ -22,18 +22,28 @@
         </activity>
 
         <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.Dashboard.DashboardActivity" android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Activity.ActivityDetailActivity"/>
-        <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.Profiling.ProfileActivity"/>
-        <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.ChangePassword.ChangePasswordActivity"/>
-        <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.NotificatonList.NotificationListActivity"/>
-        <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.Fatigue.FatigueActivity"/>
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Activity.ActivityDetailActivity"
+            android:label="Detail Aktifitas"/>
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.Profiling.ProfileActivity"
+            android:label="Profil"/>
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.ChangePassword.ChangePasswordActivity"
+            android:label="Ganti Kata Sandi"/>
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.NotificatonList.NotificationListActivity"
+            android:label="Daftar Pemberitahuan"/>
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.Fatigue.FatigueActivity"
+            android:label="Tes Fatigue"/>
         <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.DocumentCapture.DocumentCaptureActivity"
+            android:label="Pengambilan Bukti Aktifitas"
             android:windowSoftInputMode="adjustResize|stateHidden"/>
         <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.DocumentCapture.SigningActivity"/>
-        <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.OrderHistory.OrderHistoryDetail.OrderHistoryDetailActivity"/>
-        <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.TrainingQuestionnaire.QuestionnaireActivity"></activity>
-        <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.PODCapture.PODCaptureActivity"></activity>
-        <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.PodSubmit.PodSubmitActivity"/>
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.OrderHistory.OrderHistoryDetail.OrderHistoryDetailActivity"
+            android:label="Riwayat Order"/>
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.TrainingQuestionnaire.QuestionnaireActivity"
+            android:label="Kuisioner Training"></activity>
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.PODCapture.PODCaptureActivity"
+            android:label="Pengambilan Bukti POD"></activity>
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.PodSubmit.PodSubmitActivity"
+            android:label="Pengambilan Bukti POD"/>
 
 
         <activity android:name="com.serasiautoraya.slimobiledrivertracking.activity.DashboardActivity" android:theme="@style/AppTheme.NoActionBar"/>

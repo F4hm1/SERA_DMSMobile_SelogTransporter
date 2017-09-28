@@ -267,7 +267,7 @@
     <string name="order_history_detail_time_actual">Waktu Aktual</string>
     <string name="order_history_detail_location_target">Target Lokasi</string>
 
-    <string name="documents_podreason_spinner_reason">Alasan tidak melampirkan bukti foto POD:</string>
+    <string name="documents_podreason_spinner_reason">Ketersediaan dokumen POD:</string>
     <string name="err_msg_empty_overtime_keterangan">Harap isi dengan alasa/keterangan anda lembur</string>
     <string name="ws_dialog_title_wsin">Jadwal Masuk</string>
     <string name="ws_dialog_title_wsout">Jadwal Keluar</string>
@@ -290,7 +290,7 @@
     <string name="history_detail_title_overtimetype">Jenis lembur</string>
     <string name="expense_label_availableorder">Order tersedia</string>
     <string-array name="documents_podreason_array">
-        <item>Pilih</item>
+        <item>POD Tersedia</item>
         <item>Tertahan oleh customer</item>
     </string-array>
 
