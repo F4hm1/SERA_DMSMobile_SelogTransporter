@@ -13,10 +13,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.SharedPrefsModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking.R;
+import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
 import com.serasiautoraya.slimobiledrivertracking.util.GPSTrackerService;
 
 import net.grandcentrix.thirtyinch.TiFragment;
@@ -50,8 +52,14 @@ public class AssignedFragment extends TiFragment<AssignedPresenter, AssignedView
     }
 
     @Override
-    public void initialize() {
+    public void onResume() {
+        super.onResume();
         getPresenter().loadOrdersData();
+    }
+
+    @Override
+    public void initialize() {
+//        getPresenter().loadOrdersData();
     }
 
     @Override
@@ -65,12 +73,12 @@ public class AssignedFragment extends TiFragment<AssignedPresenter, AssignedView
 
     @Override
     public void showToast(String text) {
-
+        Toast.makeText(getContext(), text, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void showStandardDialog(String message, String Title) {
-
+        HelperUtil.showSimpleAlertDialogCustomTitle(message, getContext(), Title);
     }
 
     @NonNull

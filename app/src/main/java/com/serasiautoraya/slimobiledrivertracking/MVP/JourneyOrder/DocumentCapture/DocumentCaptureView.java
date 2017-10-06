@@ -42,4 +42,6 @@ public interface DocumentCaptureView extends BaseViewInterface, FormViewInterfac
 
     void setSubmitText(String text);
 
+    void showConfirmationSuccess(String message, String title);
+
 }

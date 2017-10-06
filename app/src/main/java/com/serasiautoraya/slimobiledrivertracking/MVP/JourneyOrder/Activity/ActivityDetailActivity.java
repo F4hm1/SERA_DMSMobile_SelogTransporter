@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperBridge;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperKey;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking.R;
@@ -31,27 +32,47 @@ import butterknife.OnClick;
 
 public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, ActivityDetailView> implements ActivityDetailView {
 
-    @BindView(R.id.order_title_code_head) TextView mTvOrderCodeHead;
-    @BindView(R.id.order_title_code) TextView mTvOrderCode;
-    @BindView(R.id.order_title_activityname) TextView mTvOrderActivityName;
-    @BindView(R.id.order_title_activitytype) TextView mTvOrderActivityType;
-    @BindView(R.id.order_title_origin) TextView mTvOrderOrigin;
-    @BindView(R.id.order_title_dest) TextView mTvOrderDest;
-    @BindView(R.id.order_title_etd) TextView mTvOrderEtd;
-    @BindView(R.id.order_title_eta) TextView mTvOrderEta;
-    @BindView(R.id.order_title_customer) TextView mTvOrderCustomer;
-    @BindView(R.id.order_title_locationtarget) TextView mTvOrderLocationTarget;
-    @BindView(R.id.order_title_timetarget) TextView mTvOrderTimeTarget;
-    @BindView(R.id.order_title_timebaseline) TextView mTvOrderTimeBaseline;
-    @BindView(R.id.order_title_timeactual) TextView mTvOrderTimeActual;
-    @BindView(R.id.order_title_assignment) TextView mTvOrderAssignment;
-    @BindView(R.id.order_title_cargotype) TextView mTvOrderCargotype;
-    @BindView(R.id.order_title_unitmodel) TextView mTvOrderUnitModel;
-    @BindView(R.id.order_title_unitnumber) TextView mTvOrderUnitNumber;
-    @BindView(R.id.order_title_documentneed) TextView mTvOrderDocumentneed;
-    @BindView(R.id.order_title_nextlocationtarget) TextView mTvOrderNextActivity;
+    @BindView(R.id.order_title_code_head)
+    TextView mTvOrderCodeHead;
+    @BindView(R.id.order_title_code)
+    TextView mTvOrderCode;
+    @BindView(R.id.order_title_activityname)
+    TextView mTvOrderActivityName;
+    @BindView(R.id.order_title_activitytype)
+    TextView mTvOrderActivityType;
+    @BindView(R.id.order_title_origin)
+    TextView mTvOrderOrigin;
+    @BindView(R.id.order_title_dest)
+    TextView mTvOrderDest;
+    @BindView(R.id.order_title_etd)
+    TextView mTvOrderEtd;
+    @BindView(R.id.order_title_eta)
+    TextView mTvOrderEta;
+    @BindView(R.id.order_title_customer)
+    TextView mTvOrderCustomer;
+    @BindView(R.id.order_title_locationtarget)
+    TextView mTvOrderLocationTarget;
+    @BindView(R.id.order_title_timetarget)
+    TextView mTvOrderTimeTarget;
+    @BindView(R.id.order_title_timebaseline)
+    TextView mTvOrderTimeBaseline;
+    @BindView(R.id.order_title_timeactual)
+    TextView mTvOrderTimeActual;
+    @BindView(R.id.order_title_assignment)
+    TextView mTvOrderAssignment;
+    @BindView(R.id.order_title_cargotype)
+    TextView mTvOrderCargotype;
+    @BindView(R.id.order_title_unitmodel)
+    TextView mTvOrderUnitModel;
+    @BindView(R.id.order_title_unitnumber)
+    TextView mTvOrderUnitNumber;
+    @BindView(R.id.order_title_documentneed)
+    TextView mTvOrderDocumentneed;
+    @BindView(R.id.order_title_nextlocationtarget)
+    TextView mTvOrderNextActivity;
 
-    @BindView(R.id.order_button_action) Button mTvButtonAction;
+    @BindView(R.id.order_button_action)
+    Button mTvButtonAction;
 
     private String mOrderCode;
     private ProgressDialog mProgressDialog;
@@ -64,7 +85,7 @@ public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, 
         setContentView(R.layout.activity_actionactivity);
         ButterKnife.bind(this);
         Bundle bundle = getIntent().getExtras();
-        if(bundle!=null){
+        if (bundle != null) {
             mOrderCode = bundle.getString(HelperKey.KEY_INTENT_ORDERCODE);
         }
     }
@@ -76,9 +97,9 @@ public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, 
 
     @Override
     public void toggleLoading(boolean isLoading) {
-        if(isLoading){
-            mProgressDialog = ProgressDialog.show(ActivityDetailActivity.this, getResources().getString(R.string.progress_msg_loaddata), getResources().getString(R.string.prog_msg_wait),true,false);
-        }else{
+        if (isLoading) {
+            mProgressDialog = ProgressDialog.show(ActivityDetailActivity.this, getResources().getString(R.string.progress_msg_loaddata), getResources().getString(R.string.prog_msg_wait), true, false);
+        } else {
             mProgressDialog.dismiss();
         }
     }
@@ -147,19 +168,42 @@ public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, 
 
     @Override
     public void changeActivity(Class cls) {
+        HelperBridge.sCurrentDetailActivity = this;
         Intent i = new Intent(ActivityDetailActivity.this, cls);
         startActivity(i);
     }
 
     @Override
     public void showConfirmationDialog(String title, String activity) {
-        CharSequence textMsg = Html.fromHtml("Apakah anda yakin akan melakukan aktifitas "+
-                "<b>"+ activity.toString()+"</b>"+"?");
+        CharSequence textMsg = Html.fromHtml("Apakah anda yakin akan melakukan aktifitas " +
+                "<b>" + activity.toString() + "</b>" + "?");
         HelperUtil.showConfirmationAlertDialog(textMsg, ActivityDetailActivity.this, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 getPresenter().onRequestSubmitActivity();
             }
         });
+    }
+
+    @Override
+    public void finishActivity() {
+        this.finish();
+    }
+
+    @Override
+    public void showConfirmationSuccess(String message, String title) {
+        HelperUtil.showSimpleAlertDialogCustomTitleAction(message, ActivityDetailActivity.this, title,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finishActivity();
+                    }
+                },
+                new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        finishActivity();
+                    }
+                });
     }
 }

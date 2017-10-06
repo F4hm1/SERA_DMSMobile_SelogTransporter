@@ -212,6 +212,17 @@ public class HelperUtil {
         alertDialog.show();
     }
 
+
+    public static void showSimpleAlertDialogCustomTitleAction(String msg, Context context, String title, DialogInterface.OnClickListener onClickListener, DialogInterface.OnDismissListener onDismissListener){
+        AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+        alertDialog.setTitle(title);
+        alertDialog.setMessage(msg);
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "YA",
+                onClickListener);
+        alertDialog.setOnDismissListener(onDismissListener);
+        alertDialog.show();
+    }
+
     public static void showSimpleAlertDialogCustomAction(String msg, Context context, DialogInterface.OnClickListener onClickListener){
         AlertDialog alertDialog = new AlertDialog.Builder(context).create();
         alertDialog.setTitle("Peringatan");

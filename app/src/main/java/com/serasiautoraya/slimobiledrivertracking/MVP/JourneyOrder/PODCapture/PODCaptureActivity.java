@@ -461,6 +461,25 @@ public class PODCaptureActivity extends TiActivity<PODCapturePresenter, PODCaptu
     }
 
     @Override
+    public void showConfirmationSuccess(String message, String title) {
+        HelperUtil.showSimpleAlertDialogCustomTitleAction(message, PODCaptureActivity.this, title,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        getPresenter().finishCurrentDetailActivity();
+                        finish();
+                    }
+                },
+                new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        getPresenter().finishCurrentDetailActivity();
+                        finish();
+                    }
+                });
+    }
+
+    @Override
     public void setSubmitText(String text) {
         mBtnSubmit.setText(text);
     }

@@ -171,11 +171,6 @@ public class PlanOrderPresenter extends TiPresenter<PlanOrderView> {
     }
 
     private void loadDetailOrder(final String orderId, Integer assignmentId, final AssignedOrderResponseModel assignedOrderResponseModel){
-//        setdummydata(orderCode);
-
-        /*
-        * TODO uncomment this to connect API
-        * */
         ActivityDetailSendModel activityDetailSendModel =
                 new ActivityDetailSendModel(
                         HelperBridge.sModelLoginResponse.getPersonalId(), orderId, assignmentId);
@@ -188,7 +183,7 @@ public class PlanOrderPresenter extends TiPresenter<PlanOrderView> {
                 HelperBridge.sActivityDetailResponseModel = Model.getModelInstance(response.getData()[0], ActivityDetailResponseModel.class);
                 HelperBridge.sTempSelectedOrderCode = orderId;
                 HelperBridge.sAssignedOrderResponseModel = assignedOrderResponseModel;
-                getView().changeActivityAction(HelperKey.KEY_INTENT_ORDERCODE, HelperBridge.sActivityDetailResponseModel.getAssignmentId()+"", ActivityDetailActivity.class);
+                planOrderView.changeActivityAction(HelperKey.KEY_INTENT_ORDERCODE, HelperBridge.sActivityDetailResponseModel.getAssignmentId()+"", ActivityDetailActivity.class);
                 planOrderView.toggleLoading(false);
             }
 
@@ -206,7 +201,7 @@ public class PlanOrderPresenter extends TiPresenter<PlanOrderView> {
                 /*
                 * TODO change this!
                 * */
-                planOrderView.showToast("ERROR: " + error.toString());
+                planOrderView.showToast("Terjadi Kesalahan: " + error.toString());
                 planOrderView.toggleLoading(false);
             }
         });

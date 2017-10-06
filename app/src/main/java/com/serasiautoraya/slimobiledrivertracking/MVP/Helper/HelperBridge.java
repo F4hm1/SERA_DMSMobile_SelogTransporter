@@ -10,6 +10,8 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.OrderHistory.OrderHistoryD
 import com.serasiautoraya.slimobiledrivertracking.MVP.OrderHistory.OrderHistoryResponseModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RequestHistory.RequestHistoryResponseModel;
 
+import net.grandcentrix.thirtyinch.TiActivity;
+
 import java.util.List;
 
 /**
@@ -43,5 +45,7 @@ public class HelperBridge {
     public static int sUpdateLocationInterval;
 
     public static int sTempFragmentTarget = 0;
+
+    public static TiActivity sCurrentDetailActivity = null;
 
 }

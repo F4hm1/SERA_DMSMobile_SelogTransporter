@@ -82,7 +82,7 @@ public class ActiveOrderPresenter extends TiPresenter<ActiveOrderView> {
                 HelperBridge.sActivityDetailResponseModel = Model.getModelInstance(response.getData()[0], ActivityDetailResponseModel.class);
                 HelperBridge.sTempSelectedOrderCode = orderCode;
                 HelperBridge.sAssignedOrderResponseModel = assignedOrderResponseModel;
-                getView().changeActivityAction(HelperKey.KEY_INTENT_ORDERCODE, HelperBridge.sActivityDetailResponseModel.getAssignmentId()+"", ActivityDetailActivity.class);
+                activeOrderView.changeActivityAction(HelperKey.KEY_INTENT_ORDERCODE, HelperBridge.sActivityDetailResponseModel.getAssignmentId()+"", ActivityDetailActivity.class);
                 activeOrderView.toggleLoading(false);
             }
 

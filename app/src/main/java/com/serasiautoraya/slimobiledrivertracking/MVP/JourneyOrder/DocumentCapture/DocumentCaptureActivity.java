@@ -274,6 +274,25 @@ public class DocumentCaptureActivity extends TiActivity<DocumentCapturePresenter
     }
 
     @Override
+    public void showConfirmationSuccess(String message, String title) {
+        HelperUtil.showSimpleAlertDialogCustomTitleAction(message, DocumentCaptureActivity.this, title,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        getPresenter().finishCurrentDetailActivity();
+                        finish();
+                    }
+                },
+                new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        getPresenter().finishCurrentDetailActivity();
+                        finish();
+                    }
+                });
+    }
+
+    @Override
     public void initialize() {
 //        mEtDocumentsFuel.addTextChangedListener(new CurrencyTextWatcher(mEtDocumentsFuel));
 //        mEtDocumentsTollparking.addTextChangedListener(new CurrencyTextWatcher(mEtDocumentsTollparking));

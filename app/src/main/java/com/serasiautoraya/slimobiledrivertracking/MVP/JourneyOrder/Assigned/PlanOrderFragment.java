@@ -2,6 +2,7 @@ package com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Assigned;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.BaseAdapter.SimpleAdapterV
 import com.serasiautoraya.slimobiledrivertracking.MVP.CustomView.EmptyInfoView;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking.R;
+import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
 import com.serasiautoraya.slimobiledrivertracking.listener.ClickListener;
 import com.serasiautoraya.slimobiledrivertracking.listener.RecyclerTouchListener;
 import com.serasiautoraya.slimobiledrivertracking.util.DividerRecycleViewDecoration;
@@ -40,6 +42,7 @@ public class PlanOrderFragment extends TiFragment<PlanOrderPresenter, PlanOrderV
     EmptyInfoView mEmptyInfoView;
 
     private SimpleAdapterView mSimpleAdapterView;
+    private ProgressDialog mProgressDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,7 +62,11 @@ public class PlanOrderFragment extends TiFragment<PlanOrderPresenter, PlanOrderV
 
     @Override
     public void toggleLoading(boolean isLoading) {
-
+        if (isLoading) {
+            mProgressDialog = ProgressDialog.show(getContext(), getResources().getString(R.string.progress_msg_loaddata), getResources().getString(R.string.prog_msg_wait), true, false);
+        } else {
+            mProgressDialog.dismiss();
+        }
     }
 
     @Override
@@ -69,7 +76,7 @@ public class PlanOrderFragment extends TiFragment<PlanOrderPresenter, PlanOrderV
 
     @Override
     public void showStandardDialog(String message, String Title) {
-
+        HelperUtil.showSimpleAlertDialogCustomTitle(message, getContext(), Title);
     }
 
     @Override

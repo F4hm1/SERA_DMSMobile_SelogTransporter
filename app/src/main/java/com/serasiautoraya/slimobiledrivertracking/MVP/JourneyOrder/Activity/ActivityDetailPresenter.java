@@ -47,8 +47,8 @@ public class ActivityDetailPresenter extends TiPresenter<ActivityDetailView> {
             getView().changeActivity(PodSubmitActivity.class);
         } else if (
                 HelperBridge.sActivityDetailResponseModel.getIsPhoto().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY) ||
-                        HelperBridge.sActivityDetailResponseModel.getIsSignature().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY) ||
-                        HelperBridge.sActivityDetailResponseModel.getIsCodeVerification().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)
+                HelperBridge.sActivityDetailResponseModel.getIsSignature().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY) ||
+                HelperBridge.sActivityDetailResponseModel.getIsCodeVerification().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)
                 ) {
             getView().changeActivity(DocumentCaptureActivity.class);
         } else {
@@ -192,7 +192,7 @@ public class ActivityDetailPresenter extends TiPresenter<ActivityDetailView> {
             public void callBackOnSuccess(JSONObject response) {
                 try {
                     getView().toggleLoading(false);
-                    getView().showStandardDialog(response.getString("responseText"), "Berhasil");
+                    getView().showConfirmationSuccess(response.getString("responseText"), "Berhasil");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -214,4 +214,5 @@ public class ActivityDetailPresenter extends TiPresenter<ActivityDetailView> {
             }
         });
     }
+
 }

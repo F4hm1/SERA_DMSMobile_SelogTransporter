@@ -190,7 +190,7 @@ public class PODCapturePresenter extends TiPresenter<PODCaptureView> {
             public void callBackOnSuccess(JSONObject response) {
                 try {
                     podCaptureView.toggleLoading(false);
-                    podCaptureView.showToast(response.getString("responseText"));
+                    podCaptureView.showConfirmationSuccess(response.getString("responseText"), "Berhasil");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -216,5 +216,11 @@ public class PODCapturePresenter extends TiPresenter<PODCaptureView> {
     public void onThumbnailClosed(Integer ibId, Integer cardId) {
         mPodPhotoSendModelHashMap.remove(cardId);
         getView().hideThumbnail(ibId);
+    }
+
+    public void finishCurrentDetailActivity() {
+        if (HelperBridge.sCurrentDetailActivity != null) {
+            HelperBridge.sCurrentDetailActivity.finish();
+        }
     }
 }

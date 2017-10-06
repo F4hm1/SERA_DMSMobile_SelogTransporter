@@ -232,7 +232,7 @@ public class DocumentCapturePresenter extends TiPresenter<DocumentCaptureView> {
             public void callBackOnSuccess(JSONObject response) {
                 try {
                     getView().toggleLoading(false);
-                    getView().showStandardDialog(response.getString("responseText"), "Berhasil");
+                    getView().showConfirmationSuccess(response.getString("responseText"), "Berhasil");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -253,6 +253,12 @@ public class DocumentCapturePresenter extends TiPresenter<DocumentCaptureView> {
                 getView().showStandardDialog("Gagal melakukan update status, silahkan periksa koneksi anda kemudian coba kembali", "Perhatian");
             }
         });
+    }
+
+    public void finishCurrentDetailActivity() {
+        if (HelperBridge.sCurrentDetailActivity != null) {
+            HelperBridge.sCurrentDetailActivity.finish();
+        }
     }
 
     public void validateData(String verificationCode) {
