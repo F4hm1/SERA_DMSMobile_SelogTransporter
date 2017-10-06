@@ -69,6 +69,8 @@ public class HelperUrl {
 
     public static final String POST_EXPENSE = HOST + "order/expense/";
 
+    public static final String GET_EXPENSE_INFO = HOST + "order/expenseinfo/";
+
     public static final String GET_QUESTIONNAIRE = HOST + "training/questionnaire/";
 
     public static final String POST_QUESTIONNAIRE_ANSWER = HOST + "training/questionnaireanswer/";

@@ -67,7 +67,7 @@ public class ExpenseRequestFragment extends TiFragment<ExpenseRequestPresenter, 
     public void initialize() {
         mLinRequestGroup.setVisibility(View.GONE);
         mLinAvailableGroup.setVisibility(View.GONE);
-
+        getPresenter().loadNoActualExpense();
     }
 
     @Override
@@ -146,9 +146,9 @@ public class ExpenseRequestFragment extends TiFragment<ExpenseRequestPresenter, 
 
     @Override
     public void toggleLoadingInitialLoad(boolean isLoading) {
-        if(isLoading){
-            mProgressDialog = ProgressDialog.show(getContext(), getResources().getString(R.string.progress_msg_loaddata),getResources().getString(R.string.prog_msg_wait),true,false);
-        }else{
+        if (isLoading) {
+            mProgressDialog = ProgressDialog.show(getContext(), getResources().getString(R.string.progress_msg_loaddata), getResources().getString(R.string.prog_msg_wait), true, false);
+        } else {
             mProgressDialog.dismiss();
         }
     }
@@ -161,7 +161,9 @@ public class ExpenseRequestFragment extends TiFragment<ExpenseRequestPresenter, 
     @Override
     public void initializeOvertimeDates(ArrayList<ExpenseAvailableOrderAdapter> expenseAvailableOrderResponseModelList) {
         mLinAvailableGroup.setVisibility(View.VISIBLE);
-        mAvailableOrderAdapterArrayAdapter.clear();
+        if (mAvailableOrderAdapterArrayAdapter != null) {
+            mAvailableOrderAdapterArrayAdapter.clear();
+        }
 
         mAvailableOrderAdapterArrayAdapter = new ArrayAdapter<ExpenseAvailableOrderAdapter>(getContext(), android.R.layout.simple_spinner_item, expenseAvailableOrderResponseModelList);
         mAvailableOrderAdapterArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

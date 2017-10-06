@@ -188,8 +188,10 @@ public class RestConnection {
                         } else {
                             try {
                                 restcall.callBackOnFail(response.getString("responseText"));
+                                Log.d("FAIL_API", response.getString("responseText"));
                             } catch (JSONException e) {
                                 e.printStackTrace();
+                                Log.d("FAIL_API", "Catch:"+e.getMessage());
                             }
                         }
                     }
@@ -338,6 +340,7 @@ public class RestConnection {
                             restcall.callBackOnSuccess(response);
                         } else {
                             restcall.callBackOnFail(response.getResponseText());
+                            Log.d("FAIL_API", response.getResponseText());
                         }
 
                     }
@@ -583,11 +586,14 @@ public class RestConnection {
                         Log.d("ANJIRRRRS", "code: " + mStatusCode);
                         if (mStatusCode == 200) {
                             restcall.callBackOnSuccess(response);
+                            Log.d("FAIL_API", "Success:"+response.toString());
                         } else {
                             try {
                                 restcall.callBackOnFail(response.getString("responseText"));
+                                Log.d("FAIL_API", response.getString("responseText"));
                             } catch (JSONException e) {
                                 e.printStackTrace();
+                                Log.d("FAIL_API", "Catch:"+e.getMessage());
                             }
                         }
                     }
@@ -596,6 +602,7 @@ public class RestConnection {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         restcall.callBackOnFail(error.getMessage());
+                        Log.d("FAIL_API", "Success:"+error.getMessage());
                     }
                 }
         ) {
@@ -638,8 +645,8 @@ public class RestConnection {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                Log.d("ANJIRRRRS", "code-1: " + mStatusCode);
-                Log.d("ANJIRRRRS", "code-2: " + obj.toString());
+                Log.d("FAIL_API", "code-1: " + mStatusCode);
+                Log.d("FAIL_API", "code-2: " + obj.toString());
                 return Response.success(obj, HttpHeaderParser.parseCacheHeaders(response));
             }
 

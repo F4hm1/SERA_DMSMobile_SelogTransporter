@@ -1,6 +1,7 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.ExpensesRequest;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.android.volley.error.VolleyError;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallBackInterfaceModel;
@@ -10,7 +11,11 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.BaseResponseMode
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.Model;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.TimeRESTResponseModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperBridge;
+import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperKey;
+import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperTransactionCode;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperUrl;
+import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Assigned.AssignedOrderResponseModel;
+import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Assigned.AssignedOrderSendModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking.util.HttpsTrustManager;
 
@@ -21,6 +26,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -108,7 +114,6 @@ public class ExpenseRequestPresenter extends TiPresenter<ExpenseRequestView> {
             exAmount += amount + ";";
         }
 
-
         exType = exType.substring(0, exType.length() - 1);
         exAmount = exAmount.substring(0, exAmount.length() - 1);
 
@@ -138,7 +143,7 @@ public class ExpenseRequestPresenter extends TiPresenter<ExpenseRequestView> {
         });
     }
 
-    public void onRequestSubmitted(){
+    public void onRequestSubmitted() {
         getView().toggleLoading(true);
         mRestConnection.postData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.POST_EXPENSE, mExpenseRequestSendModel.getHashMapType(), new RestCallbackInterfaceJSON() {
             @Override
@@ -168,7 +173,7 @@ public class ExpenseRequestPresenter extends TiPresenter<ExpenseRequestView> {
         });
     }
 
-    public void loadAvailableExpenseData(){
+    public void loadAvailableExpenseData() {
         getView().toggleLoadingInitialLoad(true);
         ExpenseAvailableOrderSendModel expenseAvailableOrderSendModel = new ExpenseAvailableOrderSendModel(
                 HelperBridge.sModelLoginResponse.getPersonalId()
@@ -184,9 +189,9 @@ public class ExpenseRequestPresenter extends TiPresenter<ExpenseRequestView> {
                     expenseAvailableOrderAdapterList.add(new ExpenseAvailableOrderAdapter(expenseAvailableOrderResponseModel));
                 }
 
-                if(expenseAvailableOrderAdapterList.isEmpty()){
+                if (expenseAvailableOrderAdapterList.isEmpty()) {
                     expenseRequestView.setNoAvailableExpense();
-                }else {
+                } else {
                     expenseRequestView.initializeOvertimeDates(expenseAvailableOrderAdapterList);
                 }
                 expenseRequestView.toggleLoadingInitialLoad(false);
@@ -214,40 +219,96 @@ public class ExpenseRequestPresenter extends TiPresenter<ExpenseRequestView> {
         });
     }
 
-    public void onOrderSelected(ExpenseAvailableOrderAdapter expenseAvailableOrderAdapter){
+    public void onOrderSelected(ExpenseAvailableOrderAdapter expenseAvailableOrderAdapter) {
         getView().toggleLoadingSearchingOrder(true);
         final ExpenseAvailableSendModel expenseAvailableSendModel = new ExpenseAvailableSendModel(
-                HelperBridge.sModelLoginResponse.getPersonalId(),
                 expenseAvailableOrderAdapter.getExpenseAvailableOrderResponseModel().getAssignmentId()
         );
 
+        final String orderCode = expenseAvailableOrderAdapter.getExpenseAvailableOrderResponseModel().getOrderCode();
         final ExpenseRequestView expenseRequestView = getView();
-            mRestConnection.getData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.GET_EXPENSE_AVAILABLE, expenseAvailableSendModel.getHashMapType(), new RestCallBackInterfaceModel() {
-                @Override
-                public void callBackOnSuccess(BaseResponseModel response) {
-                    expenseAvailableResponseModel = Model.getModelInstance(response.getData()[0], ExpenseAvailableResponseModel.class);
-                    generateExpenseInputValue(expenseAvailableResponseModel);
-                    expenseRequestView.toggleLoadingSearchingOrder(false);
-                }
+        mRestConnection.getData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.GET_EXPENSE_INFO, expenseAvailableSendModel.getHashMapType(), new RestCallBackInterfaceModel() {
+            @Override
+            public void callBackOnSuccess(BaseResponseModel response) {
+                expenseAvailableResponseModel = Model.getModelInstance(response.getData()[0], ExpenseAvailableResponseModel.class);
+                generateExpenseInputValue(expenseAvailableResponseModel);
+                selectedOrderCode = orderCode;
+                expenseRequestView.toggleLoadingSearchingOrder(false);
+            }
 
-                @Override
-                public void callBackOnFail(String response) {
+            @Override
+            public void callBackOnFail(String response) {
                     /*
                     * TODO change this!
                     * */
-                    expenseRequestView.showToast(response);
-                    expenseRequestView.toggleLoadingSearchingOrder(false);
-                }
+                expenseRequestView.showToast(response);
+                expenseRequestView.toggleLoadingSearchingOrder(false);
+            }
 
-                @Override
-                public void callBackOnError(VolleyError error) {
+            @Override
+            public void callBackOnError(VolleyError error) {
                     /*
                     * TODO change this!
                     * */
-                    expenseRequestView.showToast("FAIL: " + error.toString());
-                    expenseRequestView.toggleLoadingSearchingOrder(false);
-                }
-            });
+                expenseRequestView.showToast("FAIL: " + error.toString());
+                expenseRequestView.toggleLoadingSearchingOrder(false);
+            }
+        });
     }
 
+    public void loadNoActualExpense() {
+
+        getView().toggleLoading(true);
+        final ExpenseRequestView expenseRequestView = getView();
+        AssignedOrderSendModel assignedOrderSendModel = new AssignedOrderSendModel(
+                HelperBridge.sModelLoginResponse.getPersonalId(),
+                HelperTransactionCode.ASSIGNED_REQUEST_CLOSEDEXPENSE,
+                "",
+                ""
+        );
+
+        mRestConnection.getData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.GET_ASSIGNED_ORDER, assignedOrderSendModel.getHashMapType(), new RestCallBackInterfaceModel() {
+            @Override
+            public void callBackOnSuccess(BaseResponseModel response) {
+                expenseAvailableOrderAdapterList = new ArrayList<>();
+                for (int i = 0; i < response.getData().length; i++) {
+                    AssignedOrderResponseModel assignedOrderResponseModel = Model.getModelInstance(response.getData()[i], AssignedOrderResponseModel.class);
+                    ExpenseAvailableOrderResponseModel expenseAvailableOrderResponseModel = new ExpenseAvailableOrderResponseModel(
+                            assignedOrderResponseModel.getAssignmentId(),
+                            assignedOrderResponseModel.getOrderID()
+                    );
+                    expenseAvailableOrderAdapterList.add(new ExpenseAvailableOrderAdapter(expenseAvailableOrderResponseModel));
+                }
+
+                if (expenseAvailableOrderAdapterList.isEmpty()) {
+                    expenseRequestView.setNoAvailableExpense();
+                } else {
+                    expenseRequestView.initializeOvertimeDates(expenseAvailableOrderAdapterList);
+                }
+
+//                assignedView.initializeTabs(isAnyOrderActive, mSharedPrefsModel.get(HelperKey.KEY_IS_UPDATE_LOCATION_ACTIVE, false));
+                expenseRequestView.toggleLoading(false);
+            }
+
+            @Override
+            public void callBackOnFail(String response) {
+                /*
+                * TODO change this!
+                * */
+//                assignedView.initializeTabs(isAnyOrderActive, mSharedPrefsModel.get(HelperKey.KEY_IS_UPDATE_LOCATION_ACTIVE, false));
+                expenseRequestView.showToast(response);
+                expenseRequestView.toggleLoading(false);
+            }
+
+            @Override
+            public void callBackOnError(VolleyError error) {
+                /*
+                * TODO change this!
+                * */
+//                assignedView.initializeTabs(isAnyOrderActive, mSharedPrefsModel.get(HelperKey.KEY_IS_UPDATE_LOCATION_ACTIVE, false));
+                expenseRequestView.showToast("ERROR: " + error.toString());
+                expenseRequestView.toggleLoading(false);
+            }
+        });
+    }
 }

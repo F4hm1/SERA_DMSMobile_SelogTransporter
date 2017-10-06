@@ -9,29 +9,14 @@ import com.google.gson.annotations.SerializedName;
 
 public class ExpenseAvailableResponseModel {
 
-    @SerializedName("PersonalId")
-    @Expose
-    private String PersonalId;
-
-    @SerializedName("OrderCode")
-    @Expose
-    private String OrderCode;
-
-    @SerializedName("ExpenseTypeCode")
+    @SerializedName("TripExpenseCategory")
     @Expose
     private String ExpenseTypeCode;
 
-    @SerializedName("ExpenseTypeName")
+    @SerializedName("TripExpenseCategoryName")
     @Expose
     private String ExpenseTypeName;
 
-    public String getPersonalId() {
-        return PersonalId;
-    }
-
-    public String getOrderCode() {
-        return OrderCode;
-    }
 
     public String getExpenseTypeCode() {
         return ExpenseTypeCode;
@@ -40,4 +25,5 @@ public class ExpenseAvailableResponseModel {
     public String getExpenseTypeName() {
         return ExpenseTypeName;
     }
+
 }

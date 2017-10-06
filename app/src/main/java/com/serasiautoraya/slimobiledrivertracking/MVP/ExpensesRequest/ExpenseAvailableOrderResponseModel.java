@@ -12,13 +12,18 @@ public class ExpenseAvailableOrderResponseModel {
 
     @SerializedName("AssignmentId")
     @Expose
-    private String AssignmentId;
+    private Integer AssignmentId;
 
     @SerializedName("OrderCode")
     @Expose
     private String OrderCode;
 
-    public String getAssignmentId() {
+    public ExpenseAvailableOrderResponseModel(Integer assignmentId, String orderCode) {
+        AssignmentId = assignmentId;
+        OrderCode = orderCode;
+    }
+
+    public Integer getAssignmentId() {
         return AssignmentId;
     }
 

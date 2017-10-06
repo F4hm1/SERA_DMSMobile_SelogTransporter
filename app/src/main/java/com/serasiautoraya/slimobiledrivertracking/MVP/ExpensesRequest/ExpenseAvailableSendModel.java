@@ -10,24 +10,15 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.Model;
 
 public class ExpenseAvailableSendModel extends Model {
 
-    @SerializedName("Ids")
-    @Expose
-    private String PersonalId;
-
     @SerializedName("AssignmentId")
     @Expose
-    private String AssignmentId;
+    private Integer AssignmentId;
 
-    public ExpenseAvailableSendModel(String personalId, String assignmentId) {
-        PersonalId = personalId;
+    public ExpenseAvailableSendModel(Integer assignmentId) {
         AssignmentId = assignmentId;
     }
 
-    public String getPersonalId() {
-        return PersonalId;
-    }
-
-    public String getAssignmentId() {
+    public Integer getAssignmentId() {
         return AssignmentId;
     }
 }
