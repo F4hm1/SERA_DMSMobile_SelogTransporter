@@ -25,5 +25,5 @@ public interface RequestHistoryView extends BaseViewInterface{
     @DistinctUntilChanged
     void toggleLoadingInitialLoad(boolean isLoading);
 
-    void initializeTabs();
+    void initializeTabs(boolean isCicoAllowed, boolean isAbsenceAllowed, boolean isOlcTripAllowed, boolean isOvertimeAllowed);
 }

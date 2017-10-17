@@ -120,8 +120,14 @@ public class RequestHistoryFragment extends TiFragment<RequestHistoryPresenter, 
     }
 
     @Override
-    public void initializeTabs() {
-        this.setupViewPager(mViewPager);
+    public void initializeTabs(boolean isCicoAllowed, boolean isAbsenceAllowed, boolean isOlcTripAllowed, boolean isOvertimeAllowed) {
+        this.setupViewPager(
+                mViewPager,
+                isCicoAllowed,
+                isAbsenceAllowed,
+                isOlcTripAllowed,
+                isOvertimeAllowed
+        );
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
@@ -133,12 +139,24 @@ public class RequestHistoryFragment extends TiFragment<RequestHistoryPresenter, 
         }
     }
 
-    private void setupViewPager(final ViewPager viewPager) {
+    private void setupViewPager(final ViewPager viewPager, boolean isCicoAllowed, boolean isAbsenceAllowed, boolean isOlcTripAllowed, boolean isOvertimeAllowed) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new CiCoRequestHistoryFragment(), "CiCo");
-        adapter.addFragment(new AbsenceRequestHistoryFragment(), "Ketidakhadiran");
-        adapter.addFragment(new OLCTripRequestHistoryFragment(), "OLC/Trip");
-        adapter.addFragment(new OvertimeRequestHistoryFragment(), "Overtime");
+        if(isCicoAllowed){
+            adapter.addFragment(new CiCoRequestHistoryFragment(), "CiCo");
+        }
+
+        if(isAbsenceAllowed){
+            adapter.addFragment(new AbsenceRequestHistoryFragment(), "Ketidakhadiran");
+        }
+
+        if(isOlcTripAllowed){
+            adapter.addFragment(new OLCTripRequestHistoryFragment(), "OLC/Trip");
+        }
+
+        if(isOvertimeAllowed){
+            adapter.addFragment(new OvertimeRequestHistoryFragment(), "Overtime");
+        }
+
         viewPager.setAdapter(adapter);
     }
 

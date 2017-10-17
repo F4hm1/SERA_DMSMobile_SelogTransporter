@@ -58,7 +58,11 @@ public class StatusUpdateSendModel extends Model {
     @Expose
     private String Reason;
 
-    public StatusUpdateSendModel(String activityCode, String orderCode, String personalId, String locationRealCoordinates, String locationRealText, String photo1, String photo2, String photo3, String codeVerification, String timeStamp, String signature, String reason) {
+    @SerializedName("JourneyId")
+    @Expose
+    private String JourneyId;
+
+    public StatusUpdateSendModel(String activityCode, String orderCode, String personalId, String locationRealCoordinates, String locationRealText, String photo1, String photo2, String photo3, String codeVerification, String timeStamp, String signature, String reason, String journeyId) {
         ActivityCode = activityCode;
         OrderCode = orderCode;
         PersonalId = personalId;
@@ -71,6 +75,7 @@ public class StatusUpdateSendModel extends Model {
         TimeStamp = timeStamp;
         Signature = signature;
         Reason = reason;
+        JourneyId = journeyId;
     }
 
     public String getActivityCode() {

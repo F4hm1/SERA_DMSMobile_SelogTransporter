@@ -40,6 +40,18 @@ public class WsInOutHistoryListAdapter extends RecyclerView.Adapter<WsInOutSingl
             keterangan += " Clock Out |";
         }
 
+        if (!simpleSingleList.getOLC().equalsIgnoreCase("")) {
+            keterangan += " OLC |";
+        }
+
+        if (!simpleSingleList.getTrip().equalsIgnoreCase("")) {
+            keterangan += " Trip |";
+        }
+
+        if (!simpleSingleList.getOvertime().equalsIgnoreCase("")) {
+            keterangan += " Overtime |";
+        }
+
         if (!simpleSingleList.getAbsence().equalsIgnoreCase("")) {
             keterangan += " Tidak Hadir";
         }

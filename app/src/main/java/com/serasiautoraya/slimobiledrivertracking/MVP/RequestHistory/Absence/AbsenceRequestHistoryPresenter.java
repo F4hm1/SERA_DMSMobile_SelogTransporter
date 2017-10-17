@@ -99,4 +99,5 @@ public class AbsenceRequestHistoryPresenter extends TiPresenter<AbsenceRequestHi
                 requestHistoryResponseModel.getApprovalBy()
         );
     }
+
 }

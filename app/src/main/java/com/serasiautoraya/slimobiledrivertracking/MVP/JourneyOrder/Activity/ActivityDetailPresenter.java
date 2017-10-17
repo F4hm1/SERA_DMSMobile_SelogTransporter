@@ -81,7 +81,8 @@ public class ActivityDetailPresenter extends TiPresenter<ActivityDetailView> {
                                 "",
                                 timeRESTResponseModel.getTime(),
                                 "",
-                                ""
+                                "",
+                                HelperBridge.sActivityDetailResponseModel.getJourneyId() + ""
                         );
                         getView().toggleLoading(false);
                         getView().showConfirmationDialog("Perhatian", HelperBridge.sActivityDetailResponseModel.getActivityName());
@@ -171,7 +172,7 @@ public class ActivityDetailPresenter extends TiPresenter<ActivityDetailView> {
                 HelperBridge.sActivityDetailResponseModel.getUnitModel(),
                 HelperBridge.sActivityDetailResponseModel.getUnitNumber(),
                 docNeed,
-                HelperBridge.sActivityDetailResponseModel.getNextActivityLocationText()
+                HelperBridge.sActivityDetailResponseModel.getNextActivityName()+": "+HelperBridge.sActivityDetailResponseModel.getNextActivityLocationText()
         );
 
 //        Log.d("ACTIVITY DET:", HelperBridge.sActivityDetailResponseModel.getHashMapType().toString());

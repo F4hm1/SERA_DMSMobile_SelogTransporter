@@ -204,7 +204,8 @@ public class DocumentCapturePresenter extends TiPresenter<DocumentCaptureView> {
                                 verificationCodeSplitted,
                                 timeRESTResponseModel.getTime(),
                                 mBitmapSignature == null ? "" : HelperUtil.encodeTobase64(mBitmapSignature),
-                                pODReason
+                                pODReason,
+                                HelperBridge.sActivityDetailResponseModel.getJourneyId() + ""
                         );
                         getView().toggleLoading(false);
                         getView().showConfirmationDialog(HelperBridge.sActivityDetailResponseModel.getActivityName());
@@ -216,7 +217,6 @@ public class DocumentCapturePresenter extends TiPresenter<DocumentCaptureView> {
                         getView().showStandardDialog(message, "Perhatian");
                     }
                 });
-
             }
         }
     }

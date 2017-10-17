@@ -13,9 +13,12 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallback
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.TimeRestCallBackInterface;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.TimeRESTResponseModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperBridge;
+import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperKey;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperUrl;
 import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.PODCapture.PODPhotoSendModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.PODCapture.PODUpdateSendModel;
+import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.StatusUpdateSendModel;
+import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.LocationModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
 import com.serasiautoraya.slimobiledrivertracking.util.HttpsTrustManager;
@@ -57,16 +60,7 @@ public class PodSubmitPresenter extends TiPresenter<PodSubmitView> {
         HttpsTrustManager.allowAllSSL();
         getView().initialize();
         getView().setSubmitText(HelperBridge.sActivityDetailResponseModel.getActivityName());
-        getView().setGuideText(HelperBridge.sActivityDetailResponseModel.getPODGuide() + " " +
-                HelperBridge.sActivityDetailResponseModel.getPODGuide() + " " +
-                HelperBridge.sActivityDetailResponseModel.getPODGuide() + " " +
-                HelperBridge.sActivityDetailResponseModel.getPODGuide() + " " +
-                HelperBridge.sActivityDetailResponseModel.getPODGuide() + " " +
-                HelperBridge.sActivityDetailResponseModel.getPODGuide() + " " +
-                HelperBridge.sActivityDetailResponseModel.getPODGuide() + " " +
-                HelperBridge.sActivityDetailResponseModel.getPODGuide() + " " +
-                HelperBridge.sActivityDetailResponseModel.getPODGuide() + " " +
-                HelperBridge.sActivityDetailResponseModel.getPODGuide() + " ");
+        getView().setGuideText(HelperBridge.sActivityDetailResponseModel.getPODGuide());
     }
 
     /**
@@ -116,7 +110,7 @@ public class PodSubmitPresenter extends TiPresenter<PodSubmitView> {
 
     public void onRequestSubmitted(ArrayList<PodItemModel> podItemModels) {
         mPodItemCount = 0;
-        if(podItemModels.size() < 2){
+        if (podItemModels.size() < 2) {
             getView().showPhotosRequiredAlert();
             return;
         }
@@ -176,38 +170,44 @@ public class PodSubmitPresenter extends TiPresenter<PodSubmitView> {
         });
     }
 
-    public void onConfirmActivity(){
+    public void onConfirmActivity() {
         getView().showConfirmationDialog(HelperBridge.sActivityDetailResponseModel.getActivityName());
     }
 
     public void onRequestSubmitActivity(final String reason) {
         getView().toggleLoading(true);
-        mRestConnection.getServerTime(new TimeRestCallBackInterface() {
-            @Override
-            public void callBackOnSuccess(TimeRESTResponseModel timeRESTResponseModel, String latitude, String longitude, String address) {
-                String timeZoneId = RestConnection.getTimeZoneID(timeRESTResponseModel);
-                String[] timeSplit = timeRESTResponseModel.getTime().split(" ");
-                String date = timeSplit[0];
-                String time = timeSplit[1];
+        final LocationModel locationModel = mRestConnection.getCurrentLocation();
+        if (locationModel.getLongitude().equalsIgnoreCase("null")) {
+            getView().showToast("Aplikasi sedang mengambil lokasi (pastikan gps dan peket data tersedia), harap tunggu beberapa saat kemudian silahkan coba kembali.");
+        } else {
+            getView().toggleLoading(true);
+            mRestConnection.getServerTime(new TimeRestCallBackInterface() {
+                @Override
+                public void callBackOnSuccess(TimeRESTResponseModel timeRESTResponseModel, String latitude, String longitude, String address) {
+                    String[] timeSplit = timeRESTResponseModel.getTime().split(" ");
+                    String[] dateSplit = timeSplit[0].split(HelperKey.USER_DATE_FORMAT_SEPARATOR);
+                    String date = timeSplit[0];
+                    String time = timeSplit[1];
 
-//                getView().toggleLoading(false);
+                    PODUpdateSendModel podUpdateSendModel = new PODUpdateSendModel(
+                            HelperBridge.sModelLoginResponse.getPersonalId(),
+                            HelperBridge.sActivityDetailResponseModel.getJourneyActivityId() + "",
+                            reason,
+                            date + " " + time,
+                            HelperBridge.sActivityDetailResponseModel.getJourneyId()+"",
+                            locationModel.getLatitude() + ", " + locationModel.getLongitude()
+                    );
 
-                PODUpdateSendModel podUpdateSendModel = new PODUpdateSendModel(
-                        HelperBridge.sModelLoginResponse.getPersonalId(),
-                        HelperBridge.sActivityDetailResponseModel.getJourneyActivityId() + "",
-                        reason,
-                        date + " " + time
-                );
+                    submitPOD(podUpdateSendModel);
+                }
 
-                submitPOD(podUpdateSendModel);
-            }
-
-            @Override
-            public void callBackOnFail(String message) {
-                getView().toggleLoading(false);
-                getView().showStandardDialog(message, "Perhatian");
-            }
-        });
+                @Override
+                public void callBackOnFail(String message) {
+                    getView().toggleLoading(false);
+                    getView().showStandardDialog(message, "Perhatian");
+                }
+            });
+        }
     }
 
     private void submitPOD(PODUpdateSendModel podUpdateSendModel) {

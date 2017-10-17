@@ -24,6 +24,17 @@ public class PODUpdateSendModel extends Model{
     @Expose
     public String timeStamp;
 
+    @SerializedName("JourneyId")
+    @Expose
+    public String journeyId;
+
+    /*
+    * LocationRealCoordinates(lat,long)
+    * */
+    @SerializedName("LocationRealCoordinates")
+    @Expose
+    public String locationRealCoordinates;
+
     /**
      * No args constructor for use in serialization
      *
@@ -38,12 +49,12 @@ public class PODUpdateSendModel extends Model{
      * @param reason
      * @param personalId
      */
-    public PODUpdateSendModel(String personalId, String activityCode, String reason, String timeStamp) {
-        super();
+    public PODUpdateSendModel(String personalId, String activityCode, String reason, String timeStamp, String journeyId, String locationRealCoordinates) {
         this.personalId = personalId;
         this.activityCode = activityCode;
         this.reason = reason;
         this.timeStamp = timeStamp;
+        this.journeyId = journeyId;
+        this.locationRealCoordinates = locationRealCoordinates;
     }
-
 }

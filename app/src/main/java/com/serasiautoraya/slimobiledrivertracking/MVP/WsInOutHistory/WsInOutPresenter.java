@@ -90,63 +90,63 @@ public class WsInOutPresenter extends TiPresenter<WsInOutView> {
 
         getView().toggleLoading(true);
 
-        setDummyData();
+//        setDummyData();
+//
+//        if (!wsInOutResponseModels.isEmpty()) {
+//            getView().toggleEmptyInfo(false);
+//        } else {
+//            getView().toggleEmptyInfo(true);
+//        }
 
-        if (!wsInOutResponseModels.isEmpty()) {
-            getView().toggleEmptyInfo(false);
-        } else {
-            getView().toggleEmptyInfo(true);
-        }
+        final WsInOutView orderHistoryView = getView();
+        WsInOutSendModel assignedOrderSendModel = new WsInOutSendModel(HelperBridge.sModelLoginResponse.getPersonalId(), startDate, endDate);
+        mRestConnection.getData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.GET_WSINOUT_HISTORY, assignedOrderSendModel.getHashMapType(), new RestCallBackInterfaceModel() {
+            @Override
+            public void callBackOnSuccess(BaseResponseModel response) {
+                List<WsInOutResponseModel> wsInOutResponseModelsTemp = new ArrayList<>();
+                for (int i = 0; i < response.getData().length; i++) {
+                    wsInOutResponseModelsTemp.add(Model.getModelInstance(response.getData()[i], WsInOutResponseModel.class));
+                }
 
-//        final WsInOutView orderHistoryView = getView();
-//        WsInOutSendModel assignedOrderSendModel = new WsInOutSendModel(HelperBridge.sModelLoginResponse.getPersonalId(), startDate, endDate);
-//        mRestConnection.getData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.GET_WSINOUT_HISTORY, assignedOrderSendModel.getHashMapType(), new RestCallBackInterfaceModel() {
-//            @Override
-//            public void callBackOnSuccess(BaseResponseModel response) {
-//                List<WsInOutResponseModel> wsInOutResponseModelsTemp = new ArrayList<>();
-//                for (int i = 0; i < response.getData().length; i++) {
-//                    wsInOutResponseModelsTemp.add(Model.getModelInstance(response.getData()[i], WsInOutResponseModel.class));
-//                }
-//
-//                if(!wsInOutResponseModelsTemp.isEmpty()){
-//                    orderHistoryView.toggleEmptyInfo(false);
-//                }else {
-//                    orderHistoryView.toggleEmptyInfo(true);
-//                }
-//                wsInOutResponseModels = wsInOutResponseModelsTemp;
-//                mSimpleAdapterModel.setItemList(wsInOutResponseModels);
-//                orderHistoryView.refreshRecyclerView();
-//                orderHistoryView.toggleLoading(false);
-//            }
-//
-//            @Override
-//            public void callBackOnFail(String response) {
-//                orderHistoryView.toggleEmptyInfo(true);
-//                orderHistoryView.showToast("FAILLLLSSS: " + response);
-//                orderHistoryView.toggleLoading(false);
-//            }
-//
-//            @Override
-//            public void callBackOnError(VolleyError error) {
-//                orderHistoryView.toggleEmptyInfo(true);
-//                orderHistoryView.showToast("FAIL: " + error.toString());
-//                orderHistoryView.toggleLoading(false);
-//            }
-//        });
+                if(!wsInOutResponseModelsTemp.isEmpty()){
+                    orderHistoryView.toggleEmptyInfo(false);
+                }else {
+                    orderHistoryView.toggleEmptyInfo(true);
+                }
+                wsInOutResponseModels = wsInOutResponseModelsTemp;
+                mSimpleAdapterModel.setItemList(wsInOutResponseModels);
+                orderHistoryView.refreshRecyclerView();
+                orderHistoryView.toggleLoading(false);
+            }
+
+            @Override
+            public void callBackOnFail(String response) {
+                orderHistoryView.toggleEmptyInfo(true);
+                orderHistoryView.showToast("FAILLLLSSS: " + response);
+                orderHistoryView.toggleLoading(false);
+            }
+
+            @Override
+            public void callBackOnError(VolleyError error) {
+                orderHistoryView.toggleEmptyInfo(true);
+                orderHistoryView.showToast("FAIL: " + error.toString());
+                orderHistoryView.toggleLoading(false);
+            }
+        });
 
     }
 
     private void setDummyData() {
         List<WsInOutResponseModel> wsInOutResponseModelsTemp = new ArrayList<>();
-        for (int i = 0; i < 12; i++) {
-            if (i % 3 == 0) {
-                wsInOutResponseModelsTemp.add(new WsInOutResponseModel(i + "-07-2017", "08:" + (i * 2 + 10), "17:" + (i * 3 + 10), "08:" + (i * 2 + 12), "17:" + (i * 2 + 12), ""));
-            } else if (i % 2 == 0) {
-                wsInOutResponseModelsTemp.add(new WsInOutResponseModel(i + "-07-2017", "08:" + (i * 2 + 10), "17:" + (i * 3 + 10), "08:" + (i * 2 + 12), "", ""));
-            } else {
-                wsInOutResponseModelsTemp.add(new WsInOutResponseModel(i + "-07-2017", "08:" + (i * 2 + 10), "17:" + (i * 3 + 10), "", "", "23-07-2017"));
-            }
-        }
+//        for (int i = 0; i < 12; i++) {
+//            if (i % 3 == 0) {
+                wsInOutResponseModelsTemp.add(new WsInOutResponseModel("22" + "-07-2017", "08:" + "00", "17:" + "00", "07:" + "56", "18:" + "23", "", "", "", "", ""));
+//            } else if (i % 2 == 0) {
+                wsInOutResponseModelsTemp.add(new WsInOutResponseModel("19" + "-07-2017", "08:" + "00", "17:" + "00", "07:" + "38", "", "", "", "", "", ""));
+//            } else {
+                wsInOutResponseModelsTemp.add(new WsInOutResponseModel("09" + "-07-2017", "08:" + "00", "17:" + "00", "", "", "09-07-2017", "", "", "", ""));
+//            }
+//        }
         wsInOutResponseModels = wsInOutResponseModelsTemp;
         mSimpleAdapterModel.setItemList(wsInOutResponseModels);
         getView().refreshRecyclerView();

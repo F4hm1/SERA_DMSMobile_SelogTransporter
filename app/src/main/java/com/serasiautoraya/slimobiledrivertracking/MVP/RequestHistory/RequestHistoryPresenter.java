@@ -82,7 +82,12 @@ public class RequestHistoryPresenter extends TiPresenter<RequestHistoryView> {
                     requestHistoryResponseModels.add(Model.getModelInstance(response.getData()[i], RequestHistoryResponseModel.class));
                 }
                 mergeRequestHistoryData(requestHistoryResponseModels);
-                requestHistoryView.initializeTabs();
+                requestHistoryView.initializeTabs(
+                        HelperBridge.sModelLoginResponse.getReportCiCo().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY),
+                        HelperBridge.sModelLoginResponse.getReportAbsence().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY),
+                        HelperBridge.sModelLoginResponse.getReportOLCTrip().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY),
+                        HelperBridge.sModelLoginResponse.getReportOvertime().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)
+                );
                 requestHistoryView.toggleLoadingInitialLoad(false);
             }
 
@@ -91,7 +96,12 @@ public class RequestHistoryPresenter extends TiPresenter<RequestHistoryView> {
                 /*
                 * TODO change this!
                 * */
-                requestHistoryView.initializeTabs();
+                requestHistoryView.initializeTabs(
+                        HelperBridge.sModelLoginResponse.getReportCiCo().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY),
+                        HelperBridge.sModelLoginResponse.getReportAbsence().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY),
+                        HelperBridge.sModelLoginResponse.getReportOLCTrip().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY),
+                        HelperBridge.sModelLoginResponse.getReportOvertime().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)
+                );
                 requestHistoryView.showToast(response);
                 requestHistoryView.toggleLoadingInitialLoad(false);
             }
@@ -101,7 +111,12 @@ public class RequestHistoryPresenter extends TiPresenter<RequestHistoryView> {
                 /*
                 * TODO change this!
                 * */
-                requestHistoryView.initializeTabs();
+                requestHistoryView.initializeTabs(
+                        HelperBridge.sModelLoginResponse.getReportCiCo().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY),
+                        HelperBridge.sModelLoginResponse.getReportAbsence().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY),
+                        HelperBridge.sModelLoginResponse.getReportOLCTrip().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY),
+                        HelperBridge.sModelLoginResponse.getReportOvertime().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)
+                );
                 requestHistoryView.showToast("ERROR: " + error.toString());
                 requestHistoryView.toggleLoadingInitialLoad(false);
             }

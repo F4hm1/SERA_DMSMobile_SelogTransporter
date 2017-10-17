@@ -179,7 +179,9 @@ public class PodSubmitActivity extends TiActivity<PodSubmitPresenter, PodSubmitV
     @Override
     public void setImageThumbnail(Bitmap bitmapScaled, int mCurrentSelectedPosition, boolean isPod) {
         if (mPodListAdapter.getItem(mCurrentSelectedPosition).getBitmap() == null) {
-            mPodListAdapter.addItem(new PodItemModel(null));
+            if(mPodListAdapter.getCount() < 10){
+                mPodListAdapter.addItem(new PodItemModel(null));
+            }
         }
         mPodListAdapter.getItem(mCurrentSelectedPosition).setBitmap(bitmapScaled);
         mPodListAdapter.notifyDataSetChanged();

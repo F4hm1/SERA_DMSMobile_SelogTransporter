@@ -18,6 +18,10 @@ public class ActivityDetailResponseModel extends Model {
     @Expose
     private Integer JourneyActivityId;
 
+    @SerializedName("JourneyId")
+    @Expose
+    private Integer JourneyId;
+
     @SerializedName("ActivityName")
     @Expose
     private String ActivityName;
@@ -81,6 +85,10 @@ public class ActivityDetailResponseModel extends Model {
     @SerializedName("NextActivity")
     @Expose
     private Integer NextActivity;
+
+    @SerializedName("NextActivityName")
+    @Expose
+    private String NextActivityName;
 
     @SerializedName("NextActivityLocationLat")
     @Expose
@@ -250,5 +258,13 @@ public class ActivityDetailResponseModel extends Model {
 
     public String getPODGuide() {
         return PODGuide;
+    }
+
+    public String getNextActivityName() {
+        return NextActivityName;
+    }
+
+    public Integer getJourneyId() {
+        return JourneyId;
     }
 }

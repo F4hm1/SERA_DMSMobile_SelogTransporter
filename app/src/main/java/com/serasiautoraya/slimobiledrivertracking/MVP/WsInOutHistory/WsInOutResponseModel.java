@@ -3,6 +3,7 @@ package com.serasiautoraya.slimobiledrivertracking.MVP.WsInOutHistory;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.Model;
+import com.serasiautoraya.slimobiledrivertracking.MVP.Overtime.OvertimeAvailableResponseModel;
 
 /**
  * Created by randi on 24/07/2017.
@@ -34,13 +35,33 @@ public class WsInOutResponseModel extends Model {
     @Expose
     private String Absence;
 
-    public WsInOutResponseModel(String date, String scheduleIn, String scheduleOut, String clockIn, String clockOut, String absence) {
+    @SerializedName("Day")
+    @Expose
+    private String Day;
+
+    @SerializedName("Overtime")
+    @Expose
+    private String Overtime;
+
+    @SerializedName("OLC")
+    @Expose
+    private String OLC;
+
+    @SerializedName("Trip")
+    @Expose
+    private String Trip;
+
+    public WsInOutResponseModel(String date, String scheduleIn, String scheduleOut, String clockIn, String clockOut, String absence, String day, String overtime, String olc, String trip) {
         Date = date;
         ScheduleIn = scheduleIn;
         ScheduleOut = scheduleOut;
         ClockIn = clockIn;
         ClockOut = clockOut;
         Absence = absence;
+        Day = day;
+        Overtime = overtime;
+        OLC = olc;
+        Trip = trip;
     }
 
     public String getDate() {
@@ -65,5 +86,21 @@ public class WsInOutResponseModel extends Model {
 
     public String getAbsence() {
         return Absence;
+    }
+
+    public String getDay() {
+        return Day;
+    }
+
+    public String getOvertime() {
+        return Overtime;
+    }
+
+    public String getOLC() {
+        return OLC;
+    }
+
+    public String getTrip() {
+        return Trip;
     }
 }
