@@ -28,6 +28,8 @@ public interface DocumentCaptureView extends BaseViewInterface, FormViewInterfac
 
     void startActivityCapture(Intent intent);
 
+    void startActivityOpenGallery(Intent intent);
+
     void startActivitySignature();
 
     void setImageThumbnail(Bitmap bitmap, int targetIvID, boolean isPOD);
@@ -44,4 +46,5 @@ public interface DocumentCaptureView extends BaseViewInterface, FormViewInterfac
 
     void showConfirmationSuccess(String message, String title);
 
+    void showPhotoPickerSourceDialog();
 }

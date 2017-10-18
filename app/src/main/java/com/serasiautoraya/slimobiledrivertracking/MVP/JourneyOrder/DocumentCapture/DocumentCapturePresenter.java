@@ -1,6 +1,7 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.DocumentCapture;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
@@ -65,8 +66,12 @@ public class DocumentCapturePresenter extends TiPresenter<DocumentCaptureView> {
         getView().setSubmitText(HelperBridge.sActivityDetailResponseModel.getActivityName());
     }
 
-    public void capturePhoto(int id) {
+    public void pickImage(int id){
         selectedPhotoId = id;
+        getView().showPhotoPickerSourceDialog();
+    }
+
+    public void capturePhoto() {
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         File photo;
         try {
@@ -101,6 +106,18 @@ public class DocumentCapturePresenter extends TiPresenter<DocumentCaptureView> {
         final Bitmap bitmapScaled = HelperUtil.saveScaledBitmap(mImageUri.getPath(), HelperUtil.getFirstImageName());
         mBitmapPhoto[selectedPhotoId - 1] = bitmapScaled;
         getView().setImageThumbnail(bitmapScaled, selectedPhotoId, HelperBridge.sActivityDetailResponseModel.getIsPOD().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY));
+    }
+
+    public void setBitmapCapturedByGallery(String path){
+        final Bitmap bitmapScaled = HelperUtil.saveScaledBitmap(path, HelperUtil.getFirstImageName());
+        mBitmapPhoto[selectedPhotoId - 1] = bitmapScaled;
+        getView().setImageThumbnail(bitmapScaled, selectedPhotoId, HelperBridge.sActivityDetailResponseModel.getIsPOD().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY));
+    }
+
+    public void openGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
+        getView().startActivityOpenGallery(intent);
     }
 
     public void captureSignature() {
@@ -181,6 +198,7 @@ public class DocumentCapturePresenter extends TiPresenter<DocumentCaptureView> {
             } else {
                 getView().toggleLoading(true);
                 mRestConnection.getServerTime(new TimeRestCallBackInterface() {
+
                     @Override
                     public void callBackOnSuccess(TimeRESTResponseModel timeRESTResponseModel, String latitude, String longitude, String address) {
                         String timeZoneId = RestConnection.getTimeZoneID(timeRESTResponseModel);
@@ -223,10 +241,10 @@ public class DocumentCapturePresenter extends TiPresenter<DocumentCaptureView> {
 
     public void onRequestSubmitActivity() {
         getView().toggleLoading(true);
-        Log.d("DOCUMENT_CAPTURE", mStatusUpdateSendModel.getHashMapType().toString());
-        Log.d("DOCUMENT_CAPTURE", "Photo 1: " + mStatusUpdateSendModel.getPhoto1().toString());
-        Log.d("DOCUMENT_CAPTURE", "Photo 2: " + mStatusUpdateSendModel.getPhoto2().toString());
-        Log.d("DOCUMENT_CAPTURE", "Photo 3: " + mStatusUpdateSendModel.getPhoto3().toString());
+//        Log.d("DOCUMENT_CAPTURE", mStatusUpdateSendModel.getHashMapType().toString());
+//        Log.d("DOCUMENT_CAPTURE", "Photo 1: " + mStatusUpdateSendModel.getPhoto1().toString());
+//        Log.d("DOCUMENT_CAPTURE", "Photo 2: " + mStatusUpdateSendModel.getPhoto2().toString());
+//        Log.d("DOCUMENT_CAPTURE", "Photo 3: " + mStatusUpdateSendModel.getPhoto3().toString());
         mRestConnection.putData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.PUT_STATUS_UPDATE, mStatusUpdateSendModel.getHashMapType(), new RestCallbackInterfaceJSON() {
             @Override
             public void callBackOnSuccess(JSONObject response) {

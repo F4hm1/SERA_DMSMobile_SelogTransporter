@@ -14,6 +14,7 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.TimeRestCall
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.TimeRESTResponseModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperBridge;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperKey;
+import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperTransactionCode;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperUrl;
 import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.PODCapture.PODPhotoSendModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.PODCapture.PODUpdateSendModel;
@@ -67,8 +68,12 @@ public class PodSubmitPresenter extends TiPresenter<PodSubmitView> {
      * Capture Photo section
      */
 
-    public void capturePhoto(int position) {
-        mCurrentSelectedPosition = position;
+    public void pickImage(int id){
+        mCurrentSelectedPosition = id;
+        getView().showPhotoPickerSourceDialog();
+    }
+
+    public void capturePhoto() {
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         File photo;
         try {
@@ -99,12 +104,24 @@ public class PodSubmitPresenter extends TiPresenter<PodSubmitView> {
         return File.createTempFile(part, ext, tempDir);
     }
 
+    public void openGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
+        getView().startActivityOpenGallery(intent);
+    }
+
     /**
      * End Capture Photo Section
      */
 
     public void setBitmapCaptured() {
         final Bitmap bitmapScaled = HelperUtil.saveScaledBitmap(mImageUri.getPath(), HelperUtil.getFirstImageName());
+        getView().setImageThumbnail(bitmapScaled, mCurrentSelectedPosition, true);
+    }
+
+
+    public void setBitmapCapturedByGallery(String path){
+        final Bitmap bitmapScaled = HelperUtil.saveScaledBitmap(path, HelperUtil.getFirstImageName());
         getView().setImageThumbnail(bitmapScaled, mCurrentSelectedPosition, true);
     }
 

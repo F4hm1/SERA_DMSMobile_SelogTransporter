@@ -1,20 +1,26 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.DocumentCapture;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.text.Editable;
 import android.text.Html;
 import android.text.InputFilter;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -102,6 +108,8 @@ public class DocumentCaptureActivity extends TiActivity<DocumentCapturePresenter
     private boolean isFromCameraActivity = false;
     private boolean isFromSigningActivity = false;
     private ProgressDialog mProgressDialog;
+    private boolean isFromGalleryActivity = false;
+    private Uri temporaryUriGallery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,19 +123,19 @@ public class DocumentCaptureActivity extends TiActivity<DocumentCapturePresenter
     @Override
     @OnClick({R.id.documents_iv_capture1, R.id.documents_iv_capPOD1})
     public void onClickPhotoCapture1(View view) {
-        getPresenter().capturePhoto(1);
+        getPresenter().pickImage(1);
     }
 
     @Override
     @OnClick({R.id.documents_iv_capture2, R.id.documents_iv_capPOD2})
     public void onClickPhotoCapture2(View view) {
-        getPresenter().capturePhoto(2);
+        getPresenter().pickImage(2);
     }
 
     @Override
     @OnClick({R.id.documents_iv_capture3, R.id.documents_iv_capPOD3})
     public void onClickPhotoCapture3(View view) {
-        getPresenter().capturePhoto(3);
+        getPresenter().pickImage(3);
     }
 
     @Override
@@ -162,6 +170,11 @@ public class DocumentCaptureActivity extends TiActivity<DocumentCapturePresenter
     @Override
     public void startActivityCapture(Intent intent) {
         startActivityForResult(intent, HelperKey.ACTIVITY_IMAGE_CAPTURE);
+    }
+
+    @Override
+    public void startActivityOpenGallery(Intent intent) {
+        startActivityForResult(intent, HelperKey.ACTIVITY_IMAGE_CAPTURE_GALLERY);
     }
 
     @Override
@@ -293,6 +306,33 @@ public class DocumentCaptureActivity extends TiActivity<DocumentCapturePresenter
     }
 
     @Override
+    public void showPhotoPickerSourceDialog() {
+        LayoutInflater layoutInflater = LayoutInflater.from(this);
+        View promptView = layoutInflater.inflate(R.layout.dialog_capture_photopickerselection, null);
+
+        final AlertDialog alertD = new AlertDialog.Builder(this).create();
+        Button btnCamera = (Button) promptView.findViewById(R.id.capture_dialog_btncamera);
+        Button btnGallery = (Button) promptView.findViewById(R.id.capture_dialog_btngallery);
+
+        btnCamera.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                getPresenter().capturePhoto();
+                alertD.dismiss();
+            }
+        });
+
+        btnGallery.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                getPresenter().openGallery();
+                alertD.dismiss();
+            }
+        });
+
+        alertD.setView(promptView);
+        alertD.show();
+    }
+
+    @Override
     public void initialize() {
 //        mEtDocumentsFuel.addTextChangedListener(new CurrencyTextWatcher(mEtDocumentsFuel));
 //        mEtDocumentsTollparking.addTextChangedListener(new CurrencyTextWatcher(mEtDocumentsTollparking));
@@ -381,6 +421,12 @@ public class DocumentCaptureActivity extends TiActivity<DocumentCapturePresenter
         } else if (isFromSigningActivity) {
             getPresenter().setSignCaptured();
             isFromSigningActivity = false;
+        }else if(isFromGalleryActivity){
+            String imagePath = this.getPathFromUriGallery(temporaryUriGallery);
+            if(!imagePath.equalsIgnoreCase("")){
+                getPresenter().setBitmapCapturedByGallery(imagePath);
+            }
+            isFromGalleryActivity = false;
         }
     }
 
@@ -396,6 +442,12 @@ public class DocumentCaptureActivity extends TiActivity<DocumentCapturePresenter
                     isFromCameraActivity = true;
                 }
                 break;
+            }
+            case HelperKey.ACTIVITY_IMAGE_CAPTURE_GALLERY:{
+                if (resultCode == RESULT_OK) {
+                    isFromGalleryActivity = true;
+                    temporaryUriGallery = data.getData();
+                }
             }
         }
     }
@@ -420,6 +472,23 @@ public class DocumentCaptureActivity extends TiActivity<DocumentCapturePresenter
                 R.array.documents_podreason_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinnerDocumentsPODReason.setAdapter(adapter);
+    }
+
+    private String getPathFromUriGallery(Uri uri){
+        try{
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+            Cursor cursor = getContentResolver().query(uri, filePathColumn, null, null, null);
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String filePath = cursor.getString(columnIndex);
+            cursor.close();
+            return filePath;
+        }catch (Exception ex){
+            showToast("Gagal mengambil foto dari galeri, silahkan coba kembali");
+            return "";
+        }
     }
 
     @Override

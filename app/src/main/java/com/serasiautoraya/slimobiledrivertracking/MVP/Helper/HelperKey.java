@@ -33,6 +33,7 @@ public class HelperKey {
 
     //Activity Code
     public static final int ACTIVITY_IMAGE_CAPTURE = 1001;
+    public static final int ACTIVITY_IMAGE_CAPTURE_GALLERY = 1003;
     public static final int ACTIVITY_SIGNATURE_CAPTURE = 1002;
 
 

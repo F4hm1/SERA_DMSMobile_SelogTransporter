@@ -33,9 +33,6 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.ChangePassword.ChangePassw
 import com.serasiautoraya.slimobiledrivertracking.MVP.CiCo.CiCoFragment;
 import com.serasiautoraya.slimobiledrivertracking.MVP.ExpensesRequest.ExpenseRequestFragment;
 import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Assigned.AssignedFragment;
-import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.PODCapture.PODCaptureActivity;
-import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.PodSubmit.PodSubmitActivity;
-import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.PodSubmit.PodSubmitView;
 import com.serasiautoraya.slimobiledrivertracking.MVP.NotificatonList.NotificationListActivity;
 import com.serasiautoraya.slimobiledrivertracking.MVP.OLCTrip.OLCTripFragment;
 import com.serasiautoraya.slimobiledrivertracking.MVP.OrderHistory.OrderHistoryFragment;

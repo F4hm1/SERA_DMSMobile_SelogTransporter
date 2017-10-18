@@ -1,15 +1,20 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.PodSubmit;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -63,6 +68,8 @@ public class PodSubmitActivity extends TiActivity<PodSubmitPresenter, PodSubmitV
     private boolean isFromCameraActivity = false;
     private RelativeLayout.LayoutParams mParamBtnSubmitNormal;
     private RelativeLayout.LayoutParams mParamBtnSubmitBottom;
+    private boolean isFromGalleryActivity = false;
+    private Uri temporaryUriGallery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +118,7 @@ public class PodSubmitActivity extends TiActivity<PodSubmitPresenter, PodSubmitV
         mPodListAdapter = new PodListAdapter(this, new PodItemOnClickListener() {
             @Override
             public void onCapturePhoto(int position, SquareImageView squareImageView) {
-                getPresenter().capturePhoto(position);
+                getPresenter().pickImage(position);
             }
 
             @Override
@@ -168,12 +175,23 @@ public class PodSubmitActivity extends TiActivity<PodSubmitPresenter, PodSubmitV
                 }
                 break;
             }
+            case HelperKey.ACTIVITY_IMAGE_CAPTURE_GALLERY:{
+                if (resultCode == RESULT_OK) {
+                    isFromGalleryActivity = true;
+                    temporaryUriGallery = data.getData();
+                }
+            }
         }
     }
 
     @Override
     public void startActivityCapture(Intent intent) {
         startActivityForResult(intent, HelperKey.ACTIVITY_IMAGE_CAPTURE);
+    }
+
+    @Override
+    public void startActivityOpenGallery(Intent intent) {
+        startActivityForResult(intent, HelperKey.ACTIVITY_IMAGE_CAPTURE_GALLERY);
     }
 
     @Override
@@ -201,7 +219,7 @@ public class PodSubmitActivity extends TiActivity<PodSubmitPresenter, PodSubmitV
     public void toggleProgressBar(int position, boolean show) {
         mPodListAdapter.getItem(position).getProgressBar().setIndeterminate(show);
         mPodListAdapter.getItem(position).getProgressBar().setVisibility(show ? View.VISIBLE : View.GONE);
-        Log.d("PONDEX", "PONDEX: " + position + ": " + show);
+//        Log.d("PONDEX", "PONDEX: " + position + ": " + show);
 //        mPodListAdapter.notifyDataSetChanged();
     }
 
@@ -211,7 +229,13 @@ public class PodSubmitActivity extends TiActivity<PodSubmitPresenter, PodSubmitV
         if (isFromCameraActivity) {
             getPresenter().setBitmapCaptured();
             isFromCameraActivity = false;
+        } else if(isFromGalleryActivity){
+        String imagePath = this.getPathFromUriGallery(temporaryUriGallery);
+        if(!imagePath.equalsIgnoreCase("")){
+            getPresenter().setBitmapCapturedByGallery(imagePath);
         }
+        isFromGalleryActivity = false;
+    }
     }
 
     @Override
@@ -240,6 +264,50 @@ public class PodSubmitActivity extends TiActivity<PodSubmitPresenter, PodSubmitV
     @Override
     public void setGuideText(String text) {
         mTvPodGuide.setText(text);
+    }
+
+    @Override
+    public void showPhotoPickerSourceDialog() {
+        LayoutInflater layoutInflater = LayoutInflater.from(this);
+        View promptView = layoutInflater.inflate(R.layout.dialog_capture_photopickerselection, null);
+
+        final AlertDialog alertD = new AlertDialog.Builder(this).create();
+        Button btnCamera = (Button) promptView.findViewById(R.id.capture_dialog_btncamera);
+        Button btnGallery = (Button) promptView.findViewById(R.id.capture_dialog_btngallery);
+
+        btnCamera.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                getPresenter().capturePhoto();
+                alertD.dismiss();
+            }
+        });
+
+        btnGallery.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                getPresenter().openGallery();
+                alertD.dismiss();
+            }
+        });
+
+        alertD.setView(promptView);
+        alertD.show();
+    }
+
+    private String getPathFromUriGallery(Uri uri){
+        try{
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+            Cursor cursor = getContentResolver().query(uri, filePathColumn, null, null, null);
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String filePath = cursor.getString(columnIndex);
+            cursor.close();
+            return filePath;
+        }catch (Exception ex){
+            showToast("Gagal mengambil foto dari galeri, silahkan coba kembali");
+            return "";
+        }
     }
 
 }
