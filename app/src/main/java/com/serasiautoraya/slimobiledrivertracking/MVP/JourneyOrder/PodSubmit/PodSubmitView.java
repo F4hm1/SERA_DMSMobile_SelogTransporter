@@ -17,7 +17,7 @@ public interface PodSubmitView extends BaseViewInterface {
 
     void startActivityOpenGallery(Intent intent);
 
-    void setImageThumbnail(Bitmap bitmapScaled, int mCurrentSelectedPosition, boolean b);
+    void setImageThumbnail(Bitmap bitmapScaled, int mCurrentSelectedPosition, boolean b, boolean isPreview);
 
     void onClickSubmit(View view);
 
@@ -32,4 +32,6 @@ public interface PodSubmitView extends BaseViewInterface {
     void setGuideText(String text);
 
     void showPhotoPickerSourceDialog();
+
+    void toggleSubmitButton(boolean show);
 }

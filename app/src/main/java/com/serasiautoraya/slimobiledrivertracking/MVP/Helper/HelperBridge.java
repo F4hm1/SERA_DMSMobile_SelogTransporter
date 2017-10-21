@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 
 import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Activity.ActivityDetailResponseModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Assigned.AssignedOrderResponseModel;
+import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.PodSubmit.PodStatusResponseModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.Login.LoginResponseModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.OrderHistory.OrderHistoryDetail.OrderHistoryDetailResponseModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.OrderHistory.OrderHistoryResponseModel;
@@ -35,6 +36,8 @@ public class HelperBridge {
     public static Bitmap sBitmapSignature = null;
 
     public static ActivityDetailResponseModel sActivityDetailResponseModel;
+
+    public static PodStatusResponseModel sPodStatusResponseModel;
 
     public static String sTempSelectedOrderCode = "";
 

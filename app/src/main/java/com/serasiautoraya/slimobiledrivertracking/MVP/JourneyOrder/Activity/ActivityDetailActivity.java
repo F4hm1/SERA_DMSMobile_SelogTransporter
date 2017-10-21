@@ -38,8 +38,8 @@ public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, 
     TextView mTvOrderCode;
     @BindView(R.id.order_title_activityname)
     TextView mTvOrderActivityName;
-    @BindView(R.id.order_title_activitytype)
-    TextView mTvOrderActivityType;
+//    @BindView(R.id.order_title_activitytype)
+//    TextView mTvOrderActivityType;
     @BindView(R.id.order_title_origin)
     TextView mTvOrderOrigin;
     @BindView(R.id.order_title_dest)
@@ -138,7 +138,7 @@ public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, 
         mTvOrderCodeHead.setText(codeHead);
         mTvOrderCode.setText(code);
         mTvOrderActivityName.setText(activityName);
-        mTvOrderActivityType.setText(activityType);
+//        mTvOrderActivityType.setText(activityType);
         mTvOrderOrigin.setText(origin);
         mTvOrderDest.setText(destination);
         mTvOrderEtd.setText(etd);
@@ -205,5 +205,14 @@ public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, 
                         finishActivity();
                     }
                 });
+    }
+
+    @Override
+    public void toggleButtonAction(boolean show) {
+        if(show){
+            mTvButtonAction.setVisibility(View.VISIBLE);
+        }else {
+            mTvButtonAction.setVisibility(View.GONE);
+        }
     }
 }

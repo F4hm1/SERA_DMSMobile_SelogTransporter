@@ -109,6 +109,11 @@ public class PodListAdapter extends BaseAdapter {
 
         if(podItemModels.get(position).getBitmap() != null){
             squareImageView.setImageBitmap(podItemModels.get(position).getBitmap());
+            if(podItemModels.get(position).isCloseButtonAppear()){
+                podItemModels.get(position).getImageButton().setVisibility(View.VISIBLE);
+            }else{
+                podItemModels.get(position).getImageButton().setVisibility(View.GONE);
+            }
         }else{
             podItemModels.get(position).getImageButton().setVisibility(View.GONE);
         }

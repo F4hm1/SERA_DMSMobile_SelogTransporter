@@ -62,6 +62,9 @@ public class PodSubmitPresenter extends TiPresenter<PodSubmitView> {
         getView().initialize();
         getView().setSubmitText(HelperBridge.sActivityDetailResponseModel.getActivityName());
         getView().setGuideText(HelperBridge.sActivityDetailResponseModel.getPODGuide());
+        if(HelperBridge.sPodStatusResponseModel != null){
+
+        }
     }
 
     /**
@@ -110,20 +113,19 @@ public class PodSubmitPresenter extends TiPresenter<PodSubmitView> {
         getView().startActivityOpenGallery(intent);
     }
 
-    /**
-     * End Capture Photo Section
-     */
-
     public void setBitmapCaptured() {
         final Bitmap bitmapScaled = HelperUtil.saveScaledBitmap(mImageUri.getPath(), HelperUtil.getFirstImageName());
-        getView().setImageThumbnail(bitmapScaled, mCurrentSelectedPosition, true);
+        getView().setImageThumbnail(bitmapScaled, mCurrentSelectedPosition, true, true);
     }
-
 
     public void setBitmapCapturedByGallery(String path){
         final Bitmap bitmapScaled = HelperUtil.saveScaledBitmap(path, HelperUtil.getFirstImageName());
-        getView().setImageThumbnail(bitmapScaled, mCurrentSelectedPosition, true);
+        getView().setImageThumbnail(bitmapScaled, mCurrentSelectedPosition, true, true);
     }
+
+    /**
+     * End Capture Photo Section
+     */
 
     public void onRequestSubmitted(ArrayList<PodItemModel> podItemModels) {
         mPodItemCount = 0;
@@ -210,9 +212,12 @@ public class PodSubmitPresenter extends TiPresenter<PodSubmitView> {
                             HelperBridge.sModelLoginResponse.getPersonalId(),
                             HelperBridge.sActivityDetailResponseModel.getJourneyActivityId() + "",
                             reason,
-                            date + " " + time,
+//                            date + " " + time,
+                            timeRESTResponseModel.getTime(),
                             HelperBridge.sActivityDetailResponseModel.getJourneyId()+"",
-                            locationModel.getLatitude() + ", " + locationModel.getLongitude()
+                            locationModel.getLatitude() + ", " + locationModel.getLongitude(),
+                            locationModel.getAddress(),
+                            RestConnection.getUTCTimeStamp(timeRESTResponseModel)
                     );
 
                     submitPOD(podUpdateSendModel);

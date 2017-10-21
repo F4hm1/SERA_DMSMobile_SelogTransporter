@@ -1,6 +1,8 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Assigned;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -43,12 +45,21 @@ public class AssignedFragment extends TiFragment<AssignedPresenter, AssignedView
     ViewPager mViewPager;
 
     private ProgressDialog mProgressDialog;
+    private Activity mParentActivity = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_planactive_orders, container, false);
         ButterKnife.bind(this, view);
         return view;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof Activity) {
+            mParentActivity = (Activity) context;
+        }
     }
 
     @Override
@@ -64,21 +75,27 @@ public class AssignedFragment extends TiFragment<AssignedPresenter, AssignedView
 
     @Override
     public void toggleLoading(boolean isLoading) {
-        if(isLoading){
-            mProgressDialog = ProgressDialog.show(getContext(), getResources().getString(R.string.progress_msg_loaddata), getResources().getString(R.string.prog_msg_wait),true,false);
-        }else{
+        if (isLoading) {
+            if (mParentActivity != null) {
+                mProgressDialog = ProgressDialog.show(mParentActivity, getResources().getString(R.string.progress_msg_loaddata), getResources().getString(R.string.prog_msg_wait), true, false);
+            }
+        } else {
             mProgressDialog.dismiss();
         }
     }
 
     @Override
     public void showToast(String text) {
-        Toast.makeText(getContext(), text, Toast.LENGTH_LONG).show();
+        if (mParentActivity != null) {
+            Toast.makeText(mParentActivity, text, Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
     public void showStandardDialog(String message, String Title) {
-        HelperUtil.showSimpleAlertDialogCustomTitle(message, getContext(), Title);
+        if (mParentActivity != null) {
+            HelperUtil.showSimpleAlertDialogCustomTitle(message, mParentActivity, Title);
+        }
     }
 
     @NonNull
@@ -102,15 +119,19 @@ public class AssignedFragment extends TiFragment<AssignedPresenter, AssignedView
         /*
         * TODO uncomment this
         * */
-        if(isAnyOrderActive){
-            if(!isUpdateLocationActive){
-                getActivity().startService(new Intent(getActivity(), GPSTrackerService.class));
-                getPresenter().setUpdateLocationActive(true);
+        if (isAnyOrderActive) {
+            if (!isUpdateLocationActive) {
+                if (mParentActivity != null) {
+                    mParentActivity.startService(new Intent(mParentActivity, GPSTrackerService.class));
+                    getPresenter().setUpdateLocationActive(true);
+                }
             }
-        }else{
-            if(isUpdateLocationActive){
-                getActivity().stopService(new Intent(getActivity(), GPSTrackerService.class));
-                getPresenter().setUpdateLocationActive(false);
+        } else {
+            if (isUpdateLocationActive) {
+                if (mParentActivity != null) {
+                    mParentActivity.stopService(new Intent(mParentActivity, GPSTrackerService.class));
+                    getPresenter().setUpdateLocationActive(false);
+                }
             }
         }
     }
@@ -118,6 +139,11 @@ public class AssignedFragment extends TiFragment<AssignedPresenter, AssignedView
     @Override
     @OnClick(R.id.fab_planactive_order)
     public void onRefreshClicked(View view) {
+        getPresenter().loadOrdersData();
+    }
+
+    @Override
+    public void refreshAssignedList() {
         getPresenter().loadOrdersData();
     }
 
@@ -146,9 +172,9 @@ public class AssignedFragment extends TiFragment<AssignedPresenter, AssignedView
 
         @Override
         public void finishUpdate(ViewGroup container) {
-            try{
+            try {
                 super.finishUpdate(container);
-            } catch (NullPointerException nullPointerException){
+            } catch (NullPointerException nullPointerException) {
                 System.out.println("Catch the NullPointerException in FragmentPagerAdapter.finishUpdate");
             }
         }

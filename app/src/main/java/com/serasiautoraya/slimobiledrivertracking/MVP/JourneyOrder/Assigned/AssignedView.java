@@ -13,4 +13,7 @@ public interface AssignedView extends BaseViewInterface{
     void initializeTabs(boolean isAnyOrderActive, boolean isUpdateLocationActive);
 
     void onRefreshClicked(View view);
+
+    void refreshAssignedList();
+
 }

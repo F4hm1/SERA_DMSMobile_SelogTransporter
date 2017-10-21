@@ -121,7 +121,11 @@ public class AssignedOrderResponseModel extends Model{
     }
 
     public String getCurrentActivity() {
-        return CurrentActivity;
+//        if(CurrentActivity == null){
+//            return "null";
+//        }else{
+            return CurrentActivity;
+//        }
     }
 
     public String getActive() {

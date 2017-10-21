@@ -57,8 +57,8 @@ public class PodSubmitActivity extends TiActivity<PodSubmitPresenter, PodSubmitV
     @BindView(R.id.pod_btn_submit)
     Button mBtnSubmit;
 
-    @BindView(R.id.pod_spinner_reason)
-    Spinner mSpinnerPodReason;
+//    @BindView(R.id.pod_spinner_reason)
+//    Spinner mSpinnerPodReason;
 
     @BindView(R.id.pod_tv_guide)
     TextView mTvPodGuide;
@@ -78,32 +78,32 @@ public class PodSubmitActivity extends TiActivity<PodSubmitPresenter, PodSubmitV
         ButterKnife.bind(this);
         initializePodAdapter();
         initializeDynamicLayoutParams();
-        initializeSpinnerReason();
+//        initializeSpinnerReason();
 
     }
 
-    private void initializeSpinnerReason() {
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(PodSubmitActivity.this, R.array.documents_podreason_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSpinnerPodReason.setAdapter(adapter);
-        mSpinnerPodReason.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                if (position == 0) {
-                    mCardContainer.setVisibility(View.VISIBLE);
-                    mCardSubmit.setLayoutParams(mParamBtnSubmitBottom);
-                } else {
-                    mCardContainer.setVisibility(View.GONE);
-                    mCardSubmit.setLayoutParams(mParamBtnSubmitNormal);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-    }
+//    private void initializeSpinnerReason() {
+//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(PodSubmitActivity.this, R.array.documents_podreason_array, android.R.layout.simple_spinner_item);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        mSpinnerPodReason.setAdapter(adapter);
+//        mSpinnerPodReason.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+//                if (position == 0) {
+//                    mCardContainer.setVisibility(View.VISIBLE);
+//                    mCardSubmit.setLayoutParams(mParamBtnSubmitBottom);
+//                } else {
+//                    mCardContainer.setVisibility(View.GONE);
+//                    mCardSubmit.setLayoutParams(mParamBtnSubmitNormal);
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
+//    }
 
     private void initializeDynamicLayoutParams() {
         mParamBtnSubmitNormal = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -195,24 +195,25 @@ public class PodSubmitActivity extends TiActivity<PodSubmitPresenter, PodSubmitV
     }
 
     @Override
-    public void setImageThumbnail(Bitmap bitmapScaled, int mCurrentSelectedPosition, boolean isPod) {
+    public void setImageThumbnail(Bitmap bitmapScaled, int mCurrentSelectedPosition, boolean isPod, boolean isPreview) {
         if (mPodListAdapter.getItem(mCurrentSelectedPosition).getBitmap() == null) {
             if(mPodListAdapter.getCount() < 10){
                 mPodListAdapter.addItem(new PodItemModel(null));
             }
         }
         mPodListAdapter.getItem(mCurrentSelectedPosition).setBitmap(bitmapScaled);
+        mPodListAdapter.getItem(mCurrentSelectedPosition).setCloseButtonAppear(isPreview);
         mPodListAdapter.notifyDataSetChanged();
     }
 
     @Override
     @OnClick(R.id.pod_btn_submit)
     public void onClickSubmit(View view) {
-        if(mSpinnerPodReason.getSelectedItemPosition() == 0){
+//        if(mSpinnerPodReason.getSelectedItemPosition() == 0){
             getPresenter().onRequestSubmitted(mPodListAdapter.getPodItemModels());
-        }else{
-            getPresenter().onConfirmActivity();
-        }
+//        }else{
+//            getPresenter().onConfirmActivity();
+//        }
     }
 
     @Override
@@ -246,7 +247,7 @@ public class PodSubmitActivity extends TiActivity<PodSubmitPresenter, PodSubmitV
         HelperUtil.showConfirmationAlertDialog(textMsg, PodSubmitActivity.this, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                getPresenter().onRequestSubmitActivity(mSpinnerPodReason.getSelectedItemPosition() == 0?"-":mSpinnerPodReason.getSelectedItem().toString());
+                getPresenter().onRequestSubmitActivity("-");
             }
         });
     }
@@ -291,6 +292,11 @@ public class PodSubmitActivity extends TiActivity<PodSubmitPresenter, PodSubmitV
 
         alertD.setView(promptView);
         alertD.show();
+    }
+
+    @Override
+    public void toggleSubmitButton(boolean show) {
+        mBtnSubmit.setEnabled(show);
     }
 
     private String getPathFromUriGallery(Uri uri){

@@ -20,7 +20,7 @@ public class ActivityDetailResponseModel extends Model {
 
     @SerializedName("JourneyId")
     @Expose
-    private Integer JourneyId;
+    private String JourneyId;
 
     @SerializedName("ActivityName")
     @Expose
@@ -264,7 +264,7 @@ public class ActivityDetailResponseModel extends Model {
         return NextActivityName;
     }
 
-    public Integer getJourneyId() {
+    public String getJourneyId() {
         return JourneyId;
     }
 }

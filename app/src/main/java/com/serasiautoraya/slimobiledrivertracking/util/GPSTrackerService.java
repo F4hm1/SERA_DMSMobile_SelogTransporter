@@ -39,7 +39,6 @@ import com.serasiautoraya.slimobiledrivertracking.R;
 import com.serasiautoraya.slimobiledrivertracking.activity.LoginActivity;
 import com.serasiautoraya.slimobiledrivertracking.helper.HelperKey;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -69,6 +68,7 @@ public class GPSTrackerService extends Service implements LocationListener, Goog
     * TODO Delete this
     * */
     private static String TAG = "GPSTrackerService";
+    private RestConnection mRestConnection;
 
     public GPSTrackerService(Context context) {
         Log.d(TAG, "1: GPSTrackerService");
@@ -233,8 +233,10 @@ public class GPSTrackerService extends Service implements LocationListener, Goog
                 getLastLocationName()
         );
 
-        RestConnection restConnection = new RestConnection(AppInit.getAppContext());
-        restConnection.putData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.PUT_LOCATION_UPDATE, locationUpdateSendModel.getHashMapType(), new RestCallbackInterfaceJSON() {
+        if(mRestConnection == null){
+            mRestConnection = new RestConnection(AppInit.getAppContext());
+        }
+        mRestConnection.putData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.PUT_LOCATION_UPDATE, locationUpdateSendModel.getHashMapType(), new RestCallbackInterfaceJSON() {
             @Override
             public void callBackOnSuccess(JSONObject response) {
                 Log.d("LOCATION_UPDATE", "SERV_SUCCESS");

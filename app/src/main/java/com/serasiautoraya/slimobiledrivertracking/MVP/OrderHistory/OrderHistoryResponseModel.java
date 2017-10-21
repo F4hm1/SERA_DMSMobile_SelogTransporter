@@ -16,6 +16,10 @@ public class OrderHistoryResponseModel extends Model {
     @Expose
     private String OrderCode;
 
+    @SerializedName("AssignmentId")
+    @Expose
+    private String AssignmentId;
+
     @SerializedName("Status")
     @Expose
     private String Status;
@@ -48,6 +52,10 @@ public class OrderHistoryResponseModel extends Model {
         Destination = destination;
         this.ETA = ETA;
         this.ETD = ETD;
+    }
+
+    public String getAssignmentId() {
+        return AssignmentId;
     }
 
     public String getOrderCode() {

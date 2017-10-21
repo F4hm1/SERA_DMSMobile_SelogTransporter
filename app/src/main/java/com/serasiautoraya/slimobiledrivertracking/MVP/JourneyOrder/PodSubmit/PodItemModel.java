@@ -17,6 +17,7 @@ public class PodItemModel {
     private ImageButton imageButton;
     private ProgressBar progressBar;
     private int adapterIndex;
+    private boolean isCloseButtonAppear = true;
 
     public PodItemModel(Bitmap bitmap) {
         this.bitmap = bitmap;
@@ -60,5 +61,13 @@ public class PodItemModel {
 
     public int getAdapterIndex() {
         return adapterIndex;
+    }
+
+    public boolean isCloseButtonAppear() {
+        return isCloseButtonAppear;
+    }
+
+    public void setCloseButtonAppear(boolean closeButtonAppear) {
+        isCloseButtonAppear = closeButtonAppear;
     }
 }

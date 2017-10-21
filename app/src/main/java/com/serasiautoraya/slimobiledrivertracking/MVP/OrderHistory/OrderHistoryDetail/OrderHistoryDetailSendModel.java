@@ -14,8 +14,12 @@ public class OrderHistoryDetailSendModel extends Model {
     @Expose
     private String OrderCode;
 
-    public OrderHistoryDetailSendModel(String orderCode) {
-        OrderCode = orderCode;
-    }
+    @SerializedName("AssignmentId")
+    @Expose
+    private String AssignmentId;
 
+    public OrderHistoryDetailSendModel(String orderCode, String assignmentId) {
+        OrderCode = orderCode;
+        AssignmentId = assignmentId;
+    }
 }

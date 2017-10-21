@@ -59,6 +59,7 @@ public class AssignedPresenter extends TiPresenter<AssignedView> {
         mRestConnection.getData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.GET_ASSIGNED_ORDER, assignedOrderSendModel.getHashMapType(), new RestCallBackInterfaceModel() {
             @Override
             public void callBackOnSuccess(BaseResponseModel response) {
+                Log.d("SIT_FMS", "SUCCESS : "+response.getResponseText());
                 List<AssignedOrderResponseModel> assignedOrderResponseModels = new ArrayList<>();
                 for (int i = 0; i < response.getData().length; i++) {
                     assignedOrderResponseModels.add(Model.getModelInstance(response.getData()[i], AssignedOrderResponseModel.class));
@@ -77,6 +78,7 @@ public class AssignedPresenter extends TiPresenter<AssignedView> {
                 assignedView.initializeTabs(isAnyOrderActive, mSharedPrefsModel.get(HelperKey.KEY_IS_UPDATE_LOCATION_ACTIVE, false));
                 assignedView.showToast(response);
                 assignedView.toggleLoading(false);
+                Log.d("SIT_FMS", "FAIL : "+response);
             }
 
             @Override
@@ -86,6 +88,7 @@ public class AssignedPresenter extends TiPresenter<AssignedView> {
                 * */
                 assignedView.initializeTabs(isAnyOrderActive, mSharedPrefsModel.get(HelperKey.KEY_IS_UPDATE_LOCATION_ACTIVE, false));
                 assignedView.showToast("ERROR: " + error.toString());
+                Log.d("SIT_FMS", "ERROR : "+error.toString());
                 assignedView.toggleLoading(false);
             }
         });

@@ -173,9 +173,12 @@ public class PODCapturePresenter extends TiPresenter<PODCaptureView> {
                             HelperBridge.sModelLoginResponse.getPersonalId(),
                             HelperBridge.sActivityDetailResponseModel.getJourneyActivityId() + "",
                             "Reason: -",
-                            date + " " + time,
+//                            date + " " + time,
+                            timeRESTResponseModel.getTime(),
                             HelperBridge.sActivityDetailResponseModel.getJourneyId()+"",
-                            locationModel.getLatitude() + ", " + locationModel.getLongitude()
+                            locationModel.getLatitude() + ", " + locationModel.getLongitude(),
+                            locationModel.getAddress(),
+                            RestConnection.getUTCTimeStamp(timeRESTResponseModel)
                     );
 
                     submitPOD(podUpdateSendModel);

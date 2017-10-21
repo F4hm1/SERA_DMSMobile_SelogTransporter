@@ -10,7 +10,6 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.BaseModel.Model;
 
 public class PODUpdateSendModel extends Model{
 
-
     @SerializedName("PersonalId")
     @Expose
     public String personalId;
@@ -35,6 +34,14 @@ public class PODUpdateSendModel extends Model{
     @Expose
     public String locationRealCoordinates;
 
+    @SerializedName("LocationRealText")
+    @Expose
+    public String locationRealText;
+
+    @SerializedName("TimeStampUTC")
+    @Expose
+    public String timeStampUTC;
+
     /**
      * No args constructor for use in serialization
      *
@@ -49,12 +56,14 @@ public class PODUpdateSendModel extends Model{
      * @param reason
      * @param personalId
      */
-    public PODUpdateSendModel(String personalId, String activityCode, String reason, String timeStamp, String journeyId, String locationRealCoordinates) {
+    public PODUpdateSendModel(String personalId, String activityCode, String reason, String timeStamp, String journeyId, String locationRealCoordinates, String locationRealText, String timeStampUTC) {
         this.personalId = personalId;
         this.activityCode = activityCode;
         this.reason = reason;
         this.timeStamp = timeStamp;
         this.journeyId = journeyId;
         this.locationRealCoordinates = locationRealCoordinates;
+        this.locationRealText = locationRealText;
+        this.timeStampUTC = timeStampUTC;
     }
 }

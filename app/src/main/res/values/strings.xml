@@ -71,7 +71,7 @@
     <!--Login Progress-->
     <string name="warn_msg_memuatdata">Memuat data, harap tunggu</string>
     <string name="progress_msg_login">Melakukan Verifikasi...</string>
-    <string name="progress_msg_loaddata">Loading data...</string>
+    <string name="progress_msg_loaddata">Memuat data...</string>
 
     <!--Order Details -->
     <string name="order_title">Detail Order</string>

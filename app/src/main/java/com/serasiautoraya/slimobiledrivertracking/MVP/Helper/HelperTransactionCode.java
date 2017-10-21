@@ -70,4 +70,13 @@ public class HelperTransactionCode {
     public static final String ASSIGNED_REQUEST_OPEN = "1";
     public static final String ASSIGNED_REQUEST_CLOSEDEXPENSE = "2";
     public static final String ASSIGNED_REQUEST_ALL = "3";
+
+    public static final int ACTIVITY_ID_FORBIDDEN_UPDATE = -1;
+
+    public static final String POD_WAITING_APPROVAL = "WFSTS_90";
+    public static final String POD_APPROVED = "WFSTS_91";
+    public static final String POD_REJECTED = "WFSTS_92";
+    public static final String POD_INSERTED_BLANK = "WFSTS_93";
+
+
 }

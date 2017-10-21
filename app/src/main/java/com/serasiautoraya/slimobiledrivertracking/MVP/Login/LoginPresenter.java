@@ -59,7 +59,7 @@ public class LoginPresenter extends TiPresenter<LoginView> {
                 deviceID = mTelephonyManager.getDeviceId();
             }
 
-            deviceID = "353381079168024";
+//            deviceID = "353381079168024";
 
 //            getView().showToast("DEVICE-ID: "+deviceID);
 

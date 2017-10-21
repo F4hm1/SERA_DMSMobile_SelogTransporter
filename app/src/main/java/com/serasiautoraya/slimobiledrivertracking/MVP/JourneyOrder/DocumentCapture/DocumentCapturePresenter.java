@@ -220,10 +220,12 @@ public class DocumentCapturePresenter extends TiPresenter<DocumentCaptureView> {
                                 mBitmapPhoto[1] == null ? "" : HelperUtil.encodeTobase64(mBitmapPhoto[1]),
                                 mBitmapPhoto[2] == null ? "" : HelperUtil.encodeTobase64(mBitmapPhoto[2]),
                                 verificationCodeSplitted,
-                                timeRESTResponseModel.getTime(),
+                                RestConnection.getUTCTimeStamp(timeRESTResponseModel),
+//                                timeRESTResponseModel.getTime(),
                                 mBitmapSignature == null ? "" : HelperUtil.encodeTobase64(mBitmapSignature),
                                 pODReason,
-                                HelperBridge.sActivityDetailResponseModel.getJourneyId() + ""
+                                HelperBridge.sActivityDetailResponseModel.getJourneyId() + "",
+                                timeRESTResponseModel.getTime()
                         );
                         getView().toggleLoading(false);
                         getView().showConfirmationDialog(HelperBridge.sActivityDetailResponseModel.getActivityName());

@@ -46,4 +46,6 @@ public interface ActivityDetailView extends BaseViewInterface {
 
     void showConfirmationSuccess(String message, String title);
 
+    void toggleButtonAction(boolean show);
+
 }

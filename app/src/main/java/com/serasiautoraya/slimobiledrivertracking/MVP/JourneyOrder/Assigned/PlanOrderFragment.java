@@ -131,7 +131,8 @@ public class PlanOrderFragment extends TiFragment<PlanOrderPresenter, PlanOrderV
     @Override
     public void refreshAllData() {
         AssignedView assignedView = (AssignedView) getParentFragment();
-        assignedView.initialize();
+//        assignedView.initialize();
+        assignedView.refreshAssignedList();
     }
 
     @Override

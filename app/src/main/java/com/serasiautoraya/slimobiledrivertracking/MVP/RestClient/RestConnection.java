@@ -41,8 +41,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * Created by Randi Dwi Nandra on 21/03/2017.
@@ -56,8 +60,10 @@ public class RestConnection {
     private Context mContext;
 
     public RestConnection(Context context) {
-        this.mRequestQueue = Volley.newRequestQueue(context);
-        this.mContext = context;
+        if (this.mRequestQueue == null) {
+            this.mRequestQueue = Volley.newRequestQueue(context);
+            this.mContext = context;
+        }
     }
 
     int MAX_SERIAL_THREAD_POOL_SIZE = 1;
@@ -72,7 +78,7 @@ public class RestConnection {
     private static Network getNetwork() {
         HttpStack stack;
         String userAgent = "volley/0";
-        if(Build.VERSION.SDK_INT >= 9) {
+        if (Build.VERSION.SDK_INT >= 9) {
             stack = new HurlStack();
         } else {
             stack = new HttpClientStack(AndroidHttpClient.newInstance(userAgent));
@@ -84,7 +90,7 @@ public class RestConnection {
         final RestCallbackInterfaceJSON restcall = restCallback;
         final String token = transactionToken;
         Log.d("POST_TAGS", params.toString());
-        if(NetworkUtil.LAST_CONNECTION_NETWORK_STATUS == false){
+        if (NetworkUtil.LAST_CONNECTION_NETWORK_STATUS == false) {
             restcall.callBackOnFail("Pastikan terdapat koneksi internet, kemudian silahkan coba kembali");
             return;
         }
@@ -172,7 +178,7 @@ public class RestConnection {
         final RestCallbackInterfaceJSON restcall = restCallback;
         final String token = transactionToken;
         Log.d("POST_TAGS", params.toString());
-        if(NetworkUtil.LAST_CONNECTION_NETWORK_STATUS == false){
+        if (NetworkUtil.LAST_CONNECTION_NETWORK_STATUS == false) {
             restcall.callBackOnFail("Pastikan terdapat koneksi internet, kemudian silahkan coba kembali");
             return;
         }
@@ -185,13 +191,14 @@ public class RestConnection {
                     public void onResponse(JSONObject response) {
                         if (mStatusCode == 200) {
                             restcall.callBackOnSuccess(response);
+                            Log.d("FAIL_API", "SUCCESS JSON");
                         } else {
                             try {
                                 restcall.callBackOnFail(response.getString("responseText"));
-                                Log.d("FAIL_API", response.getString("responseText"));
+                                Log.d("FAIL_API", "FAIL" + response.getString("responseText"));
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                Log.d("FAIL_API", "Catch:"+e.getMessage());
+                                Log.d("FAIL_API", "Catch:" + e.getMessage());
                             }
                         }
                     }
@@ -200,6 +207,7 @@ public class RestConnection {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         restcall.callBackOnFail(error.getMessage());
+                        Log.d("FAIL_API", "ERROR:" + error.getMessage());
                     }
                 }
         ) {
@@ -262,7 +270,7 @@ public class RestConnection {
         String tempLatitude = "";
         String tempLongitude = "";
         String tempAddress = "";
-        if(NetworkUtil.LAST_CONNECTION_NETWORK_STATUS == false){
+        if (NetworkUtil.LAST_CONNECTION_NETWORK_STATUS == false) {
             restcall.callBackOnFail("Pastikan terdapat koneksi internet, kemudian silahkan coba kembali");
             return;
         }
@@ -296,6 +304,7 @@ public class RestConnection {
                     @Override
                     public void onResponse(TimeRESTResponseModel response) {
                         if (response != null) {
+
                             restcall.callBackOnSuccess(response, latitude, longitude, address);
                         } else {
                             restcall.callBackOnFail("Terjadi kesalahan, harap periksa koneksi anda, kemudian coba kembali");
@@ -315,7 +324,7 @@ public class RestConnection {
 
     public void getData(String transactionToken, String url, HashMap<String, String> params, RestCallBackInterfaceModel restCallBackInterfaceModel) {
         final RestCallBackInterfaceModel restcall = restCallBackInterfaceModel;
-        if(NetworkUtil.LAST_CONNECTION_NETWORK_STATUS == false){
+        if (NetworkUtil.LAST_CONNECTION_NETWORK_STATUS == false) {
             restcall.callBackOnFail("Pastikan terdapat koneksi internet, kemudian silahkan coba kembali");
             return;
         }
@@ -338,9 +347,11 @@ public class RestConnection {
                     public void onResponse(BaseResponseModel response) {
                         if (mStatusCode == 200) {
                             restcall.callBackOnSuccess(response);
+                            Log.d("FAIL_API", "SUCCESS:" + response.getResponseText());
+
                         } else {
                             restcall.callBackOnFail(response.getResponseText());
-                            Log.d("FAIL_API", response.getResponseText());
+                            Log.d("FAIL_API", "FAIL:" + response.getResponseText());
                         }
 
                     }
@@ -349,6 +360,7 @@ public class RestConnection {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         restcall.callBackOnFail(error.getMessage());
+                        Log.d("FAIL_API", "ERROR:" + error.getMessage());
                     }
                 }
         ) {
@@ -399,7 +411,7 @@ public class RestConnection {
 
         final RestCallBackInterfaceModel restcall = restCallBackInterfaceModel;
         HashMap<String, String> params2 = new HashMap<>();
-        if(NetworkUtil.LAST_CONNECTION_NETWORK_STATUS == false){
+        if (NetworkUtil.LAST_CONNECTION_NETWORK_STATUS == false) {
             restcall.callBackOnFail("Pastikan terdapat koneksi internet, kemudian silahkan coba kembali");
             return;
         }
@@ -422,10 +434,9 @@ public class RestConnection {
                     public void onResponse(BaseResponseModel response) {
                         if (mStatusCode == 200) {
                             restcall.callBackOnSuccess(response);
+                            Log.d("FAIL_API", "SUCCESS:" + response.getResponseText());
                         } else {
-                            Log.d("ANJIRRRRS", "code: " + mStatusCode);
-                            Log.d("ANJIRRRRS", "datas: " + response.getResponseText());
-                            Log.d("ANJIRRRRS", "codess: " + response.getResponse());
+                            Log.d("FAIL_API", "FAIL:" + response.getResponseText());
                             restcall.callBackOnFail(response.getResponseText());
                         }
 //                        if (response != null) {
@@ -440,6 +451,7 @@ public class RestConnection {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d("ANJIRRRRS", "errors: " + error.getMessage());
+                        Log.d("FAIL_API", "ERROR:" + error.getMessage());
                         restcall.callBackOnFail(error.getMessage());
                     }
                 }
@@ -571,7 +583,7 @@ public class RestConnection {
     public void putData(String transactionToken, String url, HashMap<String, String> params, RestCallbackInterfaceJSON restCallback) {
         final RestCallbackInterfaceJSON restcall = restCallback;
         final String token = transactionToken;
-        if(NetworkUtil.LAST_CONNECTION_NETWORK_STATUS == false){
+        if (NetworkUtil.LAST_CONNECTION_NETWORK_STATUS == false) {
             restcall.callBackOnFail("Pastikan terdapat koneksi internet, kemudian silahkan coba kembali");
             return;
         }
@@ -586,14 +598,14 @@ public class RestConnection {
                         Log.d("ANJIRRRRS", "code: " + mStatusCode);
                         if (mStatusCode == 200) {
                             restcall.callBackOnSuccess(response);
-                            Log.d("FAIL_API", "Success:"+response.toString());
+                            Log.d("FAIL_API", "Success:" + response.toString());
                         } else {
                             try {
                                 restcall.callBackOnFail(response.getString("responseText"));
                                 Log.d("FAIL_API", response.getString("responseText"));
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                Log.d("FAIL_API", "Catch:"+e.getMessage());
+                                Log.d("FAIL_API", "Catch:" + e.getMessage());
                             }
                         }
                     }
@@ -602,7 +614,7 @@ public class RestConnection {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         restcall.callBackOnFail(error.getMessage());
-                        Log.d("FAIL_API", "Success:"+error.getMessage());
+                        Log.d("FAIL_API", "Success:" + error.getMessage());
                     }
                 }
         ) {
@@ -694,5 +706,51 @@ public class RestConnection {
         }
         return result;
     }
+
+    public static String getTimeZoneIdByString(String offset) {
+        String result = "";
+        switch (offset) {
+            case "7":
+                result = "WIB";
+                break;
+            case "8":
+                result = "WITA";
+                break;
+            case "9":
+                result = "WIT";
+                break;
+        }
+        return result;
+    }
+
+    public static String getUTCTimeStamp(TimeRESTResponseModel timeRESTResponseModel) {
+        try {
+            Date dateBase = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(timeRESTResponseModel.getTime());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+            String result = sdf.format(dateBase);
+            Log.d("TIMEUTC", result);
+            return result;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return timeRESTResponseModel.getTime();
+        }
+    }
+
+    public static String getCustomTimeZoneTimeStamp(String omServerDate, String timeZoneRaw, String offset) {
+        try {
+            SimpleDateFormat sdfUtc = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            sdfUtc.setTimeZone(TimeZone.getTimeZone("UTC"));
+            Date dateBase = sdfUtc.parse(omServerDate);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            sdf.setTimeZone(TimeZone.getTimeZone(timeZoneRaw));
+            String result = sdf.format(dateBase);
+            return result + " " + getTimeZoneIdByString(offset);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return omServerDate + "GMT+00";
+        }
+    }
+
 }
 

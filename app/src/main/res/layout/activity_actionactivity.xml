@@ -32,6 +32,7 @@
                 <TextView
                     android:transitionName="trans_order_code"
                     android:id="@+id/order_title_code_head"
+                    android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_span="3"
@@ -115,29 +116,29 @@
             </TableRow>
 
             <!--order_title_nextdriver-->
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/table_bottom_border"
-                android:gravity="left">
+            <!--<TableRow-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="@drawable/table_bottom_border"-->
+                <!--android:gravity="left">-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingBottom="10dip"
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:paddingBottom="10dip"-->
 
-                    android:paddingLeft="20dip"
-                    android:paddingTop="10dip"
-                    android:text="@string/order_title_activitytype" />
+                    <!--android:paddingLeft="20dip"-->
+                    <!--android:paddingTop="10dip"-->
+                    <!--android:text="@string/order_title_activitytype" />-->
 
-                <TextView
-                    android:id="@+id/order_title_activitytype"
-                    android:layout_weight="1"
-                    android:paddingBottom="10dip"
+                <!--<TextView-->
+                    <!--android:id="@+id/order_title_activitytype"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:paddingBottom="10dip"-->
 
-                    android:paddingTop="10dip"
-                    android:text="Row 3 column 2" />
-            </TableRow>
+                    <!--android:paddingTop="10dip"-->
+                    <!--android:text="Row 3 column 2" />-->
+            <!--</TableRow>-->
 
             <!--order_title_origin-->
             <TableRow
@@ -199,7 +200,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_weight="1"
-
+                    android:gravity="center_vertical"
                     android:paddingBottom="10dip"
                     android:paddingLeft="20dip"
                     android:paddingTop="10dip"
@@ -302,6 +303,7 @@
                     android:paddingBottom="10dip"
                     android:paddingLeft="20dip"
                     android:paddingTop="10dip"
+
                     android:text="@string/order_title_timetarget"
                     android:textColor="@color/colorPrimaryDark" />
 
@@ -328,6 +330,7 @@
                     android:paddingBottom="10dip"
                     android:paddingLeft="20dip"
                     android:paddingTop="10dip"
+
                     android:text="@string/order_title_timebaseline"
                     android:textColor="@color/colorPrimaryDark" />
 
@@ -336,6 +339,7 @@
                     android:layout_weight="1"
                     android:paddingBottom="10dip"
                     android:paddingTop="10dip"
+
                     android:text="Row 3 column 2"
                     android:textColor="@color/colorPrimaryDark" />
             </TableRow>
@@ -353,6 +357,7 @@
                     android:paddingBottom="10dip"
                     android:paddingLeft="20dip"
                     android:paddingTop="10dip"
+
                     android:text="@string/order_title_timeactual"
                     android:textColor="@color/colorPrimaryDark" />
 
@@ -360,6 +365,7 @@
                     android:id="@+id/order_title_timeactual"
                     android:layout_weight="1"
                     android:paddingBottom="10dip"
+
                     android:paddingTop="10dip"
                     android:text="Row 3 column 2"
                     android:textColor="@color/colorPrimaryDark" />
@@ -486,7 +492,6 @@
                     android:id="@+id/order_title_nextlocationtarget"
                     android:layout_weight="1"
                     android:paddingBottom="10dip"
-
                     android:paddingTop="10dip"
                     android:text="Row 3 column 2" />
             </TableRow>

@@ -78,4 +78,6 @@ public class HelperUrl {
     public static final String POST_POD_PHOTO = HOST + "order/uploadpod/";
 
     public static final String PUT_POD = HOST + "order/updatepod";
+
+    public static final String GET_POD_STATUS = HOST + "order/statuspod";
 }

@@ -70,6 +70,16 @@ public class OrderHistoryFragment extends TiFragment<OrderHistoryPresenter, Orde
         this.initializePickerDialog();
         this.initializeRecycleView();
         this.initializeRecylerListener();
+//        getPresenter().initialOrderHistoryDatePeriod();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        this.initializeOrderHistory();
+    }
+
+    private void initializeOrderHistory(){
         getPresenter().initialOrderHistoryDatePeriod();
     }
 

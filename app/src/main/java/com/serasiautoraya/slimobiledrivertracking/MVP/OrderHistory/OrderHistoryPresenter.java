@@ -55,6 +55,7 @@ public class OrderHistoryPresenter extends TiPresenter<OrderHistoryView> {
     public void onItemClicked(int position) {
         OrderHistoryResponseModel assignedOrderResponseModel = (OrderHistoryResponseModel) mSimpleAdapterModel.getItem(position);
         final String orderCode = assignedOrderResponseModel.getOrderCode();
+        final String assignmentId = assignedOrderResponseModel.getAssignmentId();
 //        setdummydata(orderCode);
 //        getView().changeActivityAction(HelperKey.KEY_INTENT_ORDERCODE, "ORDER_DUMMY", OrderHistoryDetailActivity.class);
 
@@ -64,7 +65,10 @@ public class OrderHistoryPresenter extends TiPresenter<OrderHistoryView> {
 
         HelperBridge.sOrderHistoryDetailActivityList = new ArrayList<>();
 
-        OrderHistoryDetailSendModel orderHistoryDetailSendModel = new OrderHistoryDetailSendModel(orderCode);
+        OrderHistoryDetailSendModel orderHistoryDetailSendModel = new OrderHistoryDetailSendModel(
+                orderCode,
+                assignmentId
+        );
         getView().toggleLoading(true);
         final OrderHistoryView orderHistoryView = getView();
         mRestConnection.getData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.GET_ORDER_HISTORY_DETAIL, orderHistoryDetailSendModel.getHashMapType(), new RestCallBackInterfaceModel() {
