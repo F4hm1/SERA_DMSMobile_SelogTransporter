@@ -45,7 +45,11 @@ public class ProfileActivity extends AppCompatActivity{
     }
 
     private void assignContent() {
-        Picasso.with(ProfileActivity.this).load(HelperBridge.MODEL_LOGIN_DATA.getPhotoFront()).into(imgProfilePhoto);
+        if(HelperBridge.MODEL_LOGIN_DATA.getPhotoFront() != null){
+            if(!HelperBridge.MODEL_LOGIN_DATA.getPhotoFront().equalsIgnoreCase("")){
+                Picasso.with(ProfileActivity.this).load(HelperBridge.MODEL_LOGIN_DATA.getPhotoFront()).into(imgProfilePhoto);
+            }
+        }
 
         textProfileNameFp.setText(HelperBridge.MODEL_LOGIN_DATA.getFullName());
         String position = HelperBridge.MODEL_LOGIN_DATA.getPosition() == "Driver"? "Transporter": HelperBridge.MODEL_LOGIN_DATA.getPosition();

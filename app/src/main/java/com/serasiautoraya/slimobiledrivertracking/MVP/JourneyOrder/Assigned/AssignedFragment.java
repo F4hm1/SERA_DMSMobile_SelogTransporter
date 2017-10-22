@@ -105,8 +105,8 @@ public class AssignedFragment extends TiFragment<AssignedPresenter, AssignedView
 
     private void setupViewPager(final ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new ActiveOrderFragment(), "Active Order");
-        adapter.addFragment(new PlanOrderFragment(), "Plan Order");
+        adapter.addFragment(new ActiveOrderFragment(), "Order Aktif");
+        adapter.addFragment(new PlanOrderFragment(), "Rencana Order");
         viewPager.setAdapter(adapter);
     }
 

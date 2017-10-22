@@ -219,7 +219,11 @@ public class DashboardActivity extends AppCompatActivity
             mTextViewNavNama.setText(HelperBridge.MODEL_LOGIN_DATA.getFullName());
             String position = HelperBridge.MODEL_LOGIN_DATA.getPosition() == "Driver"? "Transporter "+HelperBridge.MODEL_LOGIN_DATA.getCompanyName(): HelperBridge.MODEL_LOGIN_DATA.getPosition()+" "+HelperBridge.MODEL_LOGIN_DATA.getCompanyName();
             mTextViewNavPosisi.setText(position);
-            Picasso.with(DashboardActivity.this).load(HelperBridge.MODEL_LOGIN_DATA.getPhotoFront()).into(mImageViewNavImg);
+            if(HelperBridge.MODEL_LOGIN_DATA.getPhotoFront() != null){
+                if(!HelperBridge.MODEL_LOGIN_DATA.getPhotoFront().equalsIgnoreCase("")){
+                    Picasso.with(DashboardActivity.this).load(HelperBridge.MODEL_LOGIN_DATA.getPhotoFront()).into(mImageViewNavImg);
+                }
+            }
         }
     }
 

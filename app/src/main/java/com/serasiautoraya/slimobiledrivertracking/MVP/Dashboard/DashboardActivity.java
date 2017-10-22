@@ -360,7 +360,11 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
 
     @Override
     public void setDrawerProfile(String name, String position, String urlPhoto) {
-        Picasso.with(DashboardActivity.this).load(urlPhoto).into(mImageViewNavImg);
+        if(urlPhoto != null){
+            if(!urlPhoto.equalsIgnoreCase("")){
+                Picasso.with(DashboardActivity.this).load(urlPhoto).into(mImageViewNavImg);
+            }
+        }
         mTextViewNavNama.setText(name);
         mTextViewNavPosisi.setText(position);
     }

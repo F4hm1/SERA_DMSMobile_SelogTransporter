@@ -123,6 +123,10 @@ public class ProfileActivity extends TiActivity<ProfilePresenter, ProfileView> i
 
     @Override
     public void setProfilePhoto(String url) {
-        Picasso.with(ProfileActivity.this).load(url).into(mIvProfilePhoto);
+        if(url != null) {
+            if (!url.equalsIgnoreCase("")) {
+                Picasso.with(ProfileActivity.this).load(url).into(mIvProfilePhoto);
+            }
+        }
     }
 }
