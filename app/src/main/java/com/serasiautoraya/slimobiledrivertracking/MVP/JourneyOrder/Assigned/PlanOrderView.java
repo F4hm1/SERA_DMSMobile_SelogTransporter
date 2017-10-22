@@ -26,7 +26,8 @@ public interface PlanOrderView extends BaseViewInterface{
 
     void refreshAllData();
 
-    @DistinctUntilChanged
     void toggleEmptyInfo(boolean show);
+
+    void setTextEmptyInfoStatus(boolean success);
 
 }

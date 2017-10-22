@@ -144,6 +144,17 @@ public class PlanOrderFragment extends TiFragment<PlanOrderPresenter, PlanOrderV
         }
     }
 
+    @Override
+    public void setTextEmptyInfoStatus(boolean success) {
+        if(success){
+            mEmptyInfoView.setIcon(R.drawable.ic_empty_order);
+            mEmptyInfoView.setText("Tidak terdapat order terencana yang belum aktif");
+        }else{
+            mEmptyInfoView.setIcon(R.drawable.ic_close_grey);
+            mEmptyInfoView.setText("Gagal mengambil daftar order, silahkan tekan tombol \"ulangi\" dibawah untuk mencoba kembali");
+        }
+    }
+
     @NonNull
     @Override
     public PlanOrderPresenter providePresenter() {

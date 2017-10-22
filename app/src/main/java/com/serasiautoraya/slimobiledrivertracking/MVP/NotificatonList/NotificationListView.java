@@ -14,6 +14,5 @@ public interface NotificationListView extends BaseViewInterface {
 
     void showDeleteConfirmationDialog(String notificationDate);
 
-    @DistinctUntilChanged
     void toggleEmptyInfo(boolean show);
 }

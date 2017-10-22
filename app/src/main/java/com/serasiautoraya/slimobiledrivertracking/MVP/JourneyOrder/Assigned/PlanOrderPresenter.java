@@ -20,12 +20,15 @@ import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Activity.Acti
 import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Activity.ActivityDetailResponseModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Activity.ActivityDetailSendModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.RestClient.RestConnection;
+import com.serasiautoraya.slimobiledrivertracking.helper.HelperUtil;
 import com.serasiautoraya.slimobiledrivertracking.util.HttpsTrustManager;
 
 import net.grandcentrix.thirtyinch.TiPresenter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
 
 /**
  * Created by Randi Dwi Nandra on 31/03/2017.
@@ -35,12 +38,13 @@ public class PlanOrderPresenter extends TiPresenter<PlanOrderView> {
 
     private SimpleAdapterModel mSimpleAdapterModel;
     private RestConnection mRestConnection;
+    private HashMap<String, AssignedOrderResponseModel> ackOrderMap = new HashMap<>();
 
     public PlanOrderPresenter(RestConnection mRestConnection) {
         this.mRestConnection = mRestConnection;
     }
 
-    public void setAdapter(SimpleAdapterModel simpleAdapterModel){
+    public void setAdapter(SimpleAdapterModel simpleAdapterModel) {
         this.mSimpleAdapterModel = simpleAdapterModel;
     }
 
@@ -51,22 +55,29 @@ public class PlanOrderPresenter extends TiPresenter<PlanOrderView> {
         getView().initialize();
     }
 
-    public void loadOrdersdata(){
+    public void loadOrdersdata() {
+        getView().setTextEmptyInfoStatus(HelperBridge.sListOrderRetrievalSuccess);
         getView().toggleEmptyInfo(true);
         if (!HelperBridge.sPlanOutstandingOrdersList.isEmpty()) {
             getView().toggleEmptyInfo(false);
         }
         mSimpleAdapterModel.setItemList(HelperBridge.sPlanOutstandingOrdersList);
 
-        for (AssignedOrderResponseModel assignedOrderResponseModel:HelperBridge.sPlanOutstandingOrdersList) {
-            if(assignedOrderResponseModel.getStatus() == HelperTransactionCode.ASSIGNED_ORDER_INACK_CODE_IN){
+        for (AssignedOrderResponseModel assignedOrderResponseModel : HelperBridge.sPlanOutstandingOrdersList) {
+            if (assignedOrderResponseModel.getStatus() == HelperTransactionCode.ASSIGNED_ORDER_INACK_CODE_IN) {
+                String[] dateEtdServerFormatSplitted = assignedOrderResponseModel.getETD().split(" ");
+                String dateEtdUserFormat = HelperUtil.getUserFormDate(dateEtdServerFormatSplitted[0]) + "\nPukul " + dateEtdServerFormatSplitted[1];
+
+                String[] dateEtaServerFormatSplitted = assignedOrderResponseModel.getETA().split(" ");
+                String dateEtaUserFormat = HelperUtil.getUserFormDate(dateEtaServerFormatSplitted[0]) + "\nPukul " + dateEtaServerFormatSplitted[1];
+                ackOrderMap.put(assignedOrderResponseModel.getOrderID(), assignedOrderResponseModel);
                 getView().showAcknowledgeDialog(
                         assignedOrderResponseModel.getOrderID(),
                         assignedOrderResponseModel.getAssignmentId(),
                         assignedOrderResponseModel.getDestination(),
                         assignedOrderResponseModel.getOrigin(),
-                        assignedOrderResponseModel.getETD(),
-                        assignedOrderResponseModel.getETA(),
+                        dateEtdUserFormat,
+                        dateEtaUserFormat,
                         assignedOrderResponseModel.getCustomer()
                 );
             }
@@ -76,7 +87,7 @@ public class PlanOrderPresenter extends TiPresenter<PlanOrderView> {
         getView().refreshRecyclerView();
     }
 
-    public void onItemClicked(int position){
+    public void onItemClicked(int position) {
 
         /*
         * TODO change the way to access id/code order list, code is the title of the list? Pass it to detail driver activity and retrieve data from API based on that.
@@ -88,23 +99,29 @@ public class PlanOrderPresenter extends TiPresenter<PlanOrderView> {
         AssignedOrderResponseModel assignedOrderResponseModel = (AssignedOrderResponseModel) mSimpleAdapterModel.getItem(position);
         int statusOrder = assignedOrderResponseModel.getStatus();
 
-        if(statusOrder == HelperTransactionCode.ASSIGNED_ORDER_INACK_CODE_IN){
+        if (statusOrder == HelperTransactionCode.ASSIGNED_ORDER_INACK_CODE_IN) {
+            String[] dateEtdServerFormatSplitted = assignedOrderResponseModel.getETD().split(" ");
+            String dateEtdUserFormat = HelperUtil.getUserFormDate(dateEtdServerFormatSplitted[0]) + "\nPukul " + dateEtdServerFormatSplitted[1];
+
+            String[] dateEtaServerFormatSplitted = assignedOrderResponseModel.getETA().split(" ");
+            String dateEtaUserFormat = HelperUtil.getUserFormDate(dateEtaServerFormatSplitted[0]) + "\nPukul " + dateEtaServerFormatSplitted[1];
+            ackOrderMap.put(assignedOrderResponseModel.getOrderID(), assignedOrderResponseModel);
             getView().showAcknowledgeDialog(
                     assignedOrderResponseModel.getOrderID(),
                     assignedOrderResponseModel.getAssignmentId(),
                     assignedOrderResponseModel.getDestination(),
                     assignedOrderResponseModel.getOrigin(),
-                    assignedOrderResponseModel.getETD(),
-                    assignedOrderResponseModel.getETA(),
+                    dateEtdUserFormat,
+                    dateEtaUserFormat,
                     assignedOrderResponseModel.getCustomer()
             );
-        }else {
+        } else {
             Integer assignmentId = assignedOrderResponseModel.getAssignmentId();
             loadDetailOrder(assignedOrderResponseModel.getOrderID(), assignmentId, assignedOrderResponseModel);
         }
     }
 
-    public void onAcknowledgeOrder(final String orderCode, final Integer assignmentId, final String eTd, final String eTa){
+    public void onAcknowledgeOrder(final String orderCode, final Integer assignmentId, final String eTd, final String eTa) {
         /*
         * TODO Post ACK order and refresh updated assigned order
         * */
@@ -119,14 +136,14 @@ public class PlanOrderPresenter extends TiPresenter<PlanOrderView> {
                 String time = timeSplit[1];
 
                 getView().toggleLoading(false);
-
+                AssignedOrderResponseModel selectedOrder = ackOrderMap.get(orderCode);
                 AcknowledgeOrderSendModel acknowledgeOrderSendModel = new AcknowledgeOrderSendModel(
                         HelperBridge.sModelLoginResponse.getPersonalId(),
                         assignmentId,
                         date,
                         time,
-                        eTa,
-                        eTd);
+                        selectedOrder.getETA(),
+                        selectedOrder.getETD());
                 submitAcknowledgeOrder(acknowledgeOrderSendModel);
             }
 
@@ -139,7 +156,7 @@ public class PlanOrderPresenter extends TiPresenter<PlanOrderView> {
 
     }
 
-    private void submitAcknowledgeOrder(AcknowledgeOrderSendModel acknowledgeOrderSendModel){
+    private void submitAcknowledgeOrder(AcknowledgeOrderSendModel acknowledgeOrderSendModel) {
         getView().toggleLoading(true);
         final PlanOrderView planOrderView = getView();
         mRestConnection.putData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.PUT_ACKNOWLEDGE_ORDER, acknowledgeOrderSendModel.getHashMapType(), new RestCallbackInterfaceJSON() {
@@ -171,7 +188,7 @@ public class PlanOrderPresenter extends TiPresenter<PlanOrderView> {
         });
     }
 
-    private void loadDetailOrder(final String orderId, Integer assignmentId, final AssignedOrderResponseModel assignedOrderResponseModel){
+    private void loadDetailOrder(final String orderId, Integer assignmentId, final AssignedOrderResponseModel assignedOrderResponseModel) {
         ActivityDetailSendModel activityDetailSendModel =
                 new ActivityDetailSendModel(
                         HelperBridge.sModelLoginResponse.getPersonalId(), orderId, assignmentId);
@@ -184,7 +201,7 @@ public class PlanOrderPresenter extends TiPresenter<PlanOrderView> {
                 HelperBridge.sActivityDetailResponseModel = Model.getModelInstance(response.getData()[0], ActivityDetailResponseModel.class);
                 HelperBridge.sTempSelectedOrderCode = orderId;
                 HelperBridge.sAssignedOrderResponseModel = assignedOrderResponseModel;
-                planOrderView.changeActivityAction(HelperKey.KEY_INTENT_ORDERCODE, HelperBridge.sActivityDetailResponseModel.getAssignmentId()+"", ActivityDetailActivity.class);
+                planOrderView.changeActivityAction(HelperKey.KEY_INTENT_ORDERCODE, HelperBridge.sActivityDetailResponseModel.getAssignmentId() + "", ActivityDetailActivity.class);
                 planOrderView.toggleLoading(false);
             }
 

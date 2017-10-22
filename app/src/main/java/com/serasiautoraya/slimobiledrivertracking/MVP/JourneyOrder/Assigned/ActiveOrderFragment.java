@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,7 +95,20 @@ public class ActiveOrderFragment extends TiFragment<ActiveOrderPresenter, Active
         } else {
             mEmptyInfoView.setVisibility(View.GONE);
         }
+        Log.d("EMPTY_INFO", mEmptyInfoView.getVisibility() == View.GONE ? "GONE" : "VISIBLE" + " -- " + mEmptyInfoView.getVisibility());
     }
+
+    @Override
+    public void setTextEmptyInfoStatus(boolean success) {
+        if(success){
+            mEmptyInfoView.setIcon(R.drawable.ic_empty_order);
+            mEmptyInfoView.setText("Tidak terdapat order yang aktif");
+        }else{
+            mEmptyInfoView.setIcon(R.drawable.ic_close_grey);
+            mEmptyInfoView.setText("Gagal mengambil daftar order, silahkan tekan tombol \"ulangi\" dibawah untuk mencoba kembali ");
+        }
+    }
+
 
     @NonNull
     @Override

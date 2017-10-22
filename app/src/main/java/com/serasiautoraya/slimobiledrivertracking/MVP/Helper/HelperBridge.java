@@ -51,4 +51,6 @@ public class HelperBridge {
 
     public static TiActivity sCurrentDetailActivity = null;
 
+    public static boolean sListOrderRetrievalSuccess = true;
+
 }

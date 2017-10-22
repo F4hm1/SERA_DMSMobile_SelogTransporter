@@ -378,6 +378,10 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
         }else {
             navMenu.findItem(R.id.nav_attendance_history).setVisible(true);
         }
+        /*
+        * TODO delete this (expense nav only disappear for phase 1 in 1 november 2017)
+        * */
+        navMenu.findItem(R.id.nav_expense_request).setVisible(false);
     }
 
 

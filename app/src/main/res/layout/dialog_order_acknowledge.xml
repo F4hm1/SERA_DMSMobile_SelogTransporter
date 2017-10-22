@@ -24,19 +24,23 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_below="@+id/acknowledge_dialog_ordercode"
+        android:stretchColumns="*"
         android:layout_height="wrap_content">
 
 
         <!--order_title_hub-->
         <TableRow
             android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
+            android:weightSum="10"
+            android:layout_width="match_parent"
             android:background="@drawable/table_bottom_border"
             android:gravity="left">
             <TextView
                 android:text="@string/order_title_dest"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
+                android:layout_column="0"
+                android:layout_weight="4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:paddingBottom="2dip"
                 android:paddingTop="2dip" />
@@ -44,7 +48,10 @@
             <TextView
                 android:id="@+id/acknowledge_dialog_destination" android:text="Surabaya"
                 android:textStyle="bold"
-                android:layout_weight="2"
+                android:layout_column="1"
+                android:layout_weight="6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:paddingBottom="2dip"
                 android:paddingTop="2dip" />
         </TableRow>
@@ -52,19 +59,25 @@
         <!--order_title_origin-->
         <TableRow
             android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
+            android:weightSum="10"
+            android:layout_width="match_parent"
             android:background="@drawable/table_bottom_border"
             android:gravity="left">
             <TextView
                 android:text="@string/order_title_origin"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
+                android:layout_column="0"
+                android:layout_weight="4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:paddingBottom="2dip"
                 android:paddingTop="2dip" />
 
             <TextView
                 android:id="@+id/acknowledge_dialog_origin" android:text="Jakarta"
-                android:layout_weight="2"
+                android:layout_column="1"
+                android:layout_weight="6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:paddingBottom="2dip"
                 android:paddingTop="2dip" />
         </TableRow>
@@ -72,19 +85,25 @@
         <!--order_title_etd-->
         <TableRow
             android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
+            android:weightSum="10"
+            android:layout_width="match_parent"
             android:background="@drawable/table_bottom_border"
             android:gravity="left">
             <TextView
                 android:text="@string/order_title_etd"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
+                android:layout_column="0"
+                android:layout_weight="4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:paddingBottom="2dip"
                 android:paddingTop="2dip" />
 
             <TextView
                 android:id="@+id/acknowledge_dialog_etd" android:text=""
-                android:layout_weight="2"
+                android:layout_column="1"
+                android:layout_weight="6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:paddingBottom="2dip"
                 android:paddingTop="2dip" />
         </TableRow>
@@ -92,19 +111,25 @@
         <!--order_title_eta-->
         <TableRow
             android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
+            android:weightSum="10"
+            android:layout_width="match_parent"
             android:background="@drawable/table_bottom_border"
             android:gravity="left">
             <TextView
                 android:text="@string/order_title_eta"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
+                android:layout_column="0"
+                android:layout_weight="4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:paddingBottom="2dip"
                 android:paddingTop="2dip" />
 
             <TextView
                 android:id="@+id/acknowledge_dialog_eta" android:text=""
-                android:layout_weight="2"
+                android:layout_column="1"
+                android:layout_weight="6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:paddingBottom="2dip"
                 android:paddingTop="2dip" />
         </TableRow>
@@ -112,19 +137,25 @@
         <!--order_title_customer-->
         <TableRow
             android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
+            android:weightSum="10"
+            android:layout_width="match_parent"
             android:background="@drawable/table_bottom_border"
             android:gravity="left">
             <TextView
                 android:text="@string/order_title_customer"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
+                android:layout_column="0"
+                android:layout_weight="4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:paddingBottom="2dip"
                 android:paddingTop="2dip" />
 
             <TextView
                 android:id="@+id/acknowledge_dialog_customer" android:text=""
-                android:layout_weight="2"
+                android:layout_column="1"
+                android:layout_weight="6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:paddingBottom="2dip"
                 android:paddingTop="2dip" />
         </TableRow>

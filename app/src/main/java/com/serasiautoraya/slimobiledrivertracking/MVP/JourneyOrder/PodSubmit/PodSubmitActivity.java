@@ -316,4 +316,23 @@ public class PodSubmitActivity extends TiActivity<PodSubmitPresenter, PodSubmitV
         }
     }
 
+    @Override
+    public void showConfirmationSuccess(String message, String title) {
+        HelperUtil.showSimpleAlertDialogCustomTitleAction(message, PodSubmitActivity.this, title,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        getPresenter().finishCurrentDetailActivity();
+                        finish();
+                    }
+                },
+                new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        getPresenter().finishCurrentDetailActivity();
+                        finish();
+                    }
+                });
+    }
+
 }

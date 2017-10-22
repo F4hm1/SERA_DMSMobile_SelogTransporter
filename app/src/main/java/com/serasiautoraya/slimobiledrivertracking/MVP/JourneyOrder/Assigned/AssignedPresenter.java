@@ -66,6 +66,7 @@ public class AssignedPresenter extends TiPresenter<AssignedView> {
                     Log.d("ANJIRR", "ss2 : " + assignedOrderResponseModels.get(i).getDestination());
                 }
                 mergeAssignedOrderData(assignedOrderResponseModels);
+                HelperBridge.sListOrderRetrievalSuccess = true;
                 assignedView.initializeTabs(isAnyOrderActive, mSharedPrefsModel.get(HelperKey.KEY_IS_UPDATE_LOCATION_ACTIVE, false));
                 assignedView.toggleLoading(false);
             }
@@ -75,6 +76,7 @@ public class AssignedPresenter extends TiPresenter<AssignedView> {
                 /*
                 * TODO change this!
                 * */
+                HelperBridge.sListOrderRetrievalSuccess = false;
                 assignedView.initializeTabs(isAnyOrderActive, mSharedPrefsModel.get(HelperKey.KEY_IS_UPDATE_LOCATION_ACTIVE, false));
                 assignedView.showToast(response);
                 assignedView.toggleLoading(false);
@@ -86,6 +88,7 @@ public class AssignedPresenter extends TiPresenter<AssignedView> {
                 /*
                 * TODO change this!
                 * */
+                HelperBridge.sListOrderRetrievalSuccess = false;
                 assignedView.initializeTabs(isAnyOrderActive, mSharedPrefsModel.get(HelperKey.KEY_IS_UPDATE_LOCATION_ACTIVE, false));
                 assignedView.showToast("ERROR: " + error.toString());
                 Log.d("SIT_FMS", "ERROR : "+error.toString());

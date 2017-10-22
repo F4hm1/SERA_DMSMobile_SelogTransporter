@@ -215,7 +215,7 @@ public class GPSTrackerService extends Service implements LocationListener, Goog
             String time = sdf.format(Calendar.getInstance().getTime());
             SharedPrefsUtil.apply(mContext, HelperKey.KEY_LOC_LAT, sLocation.getLatitude() + "");
             SharedPrefsUtil.apply(mContext, HelperKey.KEY_LOC_LONG, sLocation.getLongitude() + "");
-            SharedPrefsUtil.apply(mContext, HelperKey.KEY_LOC_ADDRESS, getLastLocationName() + "");
+            SharedPrefsUtil.apply(mContext, HelperKey.KEY_LOC_ADDRESS, getLastLocationNameVer2() + "");
             SharedPrefsUtil.apply(mContext, "CUR_TIME", time);
             String latitude = SharedPrefsUtil.getString(mContext, HelperKey.KEY_LOC_LAT, "");
             String longitude = SharedPrefsUtil.getString(mContext, HelperKey.KEY_LOC_LONG, "");
@@ -230,7 +230,7 @@ public class GPSTrackerService extends Service implements LocationListener, Goog
                 HelperBridge.sModelLoginResponse.getPersonalId(),
                 sLocation.getLatitude() + "",
                 sLocation.getLongitude() + "",
-                getLastLocationName()
+                getLastLocationNameVer2()
         );
 
         if(mRestConnection == null){
@@ -282,7 +282,7 @@ public class GPSTrackerService extends Service implements LocationListener, Goog
             Context mContext = AppInit.getAppContext();
             SharedPrefsUtil.apply(mContext, HelperKey.KEY_LOC_LAT, sLocation.getLatitude() + "");
             SharedPrefsUtil.apply(mContext, HelperKey.KEY_LOC_LONG, sLocation.getLongitude() + "");
-            SharedPrefsUtil.apply(mContext, HelperKey.KEY_LOC_ADDRESS, getLastLocationName() + "");
+            SharedPrefsUtil.apply(mContext, HelperKey.KEY_LOC_ADDRESS, getLastLocationNameVer2() + "");
             return sLocation;
         } else {
             return null;
@@ -303,6 +303,9 @@ public class GPSTrackerService extends Service implements LocationListener, Goog
                     address += "\n" + addresses.get(0).getAddressLine(i) + " ";
                 }
                 Log.d("LOCATION_UPDATE", "Address: " + address);
+                if(address.equalsIgnoreCase("")){
+                    address = addresses.get(0).getLocality();
+                }
             }
         } catch (IOException e) {
             address = "err";
@@ -310,6 +313,28 @@ public class GPSTrackerService extends Service implements LocationListener, Goog
         }
         if (address.equalsIgnoreCase("")) {
             address = "Tidak terdeteksi";
+        }
+        return address;
+    }
+
+    public String getLastLocationNameVer2(){
+        String address = "Nama lokasi tidak terdeteksi";
+        List<Address> addresses;
+        try {
+            addresses = mGeocoder.getFromLocation(sLocation.getLatitude(), sLocation.getLongitude(), 1);
+            if (addresses.size() > 0) {
+                address = "";
+
+                for (Address adrs : addresses) {
+                    address = adrs.getAddressLine(0);
+                    Log.d("LOCATION_UPDATE", "Address: " + address);
+                }
+
+            }
+            Log.d("LOCATION_UPDATE", "Final Address: " + address);
+        } catch (IOException e) {
+            address = "Nama lokasi tidak terdeteksi";
+            e.printStackTrace();
         }
         return address;
     }

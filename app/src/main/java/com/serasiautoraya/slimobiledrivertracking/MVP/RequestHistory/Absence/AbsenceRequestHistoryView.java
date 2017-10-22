@@ -16,7 +16,6 @@ public interface AbsenceRequestHistoryView extends BaseViewInterface {
 
     void refreshAllData();
 
-    @DistinctUntilChanged
     void toggleEmptyInfo(boolean show);
 
     void showDetailDialog(

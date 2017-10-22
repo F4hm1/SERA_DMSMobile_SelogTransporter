@@ -1,6 +1,7 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Activity;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.android.volley.error.VolleyError;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.RestCallBackInterfaceModel;
@@ -50,34 +51,34 @@ public class ActivityDetailPresenter extends TiPresenter<ActivityDetailView> {
     }
 
     public void onActionClicked() {
-//        final LocationModel locationModel = mRestConnection.getCurrentLocation();
-//        if (locationModel.getLongitude().equalsIgnoreCase("null")) {
-//            getView().showToast("Aplikasi sedang mengambil lokasi (pastikan gps dan peket data tersedia), harap tunggu beberapa saat kemudian silahkan coba kembali.");
-//        } else {
-//            getView().toggleLoading(true);
-//            mRestConnection.getServerTime(new TimeRestCallBackInterface() {
-//                @Override
-//                public void callBackOnSuccess(TimeRESTResponseModel timeRESTResponseModel, String latitude, String longitude, String address) {
-//                    String[] timeSplitServer = timeRESTResponseModel.getTime().split(" ");
-//                    String[] timeSplitActivity = HelperBridge.sAssignedOrderResponseModel.getETD().split(" ");
-//                    String dateServer = timeSplitServer[0];
-//                    String dateActivity = timeSplitActivity[0];
-//                    if(HelperUtil.isDateBefore(HelperUtil.getUserFormDate(dateServer), HelperUtil.getUserFormDate(dateActivity))){
-//                        onActionDateValid();
-//                    }else{
-//                        getView().showStandardDialog("Anda hanya bisa memulai perjalanan pada hari keberangkatan", "Perhatian");
-//                    }
-//                    getView().toggleLoading(false);
-//                }
-//
-//                @Override
-//                public void callBackOnFail(String message) {
-//                    getView().toggleLoading(false);
-//                    getView().showStandardDialog(message, "Perhatian");
-//                }
-//            });
-//        }
-        onActionDateValid();
+        final LocationModel locationModel = mRestConnection.getCurrentLocation();
+        if (locationModel.getLongitude().equalsIgnoreCase("null")) {
+            getView().showToast("Aplikasi sedang mengambil lokasi (pastikan gps dan peket data tersedia), harap tunggu beberapa saat kemudian silahkan coba kembali.");
+        } else {
+            getView().toggleLoading(true);
+            mRestConnection.getServerTime(new TimeRestCallBackInterface() {
+                @Override
+                public void callBackOnSuccess(TimeRESTResponseModel timeRESTResponseModel, String latitude, String longitude, String address) {
+                    String[] timeSplitServer = timeRESTResponseModel.getTime().split(" ");
+                    String[] timeSplitActivity = HelperBridge.sAssignedOrderResponseModel.getETD().split(" ");
+                    String dateServer = timeSplitServer[0];
+                    String dateActivity = timeSplitActivity[0];
+                    if(HelperUtil.isDateBefore(HelperUtil.getUserFormDate(dateServer), HelperUtil.getUserFormDate(dateActivity))){
+                        onActionDateValid();
+                    }else{
+                        getView().showStandardDialog("Anda hanya bisa memulai perjalanan pada hari keberangkatan", "Perhatian");
+                    }
+                    getView().toggleLoading(false);
+                }
+
+                @Override
+                public void callBackOnFail(String message) {
+                    getView().toggleLoading(false);
+                    getView().showStandardDialog(message, "Perhatian");
+                }
+            });
+        }
+//        onActionDateValid();
     }
 
     private void onActionDateValid() {
@@ -154,10 +155,10 @@ public class ActivityDetailPresenter extends TiPresenter<ActivityDetailView> {
                     } else if (HelperBridge.sPodStatusResponseModel.getStatusCode().equalsIgnoreCase(HelperTransactionCode.POD_REJECTED)) {
                         activityDetailView.showToast("POD Anda sebelumnya ditolak, harap mengirim kembali bukti POD");
                         activityDetailView.changeActivity(PodSubmitActivity.class);
-                    } else if(HelperBridge.sPodStatusResponseModel.getStatusCode().equalsIgnoreCase(HelperTransactionCode.POD_INSERTED_BLANK)){
+                    } else if (HelperBridge.sPodStatusResponseModel.getStatusCode().equalsIgnoreCase(HelperTransactionCode.POD_INSERTED_BLANK)) {
                         HelperBridge.sPodStatusResponseModel = null;
                         activityDetailView.changeActivity(PodSubmitActivity.class);
-                    } else if(HelperBridge.sPodStatusResponseModel.getStatusCode().equalsIgnoreCase(HelperTransactionCode.POD_APPROVED)){
+                    } else if (HelperBridge.sPodStatusResponseModel.getStatusCode().equalsIgnoreCase(HelperTransactionCode.POD_APPROVED)) {
                         activityDetailView.showToast("POD Anda telah diterima, mohon lihat kembali daftar order");
                     }
                 } else {
@@ -252,17 +253,38 @@ public class ActivityDetailPresenter extends TiPresenter<ActivityDetailView> {
                 HelperBridge.sActivityDetailResponseModel.getTimezoneTimeTarget() + ""
         ).split(" ");
 
+        String dateTimeTargetUI = HelperBridge.sActivityDetailResponseModel.getTimeTarget();
+        if (dateTimeTarget.length > 2) {
+            dateTimeTargetUI = HelperUtil.getUserFormDate(dateTimeTarget[0]) + ", " + dateTimeTarget[1] + " " + dateTimeTarget[2];
+        }
+
+
         String[] dateTimeBaseLine = RestConnection.getCustomTimeZoneTimeStamp(
                 HelperBridge.sActivityDetailResponseModel.getTimeBaseline(),
                 "GMT+0" + HelperBridge.sActivityDetailResponseModel.getTimezoneTimeTarget() + ":00",
                 HelperBridge.sActivityDetailResponseModel.getTimezoneTimeTarget() + ""
         ).split(" ");
 
+        String dateTimeBaselineUI = HelperBridge.sActivityDetailResponseModel.getTimeBaseline();
+        if (dateTimeBaseLine.length > 2) {
+            dateTimeBaselineUI = HelperUtil.getUserFormDate(dateTimeBaseLine[0]) + ", " + dateTimeBaseLine[1] + " " + dateTimeBaseLine[2];
+        }
+
+
         String[] dateNextActivityTimeTarget = RestConnection.getCustomTimeZoneTimeStamp(
                 HelperBridge.sActivityDetailResponseModel.getNextActivityTimeTarget(),
                 "GMT+0" + HelperBridge.sActivityDetailResponseModel.getTimezoneNextActivityTimeTarget() + ":00",
                 HelperBridge.sActivityDetailResponseModel.getTimezoneNextActivityTimeTarget() + ""
         ).split(" ");
+
+        String nextActivityUI = HelperBridge.sActivityDetailResponseModel.getNextActivityName() + ": " + HelperBridge.sActivityDetailResponseModel.getNextActivityLocationText();
+
+        if (dateNextActivityTimeTarget.length > 2) {
+            nextActivityUI = HelperBridge.sActivityDetailResponseModel.getNextActivityName() + ": "
+                    + HelperBridge.sActivityDetailResponseModel.getNextActivityLocationText()
+                    + "(pada " + HelperUtil.getUserFormDate(dateNextActivityTimeTarget[0])
+                    + ", " + dateNextActivityTimeTarget[1] + " " + dateNextActivityTimeTarget[2] + ")";
+        }
 
         getView().setDetailData(
                 "Order " + HelperBridge.sTempSelectedOrderCode,
@@ -271,15 +293,15 @@ public class ActivityDetailPresenter extends TiPresenter<ActivityDetailView> {
                 HelperBridge.sActivityDetailResponseModel.getActivityType(),
                 HelperBridge.sAssignedOrderResponseModel.getOrigin(),
                 HelperBridge.sAssignedOrderResponseModel.getDestination(),
-                HelperUtil.getUserFormDate(dateEtd[0]) + ", " + dateEtd[1],
+                dateEtd.length > 1 ? HelperUtil.getUserFormDate(dateEtd[0]) + ", " + dateEtd[1] : HelperBridge.sAssignedOrderResponseModel.getETD(),
 //                HelperBridge.sAssignedOrderResponseModel.getETD(),
-                HelperUtil.getUserFormDate(dateEta[0]) + ", " + dateEta[1],
+                dateEta.length > 1 ? HelperUtil.getUserFormDate(dateEta[0]) + ", " + dateEta[1] : HelperBridge.sAssignedOrderResponseModel.getETA(),
 //                HelperBridge.sAssignedOrderResponseModel.getETA(),
                 HelperBridge.sAssignedOrderResponseModel.getCustomer(),
                 HelperBridge.sActivityDetailResponseModel.getLocationTargetText(),
-                HelperUtil.getUserFormDate(dateTimeTarget[0]) + ", " + dateTimeTarget[1]+" "+dateTimeTarget[2],
+                dateTimeTargetUI.split("-")[0].equalsIgnoreCase("1900") ? "-" : dateTimeTargetUI,
 //                HelperBridge.sActivityDetailResponseModel.getTimeTarget(),
-                HelperUtil.getUserFormDate(dateTimeBaseLine[0]) + ", " + dateTimeBaseLine[1]+" "+dateTimeBaseLine[2],
+                dateTimeBaselineUI.split("-")[0].equalsIgnoreCase("1900") ? "-" : dateTimeBaselineUI,
 //                HelperBridge.sActivityDetailResponseModel.getTimeBaseline(),
                 "-",
                 HelperBridge.sActivityDetailResponseModel.getAssignmentId() + "",
@@ -287,14 +309,15 @@ public class ActivityDetailPresenter extends TiPresenter<ActivityDetailView> {
                 HelperBridge.sActivityDetailResponseModel.getUnitModel(),
                 HelperBridge.sActivityDetailResponseModel.getUnitNumber(),
                 docNeed,
-                HelperBridge.sActivityDetailResponseModel.getNextActivityName() + ": " + HelperBridge.sActivityDetailResponseModel.getNextActivityLocationText()
+                nextActivityUI
+//                HelperBridge.sActivityDetailResponseModel.getNextActivityName() + ": " + HelperBridge.sActivityDetailResponseModel.getNextActivityLocationText()
 //                HelperBridge.sActivityDetailResponseModel.getNextActivityName() + ": " + HelperBridge.sActivityDetailResponseModel.getNextActivityLocationText() + "(pada "+HelperUtil.getUserFormDate(dateNextActivityTimeTarget[0]) + ", " + dateNextActivityTimeTarget[1]+" "+dateNextActivityTimeTarget[2]+")"
         );
 
 //        Log.d("ACTIVITY DET:", HelperBridge.sActivityDetailResponseModel.getHashMapType().toString());
 
         /*
-        * TODO uncomment this
+        * TODO uncomment this (include activate cannot start journey if not today)
         * */
 //        getView().setButtonColor(HelperBridge.sActivityDetailResponseModel.getButtonActivityColor());
         getView().setButtonColor("#1976D2");

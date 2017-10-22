@@ -38,8 +38,6 @@ public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, 
     TextView mTvOrderCode;
     @BindView(R.id.order_title_activityname)
     TextView mTvOrderActivityName;
-//    @BindView(R.id.order_title_activitytype)
-//    TextView mTvOrderActivityType;
     @BindView(R.id.order_title_origin)
     TextView mTvOrderOrigin;
     @BindView(R.id.order_title_dest)
@@ -54,10 +52,10 @@ public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, 
     TextView mTvOrderLocationTarget;
     @BindView(R.id.order_title_timetarget)
     TextView mTvOrderTimeTarget;
-    @BindView(R.id.order_title_timebaseline)
-    TextView mTvOrderTimeBaseline;
-    @BindView(R.id.order_title_timeactual)
-    TextView mTvOrderTimeActual;
+//    @BindView(R.id.order_title_timebaseline)
+//    TextView mTvOrderTimeBaseline;
+//    @BindView(R.id.order_title_timeactual)
+//    TextView mTvOrderTimeActual;
     @BindView(R.id.order_title_assignment)
     TextView mTvOrderAssignment;
     @BindView(R.id.order_title_cargotype)
@@ -73,6 +71,8 @@ public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, 
 
     @BindView(R.id.order_button_action)
     Button mTvButtonAction;
+    @BindView(R.id.order_button_noaction)
+    Button mTvButtonNoAction;
 
     private String mOrderCode;
     private ProgressDialog mProgressDialog;
@@ -138,16 +138,15 @@ public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, 
         mTvOrderCodeHead.setText(codeHead);
         mTvOrderCode.setText(code);
         mTvOrderActivityName.setText(activityName);
-//        mTvOrderActivityType.setText(activityType);
         mTvOrderOrigin.setText(origin);
         mTvOrderDest.setText(destination);
         mTvOrderEtd.setText(etd);
         mTvOrderEta.setText(eta);
         mTvOrderCustomer.setText(customer);
         mTvOrderLocationTarget.setText(locationTarget);
-        mTvOrderTimeTarget.setText(timeTarget);
-        mTvOrderTimeBaseline.setText(timeBaseline);
-        mTvOrderTimeActual.setText(timeActual);
+        mTvOrderTimeTarget.setText(timeBaseline);
+//        mTvOrderTimeBaseline.setText(timeBaseline);
+//        mTvOrderTimeActual.setText(timeActual);
         mTvOrderAssignment.setText(assignmentId);
         mTvOrderCargotype.setText(cargoType);
         mTvOrderUnitModel.setText(unitModel);
@@ -211,8 +210,10 @@ public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, 
     public void toggleButtonAction(boolean show) {
         if(show){
             mTvButtonAction.setVisibility(View.VISIBLE);
+            mTvButtonNoAction.setVisibility(View.GONE);
         }else {
             mTvButtonAction.setVisibility(View.GONE);
+            mTvButtonNoAction.setVisibility(View.VISIBLE);
         }
     }
 }

@@ -293,6 +293,7 @@
     <string name="order_title_assignment">Nomor Penugasan</string>
     <string name="capture_pickfrom_camera">Kamera</string>
     <string name="capture_pickfrom_gallery">Galeri Foto</string>
+    <string name="order_button_notactive">Anda belum bisa memulai perjalanan untuk order ini</string>
     <string-array name="documents_podreason_array">
         <item>POD Tersedia</item>
         <item>Tertahan oleh customer</item>

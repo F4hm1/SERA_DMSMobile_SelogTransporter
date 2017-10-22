@@ -23,7 +23,7 @@ public class OrderHistoryDetailPresenter extends TiPresenter<OrderHistoryDetailV
         for (int i = 0; i < HelperBridge.sOrderHistoryDetailActivityList.size(); i++) {
             OrderHistoryDetailResponseModel orderHistoryDetailResponseModel = HelperBridge.sOrderHistoryDetailActivityList.get(i);
             getView().addActivityData(
-                    orderHistoryDetailResponseModel.getSequence()+ " - " + orderHistoryDetailResponseModel.getActivityName(),
+                    orderHistoryDetailResponseModel.getActivityCode()+ " - " + orderHistoryDetailResponseModel.getActivityName(),
                     orderHistoryDetailResponseModel.getActivityCode(),
                     orderHistoryDetailResponseModel.getActivityType(),
                     orderHistoryDetailResponseModel.getTimeTarget(),

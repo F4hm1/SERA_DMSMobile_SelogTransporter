@@ -1,6 +1,7 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Assigned;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.android.volley.error.VolleyError;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseAdapter.SimpleAdapterModel;
@@ -45,8 +46,11 @@ public class ActiveOrderPresenter extends TiPresenter<ActiveOrderView> {
     public void loadOrdersdata(){
         if (!HelperBridge.sActiveOrdersList.isEmpty()) {
             getView().toggleEmptyInfo(false);
+            Log.d("EMPTY_INFO", "FALSE Clicked");
         } else {
+            getView().setTextEmptyInfoStatus(HelperBridge.sListOrderRetrievalSuccess);
             getView().toggleEmptyInfo(true);
+            Log.d("EMPTY_INFO", "TRUE Clicked");
         }
         mSimpleAdapterModel.setItemList(HelperBridge.sActiveOrdersList);
         getView().refreshRecyclerView();

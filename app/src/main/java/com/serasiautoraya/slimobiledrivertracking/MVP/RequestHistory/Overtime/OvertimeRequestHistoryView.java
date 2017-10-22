@@ -16,7 +16,6 @@ public interface OvertimeRequestHistoryView extends BaseViewInterface{
 
     void refreshAllData();
 
-    @DistinctUntilChanged
     void toggleEmptyInfo(boolean show);
 
     void showDetailDialog(

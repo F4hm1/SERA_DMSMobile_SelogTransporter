@@ -192,11 +192,12 @@ public class DocumentCapturePresenter extends TiPresenter<DocumentCaptureView> {
         if (!resultValidation) {
             getView().showToast(errText);
         } else {
+            final DocumentCaptureView documentCaptureView = getView();
             final LocationModel locationModel = mRestConnection.getCurrentLocation();
             if (locationModel.getLongitude().equalsIgnoreCase("null")) {
-                getView().showToast("Aplikasi sedang mengambil lokasi (pastikan gps dan peket data tersedia), harap tunggu beberapa saat kemudian silahkan coba kembali.");
+                documentCaptureView.showToast("Aplikasi sedang mengambil lokasi (pastikan gps dan peket data tersedia), harap tunggu beberapa saat kemudian silahkan coba kembali.");
             } else {
-                getView().toggleLoading(true);
+                documentCaptureView.toggleLoading(true);
                 mRestConnection.getServerTime(new TimeRestCallBackInterface() {
 
                     @Override
@@ -227,14 +228,14 @@ public class DocumentCapturePresenter extends TiPresenter<DocumentCaptureView> {
                                 HelperBridge.sActivityDetailResponseModel.getJourneyId() + "",
                                 timeRESTResponseModel.getTime()
                         );
-                        getView().toggleLoading(false);
-                        getView().showConfirmationDialog(HelperBridge.sActivityDetailResponseModel.getActivityName());
+                        documentCaptureView.toggleLoading(false);
+                        documentCaptureView.showConfirmationDialog(HelperBridge.sActivityDetailResponseModel.getActivityName());
                     }
 
                     @Override
                     public void callBackOnFail(String message) {
-                        getView().toggleLoading(false);
-                        getView().showStandardDialog(message, "Perhatian");
+                        documentCaptureView.toggleLoading(false);
+                        documentCaptureView.showStandardDialog(message, "Perhatian");
                     }
                 });
             }
@@ -247,12 +248,13 @@ public class DocumentCapturePresenter extends TiPresenter<DocumentCaptureView> {
 //        Log.d("DOCUMENT_CAPTURE", "Photo 1: " + mStatusUpdateSendModel.getPhoto1().toString());
 //        Log.d("DOCUMENT_CAPTURE", "Photo 2: " + mStatusUpdateSendModel.getPhoto2().toString());
 //        Log.d("DOCUMENT_CAPTURE", "Photo 3: " + mStatusUpdateSendModel.getPhoto3().toString());
+        final DocumentCaptureView documentCaptureView = getView();
         mRestConnection.putData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.PUT_STATUS_UPDATE, mStatusUpdateSendModel.getHashMapType(), new RestCallbackInterfaceJSON() {
             @Override
             public void callBackOnSuccess(JSONObject response) {
                 try {
-                    getView().toggleLoading(false);
-                    getView().showConfirmationSuccess(response.getString("responseText"), "Berhasil");
+                    documentCaptureView.toggleLoading(false);
+                    documentCaptureView.showConfirmationSuccess(response.getString("responseText"), "Berhasil");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -260,8 +262,8 @@ public class DocumentCapturePresenter extends TiPresenter<DocumentCaptureView> {
 
             @Override
             public void callBackOnFail(String response) {
-                getView().toggleLoading(false);
-                getView().showStandardDialog(response, "Perhatian");
+                documentCaptureView.toggleLoading(false);
+                documentCaptureView.showStandardDialog(response, "Perhatian");
             }
 
             @Override
@@ -269,8 +271,8 @@ public class DocumentCapturePresenter extends TiPresenter<DocumentCaptureView> {
                 /*
                 * TODO change this, jadikan value nya dari string values!
                 * */
-                getView().toggleLoading(false);
-                getView().showStandardDialog("Gagal melakukan update status, silahkan periksa koneksi anda kemudian coba kembali", "Perhatian");
+                documentCaptureView.toggleLoading(false);
+                documentCaptureView.showStandardDialog("Gagal melakukan update status, silahkan periksa koneksi anda kemudian coba kembali", "Perhatian");
             }
         });
     }

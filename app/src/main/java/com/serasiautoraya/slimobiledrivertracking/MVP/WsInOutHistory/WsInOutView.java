@@ -16,7 +16,6 @@ public interface WsInOutView extends BaseViewInterface{
 
     void changeActivityAction(String key, String value, Class targetActivity);
 
-    @DistinctUntilChanged
     void toggleEmptyInfo(boolean show);
 
     void setTextStartDate(String startDate);

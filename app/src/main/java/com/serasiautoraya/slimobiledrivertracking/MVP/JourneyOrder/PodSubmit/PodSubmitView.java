@@ -34,4 +34,6 @@ public interface PodSubmitView extends BaseViewInterface {
     void showPhotoPickerSourceDialog();
 
     void toggleSubmitButton(boolean show);
+
+    void showConfirmationSuccess(String message, String title);
 }

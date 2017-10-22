@@ -240,7 +240,7 @@ public class PodSubmitPresenter extends TiPresenter<PodSubmitView> {
             public void callBackOnSuccess(JSONObject response) {
                 try {
                     podCaptureView.toggleLoading(false);
-                    podCaptureView.showToast(response.getString("responseText"));
+                    podCaptureView.showConfirmationSuccess(response.getString("responseText"), "Berhasil");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -258,8 +258,14 @@ public class PodSubmitPresenter extends TiPresenter<PodSubmitView> {
                 * TODO change this, jadikan value nya dari string values!
                 * */
                 podCaptureView.toggleLoading(false);
-                podCaptureView.showStandardDialog("Gagal melakukan ack order, silahkan periksa koneksi anda kemudian coba kembali", "Perhatian");
+                podCaptureView.showStandardDialog("Gagal menyimpan data POD, silahkan periksa koneksi anda kemudian coba kembali atau harap hubungi administrator", "Perhatian");
             }
         });
+    }
+
+    public void finishCurrentDetailActivity() {
+        if (HelperBridge.sCurrentDetailActivity != null) {
+            HelperBridge.sCurrentDetailActivity.finish();
+        }
     }
 }

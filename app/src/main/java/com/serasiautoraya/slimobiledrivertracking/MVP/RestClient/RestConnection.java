@@ -748,7 +748,7 @@ public class RestConnection {
             return result + " " + getTimeZoneIdByString(offset);
         } catch (ParseException e) {
             e.printStackTrace();
-            return omServerDate + "GMT+00";
+            return omServerDate + " GMT+00";
         }
     }
 

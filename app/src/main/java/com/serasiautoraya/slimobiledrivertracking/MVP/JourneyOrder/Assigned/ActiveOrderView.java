@@ -16,7 +16,8 @@ public interface ActiveOrderView extends BaseViewInterface {
 
     void changeActivityAction(String key, String value, Class targetActivity);
 
-    @DistinctUntilChanged
     void toggleEmptyInfo(boolean show);
+
+    void setTextEmptyInfoStatus(boolean success);
 
 }

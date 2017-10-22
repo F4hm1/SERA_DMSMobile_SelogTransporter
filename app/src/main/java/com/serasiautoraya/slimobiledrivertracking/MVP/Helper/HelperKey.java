@@ -35,6 +35,8 @@ public class HelperKey {
     public static final int ACTIVITY_IMAGE_CAPTURE = 1001;
     public static final int ACTIVITY_IMAGE_CAPTURE_GALLERY = 1003;
     public static final int ACTIVITY_SIGNATURE_CAPTURE = 1002;
+    public static final int ACTIVITY_ACTION_FORCE_FINISH = 9999;
+    public static final int ACTIVITY_ACTION_NONE = 9990;
 
 
 }

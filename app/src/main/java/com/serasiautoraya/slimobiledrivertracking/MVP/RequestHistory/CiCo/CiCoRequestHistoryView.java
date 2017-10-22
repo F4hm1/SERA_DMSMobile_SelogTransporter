@@ -14,7 +14,6 @@ public interface CiCoRequestHistoryView extends BaseViewInterface{
 
     void showCancelConfirmationDialog(String requestDate);
 
-    @DistinctUntilChanged
     void toggleEmptyInfo(boolean show);
 
     void showDetailDialog(

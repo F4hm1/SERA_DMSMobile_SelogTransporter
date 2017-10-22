@@ -95,15 +95,15 @@ public class OrderHistoryDetailActivity extends TiActivity<OrderHistoryDetailPre
         TextView tvActivityCode = (TextView) cardView.findViewById(R.id.order_history_detail_activity_code);
         TextView tvActivityType = (TextView) cardView.findViewById(R.id.order_history_detail_activity_type);
         TextView tvTimeTarget = (TextView) cardView.findViewById(R.id.order_history_detail_time_target);
-        TextView tvTimeBaseline = (TextView) cardView.findViewById(R.id.order_history_detail_time_baseline);
+//        TextView tvTimeBaseline = (TextView) cardView.findViewById(R.id.order_history_detail_time_baseline);
         TextView tvTimeActual = (TextView) cardView.findViewById(R.id.order_history_detail_time_actual);
         TextView tvLocationTargetText = (TextView) cardView.findViewById(R.id.order_history_detail_location_target);
 
         tvActivityTitle.setText(activityTitle);
         tvActivityCode.setText(activityCode);
         tvActivityType.setText(activityType);
-        tvTimeTarget.setText(timeTarget);
-        tvTimeBaseline.setText(timeBaseline);
+        tvTimeTarget.setText(timeBaseline);
+//        tvTimeBaseline.setText(timeBaseline);
         tvTimeActual.setText(timeActual);
         tvLocationTargetText.setText(locationTargetText);
 

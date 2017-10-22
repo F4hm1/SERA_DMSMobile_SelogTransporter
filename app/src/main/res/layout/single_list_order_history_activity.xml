@@ -29,25 +29,32 @@
             android:text="1 - Loading Barang"/>
 
         <TableLayout
+            android:stretchColumns="*"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <!--activity_code-->
             <TableRow
                 android:layout_height="wrap_content"
-                android:layout_width="fill_parent"
+                android:weightSum="10"
+                android:layout_width="match_parent"
                 android:background="@drawable/table_bottom_border"
                 android:gravity="left">
                 <TextView
                     android:text="@string/order_history_detail_activity_code"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
+                    android:layout_column="0"
+                    android:layout_weight="4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:paddingBottom="4dip"
                     android:paddingTop="4dip" />
 
                 <TextView
                     android:id="@+id/order_history_detail_activity_code" android:text="-"
-                    android:layout_weight="1"
+                    android:layout_column="1"
+                    android:layout_weight="6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:paddingBottom="4dip"
                     android:paddingTop="4dip" />
             </TableRow>
@@ -55,19 +62,25 @@
             <!--activity_type-->
             <TableRow
                 android:layout_height="wrap_content"
-                android:layout_width="fill_parent"
+                android:weightSum="10"
+                android:layout_width="match_parent"
                 android:background="@drawable/table_bottom_border"
                 android:gravity="left">
                 <TextView
                     android:text="@string/order_history_detail_activity_type"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
+                    android:layout_column="0"
+                    android:layout_weight="4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:paddingBottom="4dip"
                     android:paddingTop="4dip" />
 
                 <TextView
                     android:id="@+id/order_history_detail_activity_type" android:text="-"
-                    android:layout_weight="1"
+                    android:layout_column="1"
+                    android:layout_weight="6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:paddingBottom="4dip"
                     android:paddingTop="4dip" />
             </TableRow>
@@ -75,19 +88,25 @@
             <!--time_target-->
             <TableRow
                 android:layout_height="wrap_content"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
+                android:weightSum="10"
                 android:background="@drawable/table_bottom_border"
                 android:gravity="left">
                 <TextView
                     android:text="@string/order_history_detail_time_target"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
+                    android:layout_column="0"
+                    android:layout_weight="4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:paddingBottom="4dip"
                     android:paddingTop="4dip" />
 
                 <TextView
                     android:id="@+id/order_history_detail_time_target" android:text="-"
-                    android:layout_weight="1"
+                    android:layout_column="1"
+                    android:layout_weight="6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:paddingBottom="4dip"
                     android:paddingTop="4dip" />
             </TableRow>
@@ -95,19 +114,26 @@
             <!--time_baseline-->
             <TableRow
                 android:layout_height="wrap_content"
-                android:layout_width="fill_parent"
+                android:visibility="gone"
+                android:weightSum="10"
+                android:layout_width="match_parent"
                 android:background="@drawable/table_bottom_border"
                 android:gravity="left">
                 <TextView
                     android:text="@string/order_history_detail_time_baseline"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
+                    android:layout_column="0"
+                    android:layout_width="0dp"
+                    android:layout_weight="4"
+                    android:layout_height="wrap_content"
                     android:paddingBottom="4dip"
                     android:paddingTop="4dip" />
 
                 <TextView
                     android:id="@+id/order_history_detail_time_baseline" android:text="-"
-                    android:layout_weight="1"
+                    android:layout_column="1"
+                    android:layout_width="0dp"
+                    android:layout_weight="6"
+                    android:layout_height="wrap_content"
                     android:paddingBottom="4dip"
                     android:paddingTop="4dip" />
             </TableRow>
@@ -115,19 +141,25 @@
             <!--time_actual-->
             <TableRow
                 android:layout_height="wrap_content"
-                android:layout_width="fill_parent"
+                android:weightSum="10"
+                android:layout_width="match_parent"
                 android:background="@drawable/table_bottom_border"
                 android:gravity="left">
                 <TextView
                     android:text="@string/order_history_detail_time_actual"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
+                    android:layout_column="0"
+                    android:layout_weight="4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:paddingBottom="4dip"
                     android:paddingTop="4dip" />
 
                 <TextView
                     android:id="@+id/order_history_detail_time_actual" android:text="-"
-                    android:layout_weight="1"
+                    android:layout_column="1"
+                    android:layout_weight="6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:paddingBottom="4dip"
                     android:paddingTop="4dip" />
             </TableRow>
@@ -135,19 +167,25 @@
             <!--location_target_text-->
             <TableRow
                 android:layout_height="wrap_content"
-                android:layout_width="fill_parent"
+                android:weightSum="10"
+                android:layout_width="match_parent"
                 android:background="@drawable/table_bottom_border"
                 android:gravity="left">
                 <TextView
                     android:text="@string/order_history_detail_location_target"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
+                    android:layout_column="0"
+                    android:layout_weight="4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:paddingBottom="4dip"
                     android:paddingTop="4dip" />
 
                 <TextView
                     android:id="@+id/order_history_detail_location_target" android:text="-"
-                    android:layout_weight="1"
+                    android:layout_column="1"
+                    android:layout_weight="6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:paddingBottom="4dip"
                     android:paddingTop="4dip" />
             </TableRow>
