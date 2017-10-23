@@ -79,9 +79,9 @@ public class PlanOrderPresenter extends TiPresenter<PlanOrderView> {
                         dateEtdUserFormat,
                         dateEtaUserFormat,
                         assignedOrderResponseModel.getCustomer()
-                );
+                ) ;
+                break;
             }
-            continue;
         }
 
         getView().refreshRecyclerView();
