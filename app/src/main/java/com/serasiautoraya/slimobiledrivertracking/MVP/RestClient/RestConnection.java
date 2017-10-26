@@ -233,7 +233,7 @@ public class RestConnection {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<>();
                 headers.put("Content-Type", "application/json");
-                headers.put("Ocp-Apim-Subscription-Key", "6b22fb5969084b19a6c449cab37291fe");
+                headers.put("Ocp-Apim-Subscription-Key", "29d4c537dd0840eeb72dfbb99fa7e43d");
                 if (!token.equalsIgnoreCase("")) {
                     headers.put("Authorization", token);
                 }
@@ -324,6 +324,7 @@ public class RestConnection {
 
     public void getData(String transactionToken, String url, HashMap<String, String> params, RestCallBackInterfaceModel restCallBackInterfaceModel) {
         final RestCallBackInterfaceModel restcall = restCallBackInterfaceModel;
+//        final String token = transactionToken;
         if (NetworkUtil.LAST_CONNECTION_NETWORK_STATUS == false) {
             restcall.callBackOnFail("Pastikan terdapat koneksi internet, kemudian silahkan coba kembali");
             return;
@@ -331,7 +332,7 @@ public class RestConnection {
         HashMap<String, String> headers = new HashMap<>();
 
         headers.put("Content-Type", "application/json");
-        headers.put("Ocp-Apim-Subscription-Key", "6b22fb5969084b19a6c449cab37291fe");
+        headers.put("Ocp-Apim-Subscription-Key", "29d4c537dd0840eeb72dfbb99fa7e43d");
         if (!transactionToken.equalsIgnoreCase("")) {
             headers.put("Authorization", transactionToken);
         }
@@ -382,6 +383,17 @@ public class RestConnection {
                 return volleyError;
             }
 
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//                HashMap<String, String> headers = new HashMap<>();
+//                headers.put("Content-Type", "application/json");
+//                headers.put("Ocp-Apim-Subscription-Key", "29d4c537dd0840eeb72dfbb99fa7e43d");
+//                if (!transactionToken.equalsIgnoreCase("")) {
+//                    headers.put("Authorization", transactionToken);
+//                }
+//                return headers;
+//            }
+
             @Override
             protected Response<BaseResponseModel> parseNetworkResponse(NetworkResponse response) {
                 mStatusCode = response.statusCode;
@@ -418,7 +430,7 @@ public class RestConnection {
 
         HashMap<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
-        headers.put("Ocp-Apim-Subscription-Key", "6b22fb5969084b19a6c449cab37291fe");
+        headers.put("Ocp-Apim-Subscription-Key", "29d4c537dd0840eeb72dfbb99fa7e43d");
         if (!transactionToken.equalsIgnoreCase("")) {
             headers.put("Authorization", transactionToken);
         }
@@ -640,7 +652,7 @@ public class RestConnection {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<>();
                 headers.put("Content-Type", "application/json");
-                headers.put("Ocp-Apim-Subscription-Key", "6b22fb5969084b19a6c449cab37291fe");
+                headers.put("Ocp-Apim-Subscription-Key", "29d4c537dd0840eeb72dfbb99fa7e43d");
                 if (!token.equalsIgnoreCase("")) {
                     headers.put("Authorization", token);
                 }

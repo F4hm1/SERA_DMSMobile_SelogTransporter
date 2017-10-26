@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseAdapter.SimpleAdapterModel;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseAdapter.SimpleAdapterView;
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseAdapter.SimpleListViewHolder;
+import com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperKey;
 import com.serasiautoraya.slimobiledrivertracking.R;
 
 import java.util.List;
@@ -56,8 +57,17 @@ public class AssignedOrderAdapter extends RecyclerView.Adapter<SimpleListViewHol
     public void onBindViewHolder(SimpleListViewHolder holder, int position) {
         AssignedOrderResponseModel simpleSingleList = mSimpleSingleLists.get(position);
         holder.getTitle().setText("Order "+simpleSingleList.getOrderID());
-        holder.getInformation().setText(simpleSingleList.getOrigin() +" - "+ simpleSingleList.getDestination());
+        holder.getInformation().setText(simpleSingleList.getOrigin() +" - "+ getLastDestination(simpleSingleList.getDestination()));
         holder.getStatus().setText(simpleSingleList.getCurrentActivity());
+    }
+
+    private String getLastDestination(String destination) {
+        if(destination.equalsIgnoreCase("")){
+            return "-";
+        }else{
+            String[] splitted = destination.split(HelperKey.SEPARATOR_PIPE);
+            return splitted[splitted.length - 1];
+        }
     }
 
     @Override

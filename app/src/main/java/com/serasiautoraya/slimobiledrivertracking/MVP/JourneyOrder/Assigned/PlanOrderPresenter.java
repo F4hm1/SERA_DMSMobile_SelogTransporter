@@ -74,7 +74,7 @@ public class PlanOrderPresenter extends TiPresenter<PlanOrderView> {
                 getView().showAcknowledgeDialog(
                         assignedOrderResponseModel.getOrderID(),
                         assignedOrderResponseModel.getAssignmentId(),
-                        assignedOrderResponseModel.getDestination(),
+                        getSeparatedDestination(assignedOrderResponseModel.getDestination()),
                         assignedOrderResponseModel.getOrigin(),
                         dateEtdUserFormat,
                         dateEtaUserFormat,
@@ -109,7 +109,7 @@ public class PlanOrderPresenter extends TiPresenter<PlanOrderView> {
             getView().showAcknowledgeDialog(
                     assignedOrderResponseModel.getOrderID(),
                     assignedOrderResponseModel.getAssignmentId(),
-                    assignedOrderResponseModel.getDestination(),
+                    getSeparatedDestination(assignedOrderResponseModel.getDestination()),
                     assignedOrderResponseModel.getOrigin(),
                     dateEtdUserFormat,
                     dateEtaUserFormat,
@@ -224,4 +224,15 @@ public class PlanOrderPresenter extends TiPresenter<PlanOrderView> {
             }
         });
     }
+
+    private String[] getSeparatedDestination(String destination) {
+        if(destination.equalsIgnoreCase("")){
+            String[] resZero = new String[1];
+            resZero[0] = "-";
+            return resZero;
+        }else{
+            return destination.split(HelperKey.SEPARATOR_PIPE);
+        }
+    }
+
 }

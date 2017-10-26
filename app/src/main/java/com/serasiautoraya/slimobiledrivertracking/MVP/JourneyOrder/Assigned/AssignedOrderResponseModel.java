@@ -44,16 +44,29 @@ public class AssignedOrderResponseModel extends Model{
     @Expose
     public String Acknowledge;
 
+    @SerializedName("Notes")
+    @Expose
+    public String Notes;
 
-    public AssignedOrderResponseModel(String orderID, Integer assignmentID, Integer status, String customer, String origin, String destination, String ETA, String ETD) {
+    @SerializedName("CargoDescription")
+    @Expose
+    public String CargoDescription;
+
+
+    public AssignedOrderResponseModel(String orderID, Integer assignmentId, Integer status, String customer, String origin, String destination, String ETA, String ETD, String currentActivity, String active, String acknowledge, String notes, String cargoDescription) {
         OrderID = orderID;
-        AssignmentId = assignmentID;
+        AssignmentId = assignmentId;
         Status = status;
         Customer = customer;
         Origin = origin;
         Destination = destination;
         this.ETA = ETA;
         this.ETD = ETD;
+        CurrentActivity = currentActivity;
+        Active = active;
+        Acknowledge = acknowledge;
+        Notes = notes;
+        CargoDescription = cargoDescription;
     }
 
     public String getOrderID() {
@@ -73,11 +86,19 @@ public class AssignedOrderResponseModel extends Model{
     }
 
     public String getOrigin() {
-        return Origin;
+        if(Origin == null){
+            return "-";
+        }else {
+            return Origin;
+        }
     }
 
     public String getDestination() {
-        return Destination;
+        if(Origin == null){
+            return "-";
+        }else {
+            return Destination;
+        }
     }
 
     public String getETA() {
@@ -134,5 +155,33 @@ public class AssignedOrderResponseModel extends Model{
 
     public String getAcknowledge() {
         return Acknowledge;
+    }
+
+    public void setCurrentActivity(String currentActivity) {
+        CurrentActivity = currentActivity;
+    }
+
+    public void setActive(String active) {
+        Active = active;
+    }
+
+    public void setAcknowledge(String acknowledge) {
+        Acknowledge = acknowledge;
+    }
+
+    public String getNotes() {
+        return Notes;
+    }
+
+    public void setNotes(String notes) {
+        Notes = notes;
+    }
+
+    public String getCargoDescription() {
+        return CargoDescription;
+    }
+
+    public void setCargoDescription(String cargoDescription) {
+        CargoDescription = cargoDescription;
     }
 }

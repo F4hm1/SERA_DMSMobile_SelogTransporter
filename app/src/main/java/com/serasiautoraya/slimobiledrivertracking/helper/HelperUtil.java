@@ -42,49 +42,49 @@ import java.util.Locale;
  */
 public class HelperUtil {
 
-    public static <T> T getMyObject(Object object, Class<T> cls){
+    public static <T> T getMyObject(Object object, Class<T> cls) {
         Gson gson = new Gson();
         return gson.fromJson(gson.toJson(object), cls);
     }
 
-    public static void goToActivity(Activity activityFrom, Class activityTo){
+    public static void goToActivity(Activity activityFrom, Class activityTo) {
         Intent changeActivity = new Intent(activityFrom, activityTo);
         activityFrom.startActivity(changeActivity);
     }
 
-    public static void goToActivity(Activity activityFrom, Class activityTo, String key, String value){
+    public static void goToActivity(Activity activityFrom, Class activityTo, String key, String value) {
         Intent changeActivity = new Intent(activityFrom, activityTo);
         changeActivity.putExtra(key, value);
         activityFrom.startActivity(changeActivity);
     }
 
-    public static String getValueStringArrayXML(String[] arrKey, String[] arrVal, String key){
+    public static String getValueStringArrayXML(String[] arrKey, String[] arrVal, String key) {
         String val = "";
         for (int i = 0; i < arrKey.length; i++) {
-            if(arrKey[i].equals(key)){
+            if (arrKey[i].equals(key)) {
                 val = arrVal[i];
             }
         }
         return val;
     }
 
-    public static Bitmap rotateBitmap(Bitmap source, float angle){
+    public static Bitmap rotateBitmap(Bitmap source, float angle) {
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);
         return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
     }
 
-    public static String getFirstImageName(){
+    public static String getFirstImageName() {
         String date = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
         return HelperUrl.SAVE_DIRECTORY + "bukti_1_" + date + ".jpg";
     }
 
-    public static String getSecondImageName(){
+    public static String getSecondImageName() {
         String date = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
         return HelperUrl.SAVE_DIRECTORY + "bukti_2_" + date + ".jpg";
     }
 
-    public static boolean saveImageToDirectory(Bitmap bitmap, String storedPath){
+    public static boolean saveImageToDirectory(Bitmap bitmap, String storedPath) {
         boolean result = true;
         try {
             FileOutputStream mFileOutStream = new FileOutputStream(storedPath);
@@ -98,9 +98,9 @@ public class HelperUtil {
         return result;
     }
 
-    public static Bitmap saveScaledBitmap(String storedPath, String targetPath){
+    public static Bitmap saveScaledBitmap(String storedPath, String targetPath) {
         int desiredWidth = HelperKey.SAVED_IMAGE_DESIRED_WITDH;
-        Log.d("COMPRESS", storedPath +" >> "+targetPath);
+        Log.d("COMPRESS", storedPath + " >> " + targetPath);
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(storedPath, options);
@@ -108,12 +108,12 @@ public class HelperUtil {
         int srcWidth = options.outWidth;
         int srcHeight = options.outHeight;
 
-        if(desiredWidth > srcWidth) {
+        if (desiredWidth > srcWidth) {
             desiredWidth = srcWidth;
         }
 
         int inSampleSize = 1;
-        while(srcWidth / 2 > desiredWidth){
+        while (srcWidth / 2 > desiredWidth) {
             srcWidth /= 2;
             srcHeight /= 2;
             inSampleSize *= 2;
@@ -137,7 +137,8 @@ public class HelperUtil {
         try {
             out = new FileOutputStream(targetPath);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();}
+            e.printStackTrace();
+        }
 
         scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
 
@@ -155,7 +156,7 @@ public class HelperUtil {
     }
 
 
-    public static void showConfirmationAlertDialog(CharSequence msg, Context context, DialogInterface.OnClickListener onClickListener){
+    public static void showConfirmationAlertDialog(CharSequence msg, Context context, DialogInterface.OnClickListener onClickListener) {
         AlertDialog alertDialog = new AlertDialog.Builder(context).create();
         alertDialog.setTitle("Perhatian");
         alertDialog.setMessage(msg);
@@ -169,12 +170,13 @@ public class HelperUtil {
         alertDialog.show();
     }
 
-    public static void showSimpleToast(String msg, Context context){
+    public static void showSimpleToast(String msg, Context context) {
         Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
     }
 
     private static ProgressDialog progressDialog;
-    public static void showProgressDialog(Context context, String msg){
+
+    public static void showProgressDialog(Context context, String msg) {
         progressDialog = new ProgressDialog(context, R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setCanceledOnTouchOutside(false);
@@ -182,11 +184,11 @@ public class HelperUtil {
         progressDialog.show();
     }
 
-    public static void dismissProgressDialog(){
+    public static void dismissProgressDialog() {
         progressDialog.dismiss();
     }
 
-    public static void showSimpleAlertDialog(String msg, Context context){
+    public static void showSimpleAlertDialog(String msg, Context context) {
         AlertDialog alertDialog = new AlertDialog.Builder(context).create();
         alertDialog.setTitle("Peringatan");
         alertDialog.setMessage(msg);
@@ -199,7 +201,7 @@ public class HelperUtil {
         alertDialog.show();
     }
 
-    public static void showSimpleAlertDialogCustomTitle(String msg, Context context, String title){
+    public static void showSimpleAlertDialogCustomTitle(String msg, Context context, String title) {
         AlertDialog alertDialog = new AlertDialog.Builder(context).create();
         alertDialog.setTitle(title);
         alertDialog.setMessage(msg);
@@ -213,7 +215,7 @@ public class HelperUtil {
     }
 
 
-    public static void showSimpleAlertDialogCustomTitleAction(String msg, Context context, String title, DialogInterface.OnClickListener onClickListener, DialogInterface.OnDismissListener onDismissListener){
+    public static void showSimpleAlertDialogCustomTitleAction(String msg, Context context, String title, DialogInterface.OnClickListener onClickListener, DialogInterface.OnDismissListener onDismissListener) {
         AlertDialog alertDialog = new AlertDialog.Builder(context).create();
         alertDialog.setTitle(title);
         alertDialog.setMessage(msg);
@@ -223,7 +225,7 @@ public class HelperUtil {
         alertDialog.show();
     }
 
-    public static void showSimpleAlertDialogCustomAction(String msg, Context context, DialogInterface.OnClickListener onClickListener){
+    public static void showSimpleAlertDialogCustomAction(String msg, Context context, DialogInterface.OnClickListener onClickListener) {
         AlertDialog alertDialog = new AlertDialog.Builder(context).create();
         alertDialog.setTitle("Peringatan");
         alertDialog.setMessage(msg);
@@ -232,7 +234,7 @@ public class HelperUtil {
         alertDialog.show();
     }
 
-    public static boolean isDateBefore(String firstDate, String secondDate){
+    public static boolean isDateBefore(String firstDate, String secondDate) {
         //FALSE is Valid Date (Tanggal berakhir setelah tanggal mulai)
         SimpleDateFormat sdf = new SimpleDateFormat(HelperKey.USER_DATE_FORMAT, Locale.getDefault());
         Date fDate = null;
@@ -249,21 +251,58 @@ public class HelperUtil {
             return false;
         }
         if (fDate.after(sDate)) {
-            if(fCal.get(Calendar.YEAR) == sCal.get(Calendar.YEAR) &&
+            if (fCal.get(Calendar.YEAR) == sCal.get(Calendar.YEAR) &&
                     fCal.get(Calendar.MONTH) == sCal.get(Calendar.MONTH) &&
                     fCal.get(Calendar.DATE) == sCal.get(Calendar.DATE)
-                    ){
+                    ) {
                 return false;
-            }else{
+            } else {
                 return true;
             }
-        }
-        else{
+        } else {
             return false;
         }
     }
 
-    public static void showConfirmationAlertDialogNoCancel(CharSequence msg, Context context, DialogInterface.OnClickListener onClickListener){
+    public static boolean isDateBeforeOrEqual(String firstDate, String secondDate) {
+        //FALSE is Valid Date (Tanggal berakhir setelah tanggal mulai)
+        SimpleDateFormat sdf = new SimpleDateFormat(HelperKey.USER_DATE_FORMAT, Locale.getDefault());
+        Date fDate = null;
+        Date sDate = null;
+        Calendar fCal = Calendar.getInstance();
+        Calendar sCal = Calendar.getInstance();
+        try {
+            fDate = sdf.parse(firstDate);
+            fCal.setTime(fDate);
+            sDate = sdf.parse(secondDate);
+            sCal.setTime(sDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
+        if (fDate.after(sDate)) {
+//            if(fCal.get(Calendar.YEAR) == sCal.get(Calendar.YEAR) &&
+//                    fCal.get(Calendar.MONTH) == sCal.get(Calendar.MONTH) &&
+//                    fCal.get(Calendar.DATE) == sCal.get(Calendar.DATE)
+//                    ){
+//                return false;
+//            }else{
+            return true;
+//            }
+        } else {
+//            return false;
+            if (fCal.get(Calendar.YEAR) == sCal.get(Calendar.YEAR) &&
+                    fCal.get(Calendar.MONTH) == sCal.get(Calendar.MONTH) &&
+                    fCal.get(Calendar.DATE) == sCal.get(Calendar.DATE)
+                    ) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    public static void showConfirmationAlertDialogNoCancel(CharSequence msg, Context context, DialogInterface.OnClickListener onClickListener) {
         AlertDialog alertDialog = new AlertDialog.Builder(context).create();
         alertDialog.setTitle("Perhatian!");
         alertDialog.setMessage(msg);
@@ -271,7 +310,7 @@ public class HelperUtil {
         alertDialog.show();
     }
 
-    public static Calendar getCalendarVersion(Date date){
+    public static Calendar getCalendarVersion(Date date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         cal.set(Calendar.HOUR_OF_DAY, 0);
@@ -298,14 +337,14 @@ public class HelperUtil {
         Calendar sDate = getCalendarVersion(date);
         Calendar eDate = getCalendarVersion(new Date());
 
-        if(!sDate.after(eDate) && !sDate.before(eDate)){
+        if (!sDate.after(eDate) && !sDate.before(eDate)) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }
 
-    public static String getServerFormDate(String userFormDate){
+    public static String getServerFormDate(String userFormDate) {
         SimpleDateFormat serverDateFormat = new SimpleDateFormat(HelperKey.SERVER_DATE_FORMAT, Locale.getDefault());
         SimpleDateFormat userDateFormat = new SimpleDateFormat(HelperKey.USER_DATE_FORMAT, Locale.getDefault());
         try {
@@ -317,7 +356,7 @@ public class HelperUtil {
         }
     }
 
-    public static String getUserFormDate(String serverFormDate){
+    public static String getUserFormDate(String serverFormDate) {
         SimpleDateFormat serverDateFormat = new SimpleDateFormat(HelperKey.SERVER_DATE_FORMAT, Locale.getDefault());
         SimpleDateFormat userDateFormat = new SimpleDateFormat(HelperKey.USER_DATE_FORMAT, Locale.getDefault());
         try {
@@ -329,8 +368,8 @@ public class HelperUtil {
         }
     }
 
-    public static String getMonthName(String monthNum, Context context){
-        switch (monthNum){
+    public static String getMonthName(String monthNum, Context context) {
+        switch (monthNum) {
             case "01":
                 return context.getResources().getString(R.string.bulan_01);
             case "02":
@@ -360,7 +399,7 @@ public class HelperUtil {
         }
     }
 
-    public static Dialog getConfirmOrderDialog(Activity activity){
+    public static Dialog getConfirmOrderDialog(Activity activity) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         LayoutInflater inflater = activity.getLayoutInflater();
 
@@ -377,8 +416,8 @@ public class HelperUtil {
         return dialog;
     }
 
-    public static Dialog showImagePreview(Bitmap srcBmp, Activity activity){
-        View view = activity.getLayoutInflater().inflate( R.layout.dialog_image_preview, null);
+    public static Dialog showImagePreview(Bitmap srcBmp, Activity activity) {
+        View view = activity.getLayoutInflater().inflate(R.layout.dialog_image_preview, null);
 
         ImageView postImage = (ImageView) view.findViewById(R.id.iv_container);
         postImage.setImageBitmap(srcBmp);

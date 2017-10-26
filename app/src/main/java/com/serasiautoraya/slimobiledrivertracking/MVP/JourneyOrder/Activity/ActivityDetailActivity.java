@@ -1,16 +1,20 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.Html;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +54,8 @@ public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, 
     TextView mTvOrderCustomer;
     @BindView(R.id.order_title_locationtarget)
     TextView mTvOrderLocationTarget;
+    @BindView(R.id.order_title_locationtargetaddress)
+    TextView mTvOrderAddressTarget;
     @BindView(R.id.order_title_timetarget)
     TextView mTvOrderTimeTarget;
 //    @BindView(R.id.order_title_timebaseline)
@@ -68,6 +74,17 @@ public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, 
     TextView mTvOrderDocumentneed;
     @BindView(R.id.order_title_nextlocationtarget)
     TextView mTvOrderNextActivity;
+    @BindView(R.id.order_title_nextlocationaddress)
+    TextView mTvOrderNextActivityAddress;
+
+    @BindView(R.id.order_title_cargodesc)
+    TextView mTvOrderCargoDesc;
+    @BindView(R.id.order_title_notes)
+    TextView mTvOrderNotes;
+
+    @BindView(R.id.order_tl_destination)
+    TableLayout mTlOrderDestination;
+
 
     @BindView(R.id.order_button_action)
     Button mTvButtonAction;
@@ -129,17 +146,21 @@ public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, 
 
     @Override
     public void setDetailData(String codeHead, String code, String activityName,
-                              String activityType, String origin, String destination,
+                              String activityType, String origin, String[] destination,
                               String etd, String eta, String customer,
                               String locationTarget, String timeTarget, String timeBaseline,
                               String timeActual, String assignmentId, String cargoType,
                               String unitModel, String unitnumber, String docNeed,
-                              String nextActivity) {
+                              String nextActivity,
+                              String nextActivityAddress,
+                              String addressTarget,
+                              String notes,
+                              String cargoDescription) {
         mTvOrderCodeHead.setText(codeHead);
         mTvOrderCode.setText(code);
         mTvOrderActivityName.setText(activityName);
         mTvOrderOrigin.setText(origin);
-        mTvOrderDest.setText(destination);
+//        mTvOrderDest.setText(destination);
         mTvOrderEtd.setText(etd);
         mTvOrderEta.setText(eta);
         mTvOrderCustomer.setText(customer);
@@ -153,6 +174,11 @@ public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, 
         mTvOrderUnitNumber.setText(unitnumber);
         mTvOrderDocumentneed.setText(docNeed);
         mTvOrderNextActivity.setText(nextActivity);
+        mTvOrderNextActivityAddress.setText(nextActivityAddress);
+        mTvOrderAddressTarget.setText(addressTarget);
+        mTvOrderNotes.setText(notes);
+        mTvOrderCargoDesc.setText(cargoDescription);
+        this.generateDestination(destination);
     }
 
     @Override
@@ -214,6 +240,22 @@ public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, 
         }else {
             mTvButtonAction.setVisibility(View.GONE);
             mTvButtonNoAction.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void generateDestination(String[] arrDestination) {
+        for (int i = 0; i < arrDestination.length; i++) {
+            LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            TableRow rowView;
+            if(i == (arrDestination.length - 1)){
+                rowView = (TableRow)inflater.inflate(R.layout.row_destination_activity_borderless, null);
+            }else{
+                rowView = (TableRow)inflater.inflate(R.layout.row_destination_activity, null);
+            }
+            TextView tv = (TextView) rowView.findViewById(R.id.destactivity_text);
+            tv.setText(arrDestination[i]);
+            mTlOrderDestination.addView(rowView);
         }
     }
 }

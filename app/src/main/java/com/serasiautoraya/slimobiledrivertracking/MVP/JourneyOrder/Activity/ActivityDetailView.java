@@ -18,7 +18,7 @@ public interface ActivityDetailView extends BaseViewInterface {
             String activityName,
             String activityType,
             String origin,
-            String destination,
+            String[] destination,
             String etd,
             String eta,
             String customer,
@@ -31,7 +31,11 @@ public interface ActivityDetailView extends BaseViewInterface {
             String unitModel,
             String unitnumber,
             String docNeed,
-            String nextActivity
+            String nextActivity,
+            String nextActivityAddress,
+            String addressTarget,
+            String notes,
+            String cargoDescription
     );
 
     void setButtonText(String text);
@@ -47,5 +51,7 @@ public interface ActivityDetailView extends BaseViewInterface {
     void showConfirmationSuccess(String message, String title);
 
     void toggleButtonAction(boolean show);
+
+    void generateDestination(String[] arrDestination);
 
 }

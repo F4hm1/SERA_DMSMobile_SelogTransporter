@@ -3,6 +3,7 @@ package com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Assigned;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +14,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +46,7 @@ public class PlanOrderFragment extends TiFragment<PlanOrderPresenter, PlanOrderV
 
     private SimpleAdapterView mSimpleAdapterView;
     private ProgressDialog mProgressDialog;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -92,7 +96,7 @@ public class PlanOrderFragment extends TiFragment<PlanOrderPresenter, PlanOrderV
     }
 
     @Override
-    public void showAcknowledgeDialog(String ordercode, final Integer assignmentId, String destination, String origin, final String etd, final String eta, String customer) {
+    public void showAcknowledgeDialog(String ordercode, final Integer assignmentId, String[] destination, String origin, final String etd, final String eta, String customer) {
         final String fOrderCode = ordercode;
         final Integer fAssignmentId = assignmentId;
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -113,7 +117,10 @@ public class PlanOrderFragment extends TiFragment<PlanOrderPresenter, PlanOrderV
         tvOrderCode.setText(ordercode);
 
         TextView tvDestination = (TextView) dialog.findViewById(R.id.acknowledge_dialog_destination);
-        tvDestination.setText(destination);
+        tvDestination.setText(destination[0]);
+
+        TableLayout tlDestination = (TableLayout) dialog.findViewById(R.id.acknowledge_tl_destination);
+        this.generateDestination(destination, tlDestination);
 
         TextView tvOrigin= (TextView) dialog.findViewById(R.id.acknowledge_dialog_origin);
         tvOrigin.setText(origin);
@@ -186,4 +193,21 @@ public class PlanOrderFragment extends TiFragment<PlanOrderPresenter, PlanOrderV
             }
         }));
     }
+
+    @Override
+    public void generateDestination(String[] arrDestination, TableLayout tableLayout) {
+        for (int i = 0; i < arrDestination.length; i++) {
+            LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            TableRow rowView;
+            if(i == (arrDestination.length - 1)){
+                rowView = (TableRow)inflater.inflate(R.layout.row_destination_activity_borderless, null);
+            }else{
+                rowView = (TableRow)inflater.inflate(R.layout.row_destination_activity, null);
+            }
+            TextView tv = (TextView) rowView.findViewById(R.id.destactivity_text);
+            tv.setText(arrDestination[i]);
+            tableLayout.addView(rowView);
+        }
+    }
+
 }

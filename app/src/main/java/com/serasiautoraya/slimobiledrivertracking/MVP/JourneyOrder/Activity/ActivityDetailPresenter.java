@@ -51,34 +51,34 @@ public class ActivityDetailPresenter extends TiPresenter<ActivityDetailView> {
     }
 
     public void onActionClicked() {
-        final LocationModel locationModel = mRestConnection.getCurrentLocation();
-        if (locationModel.getLongitude().equalsIgnoreCase("null")) {
-            getView().showToast("Aplikasi sedang mengambil lokasi (pastikan gps dan peket data tersedia), harap tunggu beberapa saat kemudian silahkan coba kembali.");
-        } else {
-            getView().toggleLoading(true);
-            mRestConnection.getServerTime(new TimeRestCallBackInterface() {
-                @Override
-                public void callBackOnSuccess(TimeRESTResponseModel timeRESTResponseModel, String latitude, String longitude, String address) {
-                    String[] timeSplitServer = timeRESTResponseModel.getTime().split(" ");
-                    String[] timeSplitActivity = HelperBridge.sAssignedOrderResponseModel.getETD().split(" ");
-                    String dateServer = timeSplitServer[0];
-                    String dateActivity = timeSplitActivity[0];
-                    if(HelperUtil.isDateBefore(HelperUtil.getUserFormDate(dateServer), HelperUtil.getUserFormDate(dateActivity))){
-                        onActionDateValid();
-                    }else{
-                        getView().showStandardDialog("Anda hanya bisa memulai perjalanan pada hari keberangkatan", "Perhatian");
-                    }
-                    getView().toggleLoading(false);
-                }
-
-                @Override
-                public void callBackOnFail(String message) {
-                    getView().toggleLoading(false);
-                    getView().showStandardDialog(message, "Perhatian");
-                }
-            });
-        }
-//        onActionDateValid();
+//        final LocationModel locationModel = mRestConnection.getCurrentLocation();
+//        if (locationModel.getLongitude().equalsIgnoreCase("null")) {
+//            getView().showToast("Aplikasi sedang mengambil lokasi (pastikan gps dan peket data tersedia), harap tunggu beberapa saat kemudian silahkan coba kembali.");
+//        } else {
+//            getView().toggleLoading(true);
+//            mRestConnection.getServerTime(new TimeRestCallBackInterface() {
+//                @Override
+//                public void callBackOnSuccess(TimeRESTResponseModel timeRESTResponseModel, String latitude, String longitude, String address) {
+//                    String[] timeSplitServer = timeRESTResponseModel.getTime().split(" ");
+//                    String[] timeSplitActivity = HelperBridge.sAssignedOrderResponseModel.getETD().split(" ");
+//                    String dateServer = timeSplitServer[0];
+//                    String dateActivity = timeSplitActivity[0];
+//                    if(HelperUtil.isDateBeforeOrEqual(HelperUtil.getUserFormDate(dateServer), HelperUtil.getUserFormDate(dateActivity))){
+//                        onActionDateValid();
+//                    }else{
+//                        getView().showStandardDialog("Anda hanya bisa memulai perjalanan pada hari keberangkatan", "Perhatian");
+//                    }
+//                    getView().toggleLoading(false);
+//                }
+//
+//                @Override
+//                public void callBackOnFail(String message) {
+//                    getView().toggleLoading(false);
+//                    getView().showStandardDialog(message, "Perhatian");
+//                }
+//            });
+//        }
+        onActionDateValid();
     }
 
     private void onActionDateValid() {
@@ -286,13 +286,15 @@ public class ActivityDetailPresenter extends TiPresenter<ActivityDetailView> {
                     + ", " + dateNextActivityTimeTarget[1] + " " + dateNextActivityTimeTarget[2] + ")";
         }
 
+
+
         getView().setDetailData(
                 "Order " + HelperBridge.sTempSelectedOrderCode,
                 HelperBridge.sTempSelectedOrderCode,
                 HelperBridge.sActivityDetailResponseModel.getActivityName(),
                 HelperBridge.sActivityDetailResponseModel.getActivityType(),
                 HelperBridge.sAssignedOrderResponseModel.getOrigin(),
-                HelperBridge.sAssignedOrderResponseModel.getDestination(),
+                this.getSeparatedDestination(HelperBridge.sAssignedOrderResponseModel.getDestination()),
                 dateEtd.length > 1 ? HelperUtil.getUserFormDate(dateEtd[0]) + ", " + dateEtd[1] : HelperBridge.sAssignedOrderResponseModel.getETD(),
 //                HelperBridge.sAssignedOrderResponseModel.getETD(),
                 dateEta.length > 1 ? HelperUtil.getUserFormDate(dateEta[0]) + ", " + dateEta[1] : HelperBridge.sAssignedOrderResponseModel.getETA(),
@@ -309,7 +311,11 @@ public class ActivityDetailPresenter extends TiPresenter<ActivityDetailView> {
                 HelperBridge.sActivityDetailResponseModel.getUnitModel(),
                 HelperBridge.sActivityDetailResponseModel.getUnitNumber(),
                 docNeed,
-                nextActivityUI
+                nextActivityUI,
+                HelperBridge.sActivityDetailResponseModel.getNextActivityLocationAddress(),
+                HelperBridge.sActivityDetailResponseModel.getLocationTargetAddress(),
+                HelperBridge.sAssignedOrderResponseModel.getNotes(),
+                HelperBridge.sAssignedOrderResponseModel.getCargoDescription()
 //                HelperBridge.sActivityDetailResponseModel.getNextActivityName() + ": " + HelperBridge.sActivityDetailResponseModel.getNextActivityLocationText()
 //                HelperBridge.sActivityDetailResponseModel.getNextActivityName() + ": " + HelperBridge.sActivityDetailResponseModel.getNextActivityLocationText() + "(pada "+HelperUtil.getUserFormDate(dateNextActivityTimeTarget[0]) + ", " + dateNextActivityTimeTarget[1]+" "+dateNextActivityTimeTarget[2]+")"
         );
@@ -328,6 +334,17 @@ public class ActivityDetailPresenter extends TiPresenter<ActivityDetailView> {
             getView().toggleButtonAction(false);
         }
 
+    }
+
+    private String[] getSeparatedDestination(String destination) {
+        if(destination.equalsIgnoreCase("")){
+            String[] resZero = new String[1];
+            resZero[0] = "-";
+            return resZero;
+        }else{
+            destination = "KOPI|KUE|PERMEN";
+            return destination.split(HelperKey.SEPARATOR_PIPE);
+        }
     }
 
     public void onRequestSubmitActivity() {

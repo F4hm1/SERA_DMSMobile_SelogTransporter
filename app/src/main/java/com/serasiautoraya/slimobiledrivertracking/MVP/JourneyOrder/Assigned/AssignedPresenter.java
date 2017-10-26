@@ -53,8 +53,8 @@ public class AssignedPresenter extends TiPresenter<AssignedView> {
         AssignedOrderSendModel assignedOrderSendModel = new AssignedOrderSendModel(
                 HelperBridge.sModelLoginResponse.getPersonalId(),
                 HelperTransactionCode.ASSIGNED_REQUEST_OPEN,
-                "",
-                ""
+                "1900-01-01",
+                "2100-01-01"
         );
         mRestConnection.getData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.GET_ASSIGNED_ORDER, assignedOrderSendModel.getHashMapType(), new RestCallBackInterfaceModel() {
             @Override
@@ -129,41 +129,41 @@ public class AssignedPresenter extends TiPresenter<AssignedView> {
         *
         * */
 
-        for (int i = 0; i < 12; i++) {
-            AssignedOrderResponseModel activeList = new AssignedOrderResponseModel(
-                    "OC-XX-" + i,
-                    i,
-                    1,
-                    "customer -" + i,
-                    "Origin -" + i,
-                    "Destination -" + i,
-                    "ETA -" + i,
-                    "ETD -" + i);
-
-            AssignedOrderResponseModel planOutlist = new AssignedOrderResponseModel(
-                    "OC-XX-" + i,
-                    i,
-                    2,
-                    "customer -" + i,
-                    "Origin -" + i,
-                    "Destination -" + i,
-                    "ETA -" + i,
-                    "ETD -" + i);
-
-            if (i % 2 == 0) {
-                planOutlist.setStatus(1);
-            } else {
-                if (i % 3 == 0) {
-                    planOutlist.setStatus(HelperTransactionCode.ASSIGNED_STATUS_NOTACK_IN);
-                } else {
-                    planOutlist.setStatus(HelperTransactionCode.ASSIGNED_STATUS_ACK_IN);
-                }
-
-            }
-
-            HelperBridge.sActiveOrdersList.add(activeList);
-            HelperBridge.sPlanOutstandingOrdersList.add(planOutlist);
-        }
+//        for (int i = 0; i < 12; i++) {
+//            AssignedOrderResponseModel activeList = new AssignedOrderResponseModel(
+//                    "OC-XX-" + i,
+//                    i,
+//                    1,
+//                    "customer -" + i,
+//                    "Origin -" + i,
+//                    "Destination -" + i,
+//                    "ETA -" + i,
+//                    "ETD -" + i);
+//
+//            AssignedOrderResponseModel planOutlist = new AssignedOrderResponseModel(
+//                    "OC-XX-" + i,
+//                    i,
+//                    2,
+//                    "customer -" + i,
+//                    "Origin -" + i,
+//                    "Destination -" + i,
+//                    "ETA -" + i,
+//                    "ETD -" + i);
+//
+//            if (i % 2 == 0) {
+//                planOutlist.setStatus(1);
+//            } else {
+//                if (i % 3 == 0) {
+//                    planOutlist.setStatus(HelperTransactionCode.ASSIGNED_STATUS_NOTACK_IN);
+//                } else {
+//                    planOutlist.setStatus(HelperTransactionCode.ASSIGNED_STATUS_ACK_IN);
+//                }
+//
+//            }
+//
+//            HelperBridge.sActiveOrdersList.add(activeList);
+//            HelperBridge.sPlanOutstandingOrdersList.add(planOutlist);
+//        }
     }
 
 }

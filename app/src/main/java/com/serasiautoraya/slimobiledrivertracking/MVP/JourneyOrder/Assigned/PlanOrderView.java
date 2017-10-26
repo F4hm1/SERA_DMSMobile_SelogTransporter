@@ -1,5 +1,7 @@
 package com.serasiautoraya.slimobiledrivertracking.MVP.JourneyOrder.Assigned;
 
+import android.widget.TableLayout;
+
 import com.serasiautoraya.slimobiledrivertracking.MVP.BaseInterface.BaseViewInterface;
 
 import net.grandcentrix.thirtyinch.distinctuntilchanged.DistinctUntilChanged;
@@ -17,7 +19,7 @@ public interface PlanOrderView extends BaseViewInterface{
     void showAcknowledgeDialog(
             String ordercode,
             Integer assignmentId,
-            String destination,
+            String[] destination,
             String origin,
             String etd,
             String eta,
@@ -30,4 +32,5 @@ public interface PlanOrderView extends BaseViewInterface{
 
     void setTextEmptyInfoStatus(boolean success);
 
+    void generateDestination(String[] arrDestination, TableLayout tableLayout);
 }

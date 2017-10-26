@@ -30,31 +30,31 @@
                 android:gravity="center_horizontal">
 
                 <TextView
-                    android:transitionName="trans_order_code"
                     android:id="@+id/order_title_code_head"
-                    android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_span="3"
+                    android:gravity="center_vertical"
                     android:padding="18dip"
                     android:text="@string/order_title"
                     android:textColor="#000"
-                    android:textSize="18dp" />
+                    android:textSize="18dp"
+                    android:transitionName="trans_order_code" />
             </TableRow>
 
             <!--order_title_code-->
             <TableRow
-                android:layout_height="wrap_content"
-                android:weightSum="11"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/table_bottom_border"
-                android:gravity="left">
+                android:gravity="left"
+                android:weightSum="11">
 
                 <TextView
-                    android:layout_column="0"
-                    android:layout_weight="5"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_weight="5"
                     android:paddingBottom="10dip"
                     android:paddingLeft="20dip"
                     android:paddingTop="10dip"
@@ -62,58 +62,58 @@
 
                 <TextView
                     android:id="@+id/order_title_code"
-                    android:layout_column="1"
-                    android:layout_weight="6"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="4dp"
+                    android:layout_column="1"
+                    android:layout_weight="6"
                     android:paddingBottom="10dip"
+                    android:paddingLeft="4dp"
                     android:paddingTop="10dip"
                     android:text="Row 3 column 2" />
             </TableRow>
 
             <!--order_title_code-->
             <TableRow
-                android:layout_height="wrap_content"
-                android:weightSum="11"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/table_bottom_border"
-                android:gravity="left">
+                android:gravity="left"
+                android:weightSum="11">
 
                 <TextView
-                    android:layout_column="0"
-                    android:layout_weight="5"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_weight="5"
                     android:paddingLeft="20dip"
                     android:paddingTop="10dip"
                     android:text="@string/order_title_assignment" />
 
                 <TextView
                     android:id="@+id/order_title_assignment"
-                    android:paddingLeft="4dp"
-                    android:layout_column="1"
-                    android:layout_weight="6"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_weight="6"
                     android:paddingBottom="10dip"
+                    android:paddingLeft="4dp"
                     android:paddingTop="10dip"
                     android:text="Row 3 column 2" />
             </TableRow>
 
             <!--order_title_hub-->
             <TableRow
-                android:layout_height="wrap_content"
-                android:weightSum="11"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/table_bottom_border"
-                android:gravity="left">
+                android:gravity="left"
+                android:weightSum="11">
 
                 <TextView
-                    android:layout_column="0"
-                    android:layout_weight="5"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_weight="5"
                     android:paddingBottom="10dip"
                     android:paddingLeft="20dip"
                     android:paddingTop="10dip"
@@ -121,29 +121,29 @@
 
                 <TextView
                     android:id="@+id/order_title_activityname"
-                    android:paddingLeft="4dp"
-                    android:layout_column="1"
-                    android:layout_weight="6"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_weight="6"
                     android:paddingBottom="10dip"
+                    android:paddingLeft="4dp"
                     android:paddingTop="10dip"
                     android:text="Row 3 column 2" />
             </TableRow>
 
             <!--order_title_timetarget-->
             <TableRow
-                android:layout_height="wrap_content"
-                android:weightSum="11"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/table_bottom_border"
-                android:gravity="left">
+                android:gravity="left"
+                android:weightSum="11">
 
                 <TextView
-                    android:layout_column="0"
-                    android:layout_weight="5"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_weight="5"
                     android:paddingBottom="10dip"
                     android:paddingLeft="20dip"
                     android:paddingTop="10dip"
@@ -153,12 +153,12 @@
 
                 <TextView
                     android:id="@+id/order_title_timetarget"
-                    android:paddingLeft="4dp"
-                    android:layout_column="1"
-                    android:layout_weight="6"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_weight="6"
                     android:paddingBottom="10dip"
+                    android:paddingLeft="4dp"
                     android:paddingTop="10dip"
                     android:text="Row 3 column 2"
                     android:textColor="@color/colorPrimaryDark" />
@@ -166,42 +166,42 @@
 
             <!--order_title_nextdriver-->
             <!--<TableRow-->
-                <!--android:layout_width="fill_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:background="@drawable/table_bottom_border"-->
-                <!--android:gravity="left">-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@drawable/table_bottom_border"-->
+            <!--android:gravity="left">-->
 
-                <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:paddingBottom="10dip"-->
+            <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:paddingBottom="10dip"-->
 
-                    <!--android:paddingLeft="20dip"-->
-                    <!--android:paddingTop="10dip"-->
-                    <!--android:text="@string/order_title_activitytype" />-->
+            <!--android:paddingLeft="20dip"-->
+            <!--android:paddingTop="10dip"-->
+            <!--android:text="@string/order_title_activitytype" />-->
 
-                <!--<TextView-->
-                    <!--android:id="@+id/order_title_activitytype"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:paddingBottom="10dip"-->
+            <!--<TextView-->
+            <!--android:id="@+id/order_title_activitytype"-->
+            <!--android:layout_weight="1"-->
+            <!--android:paddingBottom="10dip"-->
 
-                    <!--android:paddingTop="10dip"-->
-                    <!--android:text="Row 3 column 2" />-->
+            <!--android:paddingTop="10dip"-->
+            <!--android:text="Row 3 column 2" />-->
             <!--</TableRow>-->
 
             <!--order_title_origin-->
             <TableRow
-                android:layout_height="wrap_content"
-                android:weightSum="11"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/table_bottom_border"
-                android:gravity="left">
+                android:gravity="left"
+                android:weightSum="11">
 
                 <TextView
-                    android:layout_column="0"
-                    android:layout_weight="5"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_weight="5"
                     android:paddingBottom="10dip"
                     android:paddingLeft="20dip"
                     android:paddingTop="10dip"
@@ -209,29 +209,30 @@
 
                 <TextView
                     android:id="@+id/order_title_origin"
-                    android:paddingLeft="4dp"
-                    android:layout_column="1"
-                    android:layout_weight="6"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_weight="6"
                     android:paddingBottom="10dip"
+                    android:paddingLeft="4dp"
                     android:paddingTop="10dip"
                     android:text="Row 3 column 2" />
             </TableRow>
 
             <!--order_title_dest-->
             <TableRow
-                android:layout_height="wrap_content"
-                android:weightSum="11"
+                android:visibility="gone"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/table_bottom_border"
-                android:gravity="left">
+                android:gravity="left"
+                android:weightSum="11">
 
                 <TextView
-                    android:layout_column="0"
-                    android:layout_weight="5"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_weight="5"
                     android:paddingBottom="10dip"
                     android:paddingLeft="20dip"
                     android:paddingTop="10dip"
@@ -239,29 +240,64 @@
 
                 <TextView
                     android:id="@+id/order_title_dest"
-                    android:paddingLeft="4dp"
-                    android:layout_column="1"
-                    android:layout_weight="6"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_weight="6"
                     android:paddingBottom="10dip"
+                    android:paddingLeft="4dp"
                     android:paddingTop="10dip"
                     android:text="Row 3 column 2" />
             </TableRow>
 
-            <!--order_title_etd-->
+            <!--order_title_destinationlist-->
             <TableRow
-                android:layout_height="wrap_content"
-                android:weightSum="11"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/table_bottom_border"
-                android:gravity="left">
+                android:gravity="left"
+                android:weightSum="11">
 
                 <TextView
-                    android:layout_column="0"
-                    android:layout_weight="5"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_weight="5"
+                    android:paddingBottom="10dip"
+                    android:paddingLeft="20dip"
+                    android:paddingTop="10dip"
+                    android:text="@string/order_title_dest" />
+
+                <TableLayout
+                    android:id="@+id/order_tl_destination"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_weight="6"
+                    android:paddingBottom="10dip"
+                    android:paddingLeft="4dp"
+                    android:paddingTop="10dip"
+                    android:shrinkColumns="*"
+                    android:stretchColumns="*">
+
+
+                </TableLayout>
+
+            </TableRow>
+
+            <!--order_title_etd-->
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/table_bottom_border"
+                android:gravity="left"
+                android:weightSum="11">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_weight="5"
                     android:paddingBottom="10dip"
                     android:paddingLeft="20dip"
                     android:paddingTop="10dip"
@@ -269,29 +305,29 @@
 
                 <TextView
                     android:id="@+id/order_title_etd"
-                    android:paddingLeft="4dp"
-                    android:layout_column="1"
-                    android:layout_weight="6"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_weight="6"
                     android:paddingBottom="10dip"
+                    android:paddingLeft="4dp"
                     android:paddingTop="10dip"
                     android:text="Row 3 column 2" />
             </TableRow>
 
             <!--order_title_eta-->
             <TableRow
-                android:layout_height="wrap_content"
-                android:weightSum="11"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/table_bottom_border"
-                android:gravity="left">
+                android:gravity="left"
+                android:weightSum="11">
 
                 <TextView
-                    android:layout_column="0"
-                    android:layout_weight="5"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_weight="5"
                     android:paddingBottom="10dip"
                     android:paddingLeft="20dip"
                     android:paddingTop="10dip"
@@ -299,29 +335,29 @@
 
                 <TextView
                     android:id="@+id/order_title_eta"
-                    android:paddingLeft="4dp"
-                    android:layout_column="1"
-                    android:layout_weight="6"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_weight="6"
                     android:paddingBottom="10dip"
+                    android:paddingLeft="4dp"
                     android:paddingTop="10dip"
                     android:text="Row 3 column 2" />
             </TableRow>
 
             <!--order_title_customer-->
             <TableRow
-                android:layout_height="wrap_content"
-                android:weightSum="11"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/table_bottom_border"
-                android:gravity="left">
+                android:gravity="left"
+                android:weightSum="11">
 
                 <TextView
-                    android:layout_column="0"
-                    android:layout_weight="5"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_weight="5"
                     android:paddingBottom="10dip"
                     android:paddingLeft="20dip"
                     android:paddingTop="10dip"
@@ -329,29 +365,29 @@
 
                 <TextView
                     android:id="@+id/order_title_customer"
-                    android:paddingLeft="4dp"
-                    android:layout_column="1"
-                    android:layout_weight="6"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_weight="6"
                     android:paddingBottom="10dip"
+                    android:paddingLeft="4dp"
                     android:paddingTop="10dip"
                     android:text="Row 3 column 2" />
             </TableRow>
 
-            <!--order_title_unit-->
+            <!--order_title_locationtarget-->
             <TableRow
-                android:layout_height="wrap_content"
-                android:weightSum="11"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/table_bottom_border"
-                android:gravity="left">
+                android:gravity="left"
+                android:weightSum="11">
 
                 <TextView
-                    android:layout_column="0"
-                    android:layout_weight="5"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_weight="5"
                     android:paddingBottom="10dip"
                     android:paddingLeft="20dip"
                     android:paddingTop="10dip"
@@ -359,30 +395,60 @@
 
                 <TextView
                     android:id="@+id/order_title_locationtarget"
-                    android:paddingLeft="4dp"
-                    android:layout_column="1"
-                    android:layout_weight="6"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_weight="6"
                     android:paddingBottom="10dip"
+                    android:paddingLeft="4dp"
+                    android:paddingTop="10dip"
+                    android:text="Row 3 column 2" />
+            </TableRow>
+
+            <!--order_title_locationtargetaddress-->
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/table_bottom_border"
+                android:gravity="left"
+                android:weightSum="11">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_weight="5"
+                    android:paddingBottom="10dip"
+                    android:paddingLeft="20dip"
+                    android:paddingTop="10dip"
+                    android:text="@string/order_title_locationtargetaddress" />
+
+                <TextView
+                    android:id="@+id/order_title_locationtargetaddress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_weight="6"
+                    android:paddingBottom="10dip"
+                    android:paddingLeft="4dp"
                     android:paddingTop="10dip"
                     android:text="Row 3 column 2" />
             </TableRow>
 
             <!--order_title_timebaseline_hidden-->
             <TableRow
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:weightSum="11"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/table_bottom_border"
-                android:gravity="left">
+                android:gravity="left"
+                android:visibility="gone"
+                android:weightSum="11">
 
                 <TextView
-                    android:layout_column="0"
-                    android:layout_weight="5"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_weight="5"
                     android:paddingBottom="10dip"
                     android:paddingLeft="20dip"
                     android:paddingTop="10dip"
@@ -391,12 +457,12 @@
 
                 <TextView
                     android:id="@+id/order_title_timebaseline"
-                    android:paddingLeft="4dp"
-                    android:layout_column="1"
-                    android:layout_weight="6"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_weight="6"
                     android:paddingBottom="10dip"
+                    android:paddingLeft="4dp"
                     android:paddingTop="10dip"
                     android:text="Row 3 column 2"
                     android:textColor="@color/colorPrimaryDark" />
@@ -404,18 +470,18 @@
 
             <!--order_title_timeactual_hidden-->
             <TableRow
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:weightSum="11"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/table_bottom_border"
-                android:gravity="left">
+                android:gravity="left"
+                android:visibility="gone"
+                android:weightSum="11">
 
                 <TextView
-                    android:layout_column="0"
-                    android:layout_weight="5"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_weight="5"
                     android:paddingBottom="10dip"
                     android:paddingLeft="20dip"
                     android:paddingTop="10dip"
@@ -425,12 +491,12 @@
 
                 <TextView
                     android:id="@+id/order_title_timeactual"
-                    android:paddingLeft="4dp"
-                    android:layout_column="1"
-                    android:layout_weight="6"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_weight="6"
                     android:paddingBottom="10dip"
+                    android:paddingLeft="4dp"
                     android:paddingTop="10dip"
                     android:text="Row 3 column 2"
                     android:textColor="@color/colorPrimaryDark" />
@@ -439,17 +505,17 @@
             <!--Not shown?-->
             <!--order_title_cargotype-->
             <TableRow
-                android:layout_height="wrap_content"
-                android:weightSum="11"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/table_bottom_border"
-                android:gravity="left">
+                android:gravity="left"
+                android:weightSum="11">
 
                 <TextView
-                    android:layout_column="0"
-                    android:layout_weight="5"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_weight="5"
                     android:paddingBottom="10dip"
                     android:paddingLeft="20dip"
                     android:paddingTop="10dip"
@@ -457,29 +523,59 @@
 
                 <TextView
                     android:id="@+id/order_title_cargotype"
-                    android:paddingLeft="4dp"
-                    android:layout_column="1"
-                    android:layout_weight="6"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_weight="6"
                     android:paddingBottom="10dip"
+                    android:paddingLeft="4dp"
+                    android:paddingTop="10dip"
+                    android:text="Row 3 column 2" />
+            </TableRow>
+
+            <!--order_title_cargodesc-->
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/table_bottom_border"
+                android:gravity="left"
+                android:weightSum="11">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_weight="5"
+                    android:paddingBottom="10dip"
+                    android:paddingLeft="20dip"
+                    android:paddingTop="10dip"
+                    android:text="@string/order_title_cargodesc" />
+
+                <TextView
+                    android:id="@+id/order_title_cargodesc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_weight="6"
+                    android:paddingBottom="10dip"
+                    android:paddingLeft="4dp"
                     android:paddingTop="10dip"
                     android:text="Row 3 column 2" />
             </TableRow>
 
             <!--order_title_quantity-->
             <TableRow
-                android:layout_height="wrap_content"
-                android:weightSum="11"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/table_bottom_border"
-                android:gravity="left">
+                android:gravity="left"
+                android:weightSum="11">
 
                 <TextView
-                    android:layout_column="0"
-                    android:layout_weight="5"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_weight="5"
                     android:paddingBottom="10dip"
                     android:paddingLeft="20dip"
                     android:paddingTop="10dip"
@@ -487,29 +583,29 @@
 
                 <TextView
                     android:id="@+id/order_title_unitmodel"
-                    android:paddingLeft="4dp"
-                    android:layout_column="1"
-                    android:layout_weight="6"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_weight="6"
                     android:paddingBottom="10dip"
+                    android:paddingLeft="4dp"
                     android:paddingTop="10dip"
                     android:text="Row 3 column 2" />
             </TableRow>
 
             <!--order_title_checkpoint-->
             <TableRow
-                android:layout_height="wrap_content"
-                android:weightSum="11"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/table_bottom_border"
-                android:gravity="left">
+                android:gravity="left"
+                android:weightSum="11">
 
                 <TextView
-                    android:layout_column="0"
-                    android:layout_weight="5"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_weight="5"
                     android:paddingBottom="10dip"
                     android:paddingLeft="20dip"
                     android:paddingTop="10dip"
@@ -517,29 +613,29 @@
 
                 <TextView
                     android:id="@+id/order_title_unitnumber"
-                    android:paddingLeft="4dp"
-                    android:layout_column="1"
-                    android:layout_weight="6"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_weight="6"
                     android:paddingBottom="10dip"
+                    android:paddingLeft="4dp"
                     android:paddingTop="10dip"
                     android:text="Row 3 column 2" />
             </TableRow>
 
             <!--order_title_documentneed-->
             <TableRow
-                android:layout_height="wrap_content"
-                android:weightSum="11"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/table_bottom_border"
-                android:gravity="left">
+                android:gravity="left"
+                android:weightSum="11">
 
                 <TextView
-                    android:layout_column="0"
-                    android:layout_weight="5"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_weight="5"
                     android:paddingBottom="10dip"
                     android:paddingLeft="20dip"
                     android:paddingTop="10dip"
@@ -547,29 +643,29 @@
 
                 <TextView
                     android:id="@+id/order_title_documentneed"
-                    android:paddingLeft="4dp"
-                    android:layout_column="1"
-                    android:layout_weight="6"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_weight="6"
                     android:paddingBottom="10dip"
+                    android:paddingLeft="4dp"
                     android:paddingTop="10dip"
                     android:text="Row 3 column 2" />
             </TableRow>
 
-            <!--order_title_loadingloc-->
+            <!--order_title_nextloc-->
             <TableRow
-                android:layout_height="wrap_content"
-                android:weightSum="11"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/table_bottom_border"
-                android:gravity="left">
+                android:gravity="left"
+                android:weightSum="11">
 
                 <TextView
-                    android:layout_column="0"
-                    android:layout_weight="5"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_weight="5"
                     android:paddingBottom="10dip"
                     android:paddingLeft="20dip"
                     android:paddingTop="10dip"
@@ -577,14 +673,74 @@
 
                 <TextView
                     android:id="@+id/order_title_nextlocationtarget"
-                    android:paddingLeft="4dp"
-                    android:layout_column="1"
-                    android:layout_weight="6"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_weight="6"
                     android:paddingBottom="10dip"
+                    android:paddingLeft="4dp"
                     android:paddingTop="10dip"
                     android:text="Row 3 column 2 ow 3 column 2 2 ow 3 column 2 2 ow 3 column 2 2 ow 3 column 2 2 ow 3 column 2 2 ow 3 column 2 2 ow 3 column 2 2 ow 3 column 2 2 ow 3 column 2" />
+            </TableRow>
+
+            <!--order_title_nextloc-->
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/table_bottom_border"
+                android:gravity="left"
+                android:weightSum="11">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_weight="5"
+                    android:paddingBottom="10dip"
+                    android:paddingLeft="20dip"
+                    android:paddingTop="10dip"
+                    android:text="@string/order_title_nextlocationaddress" />
+
+                <TextView
+                    android:id="@+id/order_title_nextlocationaddress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_weight="6"
+                    android:paddingBottom="10dip"
+                    android:paddingLeft="4dp"
+                    android:paddingTop="10dip"
+                    android:text="Row 3 column 2 ow 3 column 2 2 ow 3 column 2 2 ow 3 column 2 2 ow 3 column 2 2 ow 3 column 2 2 ow 3 column 2 2 ow 3 column 2 2 ow 3 column 2 2 ow 3 column 2" />
+            </TableRow>
+
+            <!--order_title_notes-->
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/table_bottom_border"
+                android:gravity="left"
+                android:weightSum="11">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_weight="5"
+                    android:paddingBottom="10dip"
+                    android:paddingLeft="20dip"
+                    android:paddingTop="10dip"
+                    android:text="@string/order_title_notes" />
+
+                <TextView
+                    android:id="@+id/order_title_notes"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_weight="6"
+                    android:paddingBottom="10dip"
+                    android:paddingLeft="4dp"
+                    android:paddingTop="10dip"
+                    android:text="Row 3 column 2" />
             </TableRow>
 
         </TableLayout>

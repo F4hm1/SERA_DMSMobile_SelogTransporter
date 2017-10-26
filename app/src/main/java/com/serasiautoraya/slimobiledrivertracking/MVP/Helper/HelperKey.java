@@ -39,4 +39,5 @@ public class HelperKey {
     public static final int ACTIVITY_ACTION_NONE = 9990;
 
 
+    public static final String SEPARATOR_PIPE = "\\|";
 }

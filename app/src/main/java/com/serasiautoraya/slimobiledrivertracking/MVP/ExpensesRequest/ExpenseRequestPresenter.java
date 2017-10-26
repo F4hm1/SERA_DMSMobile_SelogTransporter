@@ -263,8 +263,8 @@ public class ExpenseRequestPresenter extends TiPresenter<ExpenseRequestView> {
         AssignedOrderSendModel assignedOrderSendModel = new AssignedOrderSendModel(
                 HelperBridge.sModelLoginResponse.getPersonalId(),
                 HelperTransactionCode.ASSIGNED_REQUEST_CLOSEDEXPENSE,
-                "",
-                ""
+                "1900-01-01",
+                "2100-01-01"
         );
 
         mRestConnection.getData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.GET_ASSIGNED_ORDER, assignedOrderSendModel.getHashMapType(), new RestCallBackInterfaceModel() {
