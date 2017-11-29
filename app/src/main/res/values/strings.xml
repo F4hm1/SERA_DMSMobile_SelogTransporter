@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SELOG Transporter</string>
+    <string name="app_name">SELOG Transporter Training</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_logout">Keluar</string>
@@ -265,7 +265,7 @@
     <string name="order_history_detail_time_target">Waktu Target</string>
     <string name="order_history_detail_time_baseline">Waktu Baseline</string>
     <string name="order_history_detail_time_actual">Waktu Aktual</string>
-    <string name="order_history_detail_location_target">Target Lokasi</string>
+    <string name="order_history_detail_location_target">Lokasi Aktual</string>
 
     <string name="documents_podreason_spinner_reason">Ketersediaan dokumen POD:</string>
     <string name="err_msg_empty_overtime_keterangan">Harap isi dengan alasa/keterangan anda lembur</string>

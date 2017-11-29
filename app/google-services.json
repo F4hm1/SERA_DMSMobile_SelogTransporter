@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "906811767521",
+    "firebase_url": "https://sli-transporter.firebaseio.com",
+    "project_id": "sli-transporter",
+    "storage_bucket": "sli-transporter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:906811767521:android:7376a8ef0b7606a9",
+        "android_client_info": {
+          "package_name": "com.serasiautoraya.slimobiledrivertracking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "906811767521-dpd8kk3jgmg7n3qt1r6iah8ie6838sb1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBR9uq97u7w-q3Tzrm_KA1LAdrkIiuXrVE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:906811767521:android:f4e588479af8916b",
+        "android_client_info": {
+          "package_name": "com.serasiautoraya.slimobiledrivertracking_training"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "906811767521-dpd8kk3jgmg7n3qt1r6iah8ie6838sb1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBR9uq97u7w-q3Tzrm_KA1LAdrkIiuXrVE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
