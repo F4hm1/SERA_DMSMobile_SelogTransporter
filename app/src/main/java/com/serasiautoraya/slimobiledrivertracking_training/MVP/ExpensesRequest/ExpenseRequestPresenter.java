@@ -147,7 +147,8 @@ public class ExpenseRequestPresenter extends TiPresenter<ExpenseRequestView> {
             public void callBackOnSuccess(JSONObject response) {
                 try {
                     getView().toggleLoading(false);
-                    getView().showStandardDialog(response.getString("responseText"), "Berhasil");
+//                    getView().showStandardDialog(response.getString("responseText"), "Berhasil");
+                    getView().showConfirmationSuccess(response.getString("responseText"), "Berhasil");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -222,14 +223,19 @@ public class ExpenseRequestPresenter extends TiPresenter<ExpenseRequestView> {
                 expenseAvailableOrderAdapter.getExpenseAvailableOrderResponseModel().getAssignmentId()
         );
 
-        final String orderCode = expenseAvailableOrderAdapter.getExpenseAvailableOrderResponseModel().getOrderCode();
+//        final String orderCode = expenseAvailableOrderAdapter.getExpenseAvailableOrderResponseModel().getOrderCode();
+        final String orderCode = expenseAvailableOrderAdapter.getExpenseAvailableOrderResponseModel().getAssignmentId()+"";
         final ExpenseRequestView expenseRequestView = getView();
         mRestConnection.getData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.GET_EXPENSE_INFO, expenseAvailableSendModel.getHashMapType(), new RestCallBackInterfaceModel() {
             @Override
             public void callBackOnSuccess(BaseResponseModel response) {
-                expenseAvailableResponseModel = Model.getModelInstance(response.getData()[0], ExpenseAvailableResponseModel.class);
-                generateExpenseInputValue(expenseAvailableResponseModel);
-                selectedOrderCode = orderCode;
+                if(response.getData().length > 0) {
+                    expenseAvailableResponseModel = Model.getModelInstance(response.getData()[0], ExpenseAvailableResponseModel.class);
+                    generateExpenseInputValue(expenseAvailableResponseModel);
+                    selectedOrderCode = orderCode;
+                }else{
+                    getView().showToast("Data Expense tidak ditemukan");
+                }
                 expenseRequestView.toggleLoadingSearchingOrder(false);
             }
 

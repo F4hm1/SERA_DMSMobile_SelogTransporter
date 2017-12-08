@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.serasiautoraya.slimobiledrivertracking_training.MVP.CustomView.EmptyInfoView;
 import com.serasiautoraya.slimobiledrivertracking_training.MVP.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking_training.R;
 import com.serasiautoraya.slimobiledrivertracking_training.helper.HelperUtil;
@@ -52,6 +53,9 @@ public class ExpenseRequestFragment extends TiFragment<ExpenseRequestPresenter, 
     @BindView(R.id.expense_btn_submit)
     Button mButtonSubmit;
 
+    @BindView(R.id.layout_empty_info)
+    EmptyInfoView mEmptyInfoView;
+
     private ProgressDialog mProgressDialog;
     private ArrayAdapter<ExpenseAvailableOrderAdapter> mAvailableOrderAdapterArrayAdapter;
     private HashMap<String, EditText> mHashEtAmount;
@@ -65,6 +69,9 @@ public class ExpenseRequestFragment extends TiFragment<ExpenseRequestPresenter, 
 
     @Override
     public void initialize() {
+        mEmptyInfoView.setIcon(R.drawable.ic_empty_expense);
+        mEmptyInfoView.setText("Tidak terdapat expense yang dapat diajukan");
+        mEmptyInfoView.setVisibility(View.GONE);
         mLinRequestGroup.setVisibility(View.GONE);
         mLinAvailableGroup.setVisibility(View.GONE);
         getPresenter().loadNoActualExpense();
@@ -155,7 +162,9 @@ public class ExpenseRequestFragment extends TiFragment<ExpenseRequestPresenter, 
 
     @Override
     public void setNoAvailableExpense() {
-
+        mEmptyInfoView.setVisibility(View.VISIBLE);
+        mLinRequestGroup.setVisibility(View.GONE);
+        mLinAvailableGroup.setVisibility(View.GONE);
     }
 
     @Override
@@ -182,6 +191,23 @@ public class ExpenseRequestFragment extends TiFragment<ExpenseRequestPresenter, 
 
         mAvailableOrderAdapterArrayAdapter.setNotifyOnChange(true);
         mAvailableOrderAdapterArrayAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showConfirmationSuccess(String message, String title) {
+        HelperUtil.showSimpleAlertDialogCustomTitleAction(message, this.getContext(), title,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        initialize();
+                    }
+                },
+                new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        initialize();
+                    }
+                });
     }
 
     @NonNull

@@ -29,7 +29,7 @@ public class ExpenseRequestSendModel extends Model {
     /*
     * Formatnya yyyy-MM-dd hh:mm:ss
     * */
-    @SerializedName("TimeStamp")
+    @SerializedName("InputOn")
     @Expose
     private String TimeStamp;
 

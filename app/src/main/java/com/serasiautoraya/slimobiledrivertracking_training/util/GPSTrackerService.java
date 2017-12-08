@@ -50,6 +50,7 @@ import java.util.Locale;
 /**
  * Created by Randi Dwi Nandra on 09/02/2017.
  */
+
 public class GPSTrackerService extends Service implements LocationListener, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
 
     private static GPSTrackerService instance = null;

@@ -136,12 +136,7 @@ public class RestConnection {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<>();
                 headers.put("Content-Type", "application/json");
-                //Production
-                headers.put("Ocp-Apim-Subscription-Key", "8c25a9e79a3d4ba3a1e52ccbff541bc8");
-
-                //UAT
-//                headers.put("Ocp-Apim-Subscription-Key", "29d4c537dd0840eeb72dfbb99fa7e43d");
-
+                headers.put("Ocp-Apim-Subscription-Key", HelperUrl.OCP_APIM_KEY);
                 if (!token.equalsIgnoreCase("")) {
                     headers.put("Authorization", token);
                 }
@@ -233,10 +228,7 @@ public class RestConnection {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<>();
                 headers.put("Content-Type", "application/json");
-                //Production
-                headers.put("Ocp-Apim-Subscription-Key", "8c25a9e79a3d4ba3a1e52ccbff541bc8");
-                //UAT
-//                headers.put("Ocp-Apim-Subscription-Key", "29d4c537dd0840eeb72dfbb99fa7e43d");
+                headers.put("Ocp-Apim-Subscription-Key", HelperUrl.OCP_APIM_KEY);
                 if (!token.equalsIgnoreCase("")) {
                     headers.put("Authorization", token);
                 }
@@ -335,11 +327,7 @@ public class RestConnection {
         HashMap<String, String> headers = new HashMap<>();
 
         headers.put("Content-Type", "application/json");
-        //Production
-        headers.put("Ocp-Apim-Subscription-Key", "8c25a9e79a3d4ba3a1e52ccbff541bc8");
-
-        //UAT
-//          headers.put("Ocp-Apim-Subscription-Key", "29d4c537dd0840eeb72dfbb99fa7e43d");
+        headers.put("Ocp-Apim-Subscription-Key", HelperUrl.OCP_APIM_KEY);
         if (!transactionToken.equalsIgnoreCase("")) {
             headers.put("Authorization", transactionToken);
         }
@@ -394,7 +382,7 @@ public class RestConnection {
 //            public Map<String, String> getHeaders() throws AuthFailureError {
 //                HashMap<String, String> headers = new HashMap<>();
 //                headers.put("Content-Type", "application/json");
-//                headers.put("Ocp-Apim-Subscription-Key", "8c25a9e79a3d4ba3a1e52ccbff541bc8");
+//                headers.put("Ocp-Apim-Subscription-Key", HelperUrl.OCP_APIM_KEY);
 //                if (!transactionToken.equalsIgnoreCase("")) {
 //                    headers.put("Authorization", transactionToken);
 //                }
@@ -437,11 +425,7 @@ public class RestConnection {
 
         HashMap<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
-        //Production
-        headers.put("Ocp-Apim-Subscription-Key", "8c25a9e79a3d4ba3a1e52ccbff541bc8");
-
-        //UAT
-//        headers.put("Ocp-Apim-Subscription-Key", "29d4c537dd0840eeb72dfbb99fa7e43d");
+        headers.put("Ocp-Apim-Subscription-Key", HelperUrl.OCP_APIM_KEY);
         if (!transactionToken.equalsIgnoreCase("")) {
             headers.put("Authorization", transactionToken);
         }
@@ -566,7 +550,7 @@ public class RestConnection {
 //                HashMap<String, String> headers = new HashMap<>();
 //
 //                headers.put("Content-Type", "application/json");
-//                headers.put("Ocp-Apim-Subscription-Key", "8c25a9e79a3d4ba3a1e52ccbff541bc8");
+//                headers.put("Ocp-Apim-Subscription-Key", HelperUrl.OCP_APIM_KEY);
 //                if(!transactionTokenVar.equalsIgnoreCase("")){
 //                    headers.put("Authorization", transactionTokenVar);
 //                }
@@ -663,11 +647,7 @@ public class RestConnection {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<>();
                 headers.put("Content-Type", "application/json");
-                //Production
-                headers.put("Ocp-Apim-Subscription-Key", "8c25a9e79a3d4ba3a1e52ccbff541bc8");
-
-                //UAT
-//                headers.put("Ocp-Apim-Subscription-Key", "29d4c537dd0840eeb72dfbb99fa7e43d");
+                headers.put("Ocp-Apim-Subscription-Key", HelperUrl.OCP_APIM_KEY);
                 if (!token.equalsIgnoreCase("")) {
                     headers.put("Authorization", token);
                 }

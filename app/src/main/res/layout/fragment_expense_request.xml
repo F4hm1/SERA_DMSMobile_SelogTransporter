@@ -167,4 +167,10 @@
 
     </LinearLayout>
 
+    <include
+        android:id="@+id/layout_empty_info"
+        layout="@layout/single_empty_info"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 </LinearLayout>

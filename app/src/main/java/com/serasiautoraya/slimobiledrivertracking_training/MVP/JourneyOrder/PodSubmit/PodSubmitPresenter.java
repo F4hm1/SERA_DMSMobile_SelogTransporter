@@ -63,9 +63,11 @@ public class PodSubmitPresenter extends TiPresenter<PodSubmitView> {
         super.onAttachView(view);
         HttpsTrustManager.allowAllSSL();
         getView().initialize();
-//        getView().setSubmitText(HelperBridge.sActivityDetailResponseModel.getActivityName());
-//        getView().setGuideText(HelperBridge.sActivityDetailResponseModel.getPODGuide());
-        if(HelperBridge.sPodStatusResponseModel != null){
+        getView().setSubmitText(HelperBridge.sActivityDetailResponseModel.getActivityName().toString());
+        if (HelperBridge.sActivityDetailResponseModel.getPODGuide() != null) {
+            getView().setGuideText(HelperBridge.sActivityDetailResponseModel.getPODGuide().toString());
+        }
+        if (HelperBridge.sPodStatusResponseModel != null) {
 
         }
     }
@@ -74,7 +76,7 @@ public class PodSubmitPresenter extends TiPresenter<PodSubmitView> {
      * Capture Photo section
      */
 
-    public void pickImage(int id){
+    public void pickImage(int id) {
         mCurrentSelectedPosition = id;
         boolean grantedAccess = mPermissionsHelper.isAllPermissionsGranted();
         if (grantedAccess) {
@@ -95,12 +97,12 @@ public class PodSubmitPresenter extends TiPresenter<PodSubmitView> {
             return;
         }
 
-        if (Build.VERSION.SDK_INT >= 24){
+        if (Build.VERSION.SDK_INT >= 24) {
             mImageUri = FileProvider.getUriForFile(
                     getView().returnContext(),
                     BuildConfig.APPLICATION_ID + ".provider",
                     photo);
-        }else{
+        } else {
             mImageUri = Uri.fromFile(photo);
         }
         intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
@@ -130,16 +132,16 @@ public class PodSubmitPresenter extends TiPresenter<PodSubmitView> {
 
     public void setBitmapCaptured() {
         Bitmap bitmap = null;
-        if (Build.VERSION.SDK_INT >= 24){
+        if (Build.VERSION.SDK_INT >= 24) {
             bitmap = HelperUtil.saveScaledBitmapSDK24(getView().returnContext().getContentResolver(), mImageUri, HelperUtil.getFirstImageName());
-        }else{
+        } else {
             bitmap = HelperUtil.saveScaledBitmap(mImageUri.getPath(), HelperUtil.getFirstImageName());
         }
         final Bitmap bitmapScaled = bitmap;
         getView().setImageThumbnail(bitmapScaled, mCurrentSelectedPosition, true, true);
     }
 
-    public void setBitmapCapturedByGallery(String path){
+    public void setBitmapCapturedByGallery(String path) {
         final Bitmap bitmapScaled = HelperUtil.saveScaledBitmap(path, HelperUtil.getFirstImageName());
         getView().setImageThumbnail(bitmapScaled, mCurrentSelectedPosition, true, true);
     }
@@ -240,7 +242,7 @@ public class PodSubmitPresenter extends TiPresenter<PodSubmitView> {
                             reason,
 //                            date + " " + time,
                             timeRESTResponseModel.getTime(),
-                            HelperBridge.sActivityDetailResponseModel.getJourneyId()+"",
+                            HelperBridge.sActivityDetailResponseModel.getJourneyId() + "",
                             locationModel.getLatitude() + ", " + locationModel.getLongitude(),
                             locationModel.getAddress(),
                             RestConnection.getUTCTimeStamp(timeRESTResponseModel)
