@@ -50,8 +50,12 @@ public class HttpsTrustManager implements X509TrustManager {
         HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
 
             @Override
-            public boolean verify(String arg0, SSLSession arg1) {
-                return true;
+            public boolean verify(String hostname, SSLSession arg1) {
+                if (!hostname.equalsIgnoreCase("www.asdasdad.com")) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
 
         });

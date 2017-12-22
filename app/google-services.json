@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "906811767521",
-    "firebase_url": "https://sli-transporter.firebaseio.com",
-    "project_id": "sli-transporter",
-    "storage_bucket": "sli-transporter.appspot.com"
+    "project_number": "419856762431",
+    "firebase_url": "https://fms-dm.firebaseio.com",
+    "project_id": "fms-dm",
+    "storage_bucket": "fms-dm.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:906811767521:android:7376a8ef0b7606a9",
+        "mobilesdk_app_id": "1:419856762431:android:5e87e862415962a4",
         "android_client_info": {
-          "package_name": "com.serasiautoraya.slimobiledrivertracking"
+          "package_name": "com.serasiautoraya.tdsproper"
         }
       },
       "oauth_client": [
         {
-          "client_id": "906811767521-dpd8kk3jgmg7n3qt1r6iah8ie6838sb1.apps.googleusercontent.com",
+          "client_id": "419856762431-070tqq0tjkm8llp5iklbefqre5vi8gid.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBR9uq97u7w-q3Tzrm_KA1LAdrkIiuXrVE"
+          "current_key": "AIzaSyAokqDb_157sD5XNyIBXOPmpaMbVZSvppw"
         }
       ],
       "services": {
@@ -39,20 +39,20 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:906811767521:android:f4e588479af8916b",
+        "mobilesdk_app_id": "1:419856762431:android:f4e588479af8916b",
         "android_client_info": {
           "package_name": "com.serasiautoraya.slimobiledrivertracking_training"
         }
       },
       "oauth_client": [
         {
-          "client_id": "906811767521-dpd8kk3jgmg7n3qt1r6iah8ie6838sb1.apps.googleusercontent.com",
+          "client_id": "419856762431-070tqq0tjkm8llp5iklbefqre5vi8gid.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBR9uq97u7w-q3Tzrm_KA1LAdrkIiuXrVE"
+          "current_key": "AIzaSyAokqDb_157sD5XNyIBXOPmpaMbVZSvppw"
         }
       ],
       "services": {

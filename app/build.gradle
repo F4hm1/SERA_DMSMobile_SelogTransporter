@@ -11,8 +11,12 @@ android {
         targetSdkVersion 25
 //        versionCode 3
 //        versionName "2.0"
-        versionCode 8
-        versionName "1.4"
+
+//SoftLive cur Version
+        versionCode 9
+        versionName "1.5"
+//        versionCode 2
+//        versionName "1.1"
     }
     buildTypes {
         release {
@@ -41,7 +45,8 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
 
-    compile project(':picasso-2.5.2')
+//    compile project(':picasso-2.5.2')
+    compile 'com.squareup.picasso:picasso:2.5.2'
 
     def thirtyinchVersion = '0.8.0-rc3' // prerelease
     compile "net.grandcentrix.thirtyinch:thirtyinch:$thirtyinchVersion"

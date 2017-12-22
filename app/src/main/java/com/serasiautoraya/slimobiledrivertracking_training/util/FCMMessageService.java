@@ -115,37 +115,6 @@ public class FCMMessageService extends FirebaseMessagingService {
         dbHelper.insert(DBHelper.NOTIFICATION_TABLE_NAME, contentValues);
     }
 
-    public void showPopUpAlert(String message){
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                AlertDialog.Builder builder = new AlertDialog.Builder(FCMMessageService.this.getApplicationContext());
-                LayoutInflater inflater = LayoutInflater.from(FCMMessageService.this);
-
-                View dialogView = inflater.inflate(R.layout.notification_order, null);
-                builder.setView(dialogView);
-
-                final AlertDialog alert = builder.create();
-                alert.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-                alert.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-                alert.show();
-
-                Vibrator vibrator;
-                vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                vibrator.vibrate(500);
-
-                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                Window window = alert.getWindow();
-                lp.copyFrom(window.getAttributes());
-                //This makes the dialog take up the full width
-                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                window.setAttributes(lp);
-            }
-        });
-
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();

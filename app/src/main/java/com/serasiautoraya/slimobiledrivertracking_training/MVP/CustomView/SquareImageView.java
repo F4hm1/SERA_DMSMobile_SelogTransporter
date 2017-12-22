@@ -1,5 +1,6 @@
 package com.serasiautoraya.slimobiledrivertracking_training.MVP.CustomView;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.util.AttributeSet;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
  * Created by Randi Dwi Nandra on 25/04/2017.
  */
 
+@SuppressLint("AppCompatCustomView")
 public class SquareImageView extends ImageView {
 
     public SquareImageView(Context context) {

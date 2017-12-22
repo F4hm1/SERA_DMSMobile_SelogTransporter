@@ -17,7 +17,6 @@ import com.serasiautoraya.slimobiledrivertracking_training.MVP.BaseInterface.Tim
 import com.serasiautoraya.slimobiledrivertracking_training.MVP.BaseModel.TimeRESTResponseModel;
 import com.serasiautoraya.slimobiledrivertracking_training.MVP.Helper.HelperBridge;
 import com.serasiautoraya.slimobiledrivertracking_training.MVP.Helper.HelperKey;
-import com.serasiautoraya.slimobiledrivertracking_training.MVP.Helper.HelperTransactionCode;
 import com.serasiautoraya.slimobiledrivertracking_training.MVP.Helper.HelperUrl;
 import com.serasiautoraya.slimobiledrivertracking_training.MVP.Helper.PermissionsHelper;
 import com.serasiautoraya.slimobiledrivertracking_training.MVP.JourneyOrder.PODCapture.PODPhotoSendModel;

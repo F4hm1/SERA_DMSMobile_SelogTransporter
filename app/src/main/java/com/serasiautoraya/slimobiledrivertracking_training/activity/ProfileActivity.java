@@ -44,6 +44,7 @@ public class ProfileActivity extends AppCompatActivity{
         assignContent();
     }
 
+    @SuppressWarnings("SingleStatementInBlock")
     private void assignContent() {
         if(HelperBridge.MODEL_LOGIN_DATA.getPhotoFront() != null){
             if(!HelperBridge.MODEL_LOGIN_DATA.getPhotoFront().equalsIgnoreCase("")){

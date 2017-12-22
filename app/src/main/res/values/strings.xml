@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SELOG Transporter Training</string>
+    <string name="app_name">SELOG Transporter Soft Live</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_logout">Keluar</string>
@@ -46,7 +46,7 @@
     <string name="title_absence_request">Pengajuan Ketidakhadiran</string>
     <string name="title_olctrip_request">Pengajuan OLC/Trip</string>
     <string name="title_overtime_request">Pengajuan Lembur</string>
-    <string name="title_expense_request">Pengajuan Expense</string>
+    <string name="title_expense_request">Pengajuan Biaya</string>
     <string name="title_history_attendance">Riwayat Pengajuan Kehadiran</string>
     <string name="title_ws_history">Riwayat Kehadiran</string>
     <string name="title_ganti_password">Ganti Kata Sandi</string>
