@@ -51,8 +51,6 @@ public class LoginActivity extends AppCompatActivity{
     private Button mLogin;
     private RequestQueue mqueue;
 
-    private String TAG_LOGIN = "tag_login";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
