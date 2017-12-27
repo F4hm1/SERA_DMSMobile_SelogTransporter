@@ -2,7 +2,7 @@ package com.serasiautoraya.slimobiledrivertracking_training.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.serasiautoraya.slimobiledrivertracking_training.helper.HelperUtil;
+import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperUtil;
 
 /**
  * Created by Randi Dwi Nandra on 13/12/2016.

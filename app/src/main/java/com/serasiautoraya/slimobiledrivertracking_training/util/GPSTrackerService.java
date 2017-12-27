@@ -29,12 +29,12 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.serasiautoraya.slimobiledrivertracking_training.MVP.BaseInterface.RestCallbackInterfaceJSON;
-import com.serasiautoraya.slimobiledrivertracking_training.MVP.BaseModel.SharedPrefsModel;
-import com.serasiautoraya.slimobiledrivertracking_training.MVP.Helper.HelperBridge;
-import com.serasiautoraya.slimobiledrivertracking_training.MVP.Helper.HelperUrl;
-import com.serasiautoraya.slimobiledrivertracking_training.MVP.LocationUpdate.LocationUpdateSendModel;
-import com.serasiautoraya.slimobiledrivertracking_training.MVP.RestClient.RestConnection;
+import com.serasiautoraya.slimobiledrivertracking_training.module.BaseInterface.RestCallbackInterfaceJSON;
+import com.serasiautoraya.slimobiledrivertracking_training.module.BaseModel.SharedPrefsModel;
+import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperBridge;
+import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperUrl;
+import com.serasiautoraya.slimobiledrivertracking_training.module.LocationUpdate.LocationUpdateSendModel;
+import com.serasiautoraya.slimobiledrivertracking_training.module.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking_training.R;
 import com.serasiautoraya.slimobiledrivertracking_training.activity.LoginActivity;
 import com.serasiautoraya.slimobiledrivertracking_training.helper.HelperKey;
@@ -94,7 +94,7 @@ public class GPSTrackerService extends Service implements LocationListener, Goog
     public int onStartCommand(Intent intent, int flags, int startId) {
         getLocationManager(AppInit.getAppContext());
 
-        Intent i = new Intent(this, com.serasiautoraya.slimobiledrivertracking_training.MVP.Login.LoginActivity.class);
+        Intent i = new Intent(this, com.serasiautoraya.slimobiledrivertracking_training.module.Login.LoginActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
         Bitmap bitmapIcon = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.logoselog);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
@@ -117,7 +117,7 @@ public class GPSTrackerService extends Service implements LocationListener, Goog
     private void initGoogleApiClient(Context context) {
         Log.d(TAG, "1: initGoogleApiClient");
         SharedPrefsModel sharedPrefsModel = new SharedPrefsModel(context);
-        int locationUpdateInterval = sharedPrefsModel.get(com.serasiautoraya.slimobiledrivertracking_training.MVP.Helper.HelperKey.KEY_LOCATION_UPDATE_INTERVAL, 60);
+        int locationUpdateInterval = sharedPrefsModel.get(com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperKey.KEY_LOCATION_UPDATE_INTERVAL, 60);
         mLocationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setInterval(UPDATE_INTERVAL)

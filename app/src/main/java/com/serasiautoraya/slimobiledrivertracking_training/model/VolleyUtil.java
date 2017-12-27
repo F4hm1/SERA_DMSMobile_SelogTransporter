@@ -11,7 +11,6 @@ import com.android.volley.toolbox.Volley;
  */
 public class VolleyUtil {
     private static RequestQueue mRequestQueue;
-    private static ImageLoader mImageLoader;
 
 
     private VolleyUtil() {
@@ -27,14 +26,6 @@ public class VolleyUtil {
             return mRequestQueue;
         } else {
             throw new IllegalStateException("RequestQueue not initialized");
-        }
-    }
-
-    public static ImageLoader getImageLoader() {
-        if (mImageLoader != null) {
-            return mImageLoader;
-        } else {
-            throw new IllegalStateException("ImageLoader not initialized");
         }
     }
 }

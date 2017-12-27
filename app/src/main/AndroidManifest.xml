@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="com.serasiautoraya.slimobiledrivertracking_training.MVP.Login.LoginActivity"
+            android:name="com.serasiautoraya.slimobiledrivertracking_training.module.Login.LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -21,39 +21,27 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.serasiautoraya.slimobiledrivertracking_training.MVP.Dashboard.DashboardActivity" android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.serasiautoraya.slimobiledrivertracking_training.MVP.JourneyOrder.Activity.ActivityDetailActivity"
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking_training.module.Dashboard.DashboardActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking_training.module.JourneyOrder.Activity.ActivityDetailActivity"
             android:label="Detail Aktifitas"/>
-        <activity android:name="com.serasiautoraya.slimobiledrivertracking_training.MVP.Profiling.ProfileActivity"
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking_training.module.Profiling.ProfileActivity"
             android:label="Profil"/>
-        <activity android:name="com.serasiautoraya.slimobiledrivertracking_training.MVP.ChangePassword.ChangePasswordActivity"
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking_training.module.ChangePassword.ChangePasswordActivity"
             android:label="Ganti Kata Sandi"/>
-        <activity android:name="com.serasiautoraya.slimobiledrivertracking_training.MVP.NotificatonList.NotificationListActivity"
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking_training.module.NotificatonList.NotificationListActivity"
             android:label="Daftar Pemberitahuan"/>
-        <activity android:name="com.serasiautoraya.slimobiledrivertracking_training.MVP.Fatigue.FatigueActivity"
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking_training.module.Fatigue.FatigueActivity"
             android:label="Tes Fatigue"/>
-        <activity android:name="com.serasiautoraya.slimobiledrivertracking_training.MVP.JourneyOrder.DocumentCapture.DocumentCaptureActivity"
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking_training.module.JourneyOrder.DocumentCapture.DocumentCaptureActivity"
             android:label="Pengambilan Bukti Aktifitas"
             android:windowSoftInputMode="adjustResize|stateHidden"/>
-        <activity android:name="com.serasiautoraya.slimobiledrivertracking_training.MVP.JourneyOrder.DocumentCapture.SigningActivity"/>
-        <activity android:name="com.serasiautoraya.slimobiledrivertracking_training.MVP.OrderHistory.OrderHistoryDetail.OrderHistoryDetailActivity"
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking_training.module.JourneyOrder.DocumentCapture.SigningActivity"/>
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking_training.module.OrderHistory.OrderHistoryDetail.OrderHistoryDetailActivity"
             android:label="Riwayat Order"/>
-        <activity android:name="com.serasiautoraya.slimobiledrivertracking_training.MVP.TrainingQuestionnaire.QuestionnaireActivity"
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking_training.module.TrainingQuestionnaire.QuestionnaireActivity"
             android:label="Kuisioner Training"></activity>
-        <activity android:name="com.serasiautoraya.slimobiledrivertracking_training.MVP.JourneyOrder.PodSubmit.PodSubmitActivity"
+        <activity android:name="com.serasiautoraya.slimobiledrivertracking_training.module.JourneyOrder.PodSubmit.PodSubmitActivity"
             android:label="Pengambilan Bukti POD"/>
-
-
-        <activity android:name="com.serasiautoraya.slimobiledrivertracking_training.activity.DashboardActivity" android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.serasiautoraya.slimobiledrivertracking_training.activity.EvidenceCaptureActivity"/>
-        <activity android:name="com.serasiautoraya.slimobiledrivertracking_training.activity.ExpanseCaptureActivity"/>
-        <activity android:name="com.serasiautoraya.slimobiledrivertracking_training.activity.OrderDetailActivity"/>
-        <activity android:name="com.serasiautoraya.slimobiledrivertracking_training.activity.ChangePasswordActivity"/>
-        <activity android:name="com.serasiautoraya.slimobiledrivertracking_training.activity.FatigueInterviewActivity"/>
-        <activity android:name="com.serasiautoraya.slimobiledrivertracking_training.activity.ProveActivity"/>
-        <activity android:name="com.serasiautoraya.slimobiledrivertracking_training.activity.SignatureActivity"/>
-        <activity android:name="com.serasiautoraya.slimobiledrivertracking_training.activity.ProfileActivity"/>
-        <activity android:name="com.serasiautoraya.slimobiledrivertracking_training.activity.ActionActivityActivity"/>
 
         <service android:name="com.serasiautoraya.slimobiledrivertracking_training.util.GPSTracker"
             android:enabled="true"

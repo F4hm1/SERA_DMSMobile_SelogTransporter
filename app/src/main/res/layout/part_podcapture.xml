@@ -26,7 +26,7 @@
                 android:columnCount="3"
                 android:rowCount="10">
 
-                <com.serasiautoraya.slimobiledrivertracking_training.MVP.CustomView.SquareRelativeLayout
+                <com.serasiautoraya.slimobiledrivertracking_training.module.CustomView.SquareRelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="100dp"
                     android:layout_columnWeight="1"
@@ -42,7 +42,7 @@
                         app:cardUseCompatPadding="true"
                         card_view:cardElevation="2dp">
 
-                        <com.serasiautoraya.slimobiledrivertracking_training.MVP.CustomView.SquareImageView
+                        <com.serasiautoraya.slimobiledrivertracking_training.module.CustomView.SquareImageView
                             android:id="@+id/pod_iv_prove_1"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -75,9 +75,9 @@
 
                     </android.support.v7.widget.CardView>
 
-                </com.serasiautoraya.slimobiledrivertracking_training.MVP.CustomView.SquareRelativeLayout>
+                </com.serasiautoraya.slimobiledrivertracking_training.module.CustomView.SquareRelativeLayout>
 
-                <com.serasiautoraya.slimobiledrivertracking_training.MVP.CustomView.SquareRelativeLayout
+                <com.serasiautoraya.slimobiledrivertracking_training.module.CustomView.SquareRelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="100dp"
                     android:layout_columnWeight="1"
@@ -93,7 +93,7 @@
                         app:cardUseCompatPadding="true"
                         card_view:cardElevation="2dp">
 
-                        <com.serasiautoraya.slimobiledrivertracking_training.MVP.CustomView.SquareImageView
+                        <com.serasiautoraya.slimobiledrivertracking_training.module.CustomView.SquareImageView
                             android:id="@+id/pod_iv_prove_2"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -136,9 +136,9 @@
 
                     </android.support.v7.widget.CardView>
 
-                </com.serasiautoraya.slimobiledrivertracking_training.MVP.CustomView.SquareRelativeLayout>
+                </com.serasiautoraya.slimobiledrivertracking_training.module.CustomView.SquareRelativeLayout>
 
-                <com.serasiautoraya.slimobiledrivertracking_training.MVP.CustomView.SquareRelativeLayout
+                <com.serasiautoraya.slimobiledrivertracking_training.module.CustomView.SquareRelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="100dp"
                     android:layout_columnWeight="1"
@@ -154,7 +154,7 @@
                         app:cardUseCompatPadding="true"
                         card_view:cardElevation="2dp">
 
-                        <com.serasiautoraya.slimobiledrivertracking_training.MVP.CustomView.SquareImageView
+                        <com.serasiautoraya.slimobiledrivertracking_training.module.CustomView.SquareImageView
                             android:id="@+id/pod_iv_prove_3"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -197,9 +197,9 @@
 
                     </android.support.v7.widget.CardView>
 
-                </com.serasiautoraya.slimobiledrivertracking_training.MVP.CustomView.SquareRelativeLayout>
+                </com.serasiautoraya.slimobiledrivertracking_training.module.CustomView.SquareRelativeLayout>
 
-                <com.serasiautoraya.slimobiledrivertracking_training.MVP.CustomView.SquareRelativeLayout
+                <com.serasiautoraya.slimobiledrivertracking_training.module.CustomView.SquareRelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="100dp"
                     android:layout_columnWeight="1"
@@ -215,7 +215,7 @@
                         app:cardUseCompatPadding="true"
                         card_view:cardElevation="2dp">
 
-                        <com.serasiautoraya.slimobiledrivertracking_training.MVP.CustomView.SquareImageView
+                        <com.serasiautoraya.slimobiledrivertracking_training.module.CustomView.SquareImageView
                             android:id="@+id/pod_iv_prove_4"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -258,9 +258,9 @@
 
                     </android.support.v7.widget.CardView>
 
-                </com.serasiautoraya.slimobiledrivertracking_training.MVP.CustomView.SquareRelativeLayout>
+                </com.serasiautoraya.slimobiledrivertracking_training.module.CustomView.SquareRelativeLayout>
 
-                <com.serasiautoraya.slimobiledrivertracking_training.MVP.CustomView.SquareRelativeLayout
+                <com.serasiautoraya.slimobiledrivertracking_training.module.CustomView.SquareRelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="100dp"
                     android:layout_columnWeight="1"
@@ -276,7 +276,7 @@
                         app:cardUseCompatPadding="true"
                         card_view:cardElevation="2dp">
 
-                        <com.serasiautoraya.slimobiledrivertracking_training.MVP.CustomView.SquareImageView
+                        <com.serasiautoraya.slimobiledrivertracking_training.module.CustomView.SquareImageView
                             android:id="@+id/pod_iv_prove_5"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -319,9 +319,9 @@
 
                     </android.support.v7.widget.CardView>
 
-                </com.serasiautoraya.slimobiledrivertracking_training.MVP.CustomView.SquareRelativeLayout>
+                </com.serasiautoraya.slimobiledrivertracking_training.module.CustomView.SquareRelativeLayout>
 
-                <com.serasiautoraya.slimobiledrivertracking_training.MVP.CustomView.SquareRelativeLayout
+                <com.serasiautoraya.slimobiledrivertracking_training.module.CustomView.SquareRelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="100dp"
                     android:layout_columnWeight="1"
@@ -337,7 +337,7 @@
                         app:cardUseCompatPadding="true"
                         card_view:cardElevation="2dp">
 
-                        <com.serasiautoraya.slimobiledrivertracking_training.MVP.CustomView.SquareImageView
+                        <com.serasiautoraya.slimobiledrivertracking_training.module.CustomView.SquareImageView
                             android:id="@+id/pod_iv_prove_6"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -380,9 +380,9 @@
 
                     </android.support.v7.widget.CardView>
 
-                </com.serasiautoraya.slimobiledrivertracking_training.MVP.CustomView.SquareRelativeLayout>
+                </com.serasiautoraya.slimobiledrivertracking_training.module.CustomView.SquareRelativeLayout>
 
-                <com.serasiautoraya.slimobiledrivertracking_training.MVP.CustomView.SquareRelativeLayout
+                <com.serasiautoraya.slimobiledrivertracking_training.module.CustomView.SquareRelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="100dp"
                     android:layout_columnWeight="1"
@@ -398,7 +398,7 @@
                         app:cardUseCompatPadding="true"
                         card_view:cardElevation="2dp">
 
-                        <com.serasiautoraya.slimobiledrivertracking_training.MVP.CustomView.SquareImageView
+                        <com.serasiautoraya.slimobiledrivertracking_training.module.CustomView.SquareImageView
                             android:id="@+id/pod_iv_prove_7"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -441,9 +441,9 @@
 
                     </android.support.v7.widget.CardView>
 
-                </com.serasiautoraya.slimobiledrivertracking_training.MVP.CustomView.SquareRelativeLayout>
+                </com.serasiautoraya.slimobiledrivertracking_training.module.CustomView.SquareRelativeLayout>
 
-                <com.serasiautoraya.slimobiledrivertracking_training.MVP.CustomView.SquareRelativeLayout
+                <com.serasiautoraya.slimobiledrivertracking_training.module.CustomView.SquareRelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="100dp"
                     android:layout_columnWeight="1"
@@ -459,7 +459,7 @@
                         app:cardUseCompatPadding="true"
                         card_view:cardElevation="2dp">
 
-                        <com.serasiautoraya.slimobiledrivertracking_training.MVP.CustomView.SquareImageView
+                        <com.serasiautoraya.slimobiledrivertracking_training.module.CustomView.SquareImageView
                             android:id="@+id/pod_iv_prove_8"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -502,9 +502,9 @@
 
                     </android.support.v7.widget.CardView>
 
-                </com.serasiautoraya.slimobiledrivertracking_training.MVP.CustomView.SquareRelativeLayout>
+                </com.serasiautoraya.slimobiledrivertracking_training.module.CustomView.SquareRelativeLayout>
 
-                <com.serasiautoraya.slimobiledrivertracking_training.MVP.CustomView.SquareRelativeLayout
+                <com.serasiautoraya.slimobiledrivertracking_training.module.CustomView.SquareRelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="100dp"
                     android:layout_columnWeight="1"
@@ -520,7 +520,7 @@
                         app:cardUseCompatPadding="true"
                         card_view:cardElevation="2dp">
 
-                        <com.serasiautoraya.slimobiledrivertracking_training.MVP.CustomView.SquareImageView
+                        <com.serasiautoraya.slimobiledrivertracking_training.module.CustomView.SquareImageView
                             android:id="@+id/pod_iv_prove_9"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -563,9 +563,9 @@
 
                     </android.support.v7.widget.CardView>
 
-                </com.serasiautoraya.slimobiledrivertracking_training.MVP.CustomView.SquareRelativeLayout>
+                </com.serasiautoraya.slimobiledrivertracking_training.module.CustomView.SquareRelativeLayout>
 
-                <com.serasiautoraya.slimobiledrivertracking_training.MVP.CustomView.SquareRelativeLayout
+                <com.serasiautoraya.slimobiledrivertracking_training.module.CustomView.SquareRelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="100dp"
                     android:layout_columnWeight="1"
@@ -581,7 +581,7 @@
                         app:cardUseCompatPadding="true"
                         card_view:cardElevation="2dp">
 
-                        <com.serasiautoraya.slimobiledrivertracking_training.MVP.CustomView.SquareImageView
+                        <com.serasiautoraya.slimobiledrivertracking_training.module.CustomView.SquareImageView
                             android:id="@+id/pod_iv_prove_10"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -624,7 +624,7 @@
 
                     </android.support.v7.widget.CardView>
 
-                </com.serasiautoraya.slimobiledrivertracking_training.MVP.CustomView.SquareRelativeLayout>
+                </com.serasiautoraya.slimobiledrivertracking_training.module.CustomView.SquareRelativeLayout>
 
 
             </GridLayout>

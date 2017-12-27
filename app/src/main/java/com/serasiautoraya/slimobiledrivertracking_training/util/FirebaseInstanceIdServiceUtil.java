@@ -4,8 +4,8 @@ import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
-import com.serasiautoraya.slimobiledrivertracking_training.MVP.BaseModel.SharedPrefsModel;
-import com.serasiautoraya.slimobiledrivertracking_training.MVP.Helper.HelperKey;
+import com.serasiautoraya.slimobiledrivertracking_training.module.BaseModel.SharedPrefsModel;
+import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperKey;
 
 /**
  * Created by Randi Dwi Nandra on 13/01/2017.

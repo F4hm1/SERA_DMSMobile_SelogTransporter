@@ -22,11 +22,11 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.GsonRequest;
+import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperUtil;
 import com.serasiautoraya.slimobiledrivertracking_training.R;
 import com.serasiautoraya.slimobiledrivertracking_training.helper.HelperBridge;
 import com.serasiautoraya.slimobiledrivertracking_training.helper.HelperKey;
 import com.serasiautoraya.slimobiledrivertracking_training.helper.HelperUrl;
-import com.serasiautoraya.slimobiledrivertracking_training.helper.HelperUtil;
 import com.serasiautoraya.slimobiledrivertracking_training.model.ModelArrayData;
 import com.serasiautoraya.slimobiledrivertracking_training.model.ModelLoginResponse;
 import com.serasiautoraya.slimobiledrivertracking_training.model.VolleyUtil;
@@ -213,7 +213,7 @@ public class LoginActivity extends AppCompatActivity{
                                     SharedPrefsUtil.apply(LoginActivity.this, HelperKey.KEY_PASSWORD, password);
                                     SharedPrefsUtil.apply(LoginActivity.this, HelperKey.KEY_USERNAME, username);
 
-                                    HelperUtil.goToActivity(LoginActivity.this, DashboardActivity.class);
+//                                    HelperUtil.goToActivity(LoginActivity.this, DashboardActivity.class);
                                     LoginActivity.this.finish();
                                 }else{
                                     HelperUtil.showSimpleAlertDialog(getResources().getString(R.string.err_msg_not_authorizad), LoginActivity.this);

@@ -8,8 +8,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 
+import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperUtil;
 import com.serasiautoraya.slimobiledrivertracking_training.helper.HelperKey;
-import com.serasiautoraya.slimobiledrivertracking_training.helper.HelperUtil;
 
 /**
  * Created by Randi Dwi Nandra on 29/11/2016.

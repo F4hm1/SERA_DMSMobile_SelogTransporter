@@ -1,6 +1,5 @@
 package com.serasiautoraya.slimobiledrivertracking_training.util;
 
-import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -9,25 +8,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.RemoteViews;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.serasiautoraya.slimobiledrivertracking_training.MVP.BaseModel.SharedPrefsModel;
-import com.serasiautoraya.slimobiledrivertracking_training.MVP.Login.LoginActivity;
-import com.serasiautoraya.slimobiledrivertracking_training.MVP.SQLIte.DBHelper;
+import com.serasiautoraya.slimobiledrivertracking_training.module.BaseModel.SharedPrefsModel;
+import com.serasiautoraya.slimobiledrivertracking_training.module.Login.LoginActivity;
+import com.serasiautoraya.slimobiledrivertracking_training.module.SQLIte.DBHelper;
 import com.serasiautoraya.slimobiledrivertracking_training.R;
-//import com.serasiautoraya.slimobiledrivertracking.activity.LoginActivity;
 import com.serasiautoraya.slimobiledrivertracking_training.helper.HelperKey;
 
 import java.text.SimpleDateFormat;

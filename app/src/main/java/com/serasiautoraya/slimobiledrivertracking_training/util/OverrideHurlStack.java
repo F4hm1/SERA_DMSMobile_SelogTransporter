@@ -54,6 +54,7 @@ import static com.android.volley.misc.MultipartUtils.getContentLengthForMultipar
 
 /**
  * Created by Randi Dwi Nandra on 25/01/2017.
+ * This class is not used, but may be needed next time
  */
 public class OverrideHurlStack implements HttpStack {
 

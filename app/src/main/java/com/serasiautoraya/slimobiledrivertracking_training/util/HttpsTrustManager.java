@@ -46,6 +46,11 @@ public class HttpsTrustManager implements X509TrustManager {
         return _AcceptedIssuers;
     }
 
+    /*
+    * This method is use for allow https connection for all SSL domain
+    * because it can make this app rejected by playstore
+    * (ignore www.asdasdad.com)
+    * */
     public static void allowAllSSL() {
         HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
 

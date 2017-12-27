@@ -48,14 +48,12 @@ public class SignatureView extends View {
     }
 
     public void save(View v, String StoredPath) {
-        Log.v("SIGN_TAG", "Width: " + v.getWidth());
-        Log.v("SIGN_TAG", "Height: " + v.getHeight());
         if (bitmap == null) {
             bitmap = Bitmap.createBitmap(mContainer.getWidth(), mContainer.getHeight(), Bitmap.Config.RGB_565);
         }
         //Spesial akses ke HelperBridge
         HelperBridge.sTtdBitmap = bitmap;
-        com.serasiautoraya.slimobiledrivertracking_training.MVP.Helper.HelperBridge.sBitmapSignature = bitmap;
+        com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperBridge.sBitmapSignature = bitmap;
         //---
         Canvas canvas = new Canvas(bitmap);
         try {
