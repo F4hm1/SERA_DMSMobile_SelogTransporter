@@ -61,14 +61,11 @@ public class LoginPresenter extends TiPresenter<LoginView> {
                 deviceID = mTelephonyManager.getDeviceId();
             }
 
-            deviceID = "867634027603248";
-
-//            getView().showToast("DEVICE-ID: "+deviceID);
-
             String tokenFCM = mSharedPrefsModel.get(HelperKey.KEY_TOKEN_SAVED, "token-not-defined");
             if(tokenFCM.equalsIgnoreCase("token-not-defined")){
                 tokenFCM = FirebaseInstanceId.getInstance().getToken();
             }
+
 
             LoginSendModel loginSendModel = new LoginSendModel(username, password, tokenFCM, deviceID, HelperKey.APPTYPE_SLI);
             getView().toggleLoading(true);
@@ -134,7 +131,7 @@ public class LoginPresenter extends TiPresenter<LoginView> {
             String username = mSharedPrefsModel.get(HelperKey.KEY_USERNAME, "");
             getView().setCachedFormLogin(username, password);
             /*
-            * TODO change foreground of login view to full white or other solid color
+            * TODO [Improvement] change foreground of login view to full white or other solid color
             * */
             onLogin(username, password);
         }

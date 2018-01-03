@@ -71,12 +71,4 @@ public class TimePickerToEditTextDialog {
         return isBeforeCurrentTime;
     }
 
-    //onTimeSet() callback method
-    public void onTimeSet(TimePicker view, int hourOfDay, int minute){
-        //Do something with the user chosen time
-        //Get reference of host activity (XML Layout File) TextView widget
-//        TextView tv = (TextView) getActivity().findViewById(R.id.edittext_cico_time);
-//        tv.setText(hourOfDay+":"+minute);
-    }
-
 }

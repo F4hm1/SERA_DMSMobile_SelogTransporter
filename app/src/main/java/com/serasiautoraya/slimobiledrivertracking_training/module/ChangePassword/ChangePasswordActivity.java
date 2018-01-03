@@ -30,15 +30,16 @@ import butterknife.OnClick;
 public class ChangePasswordActivity extends TiActivity<ChangePasswordPresenter, ChangePasswordView> implements ChangePasswordView {
 
     private ProgressDialog mProgressDialog;
-    @BindView(R.id.edittext_cp_old) EditText mEtPasswordOld;
-    @BindView(R.id.edittext_cp_pass) EditText mEtPasswordPass;
-    @BindView(R.id.edittext_cp_passconf) EditText mEtPasswordPassConf;
+    @BindView(R.id.edittext_cp_old)
+    EditText mEtPasswordOld;
+    @BindView(R.id.edittext_cp_pass)
+    EditText mEtPasswordPass;
+    @BindView(R.id.edittext_cp_passconf)
+    EditText mEtPasswordPassConf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_change_password);
         ButterKnife.bind(this);
     }
@@ -49,7 +50,7 @@ public class ChangePasswordActivity extends TiActivity<ChangePasswordPresenter, 
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
+    public boolean onOptionsItemSelected(MenuItem item) {
         onBackPressed();
         return true;
     }
@@ -61,9 +62,9 @@ public class ChangePasswordActivity extends TiActivity<ChangePasswordPresenter, 
 
     @Override
     public void toggleLoading(boolean isLoading) {
-        if(isLoading){
+        if (isLoading) {
             mProgressDialog = ProgressDialog.show(this, getResources().getString(R.string.progress_msg_loaddata), getResources().getString(R.string.prog_msg_wait), true, false);
-        }else{
+        } else {
             mProgressDialog.dismiss();
         }
     }
@@ -84,7 +85,7 @@ public class ChangePasswordActivity extends TiActivity<ChangePasswordPresenter, 
         return new ChangePasswordPresenter(new SharedPrefsModel(ChangePasswordActivity.this), new RestConnection(ChangePasswordActivity.this));
     }
 
-    private void initializeActionBar(){
+    private void initializeActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("Ganti Kata Sandi");
@@ -92,8 +93,9 @@ public class ChangePasswordActivity extends TiActivity<ChangePasswordPresenter, 
 
     @Override
     public void showConfirmationDialog() {
-        CharSequence textMsg = Html.fromHtml("Apakah anda yakin akan "+
-                "<b>"+" mengganti kata sandi"+"</b>"+"?");
+        CharSequence textMsg = Html.fromHtml(
+                "Apakah anda yakin akan " + "<b>" + " mengganti kata sandi" + "</b>" + "?"
+        );
 
         HelperUtil.showConfirmationAlertDialog(textMsg, ChangePasswordActivity.this, new DialogInterface.OnClickListener() {
             @Override
@@ -117,39 +119,39 @@ public class ChangePasswordActivity extends TiActivity<ChangePasswordPresenter, 
         boolean result = true;
         View focusView = null;
 
-        if(TextUtils.isEmpty(mEtPasswordPassConf.getText().toString())){
+        if (TextUtils.isEmpty(mEtPasswordPassConf.getText().toString())) {
             focusView = mEtPasswordPassConf;
             mEtPasswordPassConf.setError(getResources().getString(R.string.err_msg_empty_cp_confpass));
             result = false;
         }
 
-        if(TextUtils.isEmpty(mEtPasswordPass.getText().toString())){
+        if (TextUtils.isEmpty(mEtPasswordPass.getText().toString())) {
             focusView = mEtPasswordPass;
             mEtPasswordPass.setError(getResources().getString(R.string.err_msg_empty_cp_pass));
             result = false;
         }
 
-        if(TextUtils.isEmpty(mEtPasswordOld.getText().toString())){
+        if (TextUtils.isEmpty(mEtPasswordOld.getText().toString())) {
             focusView = mEtPasswordOld;
             mEtPasswordOld.setError(getResources().getString(R.string.err_msg_empty_cp_oldpass));
             result = false;
         }
 
-        if(result == true){
-            if(!mEtPasswordOld.getText().toString().equals(savedPassword)){
+        if (result == true) {
+            if (!mEtPasswordOld.getText().toString().equals(savedPassword)) {
                 focusView = mEtPasswordOld;
                 mEtPasswordOld.setError(getResources().getString(R.string.err_msg_wrong_cp_passlamasalah));
                 result = false;
             }
 
-            if(!mEtPasswordPass.getText().toString().equals(mEtPasswordPassConf.getText().toString())){
+            if (!mEtPasswordPass.getText().toString().equals(mEtPasswordPassConf.getText().toString())) {
                 focusView = mEtPasswordPassConf;
                 mEtPasswordPassConf.setError(getResources().getString(R.string.err_msg_wrong_cp_passbarunotmatch));
                 result = false;
             }
         }
 
-        if(result == false){
+        if (result == false) {
             focusView.requestFocus();
         }
 

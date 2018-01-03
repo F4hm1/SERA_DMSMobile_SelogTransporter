@@ -27,8 +27,10 @@ import butterknife.ButterKnife;
 
 public class CiCoFragment extends TiFragment<CiCoPresenter, CiCoView> implements CiCoView {
 
-    @BindView(R.id.viewpager_cico) ViewPager mViewPager;
-    @BindView(R.id.tabs_cico) TabLayout mTabLayout;
+    @BindView(R.id.viewpager_cico)
+    ViewPager mViewPager;
+    @BindView(R.id.tabs_cico)
+    TabLayout mTabLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

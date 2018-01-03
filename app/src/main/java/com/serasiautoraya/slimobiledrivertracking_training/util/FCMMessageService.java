@@ -95,7 +95,7 @@ public class FCMMessageService extends FirebaseMessagingService {
 
     private void saveToDatabase(Map<String, String> message){
         Calendar dateCal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy, hh:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy HH:mm:ss");
         String dateString = sdf.format(dateCal.getTime());
 
         DBHelper dbHelper = DBHelper.getInstance(getApplicationContext());

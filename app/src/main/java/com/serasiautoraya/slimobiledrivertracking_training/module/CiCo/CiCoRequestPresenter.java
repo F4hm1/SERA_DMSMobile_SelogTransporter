@@ -35,7 +35,7 @@ public class CiCoRequestPresenter extends TiPresenter<CiCoRequestView> {
         this.mRestConnection = mRestConnection;
     }
 
-    public void onSubmitClicked(String date, String time, String reason, String cicoType){
+    public void onSubmitClicked(String date, String time, String reason, String cicoType) {
         mCicoRequestSendModel = new CiCoRequestSendModel(
                 Model.getNonNullable(HelperBridge.sModelLoginResponse.getPersonalId()),
                 Model.getNonNullable(HelperBridge.sModelLoginResponse.getPersonalId()),
@@ -56,10 +56,8 @@ public class CiCoRequestPresenter extends TiPresenter<CiCoRequestView> {
         getView().showConfirmationDialog();
     }
 
-    public void onRequestSubmitted(){
+    public void onRequestSubmitted() {
         getView().toggleLoading(true);
-//        Log.d("TAGSS", mCicoRequestSendModel.getHashMapType().toString());
-        Log.d("TAGSS", mCicoRequestSendModel.getJSONType(mCicoRequestSendModel));
         mRestConnection.postData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.POST_CICO_REQUEST, mCicoRequestSendModel.getHashMapType(), new RestCallbackInterfaceJSON() {
             @Override
             public void callBackOnSuccess(JSONObject response) {

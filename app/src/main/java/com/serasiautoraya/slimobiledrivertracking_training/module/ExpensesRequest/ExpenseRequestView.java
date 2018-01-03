@@ -36,4 +36,8 @@ public interface ExpenseRequestView extends BaseViewInterface, FormViewInterface
     void initializeOvertimeDates(ArrayList<ExpenseAvailableOrderAdapter> expenseAvailableOrderResponseModelList);
 
     void showConfirmationSuccess(String message, String title);
+
+    void setTotalExpense(String total);
+
+    void hideRequestGroupInput();
 }

@@ -30,8 +30,7 @@ import butterknife.OnClick;
  * Created by Randi Dwi Nandra on 03/04/2017.
  */
 
-public class AbsenceRequestFragment extends TiFragment<AbsenceRequestPresenter, AbsenceRequestView>
-        implements AbsenceRequestView {
+public class AbsenceRequestFragment extends TiFragment<AbsenceRequestPresenter, AbsenceRequestView> implements AbsenceRequestView {
 
     @BindView(R.id.spinner_absence_tipeabsen) Spinner mSpinnerAbsenceType;
     @BindView(R.id.edittext_absence_datemulai) EditText mEtDateStart;

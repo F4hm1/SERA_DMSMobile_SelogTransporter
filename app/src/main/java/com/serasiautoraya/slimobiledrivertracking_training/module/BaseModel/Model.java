@@ -16,51 +16,47 @@ import java.util.Map;
 
 public class Model {
 
-    public HashMap<String,String> getHashMapType(){
-//        Gson gson = new Gson();
+    public HashMap<String, String> getHashMapType() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.serializeNulls();
         Gson gson = gsonBuilder.create();
-        Type stringStringMap = new TypeToken<Map<String, String>>(){}.getType();
+        Type stringStringMap = new TypeToken<Map<String, String>>() {
+        }.getType();
         Log.d("TAGSSS", getJSONType());
-        Map<String,String> map = gson.fromJson(getJSONType(), stringStringMap);
+        Map<String, String> map = gson.fromJson(getJSONType(), stringStringMap);
         return new HashMap<String, String>(map);
     }
 
-    public String getJSONType(){
-//        Gson gson = new Gson();
+    public String getJSONType() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.serializeNulls();
         Gson gson = gsonBuilder.create();
         return gson.toJson(this);
     }
 
-    public String getJSONType(Object object){
-//        Gson gson = new Gson();
+    public String getJSONType(Object object) {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.serializeNulls();
         Gson gson = gsonBuilder.create();
         return gson.toJson(object);
     }
 
-    public static <T> T getModelInstance(Object object, Class<T> cls){
-//        Gson gson = new Gson();
+    public static <T> T getModelInstance(Object object, Class<T> cls) {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.serializeNulls();
         Gson gson = gsonBuilder.create();
         return gson.fromJson(gson.toJson(object), cls);
     }
 
-    public static <T> T getModelInstanceFromString(String jsonString, Class<T> cls){
-//        Gson gson = new Gson();
+    public static <T> T getModelInstanceFromString(String jsonString, Class<T> cls) {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.serializeNulls();
         Gson gson = gsonBuilder.create();
         return gson.fromJson(jsonString, cls);
     }
 
-    public static String getNonNullable(String text){
-        if(text == null){
+    public static String getNonNullable(String text) {
+        if (text == null) {
             text = "null";
         }
         return text;

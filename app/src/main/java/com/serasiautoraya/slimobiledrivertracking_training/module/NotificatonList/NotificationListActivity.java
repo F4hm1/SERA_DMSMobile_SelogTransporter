@@ -30,7 +30,8 @@ import butterknife.ButterKnife;
 
 public class NotificationListActivity extends TiActivity<NotificationListPresenter, NotificationListView> implements NotificationListView{
 
-    @BindView(R.id.recycler_notification_list) RecyclerView mRecyclerView;
+    @BindView(R.id.recycler_notification_list)
+    RecyclerView mRecyclerView;
 
     @BindView(R.id.layout_empty_info)
     EmptyInfoView mEmptyInfoView;

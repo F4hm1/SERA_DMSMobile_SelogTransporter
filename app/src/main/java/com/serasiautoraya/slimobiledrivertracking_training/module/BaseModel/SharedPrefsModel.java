@@ -11,54 +11,80 @@ import android.preference.PreferenceManager;
 
 public class SharedPrefsModel {
     private SharedPreferences sharedPrefs;
-    private Context context;
 
     public SharedPrefsModel(Context context) {
-        this.context = context;
         this.sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
-    /*SET APPLY DATA*/
-    /*String*/
+    /**
+     * Save String data to SharedPreferences
+     * @param key : key as key in SharedPreferences
+     * @param value  : value string stored in SharedPreferences
+     */
     public void apply(String key, String value) {
         putString(key, value).apply();
     }
 
-    /*Integer*/
+    /**
+     * Save Integer data to SharedPreferences
+     * @param key : key as key in SharedPreferences
+     * @param value  : value integer stored in SharedPreferences
+     */
     public void apply(String key, int value) {
         putInt(key, value).apply();
     }
 
-    /*Boolean*/
+    /**
+     * Save Boolean data to SharedPreferences
+     * @param key : key as key in SharedPreferences
+     * @param value  : value boolean stored in SharedPreferences
+     */
     public void apply(String key, boolean value) {
         putBoolean(key, value).apply();
     }
 
-    /*GET DATA*/
-    /*String*/
+    /**
+     * Load String data to SharedPreferences
+     * @param key : key as key in SharedPreferences
+     * @param defaultValue  : defaultValue if there is no data in SharedPreferences with parsed key
+     */
     public String get(String key, String defaultValue) {
         return sharedPrefs.getString(key, defaultValue);
     }
 
-    /*Integer*/
+    /**
+     * Load Integer data to SharedPreferences
+     * @param key : key as key in SharedPreferences
+     * @param defaultValue  : defaultValue if there is no data in SharedPreferences with parsed key
+     */
     public int get(String key, int defaultValue) {
         return sharedPrefs.getInt(key, defaultValue);
     }
 
-    /*Boolean*/
+    /**
+     * Load Boolean data to SharedPreferences
+     * @param key : key as key in SharedPreferences
+     * @param defaultValue  : defaultValue if there is no data in SharedPreferences with parsed key
+     */
     public boolean get(String key, boolean defaultValue) {
         return sharedPrefs.getBoolean(key, defaultValue);
     }
 
-
-    /*Clear All (When Logout)*/
+    /**
+     * Clear all saved data in SharedPreferences and called when logout
+     */
     public void clearAll() {
         SharedPreferences.Editor e = sharedPrefs.edit();
         e.clear();
         e.apply();
     }
 
-    /*Put to sharedPreferences and commit*/
+    /**
+     * Base method that use editor function directly, all of this method is used by this class caller method
+     * @param key : key as key in SharedPreferences
+     * @param value : Value based on every data type String, Int, Boolean
+     * @return
+     */
     @SuppressLint("CommitPrefEdits")
     private SharedPreferences.Editor putString(String key, String value) {
         SharedPreferences.Editor e = sharedPrefs.edit();

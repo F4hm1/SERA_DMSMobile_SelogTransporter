@@ -8,7 +8,12 @@ import com.serasiautoraya.slimobiledrivertracking_training.module.SQLIte.DBHelpe
 
 import net.grandcentrix.thirtyinch.TiPresenter;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,7 +37,7 @@ public class NotificationListPresenter extends TiPresenter<NotificationListView>
     }
 
     public void loadNotificationListData() {
-        Cursor res = mDbHelper.runRawQuery("select * from " + DBHelper.NOTIFICATION_TABLE_NAME);
+        Cursor res = mDbHelper.runRawQuery("select * from " + DBHelper.NOTIFICATION_TABLE_NAME + " ORDER BY " + DBHelper.NOTIFICATION_COLUMN_ID + " DESC");
         List<NotificationResponseModel> notificationResponseModels = new ArrayList<>();
         while (res.isAfterLast() == false) {
             NotificationResponseModel visitorModel = new NotificationResponseModel(

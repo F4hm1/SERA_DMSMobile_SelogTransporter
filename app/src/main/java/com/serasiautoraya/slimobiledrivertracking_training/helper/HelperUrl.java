@@ -20,6 +20,5 @@ public class HelperUrl {
      * Data Retrieval
      */
     public static String LOGIN = HOST + "RestAPIFront_Login/login/";
-    public static String GET_SERVER_LOCALTIME = "http://api.geonames.org/timezoneJSON";
 
 }

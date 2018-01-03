@@ -26,10 +26,10 @@ public class HelperUrl {
 //    private static final String HOST = "https://drivermanagementapimdev.azure-api.net/";
 
             //Production
-//    private static final String HOST = "https://dmapimanagement.azure-api.net/";
+    private static final String HOST = "https://dmapimanagement.azure-api.net/";
 
             //Development
-    private static final String HOST = "http://drivermanagementapidev.azurewebsites.net/";
+//    private static final String HOST = "http://drivermanagementapidev.azurewebsites.net/";
 
     public static final String GET_SERVER_LOCALTIME = "http://api.geonames.org/timezoneJSON";
 

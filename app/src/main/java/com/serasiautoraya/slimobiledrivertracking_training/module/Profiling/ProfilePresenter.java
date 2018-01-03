@@ -22,7 +22,7 @@ public class ProfilePresenter extends TiPresenter<ProfileView> {
     public void loadProfileData(){
         getView().setProfileContent(
                 HelperBridge.sModelLoginResponse.getFullname(),
-                "Transporter",
+                "Driver",
                 HelperBridge.sModelLoginResponse.getCompany(),
                 HelperBridge.sModelLoginResponse.getPoolName(),
                 HelperBridge.sModelLoginResponse.getPersonalId(),

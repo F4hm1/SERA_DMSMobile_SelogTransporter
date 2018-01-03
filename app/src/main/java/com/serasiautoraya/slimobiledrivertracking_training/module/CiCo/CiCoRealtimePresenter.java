@@ -20,19 +20,17 @@ import org.json.JSONObject;
  * Created by Randi Dwi Nandra on 29/03/2017.
  */
 
-public class  CiCoRealtimePresenter extends TiPresenter<CiCoRealtimeView> {
+public class CiCoRealtimePresenter extends TiPresenter<CiCoRealtimeView> {
 
     private RestConnection mRestConnection;
     private CiCoRealtimeSendModel mCiCoRealtimeSendModel;
-//    private SharedPrefsModel mSharedPrefsModel;
     private String mUrlSubmit;
 
     public CiCoRealtimePresenter(RestConnection mRestConnection) {
         this.mRestConnection = mRestConnection;
-//        this.mSharedPrefsModel = sharedPrefsModel;
     }
 
-    public void onSubmitCiCo(){
+    public void onSubmitCiCo() {
         getView().toggleLoading(true);
         mRestConnection.postData(HelperBridge.sModelLoginResponse.getTransactionToken(), mUrlSubmit, mCiCoRealtimeSendModel.getHashMapType(), new RestCallbackInterfaceJSON() {
             @Override
@@ -40,15 +38,9 @@ public class  CiCoRealtimePresenter extends TiPresenter<CiCoRealtimeView> {
                 try {
                     getView().toggleLoading(false);
                     getView().showStandardDialog(response.getString("responseText"), "Berhasil");
-                    if(mCiCoRealtimeSendModel.getCicoType().equalsIgnoreCase(HelperTransactionCode.CLOCK_IN_CODE)){
+                    if (mCiCoRealtimeSendModel.getCicoType().equalsIgnoreCase(HelperTransactionCode.CLOCK_IN_CODE)) {
                         getView().changeActivity(FatigueActivity.class);
                     }
-
-//                    Calendar calendar = Calendar.getInstance();
-//                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(com.serasiautoraya.slimobiledrivertracking.MVP.Helper.HelperKey.SERVER_DATE_FORMAT);
-//                    String dateToday = simpleDateFormat.format(calendar.getTime());
-//                    mSharedPrefsModel.apply(HelperKey.KEY_LAST_CLOCKIN, dateToday);
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -71,14 +63,14 @@ public class  CiCoRealtimePresenter extends TiPresenter<CiCoRealtimeView> {
         });
     }
 
-    public void onClockIn(){
+    public void onClockIn() {
         getView().toggleLoading(true);
         mRestConnection.getServerTime(new TimeRestCallBackInterface() {
             @Override
             public void callBackOnSuccess(TimeRESTResponseModel timeRESTResponseModel, String latitude, String longitude, String address) {
                 String timeZoneId = RestConnection.getTimeZoneID(timeRESTResponseModel);
                 String[] timeSplit = timeRESTResponseModel.getTime().split(" ");
-                String[] dateSplit =  timeSplit[0].split(HelperKey.USER_DATE_FORMAT_SEPARATOR);
+                String[] dateSplit = timeSplit[0].split(HelperKey.USER_DATE_FORMAT_SEPARATOR);
                 String date = timeSplit[0];
                 String time = timeSplit[1];
                 String dateMessage = dateSplit[2];
@@ -119,14 +111,14 @@ public class  CiCoRealtimePresenter extends TiPresenter<CiCoRealtimeView> {
         });
     }
 
-    public void onClockOut(){
+    public void onClockOut() {
         getView().toggleLoading(true);
         mRestConnection.getServerTime(new TimeRestCallBackInterface() {
             @Override
             public void callBackOnSuccess(TimeRESTResponseModel timeRESTResponseModel, String latitude, String longitude, String address) {
                 String timeZoneId = RestConnection.getTimeZoneID(timeRESTResponseModel);
                 String[] timeSplit = timeRESTResponseModel.getTime().split(" ");
-                String[] dateSplit =  timeSplit[0].split(HelperKey.USER_DATE_FORMAT_SEPARATOR);
+                String[] dateSplit = timeSplit[0].split(HelperKey.USER_DATE_FORMAT_SEPARATOR);
                 String date = timeSplit[0];
                 String time = timeSplit[1];
                 String dateMessage = dateSplit[2];

@@ -42,60 +42,7 @@ public class SquareImageView extends ImageView {
         setMeasuredDimension(width, width);
     }
 
-//    @Override
-//    public void setOnTouchListener(OnTouchListener l) {
-//        OnTouchListener onTouchListener = new OnTouchListener(){
-//            @Override
-//            public boolean onTouch(View view, MotionEvent motionEvent) {
-//                switch (motionEvent.getAction()) {
-//                    case MotionEvent.ACTION_DOWN: {
-//                        getDrawable().setColorFilter(0x77000000, PorterDuff.Mode.SRC_ATOP);
-//                        invalidate();
-//                        break;
-//                    }
-//                    case MotionEvent.ACTION_UP:
-//                        getDrawable().clearColorFilter();
-//                        invalidate();
-//                        break;
-//                    case MotionEvent.ACTION_CANCEL: {
-//                        getDrawable().clearColorFilter();
-//                        invalidate();
-//                        break;
-//                    }
-//                }
-//
-//                return false;
-//            }
-//        };
-//
-//        super.setOnTouchListener(onTouchListener);
-//    }
-
-
-
-//onTouchListener
-//    @Override
-//    public boolean onTouchEvent(MotionEvent event) {
-//        switch (event.getAction()) {
-//            case MotionEvent.ACTION_DOWN: {
-//                getDrawable().setColorFilter(0x77000000, PorterDuff.Mode.SRC_ATOP);
-//                invalidate();
-//                break;
-//            }
-//            case MotionEvent.ACTION_UP:
-//                getDrawable().clearColorFilter();
-//                invalidate();
-//                break;
-//            case MotionEvent.ACTION_CANCEL: {
-//                getDrawable().clearColorFilter();
-//                invalidate();
-//                break;
-//            }
-//        }
-//        return false;
-//    }
-
-    private void initializeOnClickListener(){
+    private void initializeOnClickListener() {
         OnTouchListener onTouchListener = new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -120,33 +67,5 @@ public class SquareImageView extends ImageView {
         };
         super.setOnTouchListener(onTouchListener);
     }
-
-//
-//    @Override
-//    public void setOnTouchListener(OnTouchListener l) {
-//        OnTouchListener onTouchListener = new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View view, MotionEvent motionEvent) {
-//                switch (motionEvent.getAction()) {
-//                    case MotionEvent.ACTION_DOWN: {
-//                        getDrawable().setColorFilter(0x77000000, PorterDuff.Mode.SRC_ATOP);
-//                        invalidate();
-//                        break;
-//                    }
-//                    case MotionEvent.ACTION_UP:
-//                        getDrawable().clearColorFilter();
-//                        invalidate();
-//                        break;
-//                    case MotionEvent.ACTION_CANCEL: {
-//                        getDrawable().clearColorFilter();
-//                        invalidate();
-//                        break;
-//                    }
-//                }
-//                return false;
-//            }
-//        };
-//        super.setOnTouchListener(onTouchListener);
-//    }
 
 }

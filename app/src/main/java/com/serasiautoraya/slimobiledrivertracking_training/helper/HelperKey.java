@@ -4,12 +4,7 @@ package com.serasiautoraya.slimobiledrivertracking_training.helper;
  * Created by Randi Dwi Nandra on 21/11/2016.
  */
 public class HelperKey {
-    //    Shared Activity (Bundle Intent code)
-    public enum TransitionType {
-        Explode, Slide, Fade
-    }
-
-//    Constant Value
+    //Constant Value UI
     public static final int SAVED_IMAGE_DESIRED_WITDH = 768;
 
     //Permission Code

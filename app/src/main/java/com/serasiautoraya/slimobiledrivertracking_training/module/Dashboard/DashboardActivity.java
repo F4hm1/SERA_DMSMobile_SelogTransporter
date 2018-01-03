@@ -92,13 +92,11 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
         networkChangeReceiver = new NetworkChangeReceiver() {
             @Override
             protected void onDisconnect() {
-//                snackbarNetworkChange.show();
                 relNoInternet.setVisibility(View.VISIBLE);
             }
 
             @Override
             protected void onConnect() {
-//                snackbarNetworkChange.dismiss();
                 relNoInternet.setVisibility(View.GONE);
             }
         };

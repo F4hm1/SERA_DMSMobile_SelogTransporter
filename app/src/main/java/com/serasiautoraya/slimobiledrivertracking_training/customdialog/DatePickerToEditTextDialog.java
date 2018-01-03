@@ -22,7 +22,7 @@ import java.util.TimeZone;
  * Created by Randi Dwi Nandra on 23/11/2016.
  */
 public class DatePickerToEditTextDialog {
-    //UI References
+
     private EditText editText;
     private DatePickerDialog datePickerDialog;
     private SimpleDateFormat dateFormatter;
@@ -195,7 +195,6 @@ public class DatePickerToEditTextDialog {
         cal.set(Calendar.MONTH, cal.get( Calendar.MONTH ) + 1 );
         datePickerDialog.getDatePicker().setMaxDate(cal.getTimeInMillis());
         editText.setText("");
-//        setDateTimeField();
     }
 
     public void addMinDate(int days){

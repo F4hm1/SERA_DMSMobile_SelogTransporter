@@ -6,23 +6,29 @@ android {
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
-        applicationId "com.serasiautoraya.slimobiledrivertracking_training"
+//        applicationId "com.serasiautoraya.slimobiledrivertracking_training"
+        applicationId "com.serasiautoraya.slimobiledrivertracking"
         minSdkVersion 21
         targetSdkVersion 25
-//        versionCode 3
-//        versionName "2.0"
+        versionCode 3
+        versionName "2.0"
 
 //SoftLive cur Version
-        versionCode 9
-        versionName "1.5"
-//        versionCode 2
-//        versionName "1.1"
+//        versionCode 9
+//        versionName "1.5"
+
+//For Expense Training incremental versioning
+//        versionCode 3
+//        versionName "1.2"
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
     }
 }
 
@@ -44,6 +50,7 @@ dependencies {
     compile 'org.apmem.tools:layouts:1.10@aar'
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
 
 //    compile project(':picasso-2.5.2')
     compile 'com.squareup.picasso:picasso:2.5.2'
