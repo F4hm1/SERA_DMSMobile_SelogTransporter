@@ -11,10 +11,10 @@ public class HelperUrl {
      */
 
     //Production
-//    public static final String OCP_APIM_KEY = "8c25a9e79a3d4ba3a1e52ccbff541bc8";
+    public static final String OCP_APIM_KEY = "8c25a9e79a3d4ba3a1e52ccbff541bc8";
 
     //UAT Test
-    public static final String OCP_APIM_KEY = "29d4c537dd0840eeb72dfbb99fa7e43d";
+//    public static final String OCP_APIM_KEY = "29d4c537dd0840eeb72dfbb99fa7e43d";
 
     /**
      * Host
