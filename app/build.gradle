@@ -7,20 +7,22 @@ android {
 
     defaultConfig {
 //        applicationId "com.serasiautoraya.slimobiledrivertracking_training"
-        applicationId "com.serasiautoraya.slimobiledrivertracking_trainingexpense"
-//        applicationId "com.serasiautoraya.slimobiledrivertracking"
+//        applicationId "com.serasiautoraya.slimobiledrivertracking_trainingexpense"
+        applicationId "com.serasiautoraya.slimobiledrivertracking"
         minSdkVersion 21
         targetSdkVersion 25
-//        versionCode 5
-//        versionName "2.0.2"
+
+//Production current version
+        versionCode 6
+        versionName "2.1"
 
 //SoftLive cur Version
 //        versionCode 9
 //        versionName "1.5"
 
 //For Expense Training incremental versioning
-        versionCode 6
-        versionName "1.4"
+//        versionCode 8
+//        versionName "1.5"
     }
     buildTypes {
         release {
