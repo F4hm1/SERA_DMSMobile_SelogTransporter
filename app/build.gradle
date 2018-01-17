@@ -13,16 +13,16 @@ android {
         targetSdkVersion 25
 
 //Production current version
-        versionCode 6
-        versionName "2.1"
+        versionCode 8
+        versionName "2.1.1"
 
 //SoftLive cur Version
 //        versionCode 9
 //        versionName "1.5"
 
 //For Expense Training incremental versioning
-//        versionCode 8
-//        versionName "1.5"
+//        versionCode 9
+//        versionName "1.5.1"
     }
     buildTypes {
         release {

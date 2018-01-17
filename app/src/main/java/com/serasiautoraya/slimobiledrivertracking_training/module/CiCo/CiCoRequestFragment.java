@@ -54,7 +54,7 @@ public class CiCoRequestFragment extends TiFragment<CiCoRequestPresenter, CiCoRe
     @Override
     public void initialize() {
         this.initializeSpinnersContent();
-        this.initializePickerDialog();
+//        this.initializePickerDialog();
     }
 
     @Override
@@ -101,12 +101,13 @@ public class CiCoRequestFragment extends TiFragment<CiCoRequestPresenter, CiCoRe
             errText = getResources().getString(R.string.err_msg_empty_cico_date);
             showToast(errText);
             result = false;
-        } else if (!mDatePickerToEditTextDialog.isInMaxRequest() || !mDatePickerToEditTextDialog.isBeforeToday()) {
-            focusView = mEtDate;
-            errText = getResources().getString(R.string.err_msg_wrong_cico_date);
-            showToast(errText);
-            result = false;
         }
+//        else if (mDatePickerToEditTextDialog.isInMaxRequest()) {
+//            focusView = mEtDate;
+//            errText = getResources().getString(R.string.err_msg_wrong_cico_date);
+//            showToast(errText);
+//            result = false;
+//        }
 
         if (TextUtils.isEmpty(mEtTime.getText().toString())) {
             focusView = mEtTime;
@@ -176,8 +177,10 @@ public class CiCoRequestFragment extends TiFragment<CiCoRequestPresenter, CiCoRe
         mSpinnerReason.setAdapter(adapterReason);
     }
 
-    private void initializePickerDialog() {
-        mDatePickerToEditTextDialog = new DatePickerToEditTextDialog(mEtDate, getContext(), true, false);
+    @Override
+    public void initializePickerDialog(int dayMinRequest){
+//        mDatePickerToEditTextDialog = new DatePickerToEditTextDialog(mEtDate, getContext(), true, false);
+        mDatePickerToEditTextDialog = new DatePickerToEditTextDialog(mEtDate, getContext(), true, false, dayMinRequest);
         mTimePickerToEditTextDialog = new TimePickerToEditTextDialog(mEtTime, getContext());
     }
 

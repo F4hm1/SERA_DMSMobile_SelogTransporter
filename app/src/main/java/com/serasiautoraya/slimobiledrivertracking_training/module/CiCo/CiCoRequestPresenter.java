@@ -29,6 +29,13 @@ public class CiCoRequestPresenter extends TiPresenter<CiCoRequestView> {
     protected void onAttachView(@NonNull final CiCoRequestView view) {
         super.onAttachView(view);
         getView().initialize();
+        int daysMinRequest = 0;
+        try {
+            daysMinRequest = Math.round(Float.valueOf(HelperBridge.sModelLoginResponse.getMaxHariRequestDriver()));
+        } catch (Exception ex) {
+
+        }
+        getView().initializePickerDialog(-(daysMinRequest));
     }
 
     public CiCoRequestPresenter(RestConnection mRestConnection) {
