@@ -32,6 +32,7 @@ import com.serasiautoraya.slimobiledrivertracking_training.module.BaseModel.Shar
 import com.serasiautoraya.slimobiledrivertracking_training.module.ChangePassword.ChangePasswordActivity;
 import com.serasiautoraya.slimobiledrivertracking_training.module.CiCo.CiCoFragment;
 import com.serasiautoraya.slimobiledrivertracking_training.module.ExpensesRequest.ExpenseRequestFragment;
+import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperBridge;
 import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperUtil;
 import com.serasiautoraya.slimobiledrivertracking_training.module.JourneyOrder.Assigned.AssignedFragment;
 import com.serasiautoraya.slimobiledrivertracking_training.module.NotificatonList.NotificationListActivity;
@@ -42,14 +43,27 @@ import com.serasiautoraya.slimobiledrivertracking_training.module.RequestHistory
 import com.serasiautoraya.slimobiledrivertracking_training.module.WsInOutHistory.WsInOutFragment;
 import com.serasiautoraya.slimobiledrivertracking_training.R;
 import com.serasiautoraya.slimobiledrivertracking_training.listener.TextViewTouchListener;
+import com.serasiautoraya.slimobiledrivertracking_training.util.EventBusEvents;
 import com.serasiautoraya.slimobiledrivertracking_training.util.LocationServiceUtil;
 import com.serasiautoraya.slimobiledrivertracking_training.util.NetworkChangeReceiver;
 import com.squareup.picasso.Picasso;
 
 import net.grandcentrix.thirtyinch.TiActivity;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.concurrent.TimeUnit;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Completable;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+
+import static rx.android.schedulers.AndroidSchedulers.*;
 
 /**
  * Created by Randi Dwi Nandra on 27/03/2017.
@@ -72,7 +86,7 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
     private Handler mHandler;
     private int mFragmentSelectedID;
     private View mNavHeader;
-
+    Fragment fragmentActive;
     NetworkChangeReceiver networkChangeReceiver;
     Snackbar snackbarNetworkChange;
 
@@ -80,6 +94,7 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_dashboard);
@@ -101,6 +116,9 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
             }
         };
     }
+
+
+
 
     @Override
     protected void onPause() {
@@ -160,12 +178,12 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
         Runnable mPendingRunnable = new Runnable() {
             @Override
             public void run() {
-                Fragment fragment = targetFragment;
+                fragmentActive = targetFragment;
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.setCustomAnimations(
                         android.R.anim.fade_in,
                         android.R.anim.fade_out);
-                fragmentTransaction.replace(R.id.nav_main_content, fragment);
+                fragmentTransaction.replace(R.id.nav_main_content, fragmentActive);
                 fragmentTransaction.commitAllowingStateLoss();
             }
         };
@@ -184,9 +202,14 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
     public Fragment getActiveFragment(int idNavItem) {
         switch (idNavItem) {
             case R.id.nav_active_order:
-                AssignedFragment assignedFragment = new AssignedFragment();
-                mNavigationView.setCheckedItem(R.id.nav_active_order);
-                return assignedFragment;
+                if (fragmentActive instanceof AssignedFragment){
+                    mNavigationView.setCheckedItem(R.id.nav_active_order);
+                    return fragmentActive;
+                } else {
+                    AssignedFragment assignedFragment = new AssignedFragment();
+                    mNavigationView.setCheckedItem(R.id.nav_active_order);
+                    return assignedFragment;
+                }
             case R.id.nav_cico_request:
                 CiCoFragment ciCoFragment = new CiCoFragment();
                 mNavigationView.setCheckedItem(R.id.nav_cico_request);
@@ -220,8 +243,14 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
                 mNavigationView.setCheckedItem(R.id.nav_order_history);
                 return orderHistoryFragment;
             default:
-                mNavigationView.setCheckedItem(R.id.nav_active_order);
-                return new AssignedFragment();
+                if (fragmentActive instanceof AssignedFragment){
+                    mNavigationView.setCheckedItem(R.id.nav_active_order);
+                    return fragmentActive;
+                } else {
+                    AssignedFragment assignedFragment = new AssignedFragment();
+                    mNavigationView.setCheckedItem(R.id.nav_active_order);
+                    return assignedFragment;
+                }
         }
     }
 
@@ -309,7 +338,9 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
         mNavigationView.setNavigationItemSelectedListener(this);
 
         mHandler = new Handler();
-        mNavigationView.setCheckedItem(R.id.nav_active_order);
+        if (HelperBridge.sTempFragmentTarget == 0){
+            mNavigationView.setCheckedItem(R.id.nav_active_order);
+        }
 
         mNavHeader = mNavigationView.getHeaderView(0);
 
@@ -375,6 +406,7 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
         navMenu.findItem(R.id.nav_olctrip_request).setVisible(requestOLCTrip);
         navMenu.findItem(R.id.nav_overtime_request).setVisible(requestOvertime);
 
+
         if (reportAbsence == false && reportCiCo == false && reportOLCTrip == false && reportOvertime == false) {
             navMenu.findItem(R.id.nav_attendance_history).setVisible(false);
         }else {
@@ -383,7 +415,7 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
         /*
         * TODO delete this (expense nav only disappear for phase 1 in 1 november 2017)
         * */
-//        navMenu.findItem(R.id.nav_expense_request).setVisible(false);
+        //navMenu.findItem(R.id.nav_expense_request).setVisible(false);
     }
 
 
@@ -405,5 +437,21 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
                         System.exit(0);
                     }
                 });
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void onMessage(final EventBusEvents.changeFragment event) {
+
+        mHandler.postDelayed(() ->
+            changeFragment(getActiveFragment(event.getData()))
+        , 5000);
+
     }
 }
