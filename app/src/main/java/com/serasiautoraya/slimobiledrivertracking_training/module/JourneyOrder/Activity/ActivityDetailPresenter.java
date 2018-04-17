@@ -3,12 +3,15 @@ package com.serasiautoraya.slimobiledrivertracking_training.module.JourneyOrder.
 import android.support.annotation.NonNull;
 
 import com.android.volley.error.VolleyError;
+import com.serasiautoraya.slimobiledrivertracking_training.R;
 import com.serasiautoraya.slimobiledrivertracking_training.module.BaseInterface.RestCallBackInterfaceModel;
 import com.serasiautoraya.slimobiledrivertracking_training.module.BaseInterface.RestCallbackInterfaceJSON;
 import com.serasiautoraya.slimobiledrivertracking_training.module.BaseInterface.TimeRestCallBackInterface;
 import com.serasiautoraya.slimobiledrivertracking_training.module.BaseModel.BaseResponseModel;
 import com.serasiautoraya.slimobiledrivertracking_training.module.BaseModel.Model;
 import com.serasiautoraya.slimobiledrivertracking_training.module.BaseModel.TimeRESTResponseModel;
+import com.serasiautoraya.slimobiledrivertracking_training.module.ExpensesRequest.ExpenseAvailableSendModel;
+import com.serasiautoraya.slimobiledrivertracking_training.module.ExpensesRequest.ExpenseCheckingResponseModel;
 import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperBridge;
 import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperKey;
 import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperTransactionCode;
@@ -27,6 +30,9 @@ import net.grandcentrix.thirtyinch.TiPresenter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Randi Dwi Nandra on 02/04/2017.
@@ -49,34 +55,114 @@ public class ActivityDetailPresenter extends TiPresenter<ActivityDetailView> {
         getView().initialize();
     }
 
-    public void onActionClicked() {
-        final LocationModel locationModel = mRestConnection.getCurrentLocation();
-        if (locationModel.getLongitude().equalsIgnoreCase("null")) {
-            getView().showToast("Aplikasi sedang mengambil lokasi (pastikan gps dan peket data tersedia), harap tunggu beberapa saat kemudian silahkan coba kembali.");
-        } else {
-            getView().toggleLoading(true);
-            mRestConnection.getServerTime(new TimeRestCallBackInterface() {
+    public void onActionClicked(final Integer assignmentId, final String orderCode, final String statusIsExpense) {
+
+        if (statusIsExpense.equals("true")){
+            final ExpenseAvailableSendModel expenseAvailableSendModel =
+                    new ExpenseAvailableSendModel(assignmentId);
+
+            mRestConnection.getData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.GET_EXPENSE_CHECKING, expenseAvailableSendModel.getHashMapType(), new RestCallBackInterfaceModel() {
                 @Override
-                public void callBackOnSuccess(TimeRESTResponseModel timeRESTResponseModel, String latitude, String longitude, String address) {
-                    String[] timeSplitServer = timeRESTResponseModel.getTime().split(" ");
-                    String[] timeSplitActivity = HelperBridge.sAssignedOrderResponseModel.getETD().split(" ");
-                    String dateServer = timeSplitServer[0];
-                    String dateActivity = timeSplitActivity[0];
-                    if(HelperUtil.isDateBeforeOrEqual(HelperUtil.getUserFormDate(dateServer), HelperUtil.getUserFormDate(dateActivity))){
-                        onActionDateValid();
-                    }else{
-                        getView().showStandardDialog("Anda hanya bisa memulai perjalanan pada hari keberangkatan", "Perhatian");
+                public void callBackOnSuccess(BaseResponseModel response) {
+                    List<ExpenseCheckingResponseModel> expenseCheckingResponseModels = new ArrayList<>();
+                    for (int i = 0; i < response.getData().length; i++) {
+                        expenseCheckingResponseModels.add(Model.getModelInstance(response.getData()[i], ExpenseCheckingResponseModel.class));
                     }
-                    getView().toggleLoading(false);
+
+                    if (expenseCheckingResponseModels.get(0).getCheckingStatus().equals("1")){
+
+
+                        final LocationModel locationModel = mRestConnection.getCurrentLocation();
+                        if (locationModel.getLongitude().equalsIgnoreCase("null")) {
+                            getView().showToast("Aplikasi sedang mengambil lokasi (pastikan gps dan peket data tersedia), harap tunggu beberapa saat kemudian silahkan coba kembali.");
+                        } else {
+                            getView().toggleLoading(true);
+                            mRestConnection.getServerTime(new TimeRestCallBackInterface() {
+                                @Override
+                                public void callBackOnSuccess(TimeRESTResponseModel timeRESTResponseModel, String latitude, String longitude, String address) {
+                                    String[] timeSplitServer = timeRESTResponseModel.getTime().split(" ");
+                                    String[] timeSplitActivity = HelperBridge.sAssignedOrderResponseModel.getETD().split(" ");
+                                    String dateServer = timeSplitServer[0];
+                                    String dateActivity = timeSplitActivity[0];
+                                    if(HelperUtil.isDateBeforeOrEqual(HelperUtil.getUserFormDate(dateServer), HelperUtil.getUserFormDate(dateActivity))){
+                                        onActionDateValid();
+                                    }else{
+                                        getView().showStandardDialog("Anda hanya bisa memulai perjalanan pada hari keberangkatan", "Perhatian");
+                                    }
+                                    getView().toggleLoading(false);
+                                }
+
+                                @Override
+                                public void callBackOnFail(String message) {
+                                    getView().toggleLoading(false);
+                                    getView().showStandardDialog(message, "Perhatian");
+                                }
+                            });
+                        }
+
+
+                    } else {
+                        HelperBridge.sTempExpenseAssignmentId = String.valueOf(assignmentId);
+                        HelperBridge.sTempSelectedOrderCode = orderCode;
+                        getView().setTempFragmentTarget(R.id.nav_expense_request);
+                    }
+
+
+
+
+
                 }
 
                 @Override
-                public void callBackOnFail(String message) {
-                    getView().toggleLoading(false);
-                    getView().showStandardDialog(message, "Perhatian");
+                public void callBackOnFail(String response) {
+                    /*
+                    * TODO change this!
+                    * */
+                    getView().showToast(response);
+                }
+
+                @Override
+                public void callBackOnError(VolleyError error) {
+                    /*
+                    * TODO change this!
+                    * */
+                    getView().showToast("FAIL: " + error.toString());
                 }
             });
+
+        } else {
+            final LocationModel locationModel = mRestConnection.getCurrentLocation();
+            if (locationModel.getLongitude().equalsIgnoreCase("null")) {
+                getView().showToast("Aplikasi sedang mengambil lokasi (pastikan gps dan peket data tersedia), harap tunggu beberapa saat kemudian silahkan coba kembali.");
+            } else {
+                getView().toggleLoading(true);
+                mRestConnection.getServerTime(new TimeRestCallBackInterface() {
+                    @Override
+                    public void callBackOnSuccess(TimeRESTResponseModel timeRESTResponseModel, String latitude, String longitude, String address) {
+                        String[] timeSplitServer = timeRESTResponseModel.getTime().split(" ");
+                        String[] timeSplitActivity = HelperBridge.sAssignedOrderResponseModel.getETD().split(" ");
+                        String dateServer = timeSplitServer[0];
+                        String dateActivity = timeSplitActivity[0];
+                        if(HelperUtil.isDateBeforeOrEqual(HelperUtil.getUserFormDate(dateServer), HelperUtil.getUserFormDate(dateActivity))){
+                            onActionDateValid();
+                        }else{
+                            getView().showStandardDialog("Anda hanya bisa memulai perjalanan pada hari keberangkatan", "Perhatian");
+                        }
+                        getView().toggleLoading(false);
+                    }
+
+                    @Override
+                    public void callBackOnFail(String message) {
+                        getView().toggleLoading(false);
+                        getView().showStandardDialog(message, "Perhatian");
+                    }
+                });
+            }
         }
+
+
+
+
 //        onActionDateValid();
     }
 
@@ -108,6 +194,7 @@ public class ActivityDetailPresenter extends TiPresenter<ActivityDetailView> {
 //                        String monthMessage = dateSplit[1];
 //                        String yearMessage = dateSplit[0];
 
+                        // TODO: Modify HelperRefreshCode Here
                         mStatusUpdateSendModel = new StatusUpdateSendModel(
                                 HelperBridge.sActivityDetailResponseModel.getJourneyActivityId() + "",
                                 HelperBridge.sTempSelectedOrderCode,

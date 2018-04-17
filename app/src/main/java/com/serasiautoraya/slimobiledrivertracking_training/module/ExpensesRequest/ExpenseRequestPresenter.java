@@ -10,8 +10,12 @@ import com.serasiautoraya.slimobiledrivertracking_training.module.BaseModel.Base
 import com.serasiautoraya.slimobiledrivertracking_training.module.BaseModel.Model;
 import com.serasiautoraya.slimobiledrivertracking_training.module.BaseModel.TimeRESTResponseModel;
 import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperBridge;
+import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperKey;
 import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperTransactionCode;
 import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperUrl;
+import com.serasiautoraya.slimobiledrivertracking_training.module.JourneyOrder.Activity.ActivityDetailActivity;
+import com.serasiautoraya.slimobiledrivertracking_training.module.JourneyOrder.Activity.ActivityDetailResponseModel;
+import com.serasiautoraya.slimobiledrivertracking_training.module.JourneyOrder.Activity.ActivityDetailSendModel;
 import com.serasiautoraya.slimobiledrivertracking_training.module.JourneyOrder.Assigned.AssignedOrderResponseModel;
 import com.serasiautoraya.slimobiledrivertracking_training.module.JourneyOrder.Assigned.AssignedOrderSendModel;
 import com.serasiautoraya.slimobiledrivertracking_training.module.RestClient.RestConnection;
@@ -35,7 +39,7 @@ public class ExpenseRequestPresenter extends TiPresenter<ExpenseRequestView> {
     private RestConnection mRestConnection;
     private ExpenseRequestSendModel mExpenseRequestSendModel;
     ExpenseAvailableResponseModel expenseAvailableResponseModel;
-    private String selectedOrderCode;
+    private String selectedOrderCode, tempAssignmentId, tempOrderCode;
     private int curentTotalAmount = 0;
 
     private ArrayList<ExpenseAvailableOrderAdapter> expenseAvailableOrderAdapterList;
@@ -150,6 +154,7 @@ public class ExpenseRequestPresenter extends TiPresenter<ExpenseRequestView> {
                     getView().toggleLoading(false);
 //                    getView().showStandardDialog(response.getString("responseText"), "Berhasil");
                     getView().showConfirmationSuccess(response.getString("responseText"), "Berhasil");
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -172,7 +177,7 @@ public class ExpenseRequestPresenter extends TiPresenter<ExpenseRequestView> {
         });
     }
 
-    public void loadAvailableExpenseData() {
+   /* public void loadAvailableExpenseData() {
         getView().toggleLoadingInitialLoad(true);
         ExpenseAvailableOrderSendModel expenseAvailableOrderSendModel = new ExpenseAvailableOrderSendModel(
                 HelperBridge.sModelLoginResponse.getPersonalId()
@@ -198,9 +203,9 @@ public class ExpenseRequestPresenter extends TiPresenter<ExpenseRequestView> {
 
             @Override
             public void callBackOnFail(String response) {
-                /*
+                *//*
                 * TODO change this!
-                * */
+                * *//*
                 expenseRequestView.setNoAvailableExpense();
                 expenseRequestView.showToast(response);
                 expenseRequestView.toggleLoadingInitialLoad(false);
@@ -208,35 +213,84 @@ public class ExpenseRequestPresenter extends TiPresenter<ExpenseRequestView> {
 
             @Override
             public void callBackOnError(VolleyError error) {
-                /*
+                *//*
                 * TODO change this!
-                * */
+                * *//*
                 expenseRequestView.setNoAvailableExpense();
                 expenseRequestView.showToast("ERROR: " + error.toString());
                 expenseRequestView.toggleLoadingInitialLoad(false);
             }
         });
+    }*/
+
+
+    public void loadDetailOrder() {
+
+        ActivityDetailSendModel activityDetailSendModel =
+                new ActivityDetailSendModel(
+                        HelperBridge.sModelLoginResponse.getPersonalId(), tempOrderCode, Integer.valueOf(tempAssignmentId));
+
+        getView().toggleLoading(true);
+        final ExpenseRequestView expenseRequestView = getView();
+        mRestConnection.getData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.GET_ORDER_ACTIVITY, activityDetailSendModel.getHashMapType(), new RestCallBackInterfaceModel() {
+            @Override
+            public void callBackOnSuccess(BaseResponseModel response) {
+                HelperBridge.sActivityDetailResponseModel = Model.getModelInstance(response.getData()[0], ActivityDetailResponseModel.class);
+                String[] keywords = {HelperKey.KEY_INTENT_ASSIGNMENTID, HelperKey.KEY_INTENT_ORDERCODE,  HelperKey.KEY_INTENT_IS_EXPENSE};
+                String[] values = {HelperBridge.sActivityDetailResponseModel.getAssignmentId()+"", tempOrderCode,  HelperBridge.sActivityDetailResponseModel.getIsExpense()+""};
+                //planOrderView.changeActivityAction(HelperKey.KEY_INTENT_ORDERCODE, HelperBridge.sActivityDetailResponseModel.getAssignmentId() + "", ActivityDetailActivity.class);
+                expenseRequestView.toggleLoading(false);
+                expenseRequestView.changeActivityAction(keywords, values, ActivityDetailActivity.class);
+            }
+
+            @Override
+            public void callBackOnFail(String response) {
+                /*
+                * TODO change this!
+                * */
+                expenseRequestView.showToast(response);
+                expenseRequestView.toggleLoading(false);
+            }
+
+            @Override
+            public void callBackOnError(VolleyError error) {
+                /*
+                * TODO change this!
+                * */
+                expenseRequestView.showToast("Terjadi Kesalahan: " + error.toString());
+                expenseRequestView.toggleLoading(false);
+            }
+        });
     }
 
-    public void onOrderSelected(ExpenseAvailableOrderAdapter expenseAvailableOrderAdapter) {
+
+
+    public void onOrderSelected() {
         getView().toggleLoadingSearchingOrder(true);
-        final ExpenseAvailableSendModel expenseAvailableSendModel = new ExpenseAvailableSendModel(
-                expenseAvailableOrderAdapter.getExpenseAvailableOrderResponseModel().getAssignmentId()
-        );
+        tempAssignmentId = HelperBridge.sTempExpenseAssignmentId;
+        tempOrderCode = HelperBridge.sTempSelectedOrderCode;
+
+        final ExpenseCheckingTripSendModel expenseCheckingTripSendModel =
+                new ExpenseCheckingTripSendModel(HelperBridge.sTempExpenseAssignmentId);
+
+
 
 //        final String orderCode = expenseAvailableOrderAdapter.getExpenseAvailableOrderResponseModel().getOrderCode();
-        final String orderCode = expenseAvailableOrderAdapter.getExpenseAvailableOrderResponseModel().getAssignmentId() + "";
+        final String orderCode = HelperBridge.sTempExpenseAssignmentId;
         final ExpenseRequestView expenseRequestView = getView();
-        mRestConnection.getData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.GET_EXPENSE_INFO, expenseAvailableSendModel.getHashMapType(), new RestCallBackInterfaceModel() {
+        mRestConnection.getData(HelperBridge.sModelLoginResponse.getTransactionToken(), HelperUrl.GET_EXPENSE_INFO, expenseCheckingTripSendModel.getHashMapType(), new RestCallBackInterfaceModel() {
             @Override
             public void callBackOnSuccess(BaseResponseModel response) {
                 if (response.getData().length > 0) {
                     expenseAvailableResponseModel = Model.getModelInstance(response.getData()[0], ExpenseAvailableResponseModel.class);
                     generateExpenseInputValue(expenseAvailableResponseModel);
                     selectedOrderCode = orderCode;
+                    expenseRequestView.initializeOvertimeDates(expenseAvailableResponseModel);
                 } else {
                     getView().showToast("Data Expense tidak ditemukan");
                 }
+                getView().hideRequestGroupInput();
+                getView().resetAmountView();
                 expenseRequestView.toggleLoadingSearchingOrder(false);
             }
 
@@ -260,7 +314,7 @@ public class ExpenseRequestPresenter extends TiPresenter<ExpenseRequestView> {
         });
     }
 
-    public void loadNoActualExpense() {
+    /*public void loadNoActualExpense() {
         curentTotalAmount = 0;
         getView().toggleLoading(true);
         final ExpenseRequestView expenseRequestView = getView();
@@ -296,9 +350,9 @@ public class ExpenseRequestPresenter extends TiPresenter<ExpenseRequestView> {
 
             @Override
             public void callBackOnFail(String response) {
-                /*
+                *//*
                 * TODO change this!
-                * */
+                * *//*
 //                assignedView.initializeTabs(isAnyOrderActive, mSharedPrefsModel.get(HelperKey.KEY_IS_UPDATE_LOCATION_ACTIVE, false));
                 expenseRequestView.showToast(response);
                 expenseRequestView.toggleLoading(false);
@@ -306,15 +360,15 @@ public class ExpenseRequestPresenter extends TiPresenter<ExpenseRequestView> {
 
             @Override
             public void callBackOnError(VolleyError error) {
-                /*
+                *//*
                 * TODO change this!
-                * */
+                * *//*
 //                assignedView.initializeTabs(isAnyOrderActive, mSharedPrefsModel.get(HelperKey.KEY_IS_UPDATE_LOCATION_ACTIVE, false));
                 expenseRequestView.showToast("ERROR: " + error.toString());
                 expenseRequestView.toggleLoading(false);
             }
         });
-    }
+    }*/
 
     public void calculateAmount(CharSequence charSequence) {
         try {

@@ -17,12 +17,17 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.serasiautoraya.slimobiledrivertracking_training.module.BaseModel.SharedPrefsModel;
+import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperBridge;
 import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperUtil;
 import com.serasiautoraya.slimobiledrivertracking_training.module.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking_training.R;
+import com.serasiautoraya.slimobiledrivertracking_training.util.EventBusEvents;
 import com.serasiautoraya.slimobiledrivertracking_training.util.GPSTrackerService;
 
 import net.grandcentrix.thirtyinch.TiFragment;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +48,7 @@ public class AssignedFragment extends TiFragment<AssignedPresenter, AssignedView
     @BindView(R.id.viewpager_planactive_orders)
     ViewPager mViewPager;
 
+    ViewPagerAdapter adapter;
     private ProgressDialog mProgressDialog;
     private Activity mParentActivity = null;
 
@@ -59,7 +65,9 @@ public class AssignedFragment extends TiFragment<AssignedPresenter, AssignedView
         if (context instanceof Activity) {
             mParentActivity = (Activity) context;
         }
+        EventBus.getDefault().register(this);
     }
+
 
     @Override
     public void onResume() {
@@ -69,7 +77,7 @@ public class AssignedFragment extends TiFragment<AssignedPresenter, AssignedView
 
     @Override
     public void initialize() {
-//        getPresenter().loadOrdersData();
+//        getPresenter().loadOrdersData(); //RANDY
     }
 
     @Override
@@ -103,17 +111,20 @@ public class AssignedFragment extends TiFragment<AssignedPresenter, AssignedView
         return new AssignedPresenter(new RestConnection(getContext()), new SharedPrefsModel(getContext()));
     }
 
-    private void setupViewPager(final ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
+    private void setupViewPager(final ViewPager viewPager, String currentAct) {
+        adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new ActiveOrderFragment(), "Order Aktif");
         adapter.addFragment(new PlanOrderFragment(), "Rencana Order");
         viewPager.setAdapter(adapter);
+        mTabLayout.setupWithViewPager(mViewPager);
+
     }
 
     @Override
-    public void initializeTabs(boolean isAnyOrderActive, boolean isUpdateLocationActive) {
-        setupViewPager(mViewPager);
-        mTabLayout.setupWithViewPager(mViewPager);
+    public void initializeTabs(boolean isAnyOrderActive, boolean isUpdateLocationActive, String currentAct) {
+
+        setupViewPager(mViewPager, currentAct);
+
 
         /*
         * TODO uncomment this
@@ -144,6 +155,7 @@ public class AssignedFragment extends TiFragment<AssignedPresenter, AssignedView
     @Override
     public void refreshAssignedList() {
         getPresenter().loadOrdersData();
+        HelperBridge.sRefreshOrderData = true;
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -182,6 +194,18 @@ public class AssignedFragment extends TiFragment<AssignedPresenter, AssignedView
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
+    }
+
+
+    @Override
+    public void onDetach() {
+        EventBus.getDefault().unregister(this);
+        super.onDetach();
+    }
+
+    @Subscribe
+    public void onMessage(final EventBusEvents.killFragment event) {
+        getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
     }
 
 }

@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import com.serasiautoraya.slimobiledrivertracking_training.module.BaseAdapter.SimpleAdapterView;
 import com.serasiautoraya.slimobiledrivertracking_training.module.CustomView.EmptyInfoView;
+import com.serasiautoraya.slimobiledrivertracking_training.module.Dashboard.DashboardActivity;
+import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperBridge;
 import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperUtil;
 import com.serasiautoraya.slimobiledrivertracking_training.module.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking_training.R;
@@ -24,8 +26,13 @@ import com.serasiautoraya.slimobiledrivertracking_training.R;
 import com.serasiautoraya.slimobiledrivertracking_training.listener.ClickListener;
 import com.serasiautoraya.slimobiledrivertracking_training.listener.RecyclerTouchListener;
 import com.serasiautoraya.slimobiledrivertracking_training.util.DividerRecycleViewDecoration;
+import com.serasiautoraya.slimobiledrivertracking_training.util.EventBusEvents;
 
 import net.grandcentrix.thirtyinch.TiFragment;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,6 +65,7 @@ public class ActiveOrderFragment extends TiFragment<ActiveOrderPresenter, Active
         if (context instanceof Activity) {
             mParentActivity = (Activity) context;
         }
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -100,10 +108,13 @@ public class ActiveOrderFragment extends TiFragment<ActiveOrderPresenter, Active
     }
 
     @Override
-    public void changeActivityAction(String key, String value, Class targetActivity) {
+    public void changeActivityAction(String[] key, String[] value, Class targetActivity) {
+        EventBus.getDefault().post(new EventBusEvents.killFragment());
         if (mParentActivity != null) {
             Intent intent = new Intent(mParentActivity, targetActivity);
-            intent.putExtra(key, value);
+            for (int i = 0; i < key.length; i++) {
+                intent.putExtra(key[i], value[i]);
+            }
             startActivity(intent);
         }
     }
@@ -127,6 +138,11 @@ public class ActiveOrderFragment extends TiFragment<ActiveOrderPresenter, Active
             mEmptyInfoView.setIcon(R.drawable.ic_close_grey);
             mEmptyInfoView.setText("Gagal mengambil daftar order, silahkan tekan tombol \"ulangi\" dibawah untuk mencoba kembali ");
         }
+    }
+
+    @Override
+    public void changeFragment() {
+        //((DashboardActivity)getActivity()).changeFragment(((DashboardActivity) getActivity()).getActiveFragment(R.id.nav_cico_request));
     }
 
 
@@ -161,4 +177,17 @@ public class ActiveOrderFragment extends TiFragment<ActiveOrderPresenter, Active
             }
         }));
     }
+
+
+    @Override
+    public void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessage(EventBusEvents.createSign event) {
+        getPresenter().loadOrdersdata();
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.serasiautoraya.slimobiledrivertracking_training.module.JourneyOrder.Assigned;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.StringDef;
 import android.util.Log;
 
 import com.android.volley.error.VolleyError;
@@ -30,6 +31,7 @@ public class AssignedPresenter extends TiPresenter<AssignedView> {
     private SharedPrefsModel mSharedPrefsModel;
     private boolean isAnyOrderActive;
     private boolean isUpdateLocationActive;
+    private String currentAct = "";
 
     public AssignedPresenter(RestConnection mRestConnection, SharedPrefsModel mSharedPrefsModel) {
         this.mRestConnection = mRestConnection;
@@ -63,11 +65,12 @@ public class AssignedPresenter extends TiPresenter<AssignedView> {
                 List<AssignedOrderResponseModel> assignedOrderResponseModels = new ArrayList<>();
                 for (int i = 0; i < response.getData().length; i++) {
                     assignedOrderResponseModels.add(Model.getModelInstance(response.getData()[i], AssignedOrderResponseModel.class));
+                    currentAct = assignedOrderResponseModels.get(i).getCurrentActivity();
                     Log.d("ANJIRR", "ss2 : " + assignedOrderResponseModels.get(i).getDestination());
                 }
                 mergeAssignedOrderData(assignedOrderResponseModels);
                 HelperBridge.sListOrderRetrievalSuccess = true;
-                assignedView.initializeTabs(isAnyOrderActive, mSharedPrefsModel.get(HelperKey.KEY_IS_UPDATE_LOCATION_ACTIVE, false));
+                assignedView.initializeTabs(isAnyOrderActive, mSharedPrefsModel.get(HelperKey.KEY_IS_UPDATE_LOCATION_ACTIVE, false), currentAct);
                 assignedView.toggleLoading(false);
             }
 
@@ -77,7 +80,7 @@ public class AssignedPresenter extends TiPresenter<AssignedView> {
                 * TODO change this!
                 * */
                 HelperBridge.sListOrderRetrievalSuccess = false;
-                assignedView.initializeTabs(isAnyOrderActive, mSharedPrefsModel.get(HelperKey.KEY_IS_UPDATE_LOCATION_ACTIVE, false));
+                assignedView.initializeTabs(isAnyOrderActive, mSharedPrefsModel.get(HelperKey.KEY_IS_UPDATE_LOCATION_ACTIVE, false),currentAct);
                 assignedView.showToast(response);
                 assignedView.toggleLoading(false);
                 Log.d("SIT_FMS", "FAIL : "+response);
@@ -89,7 +92,7 @@ public class AssignedPresenter extends TiPresenter<AssignedView> {
                 * TODO change this!
                 * */
                 HelperBridge.sListOrderRetrievalSuccess = false;
-                assignedView.initializeTabs(isAnyOrderActive, mSharedPrefsModel.get(HelperKey.KEY_IS_UPDATE_LOCATION_ACTIVE, false));
+                assignedView.initializeTabs(isAnyOrderActive, mSharedPrefsModel.get(HelperKey.KEY_IS_UPDATE_LOCATION_ACTIVE, false),currentAct);
                 assignedView.showToast("ERROR: " + error.toString());
                 Log.d("SIT_FMS", "ERROR : "+error.toString());
                 assignedView.toggleLoading(false);

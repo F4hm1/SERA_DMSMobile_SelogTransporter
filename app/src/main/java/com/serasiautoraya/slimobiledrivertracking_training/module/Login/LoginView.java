@@ -18,4 +18,6 @@ public interface LoginView extends BaseViewInterface, FormViewInterface {
     void startInitializeLocation();
 
     void setCachedFormLogin(String username, String password);
+
+    void goToPlayStore();
 }

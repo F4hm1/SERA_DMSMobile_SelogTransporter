@@ -13,12 +13,24 @@ public class HelperUrl {
     /**
     * Host
     */
-    private static String HOST = "https://damira.sera.astra.co.id/DMSAPI/";
+    private static String HOST_PROD = "https://damira.sera.astra.co.id/DMSAPI/";
 
+
+    /*
+    * HOST DEVELOPMENT
+    *
+    * */
+
+    private static final String HOST = "http://drivermanagementapidev.azurewebsites.net/";
 
     /**
      * Data Retrieval
      */
-    public static String LOGIN = HOST + "RestAPIFront_Login/login/";
+    public static String LOGIN = HOST + "auth/login/";
+
+    /**
+     * Data Retrieval
+     */
+    public static String LOGIN_PROD = HOST + "RestAPIFront_Login/login/";
 
 }

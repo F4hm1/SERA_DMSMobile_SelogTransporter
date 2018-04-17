@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -16,16 +17,22 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.serasiautoraya.slimobiledrivertracking_training.BuildConfig;
 import com.serasiautoraya.slimobiledrivertracking_training.module.BaseModel.SharedPrefsModel;
 import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperUtil;
 import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.PermissionsHelper;
 import com.serasiautoraya.slimobiledrivertracking_training.module.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking_training.R;
+import com.serasiautoraya.slimobiledrivertracking_training.util.EventBusEvents;
 import com.serasiautoraya.slimobiledrivertracking_training.util.FCMMessageService;
 import com.serasiautoraya.slimobiledrivertracking_training.util.LocationServiceUtil;
 import com.serasiautoraya.slimobiledrivertracking_training.util.NetworkChangeReceiver;
 
 import net.grandcentrix.thirtyinch.TiActivity;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Locale;
 
@@ -143,6 +150,13 @@ public class LoginActivity extends TiActivity<LoginPresenter, LoginView> impleme
         mEtPassword.setText(password);
     }
 
+    @Override
+    public void goToPlayStore() {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("market://details?id=" + BuildConfig.APPLICATION_ID));
+        startActivity(intent);
+    }
+
 
     @Override
     public boolean getValidationForm() {
@@ -190,4 +204,6 @@ public class LoginActivity extends TiActivity<LoginPresenter, LoginView> impleme
         startActivity(intent);
         this.finish();
     }
+
+
 }

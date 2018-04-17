@@ -30,12 +30,23 @@ public class LoginSendModel extends Model{
     @Expose
     private String AppType;
 
-    public LoginSendModel(String username, String password, String tokenFCM, String iMEIPhone, String appType) {
+    @SerializedName("AppVersion")
+    @Expose
+    private String AppVersion;
+
+
+
+    public LoginSendModel(String username, String password, String tokenFCM, String iMEIPhone, String appType, String appVersion) {
         this.username = username;
         this.password = password;
         this.tokenFCM = tokenFCM;
         this.iMEIPhone = iMEIPhone;
         this.AppType = appType;
+        this.AppVersion = appVersion;
+    }
+
+    public String getAppVersion() {
+        return AppVersion;
     }
 
     public String getAppType() {

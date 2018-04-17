@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.android.volley.error.VolleyError;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.serasiautoraya.slimobiledrivertracking_training.BuildConfig;
 import com.serasiautoraya.slimobiledrivertracking_training.module.BaseInterface.RestCallbackInterfaceJSON;
 import com.serasiautoraya.slimobiledrivertracking_training.module.BaseModel.Model;
 import com.serasiautoraya.slimobiledrivertracking_training.module.BaseModel.SharedPrefsModel;
@@ -67,7 +68,7 @@ public class LoginPresenter extends TiPresenter<LoginView> {
             }
 
 
-            LoginSendModel loginSendModel = new LoginSendModel(username, password, tokenFCM, deviceID, HelperKey.APPTYPE_SLI);
+            LoginSendModel loginSendModel = new LoginSendModel(username, password, tokenFCM, deviceID, HelperKey.APPTYPE_SLI, BuildConfig.VERSION_CODE + "");
             getView().toggleLoading(true);
             mRestConnection.postData("", HelperUrl.POST_LOGIN, loginSendModel.getHashMapType(), new RestCallbackInterfaceJSON() {
                 @Override
@@ -95,6 +96,7 @@ public class LoginPresenter extends TiPresenter<LoginView> {
                 * TODO change this!
                 * */
                     getView().showToast(response);
+                    getView().goToPlayStore();
                     getView().toggleLoading(false);
                 }
 

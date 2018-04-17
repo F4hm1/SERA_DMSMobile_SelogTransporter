@@ -19,6 +19,9 @@ public class HelperKey {
     public static final String KEY_LOCATION_UPDATE_INTERVAL = "KEY_LOCATION_UPDATE_INTERVAL";
 
     public static final String KEY_INTENT_ORDERCODE = "KEY_ORDERCODE";
+    public static final String KEY_INTENT_ASSIGNMENTID = "KEY_ASSIGNMENTID";
+    public static final String KEY_INTENT_IS_EXPENSE = "KEY_ISEXPENSE";
+
 
     public static final String SERVER_DATE_FORMAT = "yyyy-MM-dd";
     public static final String USER_DATE_FORMAT = "dd MMMM yyyy";

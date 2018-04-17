@@ -87,7 +87,9 @@ public class ActiveOrderPresenter extends TiPresenter<ActiveOrderView> {
                 HelperBridge.sTempSelectedOrderCode = orderCode;
                 HelperBridge.sAssignedOrderResponseModel = assignedOrderResponseModel;
                 HelperBridge.isClickedFromPlanOrder = false;
-                activeOrderView.changeActivityAction(HelperKey.KEY_INTENT_ORDERCODE, HelperBridge.sActivityDetailResponseModel.getAssignmentId()+"", ActivityDetailActivity.class);
+                String[] keywords = {HelperKey.KEY_INTENT_ASSIGNMENTID, HelperKey.KEY_INTENT_ORDERCODE, HelperKey.KEY_INTENT_IS_EXPENSE};
+                String[] values = {HelperBridge.sActivityDetailResponseModel.getAssignmentId()+"", orderCode, HelperBridge.sActivityDetailResponseModel.getIsExpense()+""};
+                activeOrderView.changeActivityAction(keywords, values, ActivityDetailActivity.class);
                 activeOrderView.toggleLoading(false);
             }
 

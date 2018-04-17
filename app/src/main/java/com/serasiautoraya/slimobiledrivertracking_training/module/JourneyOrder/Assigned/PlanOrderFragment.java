@@ -28,8 +28,13 @@ import com.serasiautoraya.slimobiledrivertracking_training.R;
 import com.serasiautoraya.slimobiledrivertracking_training.listener.ClickListener;
 import com.serasiautoraya.slimobiledrivertracking_training.listener.RecyclerTouchListener;
 import com.serasiautoraya.slimobiledrivertracking_training.util.DividerRecycleViewDecoration;
+import com.serasiautoraya.slimobiledrivertracking_training.util.EventBusEvents;
 
 import net.grandcentrix.thirtyinch.TiFragment;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,6 +68,7 @@ public class PlanOrderFragment extends TiFragment<PlanOrderPresenter, PlanOrderV
         if (context instanceof Activity) {
             mParentActivity = (Activity) context;
         }
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -115,10 +121,13 @@ public class PlanOrderFragment extends TiFragment<PlanOrderPresenter, PlanOrderV
     }
 
     @Override
-    public void changeActivityAction(String key, String value, Class targetActivity) {
+    public void changeActivityAction(String[] key, String[] value, Class targetActivity) {
+        EventBus.getDefault().post(new EventBusEvents.killFragment());
         if (mParentActivity != null) {
             Intent intent = new Intent(mParentActivity, targetActivity);
-            intent.putExtra(key, value);
+            for (int i = 0; i < key.length; i++) {
+                intent.putExtra(key[i], value[i]);
+            }
             startActivity(intent);
         }
     }
@@ -236,6 +245,17 @@ public class PlanOrderFragment extends TiFragment<PlanOrderPresenter, PlanOrderV
             tv.setText(arrDestination[i]);
             tableLayout.addView(rowView);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessage(EventBusEvents.createSign event) {
+        getPresenter().loadOrdersdata();
     }
 
 }

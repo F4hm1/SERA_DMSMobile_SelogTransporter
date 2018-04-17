@@ -54,4 +54,6 @@ public interface ActivityDetailView extends BaseViewInterface {
 
     void generateDestination(String[] arrDestination);
 
+    void setTempFragmentTarget(int id);
+
 }

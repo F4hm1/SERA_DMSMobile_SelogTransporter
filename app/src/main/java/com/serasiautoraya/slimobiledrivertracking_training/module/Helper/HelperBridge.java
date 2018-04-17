@@ -84,7 +84,14 @@ public class HelperBridge {
 
     public static boolean sListOrderRetrievalSuccess = true;
 
+    public static boolean sRefreshOrderData = false;
+
     public static int sPlanOrderPositionClicked = -1;
 
     public static boolean isClickedFromPlanOrder;
+
+    public static String sTempExpenseAssignmentId = "";
+    public static String sTempOrderId = "";
+
+
 }

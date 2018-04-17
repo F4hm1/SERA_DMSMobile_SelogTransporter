@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -21,8 +22,11 @@ import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperK
 import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperUtil;
 import com.serasiautoraya.slimobiledrivertracking_training.module.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking_training.R;
+import com.serasiautoraya.slimobiledrivertracking_training.util.EventBusEvents;
 
 import net.grandcentrix.thirtyinch.TiActivity;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -89,7 +93,8 @@ public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, 
     @BindView(R.id.order_button_noaction)
     Button mTvButtonNoAction;
 
-    private String mOrderCode;
+    private String mOrderCode, mIsExpense;
+    private Integer mAssignmentId;
     private ProgressDialog mProgressDialog;
 
     @Override
@@ -101,7 +106,9 @@ public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, 
         ButterKnife.bind(this);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
+            mAssignmentId = Integer.valueOf(bundle.getString(HelperKey.KEY_INTENT_ASSIGNMENTID));
             mOrderCode = bundle.getString(HelperKey.KEY_INTENT_ORDERCODE);
+            mIsExpense = bundle.getString(HelperKey.KEY_INTENT_IS_EXPENSE);
         }
     }
 
@@ -139,7 +146,7 @@ public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, 
     @Override
     @OnClick(R.id.order_button_action)
     public void onActionClicked(View view) {
-        getPresenter().onActionClicked();
+        getPresenter().onActionClicked(mAssignmentId, mOrderCode, mIsExpense);
     }
 
     @Override
@@ -219,12 +226,14 @@ public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, 
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        HelperBridge.sTempFragmentTarget = R.id.nav_active_order;
                         finishActivity();
                     }
                 },
                 new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
+                        HelperBridge.sTempFragmentTarget = R.id.nav_active_order;
                         finishActivity();
                     }
                 });
@@ -242,6 +251,12 @@ public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, 
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        setTempFragmentTarget(R.id.nav_active_order);
+    }
+
+    @Override
     public void generateDestination(String[] arrDestination) {
         for (int i = 0; i < arrDestination.length; i++) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -255,5 +270,13 @@ public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, 
             tv.setText(arrDestination[i]);
             mTlOrderDestination.addView(rowView);
         }
+    }
+
+    @Override
+    public void setTempFragmentTarget(int id) {
+        HelperBridge.sTempFragmentTarget = id;
+        Log.d("DASHBOARDSS", "ORHISTO: "+HelperBridge.sTempFragmentTarget);
+        finishActivity();
+
     }
 }

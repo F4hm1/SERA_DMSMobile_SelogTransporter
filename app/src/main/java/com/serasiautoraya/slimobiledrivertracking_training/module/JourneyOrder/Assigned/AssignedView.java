@@ -10,7 +10,7 @@ import com.serasiautoraya.slimobiledrivertracking_training.module.BaseInterface.
 
 public interface AssignedView extends BaseViewInterface{
 
-    void initializeTabs(boolean isAnyOrderActive, boolean isUpdateLocationActive);
+    void initializeTabs(boolean isAnyOrderActive, boolean isUpdateLocationActive, String currentAct);
 
     void onRefreshClicked(View view);
 
