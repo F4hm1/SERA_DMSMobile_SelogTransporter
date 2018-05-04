@@ -16,6 +16,10 @@ public class LoginResponseModel {
     @Expose
     private String IsVersionValidate;
 
+    @SerializedName("RequestExpense")
+    @Expose
+    private String RequestExpense;
+
     @SerializedName("PersonalId")
     @Expose
     private String PersonalId;
@@ -172,6 +176,11 @@ public class LoginResponseModel {
     @Expose
     private String ReportServiceHour;
 
+
+
+   public String getRequestExpense() {
+        return RequestExpense;
+    }
 
     public String getIsVersionValidate() {
         return IsVersionValidate;

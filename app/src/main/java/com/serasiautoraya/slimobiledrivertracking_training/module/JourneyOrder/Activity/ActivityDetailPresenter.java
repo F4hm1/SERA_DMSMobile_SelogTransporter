@@ -58,6 +58,9 @@ public class ActivityDetailPresenter extends TiPresenter<ActivityDetailView> {
     public void onActionClicked(final Integer assignmentId, final String orderCode, final String statusIsExpense) {
 
         if (statusIsExpense.equals("true")){
+            /*final ExpenseAvailableSendModel expenseAvailableSendModel =
+                    new ExpenseAvailableSendModel(assignmentId);*/
+
             final ExpenseAvailableSendModel expenseAvailableSendModel =
                     new ExpenseAvailableSendModel(assignmentId);
 

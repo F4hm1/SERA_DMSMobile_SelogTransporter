@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.serasiautoraya.slimobiledrivertracking_training.module.BaseModel.SharedPrefsModel;
 import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperBridge;
+import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperTransactionCode;
 import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperUtil;
 import com.serasiautoraya.slimobiledrivertracking_training.module.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking_training.R;
@@ -123,7 +124,9 @@ public class AssignedFragment extends TiFragment<AssignedPresenter, AssignedView
     @Override
     public void initializeTabs(boolean isAnyOrderActive, boolean isUpdateLocationActive, String currentAct) {
 
+
         setupViewPager(mViewPager, currentAct);
+        mViewPager.setCurrentItem(HelperBridge.isPlanOrderShow ? adapter.getCount() - 1 : adapter.getCount() - 2);
 
 
         /*

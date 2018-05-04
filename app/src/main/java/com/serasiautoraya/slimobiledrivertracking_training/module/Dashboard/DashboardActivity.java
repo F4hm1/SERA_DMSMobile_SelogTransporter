@@ -31,6 +31,7 @@ import com.serasiautoraya.slimobiledrivertracking_training.module.Absence.Absenc
 import com.serasiautoraya.slimobiledrivertracking_training.module.BaseModel.SharedPrefsModel;
 import com.serasiautoraya.slimobiledrivertracking_training.module.ChangePassword.ChangePasswordActivity;
 import com.serasiautoraya.slimobiledrivertracking_training.module.CiCo.CiCoFragment;
+import com.serasiautoraya.slimobiledrivertracking_training.module.ExpensesRequest.ExpenseReqFromNavFragment;
 import com.serasiautoraya.slimobiledrivertracking_training.module.ExpensesRequest.ExpenseRequestFragment;
 import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperBridge;
 import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperUtil;
@@ -52,18 +53,9 @@ import net.grandcentrix.thirtyinch.TiActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
-import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.Completable;
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-
-import static rx.android.schedulers.AndroidSchedulers.*;
 
 /**
  * Created by Randi Dwi Nandra on 27/03/2017.
@@ -227,7 +219,12 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
                 mNavigationView.setCheckedItem(R.id.nav_overtime_request);
                 return overtimeRequestFragment;
             case R.id.nav_expense_request:
-                ExpenseRequestFragment expenseRequestFragment = new ExpenseRequestFragment();
+                Fragment expenseRequestFragment;
+                if (HelperBridge.sIsExpenseAccessFromNav){
+                    expenseRequestFragment = new ExpenseReqFromNavFragment();
+                } else {
+                    expenseRequestFragment = new ExpenseRequestFragment();
+                }
                 mNavigationView.setCheckedItem(R.id.nav_expense_request);
                 return expenseRequestFragment;
             case R.id.nav_ws_history:
@@ -311,7 +308,10 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         this.mFragmentSelectedID = id;
-        if (id != R.id.nav_change_pass && id != R.id.nav_logout && id != R.id.nav_notification_list) {
+        if (id == R.id.nav_expense_request) {
+            HelperBridge.sIsExpenseAccessFromNav = true;
+            getPresenter().onNavigationItemSelectedForFragment(id);
+        } else if ( id != R.id.nav_change_pass && id != R.id.nav_logout && id != R.id.nav_notification_list ) {
             getPresenter().onNavigationItemSelectedForFragment(id);
         } else {
             if (id == R.id.nav_logout) {
@@ -337,10 +337,13 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
 
         mNavigationView.setNavigationItemSelectedListener(this);
 
+
         mHandler = new Handler();
+
         if (HelperBridge.sTempFragmentTarget == 0){
             mNavigationView.setCheckedItem(R.id.nav_active_order);
         }
+
 
         mNavHeader = mNavigationView.getHeaderView(0);
 
@@ -399,13 +402,13 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
     }
 
     @Override
-    public void toggleMenu(boolean requestCiCo, boolean reportCiCo, boolean requestAbsence, boolean reportAbsence, boolean requestOLCTrip, boolean reportOLCTrip, boolean requestOvertime, boolean reportOvertime, boolean reportServiceHour) {
+    public void toggleMenu(boolean requestCiCo, boolean reportCiCo, boolean requestAbsence, boolean reportAbsence, boolean requestOLCTrip, boolean reportOLCTrip, boolean requestOvertime, boolean reportOvertime, boolean reportServiceHour, boolean requestExpense) {
         Menu navMenu = mNavigationView.getMenu();
         navMenu.findItem(R.id.nav_cico_request).setVisible(requestCiCo);
         navMenu.findItem(R.id.nav_absence_request).setVisible(requestAbsence);
         navMenu.findItem(R.id.nav_olctrip_request).setVisible(requestOLCTrip);
         navMenu.findItem(R.id.nav_overtime_request).setVisible(requestOvertime);
-
+        navMenu.findItem(R.id.nav_expense_request).setVisible(requestExpense);
 
         if (reportAbsence == false && reportCiCo == false && reportOLCTrip == false && reportOvertime == false) {
             navMenu.findItem(R.id.nav_attendance_history).setVisible(false);
@@ -415,7 +418,7 @@ public class DashboardActivity extends TiActivity<DashboardPresenter, DashboardV
         /*
         * TODO delete this (expense nav only disappear for phase 1 in 1 november 2017)
         * */
-        //navMenu.findItem(R.id.nav_expense_request).setVisible(false);
+
     }
 
 

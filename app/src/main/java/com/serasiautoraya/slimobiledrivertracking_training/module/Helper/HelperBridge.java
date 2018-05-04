@@ -3,6 +3,7 @@ package com.serasiautoraya.slimobiledrivertracking_training.module.Helper;
 
 import android.graphics.Bitmap;
 
+import com.serasiautoraya.slimobiledrivertracking_training.R;
 import com.serasiautoraya.slimobiledrivertracking_training.module.JourneyOrder.Activity.ActivityDetailResponseModel;
 import com.serasiautoraya.slimobiledrivertracking_training.module.JourneyOrder.Assigned.AssignedOrderResponseModel;
 import com.serasiautoraya.slimobiledrivertracking_training.module.JourneyOrder.PodSubmit.PodStatusResponseModel;
@@ -78,6 +79,8 @@ public class HelperBridge {
 
     public static int sUpdateLocationInterval;
 
+    /*public static int sTempFragmentTarget = sModelLoginResponse.getRequestExpense().equals("1") ? R.id.nav_expense_request : 0;*/
+
     public static int sTempFragmentTarget = 0;
 
     public static TiActivity sCurrentDetailActivity = null;
@@ -86,9 +89,13 @@ public class HelperBridge {
 
     public static boolean sRefreshOrderData = false;
 
+    public static boolean sIsExpenseAccessFromNav = true;
+
     public static int sPlanOrderPositionClicked = -1;
 
     public static boolean isClickedFromPlanOrder;
+
+    public static boolean isPlanOrderShow;
 
     public static String sTempExpenseAssignmentId = "";
     public static String sTempOrderId = "";

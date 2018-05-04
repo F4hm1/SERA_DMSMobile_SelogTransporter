@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 25
@@ -7,22 +8,28 @@ android {
 
     defaultConfig {
 //        applicationId "com.serasiautoraya.slimobiledrivertracking_training"
-//        applicationId "com.serasiautoraya.slimobiledrivertracking_trainingexpense"
-        applicationId "com.serasiautoraya.slimobiledrivertracking"
+        applicationId "com.serasiautoraya.slimobiledrivertracking_trainingexpense"
+        //applicationId "com.serasiautoraya.slimobiledrivertracking"
         minSdkVersion 21
         targetSdkVersion 25
 
 //Production current version
-        versionCode 8
-        versionName "2.1.1"
+//        versionCode 11
+//        versionName "2.1.3"
 
 //SoftLive cur Version
 //        versionCode 9
 //        versionName "1.5"
 
 //For Expense Training incremental versioning
-//        versionCode 9
-//        versionName "1.5.1"
+        versionCode 11 //U: 20018225
+        versionName "2.1.5"
+
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+
     }
     buildTypes {
         release {
@@ -54,6 +61,9 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
+
+    //-- EventBus : Communication Activity and Fragment
+    compile 'org.greenrobot:eventbus:3.1.1'
 
 //    compile project(':picasso-2.5.2')
     compile 'com.squareup.picasso:picasso:2.5.2'

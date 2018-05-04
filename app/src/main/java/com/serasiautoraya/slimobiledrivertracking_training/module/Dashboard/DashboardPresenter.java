@@ -36,7 +36,8 @@ public class DashboardPresenter extends TiPresenter<DashboardView> {
                 HelperBridge.sModelLoginResponse.getReportOLCTrip().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY),
                 HelperBridge.sModelLoginResponse.getRequestOvertime().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY),
                 HelperBridge.sModelLoginResponse.getReportOvertime().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY),
-                HelperBridge.sModelLoginResponse.getReportServiceHour().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)
+                HelperBridge.sModelLoginResponse.getReportServiceHour().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY),
+                HelperBridge.sModelLoginResponse.getRequestExpense().equalsIgnoreCase(HelperTransactionCode.TRUE_BINARY)
         );
 //        Calendar calendar = Calendar.getInstance();
 //        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(HelperKey.SERVER_DATE_FORMAT);

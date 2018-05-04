@@ -275,6 +275,7 @@ public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, 
     @Override
     public void setTempFragmentTarget(int id) {
         HelperBridge.sTempFragmentTarget = id;
+        HelperBridge.sIsExpenseAccessFromNav = false;
         Log.d("DASHBOARDSS", "ORHISTO: "+HelperBridge.sTempFragmentTarget);
         finishActivity();
 

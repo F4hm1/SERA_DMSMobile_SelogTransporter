@@ -2,8 +2,10 @@ package com.serasiautoraya.slimobiledrivertracking_training.module.Login;
 
 import android.annotation.SuppressLint;
 import android.os.Build;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.volley.error.VolleyError;
@@ -22,6 +24,7 @@ import com.serasiautoraya.slimobiledrivertracking_training.util.HttpsTrustManage
 
 import net.grandcentrix.thirtyinch.TiPresenter;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -74,15 +77,33 @@ public class LoginPresenter extends TiPresenter<LoginView> {
                 @Override
                 public void callBackOnSuccess(JSONObject response) {
                     try {
-                        JSONObject jsonObject = response.getJSONArray("data").getJSONObject(0);
-                        HelperBridge.sModelLoginResponse = Model.getModelInstanceFromString(jsonObject.toString(), LoginResponseModel.class);
-                        int updateLocationInterval = Math.round(Float.valueOf(HelperBridge.sModelLoginResponse.getLocationUpdateInterval()));
-                        mSharedPrefsModel.apply(HelperKey.HAS_LOGIN, true);
-                        mSharedPrefsModel.apply(HelperKey.KEY_USERNAME, fUsername);
-                        mSharedPrefsModel.apply(HelperKey.KEY_PASSWORD, fPassword);
-                        mSharedPrefsModel.apply(HelperKey.KEY_LOCATION_UPDATE_INTERVAL, updateLocationInterval);
-                        getView().toggleLoading(false);
-                        getView().changeActivity(DashboardActivity.class);
+                        JSONArray jsonArr = response.getJSONArray("data");
+                        if (jsonArr.toString().equals("[]")){
+                            getView().toggleLoading(false);
+                            getView().showToast("Terjadi kesalahan pada saat membaca data");
+                        } else {
+                            JSONObject jsonObject = jsonArr.getJSONObject(0);
+                            HelperBridge.sModelLoginResponse = Model.getModelInstanceFromString(jsonObject.toString(), LoginResponseModel.class);
+                            if (!TextUtils.isEmpty(HelperBridge.sModelLoginResponse.getIsVersionValidate()) && HelperBridge.sModelLoginResponse.getIsVersionValidate().equals("1")){
+                                int updateLocationInterval = Math.round(Float.valueOf(HelperBridge.sModelLoginResponse.getLocationUpdateInterval()));
+                                mSharedPrefsModel.apply(HelperKey.HAS_LOGIN, true);
+                                mSharedPrefsModel.apply(HelperKey.KEY_USERNAME, fUsername);
+                                mSharedPrefsModel.apply(HelperKey.KEY_PASSWORD, fPassword);
+                                mSharedPrefsModel.apply(HelperKey.KEY_LOCATION_UPDATE_INTERVAL, updateLocationInterval);
+                                getView().toggleLoading(false);
+                                getView().changeActivity(DashboardActivity.class);
+                            } else {
+                                getView().toggleLoading(false);
+                                getView().showToast("Aplikasi Harus Diperbaharui, download dan Install di Playstore");
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        getView().goToPlayStore();
+                                    }
+                                }, 3000);
+                            }
+                        }
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                         getView().showToast("Terjadi kesalahan pada saat membaca data");
@@ -95,9 +116,14 @@ public class LoginPresenter extends TiPresenter<LoginView> {
                 /*
                 * TODO change this!
                 * */
-                    getView().showToast(response);
-                    getView().goToPlayStore();
                     getView().toggleLoading(false);
+                    getView().showToast(response);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            getView().goToPlayStore();
+                        }
+                    }, 3000);
                 }
 
                 @Override

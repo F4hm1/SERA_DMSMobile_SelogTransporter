@@ -10,15 +10,15 @@ import com.serasiautoraya.slimobiledrivertracking_training.module.BaseModel.Mode
 
 public class ExpenseAvailableSendModel extends Model {
 
-    @SerializedName("asignmentId")
+    @SerializedName("AssignmentId")
     @Expose
-    private Integer asignmentId;
+    private Integer AssignmentId;
 
     public ExpenseAvailableSendModel(Integer assignmentId) {
-        this.asignmentId = assignmentId;
+        this.AssignmentId = assignmentId;
     }
 
     public Integer getAssignmentId() {
-        return this.asignmentId;
+        return this.AssignmentId;
     }
 }
