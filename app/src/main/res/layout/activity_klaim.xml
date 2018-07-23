@@ -174,7 +174,7 @@
                                 android:layout_weight="1.2"
                                 android:textSize="15sp"
                                 android:inputType="numberDecimal"
-                                android:hint="0"/>
+                                android:text="1"/>
 
                         </LinearLayout>
 

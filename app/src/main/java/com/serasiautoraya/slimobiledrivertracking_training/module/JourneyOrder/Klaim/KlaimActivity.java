@@ -19,6 +19,7 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.InputFilter;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -326,7 +327,7 @@ public class KlaimActivity extends TiActivity<KlaimPresenter, KlaimView> impleme
     @Override
     @OnClick(R.id.documents_btn_submit)
     public void onClickSubmit(View view) {
-        if (getValidationForm()) {
+        if (getValidationForm() && !TextUtils.isEmpty(mEtDocumentsPrice.getText().toString()) && mEtDocumentsPrice.getText().toString().equalsIgnoreCase("0") ) {
             getPresenter().onClickSubmit(
                     mEtDocumentsDocNo.getText().toString(),
                     mEtDocumentsDesc.getText().toString(),
