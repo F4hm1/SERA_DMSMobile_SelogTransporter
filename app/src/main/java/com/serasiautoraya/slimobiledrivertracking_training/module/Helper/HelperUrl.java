@@ -20,7 +20,7 @@ public class HelperUrl {
      * Host
      */
 
-            //UAT
+            //UAT- OLD
 //    private static final String HOST = "http://seradmapimanagementdev.azure-api.net/";
 
             //UAT-Test
@@ -101,4 +101,9 @@ public class HelperUrl {
     public static final String PUT_POD = HOST + "order/updatepod";
 
     public static final String GET_POD_STATUS = HOST + "order/statuspod";
+
+    public static final String GET_CLAIM_CHECK = HOST + "order/claimcheck";
+
+    public static final String POST_CLAIM = HOST + "order/claim";
+
 }

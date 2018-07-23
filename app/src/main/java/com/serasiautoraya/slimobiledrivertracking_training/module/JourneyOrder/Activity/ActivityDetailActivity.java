@@ -1,5 +1,6 @@
 package com.serasiautoraya.slimobiledrivertracking_training.module.JourneyOrder.Activity;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperBridge;
 import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperKey;
 import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperUtil;
+import com.serasiautoraya.slimobiledrivertracking_training.module.JourneyOrder.Klaim.KlaimActivity;
 import com.serasiautoraya.slimobiledrivertracking_training.module.RestClient.RestConnection;
 import com.serasiautoraya.slimobiledrivertracking_training.R;
 import com.serasiautoraya.slimobiledrivertracking_training.util.EventBusEvents;
@@ -93,7 +95,7 @@ public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, 
     @BindView(R.id.order_button_noaction)
     Button mTvButtonNoAction;
 
-    private String mOrderCode, mIsExpense;
+    private String mOrderCode, mIsExpense, mIsClaim;
     private Integer mAssignmentId;
     private ProgressDialog mProgressDialog;
 
@@ -109,6 +111,7 @@ public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, 
             mAssignmentId = Integer.valueOf(bundle.getString(HelperKey.KEY_INTENT_ASSIGNMENTID));
             mOrderCode = bundle.getString(HelperKey.KEY_INTENT_ORDERCODE);
             mIsExpense = bundle.getString(HelperKey.KEY_INTENT_IS_EXPENSE);
+            mIsClaim = bundle.getString(HelperKey.KEY_INTENT_IS_CLAIM);
         }
     }
 
@@ -146,7 +149,7 @@ public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, 
     @Override
     @OnClick(R.id.order_button_action)
     public void onActionClicked(View view) {
-        getPresenter().onActionClicked(mAssignmentId, mOrderCode, mIsExpense);
+        getPresenter().onActionClicked(mAssignmentId, mOrderCode, mIsExpense, mIsClaim);
     }
 
     @Override
@@ -213,6 +216,29 @@ public class ActivityDetailActivity extends TiActivity<ActivityDetailPresenter, 
                 getPresenter().onRequestSubmitActivity();
             }
         });
+    }
+
+    @Override
+    public void showConfirmationAlertDialog(String title, String msg, String activity) {
+        HelperUtil.showSimpleAlertDialogCustomTitleAction(msg, ActivityDetailActivity.this, title,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int which) {
+                        switch (which) {
+                            case DialogInterface.BUTTON_POSITIVE:
+                                changeActivity(KlaimActivity.class);
+                                break;
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                getPresenter().serverTimeChecking();
+                                break;
+                        }
+                    }
+                }, new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+
+                    }
+                });
     }
 
     @Override

@@ -21,6 +21,7 @@ public class HelperKey {
     public static final String KEY_INTENT_ORDERCODE = "KEY_ORDERCODE";
     public static final String KEY_INTENT_ASSIGNMENTID = "KEY_ASSIGNMENTID";
     public static final String KEY_INTENT_IS_EXPENSE = "KEY_ISEXPENSE";
+    public static final String KEY_INTENT_IS_CLAIM = "KEY_IS_CLAIM";
 
 
     public static final String SERVER_DATE_FORMAT = "yyyy-MM-dd";

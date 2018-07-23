@@ -17,6 +17,7 @@ import com.serasiautoraya.slimobiledrivertracking_training.module.BaseModel.Shar
 import com.serasiautoraya.slimobiledrivertracking_training.module.Dashboard.DashboardActivity;
 import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperBridge;
 import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperKey;
+import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperTransactionCode;
 import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperUrl;
 import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.PermissionsHelper;
 import com.serasiautoraya.slimobiledrivertracking_training.module.RestClient.RestConnection;
@@ -73,7 +74,7 @@ public class LoginPresenter extends TiPresenter<LoginView> {
 
             LoginSendModel loginSendModel = new LoginSendModel(username, password, tokenFCM, deviceID, HelperKey.APPTYPE_SLI, BuildConfig.VERSION_CODE + "");
             getView().toggleLoading(true);
-            mRestConnection.postData("", HelperUrl.POST_LOGIN, loginSendModel.getHashMapType(), new RestCallbackInterfaceJSON() {
+            mRestConnection.postLoginData("", HelperUrl.POST_LOGIN, loginSendModel.getHashMapType(), new RestCallbackInterfaceJSON() {
                 @Override
                 public void callBackOnSuccess(JSONObject response) {
                     try {
@@ -84,7 +85,7 @@ public class LoginPresenter extends TiPresenter<LoginView> {
                         } else {
                             JSONObject jsonObject = jsonArr.getJSONObject(0);
                             HelperBridge.sModelLoginResponse = Model.getModelInstanceFromString(jsonObject.toString(), LoginResponseModel.class);
-                            if (!TextUtils.isEmpty(HelperBridge.sModelLoginResponse.getIsVersionValidate()) && HelperBridge.sModelLoginResponse.getIsVersionValidate().equals("1")){
+                            if (!TextUtils.isEmpty(HelperBridge.sModelLoginResponse.getIsVersionValidate()) && HelperBridge.sModelLoginResponse.getIsVersionValidate().equals(HelperTransactionCode.TRUE_BINARY)){
                                 int updateLocationInterval = Math.round(Float.valueOf(HelperBridge.sModelLoginResponse.getLocationUpdateInterval()));
                                 mSharedPrefsModel.apply(HelperKey.HAS_LOGIN, true);
                                 mSharedPrefsModel.apply(HelperKey.KEY_USERNAME, fUsername);
@@ -100,7 +101,7 @@ public class LoginPresenter extends TiPresenter<LoginView> {
                                     public void run() {
                                         getView().goToPlayStore();
                                     }
-                                }, 3000);
+                                }, 1000);
                             }
                         }
 
@@ -117,13 +118,19 @@ public class LoginPresenter extends TiPresenter<LoginView> {
                 * TODO change this!
                 * */
                     getView().toggleLoading(false);
-                    getView().showToast(response);
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            getView().goToPlayStore();
-                        }
-                    }, 3000);
+                    String[] msg = response.split(":");
+                    if (msg[1].equals(HelperTransactionCode.TRUE_BINARY)){
+                        getView().showToast(msg[0]);
+                    } else {
+                        getView().showToast(msg[0]);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                getView().goToPlayStore();
+                            }
+                        }, 1000);
+                    }
+
                 }
 
                 @Override

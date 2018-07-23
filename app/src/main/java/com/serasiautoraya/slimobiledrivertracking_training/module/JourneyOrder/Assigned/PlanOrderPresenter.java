@@ -213,8 +213,8 @@ public class PlanOrderPresenter extends TiPresenter<PlanOrderView> {
                 HelperBridge.sActivityDetailResponseModel = Model.getModelInstance(response.getData()[0], ActivityDetailResponseModel.class);
                 HelperBridge.sTempSelectedOrderCode = orderId;
                 HelperBridge.sAssignedOrderResponseModel = assignedOrderResponseModel;
-                String[] keywords = {HelperKey.KEY_INTENT_ASSIGNMENTID, HelperKey.KEY_INTENT_ORDERCODE,  HelperKey.KEY_INTENT_IS_EXPENSE};
-                String[] values = {HelperBridge.sActivityDetailResponseModel.getAssignmentId()+"", orderCode,  HelperBridge.sActivityDetailResponseModel.getIsExpense()+""};
+                String[] keywords = {HelperKey.KEY_INTENT_ASSIGNMENTID, HelperKey.KEY_INTENT_ORDERCODE,  HelperKey.KEY_INTENT_IS_EXPENSE, HelperKey.KEY_INTENT_IS_CLAIM};
+                String[] values = {HelperBridge.sActivityDetailResponseModel.getAssignmentId()+"", orderCode,  HelperBridge.sActivityDetailResponseModel.getIsExpense()+"", HelperBridge.sActivityDetailResponseModel.getIsClaim()};
                 //planOrderView.changeActivityAction(HelperKey.KEY_INTENT_ORDERCODE, HelperBridge.sActivityDetailResponseModel.getAssignmentId() + "", ActivityDetailActivity.class);
                 planOrderView.changeActivityAction(keywords, values, ActivityDetailActivity.class);
                 planOrderView.toggleLoading(false);

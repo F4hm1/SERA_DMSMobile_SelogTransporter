@@ -24,19 +24,20 @@ public class HelperBridge {
 
     public static LoginResponseModel sModelLoginResponse;
 
-    public static List<AssignedOrderResponseModel> sActiveOrdersList;
-    public static List<AssignedOrderResponseModel> sPlanOutstandingOrdersList;
+    public static ActivityDetailResponseModel sActivityDetailResponseModel;
 
+    public static List<AssignedOrderResponseModel> sActiveOrdersList;
+
+    public static List<AssignedOrderResponseModel> sPlanOutstandingOrdersList;
     public static List<RequestHistoryResponseModel> sCiCoRequestHistoryList;
     public static List<RequestHistoryResponseModel> sOLCRequestHistoryList;
     public static List<RequestHistoryResponseModel> sOvertimeRequestHistoryList;
+
     public static List<RequestHistoryResponseModel> sAbsenceRequestHistoryList;
 
     public static List<OrderHistoryResponseModel> sOderHistoryList;
 
     public static Bitmap sBitmapSignature = null;
-
-    public static ActivityDetailResponseModel sActivityDetailResponseModel;
 
 //    public static ActivityDetailResponseModel sActivityDetailResponseModel = new ActivityDetailResponseModel(
 //            63,

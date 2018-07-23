@@ -314,9 +314,10 @@ public class HelperUtil {
         AlertDialog alertDialog = new AlertDialog.Builder(context).create();
         alertDialog.setTitle(title);
         alertDialog.setMessage(msg);
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "YA",
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "YA",
                 onClickListener);
-        alertDialog.setOnDismissListener(onDismissListener);
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "TIDAK",
+                onClickListener);
         alertDialog.show();
     }
 

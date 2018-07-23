@@ -23,6 +23,7 @@ import com.android.volley.toolbox.HttpStack;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.serasiautoraya.slimobiledrivertracking_training.module.BaseInterface.RestCallBackInterfaceModel;
 import com.serasiautoraya.slimobiledrivertracking_training.module.BaseInterface.RestCallbackInterfaceJSON;
 import com.serasiautoraya.slimobiledrivertracking_training.module.BaseInterface.TimeRestCallBackInterface;
@@ -33,6 +34,7 @@ import com.serasiautoraya.slimobiledrivertracking_training.module.Helper.HelperU
 import com.serasiautoraya.slimobiledrivertracking_training.util.LocationServiceUtil;
 import com.serasiautoraya.slimobiledrivertracking_training.util.NetworkUtil;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -168,6 +170,108 @@ public class RestConnection {
         RequestQueue requestQueueSerail = this.prepareSerialRequestQueue(mContext);
         requestQueueSerail.add(request);
     }
+
+    public void postLoginData(String transactionToken, String url, HashMap<String, String> params, RestCallbackInterfaceJSON restCallback) {
+        final RestCallbackInterfaceJSON restcall = restCallback;
+        final String token = transactionToken;
+        Log.d("POST_TAGS", params.toString());
+        if (NetworkUtil.LAST_CONNECTION_NETWORK_STATUS == false) {
+            restcall.callBackOnFail("Pastikan terdapat koneksi internet, kemudian silahkan coba kembali");
+            return;
+        }
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                url,
+                new JSONObject(params),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        if (mStatusCode == 200) {
+                            restcall.callBackOnSuccess(response);
+                            Log.d("FAIL_API", "SUCCESS JSON");
+                        } else {
+                            try {
+                                restcall.callBackOnFail(response.getString("responseText"));
+                                Log.d("FAIL_API", "FAIL" + response.getString("responseText"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Log.d("FAIL_API", "Catch:" + e.getMessage());
+                            }
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        restcall.callBackOnFail(error.getMessage());
+                        Log.d("FAIL_API", "ERROR:" + error.getMessage());
+                    }
+                }
+        ) {
+            @Override
+            protected VolleyError parseNetworkError(VolleyError volleyError) {
+                if (volleyError.networkResponse != null && volleyError.networkResponse.data != null) {
+                    JSONObject jsonResponse = null;
+                    String versionNotValid = "";
+                    String responseText = "Terjadi Kesalahan";
+                    try {
+                        jsonResponse = new JSONObject(new String(volleyError.networkResponse.data));
+                        JSONArray jsonArr = jsonResponse.getJSONArray("data");
+                        versionNotValid = jsonArr.getJSONObject(0).getString("IsVersionValidate");
+                        responseText = jsonResponse.getString("responseText");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    if (versionNotValid.equals("1")){
+                        VolleyError error = new VolleyError(responseText+":1");
+                        volleyError = error;
+                    } else {
+                        VolleyError error = new VolleyError(responseText+":"+versionNotValid);
+                        volleyError = error;
+                    }
+
+                }
+                return volleyError;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                headers.put("Ocp-Apim-Subscription-Key", HelperUrl.OCP_APIM_KEY);
+                if (!token.equalsIgnoreCase("")) {
+                    headers.put("Authorization", token);
+                }
+                return headers;
+            }
+
+
+
+            @Override
+            protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+                mStatusCode = response.statusCode;
+                String jsonString = new String(response.data);
+                JSONObject obj = null;
+                try {
+                    obj = new JSONObject(jsonString);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                return Response.success(obj, HttpHeaderParser.parseCacheHeaders(response));
+            }
+
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+        };
+
+        request.setShouldCache(false);
+        mRequestQueue.add(request);
+    }
+
 
     public void postData(String transactionToken, String url, HashMap<String, String> params, RestCallbackInterfaceJSON restCallback) {
         final RestCallbackInterfaceJSON restcall = restCallback;
