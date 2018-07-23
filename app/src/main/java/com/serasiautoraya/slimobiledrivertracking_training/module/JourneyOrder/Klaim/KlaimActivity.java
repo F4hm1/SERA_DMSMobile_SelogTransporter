@@ -337,6 +337,9 @@ public class KlaimActivity extends TiActivity<KlaimPresenter, KlaimView> impleme
                     getResources().getStringArray(R.array.documents_podreason_array),
                     getResources().getStringArray(R.array.documents_podreason_array_val)
             );
+        } else {
+            showToast("Harga tidak boleh kosong atau diisi nol...");
+            Log.e("FORMVALIDATE", "NNOT VALID");
         }
     }
 
