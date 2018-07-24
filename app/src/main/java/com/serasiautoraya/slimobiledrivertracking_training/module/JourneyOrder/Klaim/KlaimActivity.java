@@ -324,10 +324,12 @@ public class KlaimActivity extends TiActivity<KlaimPresenter, KlaimView> impleme
         startActivityForResult(intent, HelperKey.ACTIVITY_IMAGE_CAPTURE);
     }
 
+
+
     @Override
     @OnClick(R.id.documents_btn_submit)
     public void onClickSubmit(View view) {
-        if (getValidationForm() && !TextUtils.isEmpty(mEtDocumentsPrice.getText().toString()) && mEtDocumentsPrice.getText().toString().equalsIgnoreCase("0") ) {
+        if (getValidationForm() && !TextUtils.isEmpty(mEtDocumentsPrice.getText().toString()) && !mEtDocumentsPrice.getText().toString().equalsIgnoreCase("0") ) {
             getPresenter().onClickSubmit(
                     mEtDocumentsDocNo.getText().toString(),
                     mEtDocumentsDesc.getText().toString(),
@@ -338,7 +340,7 @@ public class KlaimActivity extends TiActivity<KlaimPresenter, KlaimView> impleme
                     getResources().getStringArray(R.array.documents_podreason_array_val)
             );
         } else {
-            showToast("Harga tidak boleh kosong atau diisi nol...");
+            showToast(String.valueOf(Html.fromHtml("Kolom " + "<b>" + "HARGA" + "</b> " + " tidak boleh nol atau kosong")));
             Log.e("FORMVALIDATE", "NNOT VALID");
         }
     }

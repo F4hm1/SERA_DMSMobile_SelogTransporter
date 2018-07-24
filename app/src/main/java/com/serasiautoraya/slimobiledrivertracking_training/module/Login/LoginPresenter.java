@@ -117,7 +117,9 @@ public class LoginPresenter extends TiPresenter<LoginView> {
                 /*
                 * TODO change this!
                 * */
-                    getView().toggleLoading(false);
+                    try {
+                        getView().toggleLoading(false);
+                    } catch (Exception e){}
                     String[] msg = response.split(":");
                     if (msg[1].equals(HelperTransactionCode.TRUE_BINARY)){
                         getView().showToast(msg[0]);
