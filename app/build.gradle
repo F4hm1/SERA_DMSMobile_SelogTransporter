@@ -22,8 +22,8 @@ android {
 //        versionName "1.5"
 
 //For Expense Training incremental versioning
-        versionCode 11 //U: 20018225
-        versionName "2.1.12"
+        versionCode 12 //U: 20018225
+        versionName "2.1.13"
 
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_8
