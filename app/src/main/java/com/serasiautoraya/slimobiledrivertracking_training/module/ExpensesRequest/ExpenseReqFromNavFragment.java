@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
+import android.text.method.DigitsKeyListener;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -166,6 +167,7 @@ public class ExpenseReqFromNavFragment extends TiFragment<ExpenseReqFromNavPrese
             View v = LayoutInflater.from(getContext()).inflate(R.layout.single_list_expenseinput, null);
             EditText etAmount = (EditText) v.findViewById(R.id.expense_input_et);
             etAmount.setText(expenseInputList.get(typeCodeList[i]).getAmount());
+            etAmount.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
             etList.add(etAmount);
             TextView tvInputLabel = (TextView) v.findViewById(R.id.expense_input_label);
             tvInputLabel.setText(expenseInputList.get(typeCodeList[i]).getNameType());
