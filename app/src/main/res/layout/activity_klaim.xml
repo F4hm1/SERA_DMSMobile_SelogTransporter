@@ -31,189 +31,197 @@
                 card_view:cardElevation="3dp"
                 card_view:cardCornerRadius="2dp">
 
-                <LinearLayout
-                    android:id="@+id/documents_lin_klaims"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="6dp"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/colorTextPrimary"
-                        android:text="Potensi Kerusakan Barang"/>
-
                     <LinearLayout
+                        android:id="@+id/documents_lin_klaims"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <LinearLayout
+                        <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:weightSum="2">
+                            android:layout_marginBottom="6dp"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorTextPrimary"
+                            android:text="Potensi Kerusakan Barang"/>
 
-                            <TextView
-                                android:layout_width="0dp"
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.8"
-                                android:textSize="16sp"
-                                android:text="Dok. No"/>
+                                android:orientation="vertical">
 
-                            <!--<EditText-->
-                            <!--android:id="@+id/documents_et_fuel"-->
-                            <!--android:layout_width="0dp"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_weight="1.2"-->
-                            <!--android:textSize="15sp"-->
-                            <!--android:inputType="number"-->
-                            <!--android:text="Rp0,-"/>-->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:weightSum="2">
 
-                            <EditText
-                                android:id="@+id/documents_et_docno"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1.2"
-                                android:textSize="15sp"
-                                android:inputType="text"
-                                android:hint=""/>
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="0.8"
+                                        android:textSize="16sp"
+                                        android:text="Dok. No"/>
 
-                        </LinearLayout>
+                                    <!--<EditText-->
+                                    <!--android:id="@+id/documents_et_fuel"-->
+                                    <!--android:layout_width="0dp"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_weight="1.2"-->
+                                    <!--android:textSize="15sp"-->
+                                    <!--android:inputType="number"-->
+                                    <!--android:text="Rp0,-"/>-->
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:weightSum="2">
+                                    <EditText
+                                        android:id="@+id/documents_et_docno"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1.2"
+                                        android:textSize="15sp"
+                                        android:inputType="text"
+                                        android:hint=""/>
 
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="0.8"
-                                android:textSize="16sp"
-                                android:text="Keterangan"/>
+                                </LinearLayout>
 
-                            <!--<EditText-->
-                            <!--android:id="@+id/documents_et_tollparking"-->
-                            <!--android:layout_width="0dp"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_weight="1.2"-->
-                            <!--android:textSize="15sp"-->
-                            <!--android:inputType="number"-->
-                            <!--android:text="Rp0,-"/>-->
-                            <EditText
-                                android:id="@+id/documents_et_desc"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1.2"
-                                android:textSize="15sp"
-                                android:inputType="textShortMessage"
-                                android:hint=""/>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:weightSum="2">
 
-                        </LinearLayout>
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="0.8"
+                                        android:textSize="16sp"
+                                        android:text="Keterangan"/>
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:weightSum="2">
+                                    <!--<EditText-->
+                                    <!--android:id="@+id/documents_et_tollparking"-->
+                                    <!--android:layout_width="0dp"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_weight="1.2"-->
+                                    <!--android:textSize="15sp"-->
+                                    <!--android:inputType="number"-->
+                                    <!--android:text="Rp0,-"/>-->
+                                    <EditText
+                                        android:id="@+id/documents_et_desc"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1.2"
+                                        android:textSize="15sp"
+                                        android:inputType="textShortMessage"
+                                        android:hint=""/>
 
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="0.8"
-                                android:textSize="16sp"
-                                android:text="Jml Barang Rusak"/>
+                                </LinearLayout>
 
-                            <!--<EditText-->
-                            <!--android:id="@+id/documents_et_escort"-->
-                            <!--android:layout_width="0dp"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_weight="1.2"-->
-                            <!--android:textSize="15sp"-->
-                            <!--android:inputType="number"-->
-                            <!--android:text="Rp0,-"/>-->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:weightSum="2">
 
-                            <EditText
-                                android:id="@+id/documents_et_qty"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1.2"
-                                android:textSize="15sp"
-                                android:inputType="number"
-                                android:hint="0"/>
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="0.8"
+                                        android:textSize="16sp"
+                                        android:text="Jml Barang Rusak"/>
 
-                        </LinearLayout>
+                                    <!--<EditText-->
+                                    <!--android:id="@+id/documents_et_escort"-->
+                                    <!--android:layout_width="0dp"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_weight="1.2"-->
+                                    <!--android:textSize="15sp"-->
+                                    <!--android:inputType="number"-->
+                                    <!--android:text="Rp0,-"/>-->
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:weightSum="2">
+                                    <EditText
+                                        android:id="@+id/documents_et_qty"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1.2"
+                                        android:textSize="15sp"
+                                        android:inputType="number"
+                                        android:hint="0"/>
 
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="0.8"
-                                android:textSize="16sp"
-                                android:hint="Harga"/>
+                                </LinearLayout>
 
-                            <!--<EditText-->
-                            <!--android:id="@+id/documents_et_asdp"-->
-                            <!--android:layout_width="0dp"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_weight="1.2"-->
-                            <!--android:textSize="15sp"-->
-                            <!--android:inputType="number"-->
-                            <!--android:text="Rp0,-"/>-->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:weightSum="2">
 
-                            <EditText
-                                android:id="@+id/documents_et_price"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1.2"
-                                android:textSize="15sp"
-                                android:digits="123456789"
-                                android:inputType="numberDecimal"
-                                android:hint="1"/>
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="0.8"
+                                        android:textSize="16sp"
+                                        android:hint="Harga"/>
 
-                        </LinearLayout>
+                                    <!--<EditText-->
+                                    <!--android:id="@+id/documents_et_asdp"-->
+                                    <!--android:layout_width="0dp"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_weight="1.2"-->
+                                    <!--android:textSize="15sp"-->
+                                    <!--android:inputType="number"-->
+                                    <!--android:text="Rp0,-"/>-->
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:weightSum="2">
+                                    <EditText
+                                        android:id="@+id/documents_et_price"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1.2"
+                                        android:textSize="15sp"
+                                        android:digits="1234567890"
+                                        android:inputType="numberDecimal"
+                                        android:hint="1"/>
 
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="0.8"
-                                android:textSize="16sp"
-                                android:hint="Nama PIC Customer"/>
+                                </LinearLayout>
 
-                            <!--<EditText-->
-                            <!--android:id="@+id/documents_et_portal"-->
-                            <!--android:layout_width="0dp"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_weight="1.2"-->
-                            <!--android:textSize="15sp"-->
-                            <!--android:inputType="number"-->
-                            <!--android:text="Rp0,-"/>-->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:weightSum="2">
 
-                            <EditText
-                                android:id="@+id/documents_et_customer"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1.2"
-                                android:textSize="15sp"
-                                android:inputType="textShortMessage"
-                                android:hint=""/>
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="0.8"
+                                        android:textSize="16sp"
+                                        android:layout_marginBottom="15dp"
+                                        android:hint="Nama PIC Customer"/>
 
-                        </LinearLayout>
+                                    <!--<EditText-->
+                                    <!--android:id="@+id/documents_et_portal"-->
+                                    <!--android:layout_width="0dp"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_weight="1.2"-->
+                                    <!--android:textSize="15sp"-->
+                                    <!--android:inputType="number"-->
+                                    <!--android:text="Rp0,-"/>-->
+
+                                    <EditText
+                                        android:id="@+id/documents_et_customer"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1.2"
+                                        android:textSize="15sp"
+                                        android:inputType="textShortMessage"
+                                        android:hint=""/>
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+
 
                     </LinearLayout>
 
-                </LinearLayout>
+
+
 
             </android.support.v7.widget.CardView>
 

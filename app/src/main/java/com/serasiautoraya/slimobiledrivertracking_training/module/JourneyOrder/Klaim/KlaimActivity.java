@@ -151,7 +151,17 @@ public class KlaimActivity extends TiActivity<KlaimPresenter, KlaimView> impleme
 
     @Override
     public boolean getValidationForm() {
-        return true;
+        if (!TextUtils.isEmpty(mEtDocumentsPrice.getText().toString())
+                && !TextUtils.isEmpty(mEtDocumentsDocNo.getText().toString())
+                && !TextUtils.isEmpty(mEtDocumentsDesc.getText().toString())
+                && !TextUtils.isEmpty(mEtDocumentsQty.getText().toString())
+                && !TextUtils.isEmpty(mEtDocumentsCustomer.getText().toString())
+                && !mEtDocumentsPrice.getText().toString().equalsIgnoreCase("0")){
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     @Override
@@ -327,7 +337,7 @@ public class KlaimActivity extends TiActivity<KlaimPresenter, KlaimView> impleme
     @Override
     @OnClick(R.id.documents_btn_submit)
     public void onClickSubmit(View view) {
-        if (getValidationForm() && !TextUtils.isEmpty(mEtDocumentsPrice.getText().toString()) && mEtDocumentsPrice.getText().toString().equalsIgnoreCase("0")) {
+        if (getValidationForm()) {
             getPresenter().onClickSubmit(
                     mEtDocumentsDocNo.getText().toString(),
                     mEtDocumentsDesc.getText().toString(),
@@ -459,21 +469,13 @@ public class KlaimActivity extends TiActivity<KlaimPresenter, KlaimView> impleme
 
     @Override
     public void showConfirmationSuccess(String message, String title) {
-        HelperUtil.showSimpleAlertDialogCustomTitleAction(message, KlaimActivity.this, title,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        getPresenter().finishCurrentDetailActivity();
-                        finish();
-                    }
-                },
-                new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        getPresenter().finishCurrentDetailActivity();
-                        finish();
-                    }
-                });
+        HelperUtil.showSimpleAlertDialogCustomAction(message, KlaimActivity.this, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                getPresenter().finishCurrentDetailActivity();
+                finish();
+            }
+        });
     }
 
     @Override
