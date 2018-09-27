@@ -44,7 +44,7 @@ import java.util.Locale;
 /**
  * Created by Randi Dwi Nandra on 28/11/2016.
  */
-public class LoginActivity extends AppCompatActivity{
+public class LoginActivityBackup extends AppCompatActivity{
     // UI references.
     private EditText mUsername;
     private EditText mPasswordView;
@@ -64,8 +64,8 @@ public class LoginActivity extends AppCompatActivity{
         config.locale = locale;
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
         startService(new Intent(this, FCMMessageService.class));
-        LocationServiceUtil.getLocationManager(LoginActivity.this);
-        VolleyUtil.init(LoginActivity.this);
+        LocationServiceUtil.getLocationManager(LoginActivityBackup.this);
+        VolleyUtil.init(LoginActivityBackup.this);
         HttpsTrustManager.allowAllSSL();
         if(!SharedPrefsUtil.getBoolean(this, HelperKey.HAS_LOGIN, false)){
             setContentView(R.layout.activity_login);
@@ -95,20 +95,20 @@ public class LoginActivity extends AppCompatActivity{
     protected void onStart() {
         Log.d("LOHIN_TAG", "clicked_1");
         super.onStart();
-        LocationServiceUtil.getLocationManager(LoginActivity.this).connectGoogleAPIClient();
+        LocationServiceUtil.getLocationManager(LoginActivityBackup.this).connectGoogleAPIClient();
         Log.d("LOHIN_TAG", "clicked");
     }
 
     private void initPermissions() {
         if(!PermissionsUtil.issLocationGranted()){
-            PermissionsUtil.requestLocationPermission(LoginActivity.this);
+            PermissionsUtil.requestLocationPermission(LoginActivityBackup.this);
         }
         if(!PermissionsUtil.issExternalStorageGranted()){
-            PermissionsUtil.requestStoragePermission(LoginActivity.this);
+            PermissionsUtil.requestStoragePermission(LoginActivityBackup.this);
         }
 
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            if (!Settings.canDrawOverlays(LoginActivity.this)) {
+//            if (!Settings.canDrawOverlays(LoginActivityBackup.this)) {
 //                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
 //                startActivityForResult(intent, 1001);
 //            }
@@ -203,23 +203,23 @@ public class LoginActivity extends AppCompatActivity{
                                     if(HelperBridge.MODEL_LOGIN_DATA.getPhotoFront() == null ||
                                             HelperBridge.MODEL_LOGIN_DATA.getPhotoFront().equalsIgnoreCase("null") ||
                                             HelperBridge.MODEL_LOGIN_DATA.getPhotoFront().equalsIgnoreCase("")){
-                                        HelperBridge.MODEL_LOGIN_DATA.setPhotoFront("https://damira.sera.astra.co.id/DMS/assets/images/avatar2.jpg");
+                                        //HelperBridge.MODEL_LOGIN_DATA.setPhotoFront("https://damira.sera.astra.co.id/DMS/assets/images/avatar2.jpg");
                                     }
                                     HelperBridge.maxRequest = HelperBridge.MODEL_LOGIN_DATA.getMaxHariRequestDriver();
-                                    HelperUtil.showSimpleToast(getResources().getString(R.string.success_msg_login), LoginActivity.this);
+                                    HelperUtil.showSimpleToast(getResources().getString(R.string.success_msg_login), LoginActivityBackup.this);
 
-                                    SharedPrefsUtil.apply(LoginActivity.this, HelperKey.HAS_LOGIN, true);
-                                    SharedPrefsUtil.apply(LoginActivity.this, HelperKey.KEY_PASSWORD, password);
-                                    SharedPrefsUtil.apply(LoginActivity.this, HelperKey.KEY_USERNAME, username);
+                                    SharedPrefsUtil.apply(LoginActivityBackup.this, HelperKey.HAS_LOGIN, true);
+                                    SharedPrefsUtil.apply(LoginActivityBackup.this, HelperKey.KEY_PASSWORD, password);
+                                    SharedPrefsUtil.apply(LoginActivityBackup.this, HelperKey.KEY_USERNAME, username);
 
-//                                    HelperUtil.goToActivity(LoginActivity.this, DashboardActivity.class);
-                                    LoginActivity.this.finish();
+//                                    HelperUtil.goToActivity(LoginActivityBackup.this, DashboardActivity.class);
+                                    LoginActivityBackup.this.finish();
                                 }else{
-                                    HelperUtil.showSimpleAlertDialog(getResources().getString(R.string.err_msg_not_authorizad), LoginActivity.this);
+                                    HelperUtil.showSimpleAlertDialog(getResources().getString(R.string.err_msg_not_authorizad), LoginActivityBackup.this);
                                 }
                         }else{
-                            HelperUtil.showSimpleAlertDialog(getResources().getString(R.string.err_msg_wrong_login), LoginActivity.this);
-                            if(SharedPrefsUtil.getBoolean(LoginActivity.this, HelperKey.HAS_LOGIN, false)){
+                            HelperUtil.showSimpleAlertDialog(getResources().getString(R.string.err_msg_wrong_login), LoginActivityBackup.this);
+                            if(SharedPrefsUtil.getBoolean(LoginActivityBackup.this, HelperKey.HAS_LOGIN, false)){
                                 restartLogin();
                             }
                         }
@@ -229,15 +229,15 @@ public class LoginActivity extends AppCompatActivity{
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         showProgress(false, "");
-                        if(SharedPrefsUtil.getBoolean(LoginActivity.this, HelperKey.HAS_LOGIN, false)){
-                            HelperUtil.showSimpleAlertDialogCustomAction(getResources().getString(R.string.err_msg_general), LoginActivity.this, new DialogInterface.OnClickListener() {
+                        if(SharedPrefsUtil.getBoolean(LoginActivityBackup.this, HelperKey.HAS_LOGIN, false)){
+                            HelperUtil.showSimpleAlertDialogCustomAction(getResources().getString(R.string.err_msg_general), LoginActivityBackup.this, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     System.exit(0);
                                 }
                             });
                         }else {
-                            HelperUtil.showSimpleAlertDialog(getResources().getString(R.string.err_msg_general), LoginActivity.this);
+                            HelperUtil.showSimpleAlertDialog(getResources().getString(R.string.err_msg_general), LoginActivityBackup.this);
                         }
                     }
                 }
@@ -254,7 +254,7 @@ public class LoginActivity extends AppCompatActivity{
     }
 
     private void passLogin(){
-        HelperUtil.showSimpleToast(getResources().getString(R.string.warn_msg_memuatdata), LoginActivity.this);
+        HelperUtil.showSimpleToast(getResources().getString(R.string.warn_msg_memuatdata), LoginActivityBackup.this);
         mqueue = VolleyUtil.getRequestQueue();
         String password = SharedPrefsUtil.getString(this, HelperKey.KEY_PASSWORD, "");
         String username = SharedPrefsUtil.getString(this, HelperKey.KEY_USERNAME, "");

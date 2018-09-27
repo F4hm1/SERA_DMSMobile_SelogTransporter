@@ -13,7 +13,7 @@ public class HelperUrl {
     /**
     * Host
     */
-    private static String HOST_PROD = "https://damira.sera.astra.co.id/DMSAPI/";
+    //private static String HOST_PROD = "https://damira.sera.astra.co.id/DMSAPI/";
 
 
     /*
